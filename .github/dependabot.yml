@@ -1,0 +1,115 @@
+# GluMira™ Dependabot Configuration
+# Version: 7.0.0
+#
+# Automated dependency updates:
+#   - npm packages: weekly on Monday (grouped by category)
+#   - GitHub Actions: weekly on Monday
+#
+# Security updates are enabled separately via GitHub Security Advisories.
+
+version: 2
+
+updates:
+  # ── npm / pnpm dependencies ──────────────────────────────────
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 10
+    reviewers:
+      - "glumira-dev"
+    labels:
+      - "dependencies"
+      - "automated"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+    # Group updates to reduce PR noise
+    groups:
+      radix-ui:
+        patterns:
+          - "@radix-ui/*"
+        update-types:
+          - "minor"
+          - "patch"
+      trpc:
+        patterns:
+          - "@trpc/*"
+        update-types:
+          - "minor"
+          - "patch"
+      tanstack:
+        patterns:
+          - "@tanstack/*"
+        update-types:
+          - "minor"
+          - "patch"
+      drizzle:
+        patterns:
+          - "drizzle-orm"
+          - "drizzle-kit"
+        update-types:
+          - "minor"
+          - "patch"
+      vite-build:
+        patterns:
+          - "vite"
+          - "vitest"
+          - "esbuild"
+          - "typescript"
+        update-types:
+          - "minor"
+          - "patch"
+      react:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "@types/react"
+          - "@types/react-dom"
+        update-types:
+          - "minor"
+          - "patch"
+      security-critical:
+        patterns:
+          - "express"
+          - "cookie"
+          - "dotenv"
+          - "zod"
+        update-types:
+          - "patch"
+    # Never auto-update major versions of these critical packages
+    ignore:
+      - dependency-name: "drizzle-orm"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@trpc/server"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@trpc/client"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "react"
+        update-types: ["version-update:semver-major"]
+
+  # ── GitHub Actions ───────────────────────────────────────────
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 5
+    labels:
+      - "github-actions"
+      - "automated"
+    commit-message:
+      prefix: "ci(actions)"
+      include: "scope"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"

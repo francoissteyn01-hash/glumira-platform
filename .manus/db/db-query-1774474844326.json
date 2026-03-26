@@ -1,0 +1,9 @@
+{
+  "query": "CREATE TABLE `mealPatientSettings` (\n\t`id` int AUTO_INCREMENT NOT NULL,\n\t`patientId` int NOT NULL,\n\t`activeRegimeId` varchar(50) NOT NULL,\n\t`customHypoThreshold` decimal(10,2),\n\t`customHyperThreshold` decimal(10,2),\n\t`notes` text,\n\t`createdAt` timestamp NOT NULL DEFAULT (now()),\n\t`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,\n\tCONSTRAINT `mealPatientSettings_id` PRIMARY KEY(`id`)\n);\n\nCREATE TABLE `meals` (\n\t`id` int AUTO_INCREMENT NOT NULL,\n\t`patientId` int NOT NULL,\n\t`userId` int NOT NULL,\n\t`eatenAt` timestamp NOT NULL,\n\t`carbsGrams` decimal(10,1) NOT NULL,\n\t`mealRegime` varchar(50),\n\t`mealName` varchar(255),\n\t`notes` text,\n\t`createdAt` timestamp NOT NULL DEFAULT (now()),\n\tCONSTRAINT `meals_id` PRIMARY KEY(`id`)\n);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3FWqYPRopRKvbrd.519995121056 --database 7pTbwMW7uihCCsypZFsqz6 --execute CREATE TABLE `mealPatientSettings` (\n\t`id` int AUTO_INCREMENT NOT NULL,\n\t`patientId` int NOT NULL,\n\t`activeRegimeId` varchar(50) NOT NULL,\n\t`customHypoThreshold` decimal(10,2),\n\t`customHyperThreshold` decimal(10,2),\n\t`notes` text,\n\t`createdAt` timestamp NOT NULL DEFAULT (now()),\n\t`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,\n\tCONSTRAINT `mealPatientSettings_id` PRIMARY KEY(`id`)\n);\n\nCREATE TABLE `meals` (\n\t`id` int AUTO_INCREMENT NOT NULL,\n\t`patientId` int NOT NULL,\n\t`userId` int NOT NULL,\n\t`eatenAt` timestamp NOT NULL,\n\t`carbsGrams` decimal(10,1) NOT NULL,\n\t`mealRegime` varchar(50),\n\t`mealName` varchar(255),\n\t`notes` text,\n\t`createdAt` timestamp NOT NULL DEFAULT (now()),\n\tCONSTRAINT `meals_id` PRIMARY KEY(`id`)\n);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 829
+}
