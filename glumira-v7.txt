@@ -2619,3 +2619,8 @@ Files: icr-calculator.ts, icr-calculator.test.ts (17 tests), glucose-forecast.ts
 Tests: 2262 passing (+42)
 Commit: GitHub main
 Drive: Wave67-Sprint-2026-03-26
+WAVE 68 - 2026-03-26
+Files: burnout-screener.ts, burnout-screener.test.ts (18 tests), injection-site-tracker.ts, injection-site-tracker.test.ts (17 tests)
+Tests: 2296 passing (+35)
+Commit: GitHub main
+Drive: Wave68-Sprint-2026-03-26
