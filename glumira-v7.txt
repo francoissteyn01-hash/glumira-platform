@@ -2609,3 +2609,8 @@ Files: hypo-risk-predictor.ts, hypo-risk-predictor.test.ts (25 tests), glucose-v
 Tests: 2177 passing (+51)
 Commit: GitHub main
 Drive: Wave65-Sprint-2026-03-26
+WAVE 66 - 2026-03-26
+Files: a1c-estimator.ts, a1c-estimator.test.ts (23 tests), isf-calculator.ts, isf-calculator.test.ts (20 tests)
+Tests: 2220 passing (+43)
+Commit: GitHub main
+Drive: Wave66-Sprint-2026-03-26
