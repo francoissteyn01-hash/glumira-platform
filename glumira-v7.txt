@@ -2584,3 +2584,8 @@ Files: cgm-gap-analysis.ts, cgm-gap-analysis.test.ts (20 tests), data-export.ts,
 Tests: 1918 passing (+50)
 Commit: GitHub main
 Drive: Wave60-Sprint-2026-03-26
+WAVE 61 - 2026-03-26
+Files: medication-interaction.ts, medication-interaction.test.ts (22 tests), sick-day-protocol.ts, sick-day-protocol.test.ts (32 tests)
+Tests: 1972 passing (+54)
+Commit: GitHub main
+Drive: Wave61-Sprint-2026-03-26
