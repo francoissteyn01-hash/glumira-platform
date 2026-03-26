@@ -2594,3 +2594,8 @@ Files: pregnancy-glucose.ts, pregnancy-glucose.test.ts (30 tests), pediatric-dos
 Tests: 2031 passing (+59)
 Commit: GitHub main
 Drive: Wave62-Sprint-2026-03-26
+WAVE 63 - 2026-03-26
+Files: pump-settings-optimizer.ts, pump-settings-optimizer.test.ts (19 tests), basal-rate-profiler.ts, basal-rate-profiler.test.ts (20 tests)
+Tests: 2070 passing (+39)
+Commit: GitHub main
+Drive: Wave63-Sprint-2026-03-26
