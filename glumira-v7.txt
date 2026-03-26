@@ -2569,3 +2569,8 @@ Files: altitude-impact.ts, altitude-impact.test.ts (30 tests), menstrual-cycle-i
 Tests: 1759 passing (+58)
 Commit: GitHub main
 Drive: Wave57-Sprint-2026-03-26
+WAVE 58 - 2026-03-26
+Files: fasting-protocol.ts, fasting-protocol.test.ts (26 tests), alcohol-impact.ts, alcohol-impact.test.ts (32 tests), useFastingProtocol.ts, useAlcoholImpact.ts, routes, pages
+Tests: 1817 passing (+58)
+Commit: GitHub main
+Drive: Wave58-Sprint-2026-03-26
