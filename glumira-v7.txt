@@ -2604,3 +2604,8 @@ Files: carb-counting-trainer.ts, carb-counting-trainer.test.ts (28 tests), bolus
 Tests: 2126 passing (+56)
 Commit: GitHub main
 Drive: Wave64-Sprint-2026-03-26
+WAVE 65 - 2026-03-26
+Files: hypo-risk-predictor.ts, hypo-risk-predictor.test.ts (25 tests), glucose-variability-index.ts, glucose-variability-index.test.ts (26 tests)
+Tests: 2177 passing (+51)
+Commit: GitHub main
+Drive: Wave65-Sprint-2026-03-26
