@@ -2599,3 +2599,8 @@ Files: pump-settings-optimizer.ts, pump-settings-optimizer.test.ts (19 tests), b
 Tests: 2070 passing (+39)
 Commit: GitHub main
 Drive: Wave63-Sprint-2026-03-26
+WAVE 64 - 2026-03-26
+Files: carb-counting-trainer.ts, carb-counting-trainer.test.ts (28 tests), bolus-advisor.ts, bolus-advisor.test.ts (28 tests)
+Tests: 2126 passing (+56)
+Commit: GitHub main
+Drive: Wave64-Sprint-2026-03-26
