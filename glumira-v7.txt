@@ -2614,3 +2614,8 @@ Files: a1c-estimator.ts, a1c-estimator.test.ts (23 tests), isf-calculator.ts, is
 Tests: 2220 passing (+43)
 Commit: GitHub main
 Drive: Wave66-Sprint-2026-03-26
+WAVE 67 - 2026-03-26
+Files: icr-calculator.ts, icr-calculator.test.ts (17 tests), glucose-forecast.ts, glucose-forecast.test.ts (25 tests)
+Tests: 2262 passing (+42)
+Commit: GitHub main
+Drive: Wave67-Sprint-2026-03-26
