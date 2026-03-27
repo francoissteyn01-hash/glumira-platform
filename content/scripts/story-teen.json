@@ -1,0 +1,59 @@
+{
+  "profile": "teen",
+  "voice_style": "calm_peer",
+  "total_duration_ms": 52000,
+  "scenes": [
+    {
+      "scene_id": "T1-S1",
+      "duration_ms": 9000,
+      "voice_text": "GluMira is different from other diabetes apps. It doesn't talk down to you. It gives you real information and lets you do what you want with it.",
+      "subtitle_text": "Real information. No lectures.",
+      "visual_id": "anim_teen_dashboard_dark",
+      "visual_note": "Dark mode dashboard slides in. Clean, minimal. No clutter."
+    },
+    {
+      "scene_id": "T1-S2",
+      "duration_ms": 10000,
+      "voice_text": "IOB Hunter shows exactly how much insulin is still active in your body. It's the number that tells you whether a correction is safe right now — or whether you should wait.",
+      "subtitle_text": "Active insulin. The number that actually matters.",
+      "visual_id": "anim_iob_teen_view",
+      "visual_note": "Clean IOB curve in dark mode. Minimal labels. Clinical feel."
+    },
+    {
+      "scene_id": "T1-S3",
+      "duration_ms": 10000,
+      "voice_text": "After a week of data, GluMira starts finding patterns — times when your glucose consistently goes high or low. Not guessing. Actual data about your actual body.",
+      "subtitle_text": "Patterns from your data. Not guesses.",
+      "visual_id": "anim_pattern_detection_dark",
+      "visual_note": "Dark mode 7-day grid. Recurring clusters highlight. No cheerful graphics — just clean data."
+    },
+    {
+      "scene_id": "T1-S4",
+      "duration_ms": 9000,
+      "voice_text": "You can choose what your dashboard looks like. Dark mode, which metrics you see first, how alerts work. It's your app.",
+      "subtitle_text": "Your dashboard. Your way.",
+      "visual_id": "anim_teen_customise",
+      "visual_note": "Dashboard customisation panel. Theme toggle. Widget rearrangement. Feels personal."
+    },
+    {
+      "scene_id": "T1-S5",
+      "duration_ms": 9000,
+      "voice_text": "When you go to clinic, you can share a report that actually shows what's been going on — instead of trying to explain it from memory.",
+      "subtitle_text": "Clinic reports that say what you can't always explain.",
+      "visual_id": "anim_report_teen",
+      "visual_note": "Clean report preview. Minimal. Professional. Data-focused."
+    },
+    {
+      "scene_id": "T1-S6",
+      "duration_ms": 5000,
+      "voice_text": "Let's set it up. Takes about three minutes.",
+      "subtitle_text": "Three minutes. Let's go.",
+      "visual_id": "anim_teen_cta",
+      "visual_note": "Simple full-screen CTA. Dark background. Single button. No fuss."
+    }
+  ],
+  "cta": {
+    "text": "Set up GluMira",
+    "route": "/onboarding/first-win/teen"
+  }
+}

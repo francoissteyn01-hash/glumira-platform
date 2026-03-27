@@ -1,0 +1,59 @@
+{
+  "profile": "parent",
+  "voice_style": "warm_reassuring",
+  "total_duration_ms": 57000,
+  "scenes": [
+    {
+      "scene_id": "PR1-S1",
+      "duration_ms": 10000,
+      "voice_text": "Managing your child's diabetes is a 24-hour job. The sleepless nights, the constant worry, the endless calculations. GluMira is here to share that load.",
+      "subtitle_text": "Managing diabetes is a 24-hour job. We're here to help.",
+      "visual_id": "anim_parent_night_worry",
+      "visual_note": "A soft, reassuring animation of a glowing owl watching over a sleeping child's glucose curve."
+    },
+    {
+      "scene_id": "PR1-S2",
+      "duration_ms": 10000,
+      "voice_text": "With IOB Hunter, you always know exactly how much active insulin is still in their system. It takes the guesswork out of correction doses, especially at night.",
+      "subtitle_text": "Know exactly how much insulin is active. No guesswork.",
+      "visual_id": "anim_iob_parent_view",
+      "visual_note": "Clear IOB curve showing a safe correction threshold, glowing softly to indicate safety."
+    },
+    {
+      "scene_id": "PR1-S3",
+      "duration_ms": 10000,
+      "voice_text": "GluMira connects everyone. You, your partner, the school, and the clinic. Everyone sees the same data, in real-time. You're never managing this alone.",
+      "subtitle_text": "Connect family, school, and clinic. One shared view.",
+      "visual_id": "anim_parent_network",
+      "visual_note": "A network diagram showing the child's profile connecting to parents, school, and doctor."
+    },
+    {
+      "scene_id": "PR1-S4",
+      "duration_ms": 10000,
+      "voice_text": "The pattern engine spots trends before they become problems. It learns their unique routine—school days, sports, weekends—and helps you adjust proactively.",
+      "subtitle_text": "Spot trends before they become problems.",
+      "visual_id": "anim_pattern_parent",
+      "visual_note": "A weekly calendar highlighting a recurring post-sport low, with a gentle alert icon."
+    },
+    {
+      "scene_id": "PR1-S5",
+      "duration_ms": 9000,
+      "voice_text": "You can generate a complete care plan for their school in seconds. It updates automatically whenever you change their profile.",
+      "subtitle_text": "Auto-generated school care plans. Always up to date.",
+      "visual_id": "anim_care_plan_parent",
+      "visual_note": "A school care plan document generating with a protective shield icon."
+    },
+    {
+      "scene_id": "PR1-S6",
+      "duration_ms": 8000,
+      "voice_text": "You're doing an amazing job. Let's set up your child's profile and give you some peace of mind.",
+      "subtitle_text": "You're doing amazing. Let's get started.",
+      "visual_id": "anim_parent_cta",
+      "visual_note": "Warm, reassuring CTA screen. The GluMira owl gives a comforting nod."
+    }
+  ],
+  "cta": {
+    "text": "Set up child's profile",
+    "route": "/onboarding/first-win/parent"
+  }
+}

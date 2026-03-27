@@ -1,0 +1,51 @@
+{
+  "profile": "child",
+  "voice_style": "friendly_upbeat",
+  "total_duration_ms": 48000,
+  "scenes": [
+    {
+      "scene_id": "CH1-S1",
+      "duration_ms": 8000,
+      "voice_text": "Hey! Welcome to GluMira. This is YOUR diabetes app. And it's going to help you be kind of a superhero about it.",
+      "subtitle_text": "Welcome to GluMira. Your diabetes app. 🦉",
+      "visual_id": "anim_child_hero_intro",
+      "visual_note": "GluMira owl flies across screen and lands. Stars and sparkles. Friendly, bold, colourful."
+    },
+    {
+      "scene_id": "CH1-S2",
+      "duration_ms": 8000,
+      "voice_text": "GluMira watches your glucose — that's the sugar in your blood. When it goes too low or too high, it lets you and your grown-ups know straight away.",
+      "subtitle_text": "It watches your glucose and tells you when to act.",
+      "visual_id": "anim_child_glucose_explained",
+      "visual_note": "Simple, colourful animation of a glucose curve in a friendly range band. Low = blue cold zone, high = red hot zone, target = sunshine yellow."
+    },
+    {
+      "scene_id": "CH1-S3",
+      "duration_ms": 8000,
+      "voice_text": "You can log your meals, your insulin, and how you're feeling. Every time you do, you get closer to earning a badge. Yes — real badges.",
+      "subtitle_text": "Log things. Earn badges. Be awesome.",
+      "visual_id": "anim_child_badge_unlock",
+      "visual_note": "A badge animates in with a satisfying pop and glow — 'First Log!' badge example"
+    },
+    {
+      "scene_id": "CH1-S4",
+      "duration_ms": 8000,
+      "voice_text": "GluMira also tells your school exactly what to do if you feel unwell. So even when Mum or Dad aren't there, someone always knows what to do.",
+      "subtitle_text": "Your school knows exactly how to help you.",
+      "visual_id": "anim_child_school_safe",
+      "visual_note": "Friendly illustration of a school building with a glowing shield over it. Simple, reassuring."
+    },
+    {
+      "scene_id": "CH1-S5",
+      "duration_ms": 8000,
+      "voice_text": "Ready to start? Let's set up your profile and earn your very first badge.",
+      "subtitle_text": "Let's go earn your first badge! 🌟",
+      "visual_id": "anim_child_cta",
+      "visual_note": "Owl waves. Stars burst. Big friendly CTA button pulses."
+    }
+  ],
+  "cta": {
+    "text": "Let's go! 🌟",
+    "route": "/onboarding/first-win/child"
+  }
+}

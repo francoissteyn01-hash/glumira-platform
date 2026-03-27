@@ -1,0 +1,67 @@
+{
+  "profile": "patient",
+  "voice_style": "warm_neutral",
+  "total_duration_ms": 68000,
+  "scenes": [
+    {
+      "scene_id": "P1-S1",
+      "duration_ms": 10000,
+      "voice_text": "Living with diabetes means making hundreds of decisions every day. What to eat, when to dose, what that number means right now. GluMira was built to make those decisions clearer.",
+      "subtitle_text": "Hundreds of decisions, every day. GluMira makes them clearer.",
+      "visual_id": "anim_glucose_curve_stabilising",
+      "visual_note": "A CGM-style line drifts gently above target, then smoothly returns to range as GluMira wordmark fades in"
+    },
+    {
+      "scene_id": "P1-S2",
+      "duration_ms": 10000,
+      "voice_text": "It starts with your profile. Your insulin, your diet, your body. GluMira learns your specifics — not a generic average.",
+      "subtitle_text": "Your insulin. Your diet. Your profile.",
+      "visual_id": "anim_profile_building",
+      "visual_note": "Animated profile card assembles itself — name, insulin type, meal regime, target range"
+    },
+    {
+      "scene_id": "P1-S3",
+      "duration_ms": 12000,
+      "voice_text": "IOB Hunter tracks exactly how much insulin is still working in your body. It's one of the most important numbers in diabetes management — and most apps never show it. We do.",
+      "subtitle_text": "Active insulin, tracked in real time. Always.",
+      "visual_id": "anim_iob_curve_decay",
+      "visual_note": "A smooth pharmacokinetic decay curve animates across a 4-hour timeline. A warning glow appears when IOB overlaps a new dose, then resolves"
+    },
+    {
+      "scene_id": "P1-S4",
+      "duration_ms": 10000,
+      "voice_text": "After a few days, GluMira's pattern engine starts finding what you can't always see — recurring lows at the same time, post-meal spikes, nighttime trends.",
+      "subtitle_text": "Patterns you might miss. GluMira finds them.",
+      "visual_id": "anim_pattern_detection",
+      "visual_note": "7-day glucose grid animates in, then three recurring low clusters are highlighted simultaneously with a soft glow"
+    },
+    {
+      "scene_id": "P1-S5",
+      "duration_ms": 10000,
+      "voice_text": "Log meals, doses, and readings. Or connect your CGM and let live data do the work. GluMira fits around your life — not the other way around.",
+      "subtitle_text": "Manual logging or live CGM. Your choice.",
+      "visual_id": "anim_cgm_connect",
+      "visual_note": "Phone screen shows manual log entry, then transitions to a live CGM feed populating automatically"
+    },
+    {
+      "scene_id": "P1-S6",
+      "duration_ms": 8000,
+      "voice_text": "Every clinic visit, you can share a clean, structured report — patterns, time in range, insulin events. No more trying to remember. No more blank looks.",
+      "subtitle_text": "Reports your doctor will actually understand.",
+      "visual_id": "anim_report_generating",
+      "visual_note": "A clinical report PDF assembles itself with TIR bar, glucose graph, and IOB event list"
+    },
+    {
+      "scene_id": "P1-S7",
+      "duration_ms": 8000,
+      "voice_text": "GluMira doesn't replace your doctor or your instincts. It gives you the information to work with both. Let's get your profile set up.",
+      "subtitle_text": "Better information. Better decisions. Let's begin.",
+      "visual_id": "anim_dashboard_overview",
+      "visual_note": "Full GluMira dashboard fades in, all panels populated, owl logo pulses gently"
+    }
+  ],
+  "cta": {
+    "text": "Set up my profile",
+    "route": "/onboarding/first-win/patient"
+  }
+}
