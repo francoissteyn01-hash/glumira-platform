@@ -63,10 +63,10 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0f1b3d 0%, #1a2a5e 40%, #1a3a5e 100%)', minHeight: '600px' }}>
+      <section className="relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0f1b3d 0%, #1a2a5e 40%, #1a3a5e 100%)' }}>
         {/* Background wave image */}
         <div className="absolute inset-0 opacity-40" style={{ backgroundImage: 'url(/glumira-hero-bg.png)', backgroundSize: 'cover', backgroundPosition: 'center bottom' }}></div>
-        <div className="container mx-auto px-4 relative z-10 py-16 md:py-24">
+        <div className="container mx-auto px-4 relative z-10 py-10 md:py-16">
           <div className="grid md:grid-cols-2 gap-8 items-center">
             {/* Left: Text */}
             <div>
@@ -109,7 +109,7 @@ export default function Home() {
               <img
                 src="/glumira-hero-owl.png"
                 alt="GluMira™ Owl — The science of insulin, made visible"
-                className="w-full max-w-md md:max-w-lg drop-shadow-2xl"
+                className="w-full max-w-xs md:max-w-sm drop-shadow-2xl"
                 style={{ filter: 'drop-shadow(0 0 40px rgba(42, 181, 193, 0.3))' }}
               />
             </div>
