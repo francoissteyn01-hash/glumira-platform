@@ -32,9 +32,12 @@ import {
   LogOut,
   PanelLeft,
   Syringe,
+  Trophy,
   UtensilsCrossed,
   User,
 } from "lucide-react";
+import { useGamification } from "../lib/gamification/GamificationContext";
+import { ProfileMascot } from "./gamification/ProfileMascot";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
 import { DashboardLayoutSkeleton } from "./DashboardLayoutSkeleton";
@@ -50,6 +53,7 @@ const menuItems = [
   { icon: Brain, label: "ADHD", path: "/dashboard/adhd" },
   { icon: Activity, label: "Thyroid", path: "/dashboard/thyroid" },
   { icon: BookOpen, label: "School Care Plan", path: "/dashboard/school-care-plan" },
+  { icon: Trophy, label: "Rewards", path: "/dashboard/rewards" },
   { icon: User, label: "Profile", path: "/dashboard/profile" },
 ];
 
@@ -128,6 +132,47 @@ type DashboardLayoutContentProps = {
   children: React.ReactNode;
   setSidebarWidth: (width: number) => void;
 };
+
+// ─── Mascot Sidebar Widget ───────────────────────────────────────────────────
+
+function MascotSidebarWidget({
+  setLocation,
+  isCollapsed,
+}: {
+  setLocation: (path: string) => void;
+  isCollapsed: boolean;
+}) {
+  try {
+    const { profile } = useGamification();
+    if (!profile) return null;
+    return (
+      <button
+        onClick={() => setLocation("/dashboard/rewards")}
+        className="flex items-center gap-2.5 w-full rounded-lg px-1 py-2 hover:bg-accent/10 transition-colors mb-1 text-left"
+        title={`${profile.currentTier.charAt(0).toUpperCase() + profile.currentTier.slice(1)} Member — View Rewards`}
+      >
+        <ProfileMascot
+          tier={profile.currentTier}
+          activeBadgeId={profile.activeBadgeId}
+          size="sm"
+        />
+        {!isCollapsed && (
+          <div className="flex-1 min-w-0">
+            <p className="text-xs font-semibold text-foreground leading-tight truncate">
+              {profile.currentTier.charAt(0).toUpperCase() + profile.currentTier.slice(1)} Member
+            </p>
+            <p className="text-[10px] text-amber-500 font-medium leading-tight">
+              {profile.points.toLocaleString()} pts
+              {profile.currentStreakDays > 0 && ` · ${profile.currentStreakDays}d streak`}
+            </p>
+          </div>
+        )}
+      </button>
+    );
+  } catch {
+    return null;
+  }
+}
 
 function DashboardLayoutContent({
   children,
@@ -232,6 +277,8 @@ function DashboardLayoutContent({
           </SidebarContent>
 
           <SidebarFooter className="p-3">
+            {/* Mascot tier widget — links to Rewards page */}
+            <MascotSidebarWidget setLocation={setLocation} isCollapsed={isCollapsed} />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="flex items-center gap-3 rounded-lg px-1 py-1 hover:bg-accent/10 transition-colors w-full text-left group-data-[collapsible=icon]:justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-ring">

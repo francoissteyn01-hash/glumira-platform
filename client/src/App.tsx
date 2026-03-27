@@ -16,6 +16,9 @@ import PregnancyPage from "./pages/PregnancyPage";
 import ADHDPage from "./pages/ADHDPage";
 import ThyroidPage from "./pages/ThyroidPage";
 import SchoolCarePlanPage from "./pages/SchoolCarePlanPage";
+import RewardsPage from "./pages/RewardsPage";
+import { GamificationProvider } from "./lib/gamification/GamificationContext";
+import { GamificationOverlay } from "./components/gamification/GamificationOverlay";
 
 /**
  * GluMira™ V7 — The science of insulin, made visible
@@ -25,21 +28,26 @@ import SchoolCarePlanPage from "./pages/SchoolCarePlanPage";
 
 function DashboardRoutes() {
   return (
-    <DashboardLayout>
-      <Switch>
-        <Route path="/dashboard" component={Dashboard} />
-        <Route path="/dashboard/glucose" component={GlucosePage} />
-        <Route path="/dashboard/insulin" component={InsulinPage} />
-        <Route path="/dashboard/iob" component={IOBPage} />
-        <Route path="/dashboard/meals" component={MealsPage} />
-        <Route path="/dashboard/profile" component={ProfilePage} />
-        <Route path="/dashboard/pregnancy" component={PregnancyPage} />
-        <Route path="/dashboard/adhd" component={ADHDPage} />
-        <Route path="/dashboard/thyroid" component={ThyroidPage} />
-        <Route path="/dashboard/school-care-plan" component={SchoolCarePlanPage} />
-        <Route component={Dashboard} />
-      </Switch>
-    </DashboardLayout>
+    <GamificationProvider>
+      <DashboardLayout>
+        <Switch>
+          <Route path="/dashboard" component={Dashboard} />
+          <Route path="/dashboard/glucose" component={GlucosePage} />
+          <Route path="/dashboard/insulin" component={InsulinPage} />
+          <Route path="/dashboard/iob" component={IOBPage} />
+          <Route path="/dashboard/meals" component={MealsPage} />
+          <Route path="/dashboard/profile" component={ProfilePage} />
+          <Route path="/dashboard/pregnancy" component={PregnancyPage} />
+          <Route path="/dashboard/adhd" component={ADHDPage} />
+          <Route path="/dashboard/thyroid" component={ThyroidPage} />
+          <Route path="/dashboard/school-care-plan" component={SchoolCarePlanPage} />
+          <Route path="/dashboard/rewards" component={RewardsPage} />
+          <Route component={Dashboard} />
+        </Switch>
+      </DashboardLayout>
+      {/* Gamification overlay: milestone toasts and modals */}
+      <GamificationOverlay />
+    </GamificationProvider>
   );
 }
 
