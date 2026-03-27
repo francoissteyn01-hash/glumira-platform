@@ -154,6 +154,7 @@ export default function AdminPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
+          <p className="text-[10px] text-glumira-blue font-medium">Visualizing the science of insulin</p>
           <p className="text-sm text-gray-500 mt-1">GluMira™ Platform — Internal</p>
         </div>
         <div className="flex items-center gap-3">

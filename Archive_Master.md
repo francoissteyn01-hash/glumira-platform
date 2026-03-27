@@ -9,7 +9,7 @@ This document serves as the master record of all strategies, next actions, and p
 
 ## 1. Executive Summary
 
-GluMira™ is an informational education tool designed to make the science of insulin visible, powered by the IOB Hunter™ engine. The platform is currently in Phase 1 (Beta Testing) and transitioning into Phase 2 (Clinician Assistant). 
+GluMira™ is an informational education tool designed to visualize the science of insulin, powered by the IOB Hunter™ engine. The platform is currently in Phase 1 (Beta Testing) and transitioning into Phase 2 (Clinician Assistant). 
 
 During the March 26, 2026 Beast Mode sessions, the platform underwent rapid expansion across three continuous waves, scaling from a core foundation to a secure, compliant, AI-ready architecture with 330+ automated tests.
 

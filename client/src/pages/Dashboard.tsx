@@ -25,7 +25,7 @@ export default function Dashboard() {
           Welcome back, {firstName}
         </h1>
         <p className="text-muted-foreground mt-1">
-          The science of insulin, made visible — powered by IOB Hunter™
+          Visualizing the science of insulin — powered by IOB Hunter™
         </p>
       </div>
 

@@ -1,7 +1,7 @@
 # GluMira™ V6 Free Tier — Rebuild TODO (V7.0.0 Architecture)
 
 **Version:** 7.0.0 (Manus Implementation)  
-**Tagline:** The science of insulin, made visible  
+**Tagline:** Visualizing the science of insulin  
 **Powered by:** IOB Hunter™  
 **Status:** Phase 1 - Architecture Integration  
 **Stack:** Next.js 14 · Supabase · Upstash Redis · Tailwind CSS · Recharts · Claude Sonnet

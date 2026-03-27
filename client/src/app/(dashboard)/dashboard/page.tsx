@@ -384,6 +384,7 @@ export default function DashboardPage() {
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div>
             <h1 className="text-xl font-bold text-gray-900">GluMira™ Dashboard</h1>
+            <p className="text-[10px] text-glumira-blue font-medium">Visualizing the science of insulin</p>
             <p className="text-xs text-gray-400 mt-0.5">
               Last updated: {new Date(data.lastUpdated).toLocaleTimeString()} ·
               Powered by IOB Hunter™

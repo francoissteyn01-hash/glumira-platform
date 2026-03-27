@@ -27,7 +27,7 @@ test("landing page renders hero section", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   // GluMira tagline
-  await expect(page.getByText(/science of insulin/i)).toBeVisible();
+  await expect(page.getByText(/Visualizing the science of insulin/i)).toBeVisible();
 });
 
 test("landing page has CTA button linking to register", async ({ page }) => {

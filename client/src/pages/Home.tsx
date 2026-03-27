@@ -79,7 +79,7 @@ export default function Home() {
               Walsh bilinear DIA decay curve — not linear, not exponential.
             </p>
             <p className="text-base text-secondary font-medium mb-10" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-              The science of insulin, made visible
+              Visualizing the science of insulin
             </p>
             <div className="flex gap-4 justify-center flex-wrap">
               {isAuthenticated ? (

@@ -178,6 +178,7 @@ export default function ClinicianPage() {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Clinician View</h1>
+          <p className="text-[10px] text-glumira-blue font-medium">Visualizing the science of insulin</p>
           <p className="text-sm text-gray-500 mt-0.5">
             GluMira™ Pro · Pattern Analysis · Phase 2
           </p>

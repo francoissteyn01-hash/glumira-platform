@@ -110,7 +110,8 @@ function SidebarContent({
           </div>
           <div>
             <p className="text-sm font-bold text-gray-900">GluMira™</p>
-            <p className="text-xs text-gray-400">IOB Hunter™</p>
+            <p className="text-[10px] text-glumira-blue leading-tight">Visualizing the science of insulin</p>
+            <p className="text-[9px] text-gray-400 mt-0.5">Powered by IOB Hunter™</p>
           </div>
         </div>
       </div>
@@ -185,7 +186,10 @@ export function Sidebar({ displayName = "User", tier = "free", currentPath = "/"
           <div className="w-7 h-7 bg-blue-600 rounded-lg flex items-center justify-center">
             <span className="text-white font-bold text-sm">G</span>
           </div>
-          <span className="text-sm font-bold text-gray-900">GluMira™</span>
+          <div>
+            <span className="text-sm font-bold text-gray-900 block leading-tight">GluMira™</span>
+            <span className="text-[9px] text-glumira-blue leading-tight">Visualizing the science of insulin</span>
+          </div>
         </div>
         <button
           onClick={() => setMobileOpen(true)}
