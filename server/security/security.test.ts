@@ -189,9 +189,9 @@ describe("writeAuditLog", () => {
     const entry = await writeAuditLog({
       userId: "u1",
       action: "care_plan.generate",
-      metadata: { school: "Windhoek Primary", regime: "pediatric-standard" },
+      metadata: { school: "Springfield Primary", regime: "pediatric-standard" },
     });
-    expect(entry.metadata?.school).toBe("Windhoek Primary");
+    expect(entry.metadata?.school).toBe("Springfield Primary");
   });
 });
 

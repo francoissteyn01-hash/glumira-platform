@@ -12,7 +12,7 @@
  *   - Feedback collection endpoint
  *
  * Beta participants:
- *   NAM-001 — Namibia participant (Africa region)
+ *   NAM-001 — Africa region participant
  *   ZA-001  — South Africa participant (Africa region)
  *
  * DISCLAIMER: GluMira™ is an informational tool only. Not a medical device.
@@ -172,7 +172,7 @@ export function generateWelcomeEmail(
   region: BetaRegion
 ): WelcomeEmailContent {
   const regionNames: Record<BetaRegion, string> = {
-    NAM: "Namibia",
+    NAM: "NAM",
     ZA: "South Africa",
     UK: "United Kingdom",
     US: "United States",

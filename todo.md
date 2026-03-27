@@ -286,7 +286,7 @@
 ### Mission/About Section
 - [x] Add mission statement
 - [ ] Include team information
-- [x] Add company origin (Windhoek, Namibia)
+- [x] Company origin: redacted (privacy policy)
 - [x] Include contact information (info@glumira.ai)
 
 ### Footer
@@ -642,7 +642,7 @@ Used for predictive text suggestions
 - **Security Audit:** 30/30 findings resolved, zero open vulnerabilities
 - **AI Model:** Claude Sonnet (claude-sonnet-4-5 or latest) for pattern analysis
 - **Stack:** Next.js 14, Supabase, Upstash Redis, Tailwind CSS, Recharts, Puppeteer
-- **Origin:** Windhoek, Namibia
+- **Origin:** [Redacted — privacy policy]
 - **Contact:** info@glumira.ai
 - **Website:** beta.glumira.ai
 

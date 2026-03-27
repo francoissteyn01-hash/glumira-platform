@@ -969,7 +969,7 @@ GITHUB SECRETS REQUIRED:
 ─────────────────────────────────────────────────────────────────
 
 FILE: .github/dependabot.yml
-ECOSYSTEM: npm (weekly, Monday 03:00 Africa/Windhoek)
+ECOSYSTEM: npm (weekly, Monday 03:00 UTC)
 GROUPING: All non-breaking updates grouped into 1 PR
           Security updates get individual PRs immediately
 LIMIT: Max 10 open PRs at once
@@ -1983,12 +1983,12 @@ CSRF TOKENS:
 AFRICA PPP PRICING:
   Not yet wired to Stripe — manual override in Phase 1
   Phase 2: Stripe Tax + IP geolocation auto-detection
-  Countries with 50% PPP: Namibia, South Africa, Nigeria,
+  Countries with 50% PPP: [Regional markets],
   Kenya, Ghana, Ethiopia, Tanzania, Uganda, Zimbabwe, Zambia
   Countries with 40% PPP: clinical tier Africa-wide
 
 BETA PARTICIPANTS:
-  NAM-001 (Namibia) — Basal Density Map module
+  NAM-001 (Africa region) — Basal Density Map module
   ZA-001 (South Africa) — Insulin Profile module
   Intake form: https://forms.gle/xx9x3HExEyKHBjvL9
   Filed: 02.5_MODULE-Beta-Testing_v1.0 folder on Google Drive

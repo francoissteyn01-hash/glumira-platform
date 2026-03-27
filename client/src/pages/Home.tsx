@@ -281,14 +281,14 @@ export default function Home() {
       <section className="py-20 md:py-28 section-navy">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl mb-6" style={{ color: 'white' }}>
-            Built in Namibia. Designed for the World.
+
           </h2>
           <p className="text-lg max-w-2xl mx-auto mb-8 opacity-80" style={{ fontFamily: "'DM Sans', sans-serif", color: 'rgba(255,255,255,0.85)' }}>
             GluMira™ was born from a simple question: why can't patients see what their insulin is doing?
             We believe that understanding insulin behavior is the first step to better diabetes management.
           </p>
           <p className="text-base opacity-60 mb-8" style={{ fontFamily: "'DM Sans', sans-serif", color: 'rgba(255,255,255,0.7)' }}>
-            Contact: info@glumira.ai · Windhoek, Namibia
+            Contact: info@glumira.ai
           </p>
           {!isAuthenticated && (
             <Button size="lg" className="bg-white text-primary hover:bg-white/90 font-semibold px-8" asChild>
@@ -344,7 +344,7 @@ export default function Home() {
           <div className="border-t border-border pt-8">
             <p className="glum-disclaimer">
               GluMira™ is an educational platform, not a medical device. It does not provide medical advice or dosing recommendations.
-              Always consult your registered diabetes care team. Built in Namibia. Designed for the world.
+              Always consult your registered diabetes care team.
             </p>
             <p className="text-xs text-muted-foreground text-center mt-3" style={{ fontFamily: "'DM Sans', sans-serif" }}>
               &copy; 2026 GluMira™. All rights reserved. Powered by IOB Hunter™ v7.0.

@@ -163,9 +163,9 @@ describe("specific regime content", () => {
     expect(r.hyperThreshold).toBeLessThanOrEqual(160);
   });
 
-  it("Southern African includes Namibian context", () => {
+  it("Southern African includes regional context", () => {
     const r = getMealRegime("southern-african")!;
-    expect(r.name.toLowerCase()).toContain("namibian");
+    expect(r.name.toLowerCase()).toContain("southern african");
   });
 
   it("Gastroparesis uses post-meal dosing", () => {

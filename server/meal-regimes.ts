@@ -323,11 +323,11 @@ export const MEAL_REGIMES: MealRegime[] = [
     isActive: true,
   },
 
-  // ── 15. Southern African / Namibian ──
+  // ── 15. Southern African ──
   {
     id: 'southern-african',
-    name: 'Southern African / Namibian',
-    description: 'Pap, braai, biltong-based meals. Built in Namibia, designed for the world.',
+    name: 'Southern African',
+    description: 'Pap, braai, biltong-based meals. Traditional Southern African cuisine.',
     category: 'cultural',
     hypoThreshold: 70,
     hyperThreshold: 180,

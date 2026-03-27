@@ -18,7 +18,7 @@ const BASE_INPUT: SchoolCarePlanInput = {
   patientLastName: "Nakamura",
   dateOfBirth: "2016-05-12",
   diabetesType: "type1",
-  schoolName: "Windhoek Primary School",
+  schoolName: "Springfield Primary School",
   teacherName: "Ms. Brandt",
   grade: "Grade 4",
   academicYear: "2026",
@@ -84,7 +84,7 @@ describe("generateSchoolCarePlan — HTML content", () => {
 
   it("HTML contains school name", () => {
     const result = generateSchoolCarePlan(BASE_INPUT);
-    expect(result.html).toContain("Windhoek Primary School");
+    expect(result.html).toContain("Springfield Primary School");
   });
 
   it("HTML contains hypo threshold value", () => {

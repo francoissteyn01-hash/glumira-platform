@@ -256,7 +256,7 @@ export default function SchoolCarePlanForm({ onClose }: SchoolCarePlanFormProps)
       </div>
       <div>
         <Label>School Name *</Label>
-        <Input value={form.schoolName} onChange={(e) => set("schoolName", e.target.value)} placeholder="e.g. Windhoek Primary School" />
+        <Input value={form.schoolName} onChange={(e) => set("schoolName", e.target.value)} placeholder="e.g. Springfield Primary School" />
       </div>
       <div className="grid grid-cols-3 gap-4">
         <div>

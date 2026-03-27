@@ -214,7 +214,7 @@ export default function Dashboard() {
       {/* Medical Disclaimer */}
       <p className="glum-disclaimer">
         GluMira™ is an educational platform, not a medical device. Always consult your registered diabetes care team.
-        Built in Namibia. Designed for the world.
+
       </p>
     </div>
   );
