@@ -12,6 +12,10 @@ import InsulinPage from "./pages/InsulinPage";
 import IOBPage from "./pages/IOBPage";
 import MealsPage from "./pages/MealsPage";
 import ProfilePage from "./pages/ProfilePage";
+import PregnancyPage from "./pages/PregnancyPage";
+import ADHDPage from "./pages/ADHDPage";
+import ThyroidPage from "./pages/ThyroidPage";
+import SchoolCarePlanPage from "./pages/SchoolCarePlanPage";
 
 /**
  * GluMira™ V7 — The science of insulin, made visible
@@ -29,6 +33,10 @@ function DashboardRoutes() {
         <Route path="/dashboard/iob" component={IOBPage} />
         <Route path="/dashboard/meals" component={MealsPage} />
         <Route path="/dashboard/profile" component={ProfilePage} />
+        <Route path="/dashboard/pregnancy" component={PregnancyPage} />
+        <Route path="/dashboard/adhd" component={ADHDPage} />
+        <Route path="/dashboard/thyroid" component={ThyroidPage} />
+        <Route path="/dashboard/school-care-plan" component={SchoolCarePlanPage} />
         <Route component={Dashboard} />
       </Switch>
     </DashboardLayout>

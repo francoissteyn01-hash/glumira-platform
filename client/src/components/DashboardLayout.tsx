@@ -24,7 +24,10 @@ import { getLoginUrl } from "@/const";
 import { useIsMobile } from "@/hooks/useMobile";
 import {
   Activity,
+  Baby,
   BarChart3,
+  BookOpen,
+  Brain,
   Home,
   LogOut,
   PanelLeft,
@@ -43,6 +46,10 @@ const menuItems = [
   { icon: Syringe, label: "Insulin", path: "/dashboard/insulin" },
   { icon: Activity, label: "IOB Analysis", path: "/dashboard/iob" },
   { icon: UtensilsCrossed, label: "Meals", path: "/dashboard/meals" },
+  { icon: Baby, label: "Pregnancy", path: "/dashboard/pregnancy" },
+  { icon: Brain, label: "ADHD", path: "/dashboard/adhd" },
+  { icon: Activity, label: "Thyroid", path: "/dashboard/thyroid" },
+  { icon: BookOpen, label: "School Care Plan", path: "/dashboard/school-care-plan" },
   { icon: User, label: "Profile", path: "/dashboard/profile" },
 ];
 
