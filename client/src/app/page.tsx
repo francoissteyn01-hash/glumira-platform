@@ -5,7 +5,7 @@
  * Version: 7.0.0
  * Route: /
  *
- * Tagline: "Visualizing the science of insulin."
+ * Tagline: "The science of insulin, made visible."
  * Tiers: Free (Beta) · Pro · AI
  * Powered by IOB Hunter™
  *
@@ -103,7 +103,7 @@ export default function LandingPage() {
           <div className="flex items-center gap-2">
             <span className="text-xl font-extrabold text-glumira-blue">GluMira™</span>
             <span className="text-[10px] text-glumira-blue/70 font-medium hidden sm:block leading-tight">
-              Visualizing the science of insulin
+              The science of insulin, made visible
             </span>
           </div>
           <div className="flex items-center gap-3">
@@ -130,7 +130,7 @@ export default function LandingPage() {
         </div>
         <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight mb-6 max-w-3xl mx-auto">
           <span className="block">GluMira™</span>
-          <span className="block text-glumira-blue">Visualizing the science of insulin.</span>
+          <span className="block text-glumira-blue">The science of insulin, made visible.</span>
         </h1>
         <p className="text-lg md:text-xl text-gray-500 max-w-2xl mx-auto mb-10">
           GluMira™ is the only platform powered by IOB Hunter™ — a biexponential decay
@@ -256,7 +256,7 @@ export default function LandingPage() {
       <footer className="bg-white border-t border-gray-100 py-8 px-4 text-center">
         <p className="text-sm font-bold text-gray-900 mb-1">GluMira™ · IOB Hunter™</p>
         <p className="text-xs text-gray-400 mb-4">
-          Visualizing the science of insulin.
+          The science of insulin, made visible.
         </p>
         <div className="flex justify-center gap-6 text-xs text-gray-400 mb-4">
           <Link href="/pricing" className="hover:text-gray-600">Pricing</Link>

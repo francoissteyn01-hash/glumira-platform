@@ -134,7 +134,7 @@ export function buildReportHtml(data: PatientReportData): string {
   <div class="header">
     <div>
       <div class="logo">Glu<span>Mira</span>™</div>
-      <div style="font-size:11px;color:#64748b;margin-top:2px;">Visualizing the science of insulin</div>
+      <div style="font-size:11px;color:#64748b;margin-top:2px;">The science of insulin, made visible</div>
       <h1 style="margin-top:12px;">Patient Clinical Summary</h1>
     </div>
     <div class="meta">

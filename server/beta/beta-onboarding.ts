@@ -205,7 +205,7 @@ export function generateWelcomeEmail(
   <div class="container">
     <div class="header">
       <h1>GluMira™</h1>
-      <p>Visualizing the science of insulin · Powered by IOB Hunter™</p>
+      <p>The science of insulin, made visible · Powered by IOB Hunter™</p>
     </div>
     <div class="body">
       <h2>Welcome to the GluMira Beta, ${participantId}!</h2>

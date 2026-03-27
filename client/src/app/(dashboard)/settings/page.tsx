@@ -215,7 +215,7 @@ export default function SettingsPage() {
         <div className="max-w-3xl mx-auto flex items-center justify-between">
           <div>
             <h1 className="text-xl font-bold text-gray-900">Settings</h1>
-            <p className="text-[10px] text-glumira-blue font-medium">Visualizing the science of insulin</p>
+            <p className="text-[10px] text-glumira-blue font-medium">The science of insulin, made visible</p>
             <p className="text-xs text-gray-400 mt-0.5">GluMira™ v7.0.0</p>
           </div>
           <button

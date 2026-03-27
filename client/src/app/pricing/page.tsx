@@ -10,7 +10,7 @@
  *  2. GluMira Pro — Powered by IOB Hunter™
  *  3. GluMira AI — Powered by IOB Hunter™
  *
- * Tagline: "Visualizing the science of insulin."
+ * Tagline: "The science of insulin, made visible."
  * GluMira™ is an informational tool only. Not a medical device.
  */
 
@@ -146,7 +146,7 @@ export default function PricingPage() {
         </p>
         <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
           <span className="block">GluMira™</span>
-          <span className="block text-glumira-blue">Visualizing the science of insulin.</span>
+          <span className="block text-glumira-blue">The science of insulin, made visible.</span>
         </h1>
         <p className="text-lg text-gray-500 max-w-xl mx-auto mb-8">
           Choose the plan that fits your journey. All plans include the IOB Hunter™

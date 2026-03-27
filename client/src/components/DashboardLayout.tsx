@@ -82,7 +82,7 @@ export default function DashboardLayout({
               Welcome to GluMira™
             </h1>
             <p className="text-sm text-muted-foreground text-center max-w-sm">
-              Visualizing the science of insulin. Sign in to access your dashboard.
+              The science of insulin, made visible. Sign in to access your dashboard.
             </p>
           </div>
           <Button

@@ -114,7 +114,7 @@ export default function ClinicianPatientsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-xl font-bold text-gray-900">Patient List</h1>
-          <p className="text-[10px] text-glumira-blue font-medium">Visualizing the science of insulin</p>
+          <p className="text-[10px] text-glumira-blue font-medium">The science of insulin, made visible</p>
           <p className="text-xs text-gray-500 mt-0.5">Clinician view — GluMira™ Pro</p>
         </div>
         <button

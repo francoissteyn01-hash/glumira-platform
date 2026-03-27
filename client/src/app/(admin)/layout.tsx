@@ -75,7 +75,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         {/* Logo */}
         <div className="px-5 py-5 border-b border-gray-700">
           <p className="text-sm font-bold text-teal-400 tracking-wide">GluMira™</p>
-          <p className="text-[10px] text-teal-300/70 leading-tight">Visualizing the science of insulin</p>
+          <p className="text-[10px] text-teal-300/70 leading-tight">The science of insulin, made visible</p>
           <p className="text-xs text-gray-400 mt-1">Admin Console</p>
         </div>
 

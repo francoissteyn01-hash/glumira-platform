@@ -133,7 +133,7 @@ export default function RegisterPage() {
             <span className="text-white font-bold text-lg">G</span>
           </div>
           <h1 className="text-2xl font-bold text-gray-900">GluMira™</h1>
-          <p className="text-xs text-glumira-blue font-medium mt-1">Visualizing the science of insulin</p>
+          <p className="text-xs text-glumira-blue font-medium mt-1">The science of insulin, made visible</p>
           <p className="text-sm text-gray-400 mt-2">Create your free beta account</p>
         </div>
 

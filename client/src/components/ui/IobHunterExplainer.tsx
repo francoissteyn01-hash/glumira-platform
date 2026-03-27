@@ -70,7 +70,7 @@ This gives a smooth, physiologically accurate curve — not a simple linear coun
 • Renders a 6-hour IOB timeline chart so you can see when your insulin will peak and clear
 
 IOB Hunter™ runs entirely on your device — no data leaves your session until you choose to save a reading.`,
-    highlight: "Visualizing the science of insulin.",
+    highlight: "The science of insulin, made visible.",
   },
 ] as const;
 

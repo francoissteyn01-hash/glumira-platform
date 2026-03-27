@@ -14,7 +14,7 @@ import MealsPage from "./pages/MealsPage";
 import ProfilePage from "./pages/ProfilePage";
 
 /**
- * GluMira™ V7 — Visualizing the science of insulin
+ * GluMira™ V7 — The science of insulin, made visible
  * Soft Editorial design system with navy, teal, and amber colors
  * Powered by IOB Hunter™
  */

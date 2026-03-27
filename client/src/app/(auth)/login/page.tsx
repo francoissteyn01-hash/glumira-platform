@@ -109,7 +109,7 @@ export default function LoginPage() {
             <span className="text-white font-bold text-lg">G</span>
           </div>
           <h1 className="text-2xl font-bold text-gray-900">GluMira™</h1>
-          <p className="text-sm text-gray-400 mt-1">Visualizing the science of insulin</p>
+          <p className="text-sm text-gray-400 mt-1">The science of insulin, made visible</p>
         </div>
 
         {/* Mode Toggle */}
