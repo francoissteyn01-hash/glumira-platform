@@ -63,42 +63,55 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="py-20 md:py-32 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-secondary/5"></div>
-        <div className="container mx-auto px-4 relative">
-          <div className="max-w-3xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/10 text-secondary text-sm font-medium mb-8">
-              <Activity className="w-4 h-4" />
-              Powered by IOB Hunter™ Engine v7.0
+      <section className="relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0f1b3d 0%, #1a2a5e 40%, #1a3a5e 100%)', minHeight: '600px' }}>
+        {/* Background wave image */}
+        <div className="absolute inset-0 opacity-40" style={{ backgroundImage: 'url(/glumira-hero-bg.png)', backgroundSize: 'cover', backgroundPosition: 'center bottom' }}></div>
+        <div className="container mx-auto px-4 relative z-10 py-16 md:py-24">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            {/* Left: Text */}
+            <div>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/20 text-secondary text-sm font-medium mb-8">
+                <Activity className="w-4 h-4" />
+                Powered by IOB Hunter™ Engine v7.0
+              </div>
+              <h1 className="text-3xl md:text-5xl font-bold mb-6 leading-tight" style={{ color: 'white', fontFamily: "'Playfair Display', serif" }}>
+                Have you ever wondered what your insulin is actually doing between injections?
+              </h1>
+              <p className="text-lg md:text-xl mb-4 max-w-xl" style={{ fontFamily: "'DM Sans', sans-serif", color: 'rgba(255,255,255,0.85)' }}>
+                GluMira™ makes it visible. An educational insulin analytics platform using the
+                Walsh bilinear DIA decay curve — not linear, not exponential.
+              </p>
+              <p className="text-base font-medium mb-10 italic" style={{ fontFamily: "'DM Sans', sans-serif", color: '#2ab5c1' }}>
+                The science of insulin, made visible
+              </p>
+              <div className="flex gap-4 flex-wrap">
+                {isAuthenticated ? (
+                  <Button size="lg" className="glum-btn-primary text-base px-8" onClick={() => setLocation("/dashboard")}>
+                    Open Dashboard
+                    <ArrowRight className="w-5 h-5 ml-2" />
+                  </Button>
+                ) : (
+                  <>
+                    <Button size="lg" className="glum-btn-primary text-base px-8" asChild>
+                      <a href={loginUrl} target="_blank" rel="noopener noreferrer">
+                        Try GluMira™ Free
+                      </a>
+                    </Button>
+                    <Button size="lg" variant="outline" className="text-base px-8 border-white/30 text-white hover:bg-white/10" asChild>
+                      <a href="#features">Explore Features</a>
+                    </Button>
+                  </>
+                )}
+              </div>
             </div>
-            <h1 className="text-4xl md:text-6xl text-primary mb-6 leading-tight">
-              Have you ever wondered what your insulin is actually doing between injections?
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground mb-4 max-w-2xl mx-auto" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-              GluMira™ makes it visible. An educational insulin analytics platform using the
-              Walsh bilinear DIA decay curve — not linear, not exponential.
-            </p>
-            <p className="text-base text-secondary font-medium mb-10" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-              The science of insulin, made visible
-            </p>
-            <div className="flex gap-4 justify-center flex-wrap">
-              {isAuthenticated ? (
-                <Button size="lg" className="glum-btn-primary text-base px-8" onClick={() => setLocation("/dashboard")}>
-                  Open Dashboard
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </Button>
-              ) : (
-                <>
-                  <Button size="lg" className="glum-btn-primary text-base px-8" asChild>
-                    <a href={loginUrl} target="_blank" rel="noopener noreferrer">
-                      Try GluMira™ Free
-                    </a>
-                  </Button>
-                  <Button size="lg" variant="outline" className="glum-btn-secondary text-base px-8" asChild>
-                    <a href="#features">Explore Features</a>
-                  </Button>
-                </>
-              )}
+            {/* Right: Owl Hero Image */}
+            <div className="flex justify-center">
+              <img
+                src="/glumira-hero-owl.png"
+                alt="GluMira™ Owl — The science of insulin, made visible"
+                className="w-full max-w-md md:max-w-lg drop-shadow-2xl"
+                style={{ filter: 'drop-shadow(0 0 40px rgba(42, 181, 193, 0.3))' }}
+              />
             </div>
           </div>
         </div>
@@ -248,7 +261,7 @@ export default function Home() {
                 <li className="flex gap-2"><span className="text-secondary font-bold">✓</span><span>Advanced reporting & export</span></li>
                 <li className="flex gap-2"><span className="text-secondary font-bold">✓</span><span>Multi-day pattern analysis</span></li>
                 <li className="flex gap-2"><span className="text-secondary font-bold">✓</span><span>Unlimited patient profiles</span></li>
-                <li className="flex gap-2"><span className="text-secondary font-bold">✓</span><span>PPP pricing for Africa (50% off)</span></li>
+                <li className="flex gap-2"><span className="text-secondary font-bold">✓</span><span>Regional PPP pricing available</span></li>
               </ul>
               <Button className="w-full" disabled variant="outline">Coming Soon</Button>
             </div>
@@ -280,8 +293,8 @@ export default function Home() {
       {/* Mission Section */}
       <section className="py-20 md:py-28 section-navy">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl mb-6" style={{ color: 'white' }}>
-
+          <h2 className="text-3xl md:text-4xl mb-6" style={{ color: 'white', fontFamily: "'Playfair Display', serif" }}>
+            The Science of Insulin, Made Visible
           </h2>
           <p className="text-lg max-w-2xl mx-auto mb-8 opacity-80" style={{ fontFamily: "'DM Sans', sans-serif", color: 'rgba(255,255,255,0.85)' }}>
             GluMira™ was born from a simple question: why can't patients see what their insulin is doing?
