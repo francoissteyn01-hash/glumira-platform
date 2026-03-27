@@ -13,7 +13,7 @@
  * These are unit tests of the policy LOGIC (pure functions that mirror
  * the SQL WHERE clauses). They do NOT require a live Supabase connection.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import { describe, it, expect } from "vitest";

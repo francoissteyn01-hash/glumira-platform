@@ -4,7 +4,7 @@
  * React hook for fetching the admin audit log.
  * Admin-only — returns 403 for non-admin users.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import { useState, useEffect, useCallback } from "react";

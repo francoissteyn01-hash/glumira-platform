@@ -4,7 +4,7 @@
  * React hook for fetching the 7-day vs 14-day analytics summary.
  * Wraps GET /api/analytics/summary.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import { useState, useEffect, useCallback } from "react";

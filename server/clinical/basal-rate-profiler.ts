@@ -217,7 +217,7 @@ export function generateBasalProfile(input: BasalProfileInput): BasalProfileResu
     overallPattern,
     recommendations,
     disclaimer:
-      "GluMira™ is an informational and educational tool only. It is NOT a medical device. " +
+      "GluMira™ is an educational platform. The science of insulin, made visible. " +
       "Basal rate changes must be approved by your diabetes team.",
   };
 }

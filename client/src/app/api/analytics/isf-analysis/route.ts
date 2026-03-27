@@ -4,7 +4,7 @@
  * Computes insulin sensitivity factor (ISF) analysis from correction events.
  * Returns ISF estimate, sensitivity classification, and adjustment suggestion.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import { NextRequest, NextResponse } from "next/server";

@@ -4,7 +4,7 @@
  * Analyses post-meal glucose excursions to suggest optimal ICR adjustments.
  * Uses the 500-rule baseline and refines with real-world meal data.
  *
- * GluMira is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 // ─── Types ────────────────────────────────────────────────────────────────────

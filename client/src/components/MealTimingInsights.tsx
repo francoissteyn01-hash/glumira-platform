@@ -3,7 +3,7 @@
  *
  * Displays meal timing patterns, pre-bolus analysis, and post-meal excursions.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 "use client";
@@ -122,7 +122,7 @@ export function MealTimingInsights({ report }: Props) {
       )}
 
       <p className="text-xs text-gray-300">
-        GluMira™ is an informational tool only. Not a medical device.
+        GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
       </p>
     </div>
   );

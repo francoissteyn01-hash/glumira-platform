@@ -4,7 +4,7 @@
  * Displays platform-wide stats for the admin dashboard.
  * Uses useAdminStats hook to fetch GET /api/admin/stats.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 "use client";

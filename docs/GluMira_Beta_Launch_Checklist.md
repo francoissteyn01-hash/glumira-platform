@@ -100,4 +100,4 @@ The primary goal of this beta is to produce a dataset that secures funding. The 
 4. **Cohort Selection:** Finalize the list of 30–50 beta testers and distribute access codes.
 5. **Beta Day 1:** Monitor the `telemetry_events` table in Supabase to ensure onboarding data is capturing correctly.
 
-*GluMira™ is an informational tool only. Not a medical device.*
+*GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.*

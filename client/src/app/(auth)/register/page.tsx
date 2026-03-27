@@ -6,7 +6,7 @@
  * Supabase Auth — email/password sign-up with beta participant ID.
  * Creates user in Supabase Auth + patient_profiles table.
  *
- * DISCLAIMER: GluMira™ is an informational tool only. Not a medical device.
+ * DISCLAIMER: GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 "use client";

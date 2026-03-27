@@ -9,7 +9,7 @@
  *
  * Body: { participantId, category, rating, comment }
  *
- * DISCLAIMER: GluMira™ is an informational tool only. Not a medical device.
+ * DISCLAIMER: GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import { NextRequest, NextResponse } from "next/server";

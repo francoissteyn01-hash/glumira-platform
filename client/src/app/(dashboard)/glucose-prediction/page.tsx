@@ -4,7 +4,7 @@
  * Displays real-time glucose prediction with rate-of-change arrows,
  * predicted values at 15/30/60 min, and urgency assessment.
  *
- * GluMira is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 "use client";
@@ -122,7 +122,7 @@ export default function GlucosePredictionPage() {
       </div>
 
       <p className="text-xs text-gray-400">
-        GluMira is an informational tool only. Not a medical device.
+        GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
         Predictions are estimates based on recent trends and may not reflect actual future values.
       </p>
     </div>

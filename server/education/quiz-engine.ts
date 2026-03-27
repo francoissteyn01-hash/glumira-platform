@@ -186,7 +186,7 @@ export function scoreQuiz(questions: QuizQuestion[], answers: QuizAnswer[]): Qui
     feedback,
     nextSteps,
     disclaimer:
-      "GluMira™ is an informational and educational tool only. It is NOT a medical device. " +
+      "GluMira™ is an educational platform. The science of insulin, made visible. " +
       "Quiz content is for learning purposes and should not replace professional medical advice.",
   };
 }

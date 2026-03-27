@@ -5,7 +5,7 @@
  * Combines TIR, GMI, CV, dose totals, and pattern detection into a
  * single summary object suitable for PDF export or dashboard display.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import type { GlucosePoint } from "./glucose-trend";
@@ -244,7 +244,7 @@ export function generateProgressReport(
     overallStatus:   status,
     statusRationale: rationale,
     disclaimer:
-      "GluMira™ is an informational tool only. Not a medical device. " +
+      "GluMira™ is an educational platform. The science of insulin, made visible. " +
       "This report is for educational purposes and does not constitute medical advice.",
   };
 }

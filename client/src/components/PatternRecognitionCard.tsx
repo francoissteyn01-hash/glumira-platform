@@ -4,7 +4,7 @@
  * Displays detected glucose patterns with severity badges,
  * confidence indicators, and actionable recommendations.
  *
- * GluMira is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 "use client";
@@ -98,7 +98,7 @@ export function PatternRecognitionCard({ report }: Props) {
 
       {/* Disclaimer */}
       <p className="text-[10px] text-gray-300 text-center">
-        GluMira is an informational tool only. Not a medical device.
+        GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
       </p>
     </div>
   );

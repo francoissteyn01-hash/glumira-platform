@@ -4,7 +4,7 @@
  * React hook for fetching a patient's progress report for clinician review.
  * Wraps POST /api/analytics/progress-report.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 "use client";

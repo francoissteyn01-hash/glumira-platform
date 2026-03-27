@@ -7,7 +7,7 @@
  *  - Active IOB summary card with per-dose breakdown
  *  - Dose history table (last 24h)
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 "use client";
@@ -300,7 +300,7 @@ export default function DosesPage() {
 
       {/* Disclaimer */}
       <p className="text-xs text-gray-400 text-center">
-        GluMira™ is an informational tool only. Not a medical device. Always consult your healthcare provider.
+        GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice. Always consult your healthcare provider.
       </p>
     </div>
   );

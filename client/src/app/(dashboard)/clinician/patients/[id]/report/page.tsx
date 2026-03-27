@@ -8,7 +8,7 @@
  * Fetches the HTML preview of the patient report from /api/reports/patient
  * and renders it in an iframe. Provides a download PDF button.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import { useEffect, useState } from "react";
@@ -182,7 +182,7 @@ export default function PatientReportPage() {
 
       {/* Disclaimer */}
       <div className="bg-amber-50 border border-amber-200 rounded-lg px-4 py-2 text-xs text-amber-800">
-        <strong>GluMira™ is an informational tool only.</strong> This report is not a medical
+        <strong>GluMira™ is an educational platform only.</strong> This report is not a medical
         document and must not be used as the sole basis for clinical decisions. Always apply
         clinical judgement and consult the treating physician.
       </div>

@@ -9,7 +9,7 @@
 --   4. feedback_summary view
 --   5. RLS policies for all new objects
 --
--- GluMira™ is an informational tool only. Not a medical device.
+-- GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
 
 -- ─── 1. beta_participants ─────────────────────────────────────
 

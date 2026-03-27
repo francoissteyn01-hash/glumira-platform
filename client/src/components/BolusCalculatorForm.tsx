@@ -5,7 +5,7 @@
  * Accepts carbs, current glucose, target, ICR, ISF, and active IOB.
  * Displays calculated meal dose, correction dose, and total suggested dose.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 "use client";
@@ -62,7 +62,7 @@ export default function BolusCalculatorForm() {
     <div className="space-y-6">
       {/* Disclaimer */}
       <div className="rounded-lg bg-amber-50 border border-amber-200 p-3 text-xs text-amber-800">
-        GluMira™ is an informational tool only. Not a medical device. Always confirm doses with your clinician.
+        GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice. Always confirm doses with your clinician.
       </div>
 
       {/* Form */}

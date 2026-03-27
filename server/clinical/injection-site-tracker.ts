@@ -190,7 +190,7 @@ export function analyzeRotation(records: InjectionRecord[]): RotationResult {
     warnings,
     tips,
     disclaimer:
-      "GluMira™ is an informational and educational tool only. It is NOT a medical device. " +
+      "GluMira™ is an educational platform. The science of insulin, made visible. " +
       "Discuss injection site concerns with your diabetes care team.",
   };
 }

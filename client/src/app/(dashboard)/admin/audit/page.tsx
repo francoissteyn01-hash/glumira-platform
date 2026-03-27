@@ -4,7 +4,7 @@
  * Displays the HMAC-chained audit log for admin users.
  * Fetches from GET /api/admin/audit with pagination.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 "use client";
@@ -159,7 +159,7 @@ export default function AdminAuditPage() {
       )}
 
       <p className="mt-6 text-xs text-slate-400">
-        GluMira™ is an informational tool only. Not a medical device.
+        GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
       </p>
     </div>
   );

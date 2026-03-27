@@ -153,7 +153,7 @@ export function calculateMealGL(foods: FoodItem[]): MealGLResult {
     recommendations,
     swapSuggestions,
     disclaimer:
-      "GluMira™ is an informational and educational tool only. It is NOT a medical device. " +
+      "GluMira™ is an educational platform. The science of insulin, made visible. " +
       "Glycemic load values are estimates based on published GI data.",
   };
 }

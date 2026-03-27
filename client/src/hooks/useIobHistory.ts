@@ -4,7 +4,7 @@
  * React hook for fetching IOB (Insulin-on-Board) history over a time window.
  * Wraps GET /api/iob/history.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 "use client";

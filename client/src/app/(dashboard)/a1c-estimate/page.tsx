@@ -4,7 +4,7 @@
  * Displays estimated A1c (eA1c) based on glucose readings, with
  * ADAG and IFCC conversions, categorisation, and projection.
  *
- * GluMira is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 "use client";
@@ -92,7 +92,7 @@ export default function A1cEstimatePage() {
       )}
 
       <p className="text-xs text-gray-400">
-        GluMira is an informational tool only. Not a medical device.
+        GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
         eA1c is an estimate and may differ from laboratory HbA1c.
       </p>
     </div>

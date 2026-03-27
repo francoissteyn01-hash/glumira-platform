@@ -183,7 +183,7 @@ export function forecastGlucose(input: ForecastInput): ForecastResult {
     warnings,
     notes,
     disclaimer:
-      "GluMira™ is an informational and educational tool only. It is NOT a medical device. " +
+      "GluMira™ is an educational platform. The science of insulin, made visible. " +
       "Glucose forecasts are estimates and may not reflect actual future values.",
   };
 }

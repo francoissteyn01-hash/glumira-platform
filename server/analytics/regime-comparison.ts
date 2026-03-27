@@ -5,7 +5,7 @@
  * Used to help patients understand how their chosen regime
  * affects TIR, mean glucose, and hypo/hyper frequency.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import type { GlucosePoint } from "./glucose-trend";

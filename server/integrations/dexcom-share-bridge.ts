@@ -14,8 +14,8 @@
  *
  * Supports both US and non-US (international) Dexcom servers.
  *
- * DISCLAIMER: GluMira™ is an informational tool only. Not a medical device.
- * Dexcom Share data is for informational purposes only. Always verify with
+ * DISCLAIMER: GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
+ * Dexcom Share data is for educational purposes only. Always verify with
  * a calibrated blood glucose meter and consult your diabetes care team.
  */
 

@@ -13,7 +13,7 @@
  *
  * Data is sourced from the shared meal-regimes module (20 profiles).
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import Link from "next/link";
@@ -263,7 +263,7 @@ export default function RegimeDetailPage({ params }: Props) {
 
       {/* Disclaimer */}
       <p className="text-xs text-gray-400 text-center">
-        GluMira™ is an informational tool only. Not a medical device. Always follow your clinician's guidance.
+        GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice. Always follow your clinician's guidance.
       </p>
     </div>
   );

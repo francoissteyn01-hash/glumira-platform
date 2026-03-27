@@ -3,7 +3,7 @@
  *
  * Unit tests for the bolus calculator module.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import { describe, it, expect } from "vitest";

@@ -12,7 +12,7 @@
  *  - School Care Plan quick-link
  *  - Per-meal IOB impact estimate
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import React, { useState, useEffect, useCallback } from "react";
@@ -301,7 +301,7 @@ export default function MealsPage() {
           )}
 
           <p className="text-xs text-gray-400">
-            GluMira™ is an informational tool only. Not a medical device.
+            GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
             Estimated bolus values are educational and not dosing recommendations.
           </p>
         </div>

@@ -4,7 +4,7 @@
  * Compact summary card showing basal titration result.
  * Used on the patient dashboard and dose-titration page.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 "use client";
@@ -77,7 +77,7 @@ export function BasalTitrationCard({ result, onViewDetails }: Props) {
       )}
 
       <p className="text-xs mt-3 opacity-40">
-        GluMira™ is an informational tool only. Not a medical device.
+        GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
       </p>
     </div>
   );

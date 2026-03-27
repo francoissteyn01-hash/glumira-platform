@@ -5,7 +5,7 @@
  * Implements: ISF estimation rules (1700/1800 rule), ISF validation,
  * correction dose accuracy analysis, and ISF trend detection.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  * All ISF adjustments must be reviewed by a qualified clinician.
  */
 

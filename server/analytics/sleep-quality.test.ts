@@ -4,7 +4,7 @@
  * Tests overnight stats, nocturnal events, dawn phenomenon detection,
  * stability scoring, quality labels, recommendations, and full report.
  *
- * GluMira is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import { describe, it, expect } from "vitest";

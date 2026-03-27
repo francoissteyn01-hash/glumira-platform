@@ -16,7 +16,7 @@
  *
  * Requires: CLINICIAN_EMAIL and CLINICIAN_PASSWORD in .env.test
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import { test, expect, type Page } from "@playwright/test";

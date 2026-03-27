@@ -6,7 +6,7 @@
  * Supabase Auth — email/password sign-in with magic link option.
  * Redirects to /dashboard on success.
  *
- * DISCLAIMER: GluMira™ is an informational tool only. Not a medical device.
+ * DISCLAIMER: GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 "use client";
@@ -197,7 +197,7 @@ export default function LoginPage() {
 
         {/* Disclaimer */}
         <p className="text-xs text-gray-400 text-center mt-6 leading-relaxed">
-          GluMira™ is an informational tool only. Not a medical device.
+          GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
           Not a dosing tool. Always consult your diabetes care team.
         </p>
       </div>

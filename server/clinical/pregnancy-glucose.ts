@@ -247,7 +247,7 @@ export function assessPregnancyGlucose(input: PregnancyGlucoseInput): PregnancyG
     trimesterGuidance,
     warnings,
     disclaimer:
-      "GluMira™ is an informational and educational tool only. It is NOT a medical device. " +
+      "GluMira™ is an educational platform. The science of insulin, made visible. " +
       "Pregnancy glucose management requires close supervision by your diabetes and obstetric team.",
   };
 }

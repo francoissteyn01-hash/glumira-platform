@@ -5,7 +5,7 @@
  * Bell icon with unread badge, slide-out drawer with notification list.
  * Polls /api/notifications every 60 seconds.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 "use client";

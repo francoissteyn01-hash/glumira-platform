@@ -4,7 +4,7 @@
  * Sends glucose + dose data to POST /api/analytics/isf-analysis
  * and returns the insulin sensitivity factor assessment.
  *
- * GluMira is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 "use client";

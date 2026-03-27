@@ -231,7 +231,7 @@ export default function ADHDPage() {
       </div>
 
       <footer className="text-center text-xs text-gray-500 dark:text-gray-400 pt-4">
-        <p><strong>Disclaimer:</strong> GluMira™ is an educational platform and not a medical device. The information provided is for informational purposes only and should not be used as a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition.</p>
+        <p><strong>Disclaimer:</strong> GluMira™ is an educational platform and not a medical device. The information provided is for educational purposes only and should not be used as a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition.</p>
         <p className="mt-2">For support, contact <a href="mailto:dev@glumira.ai" className="underline">dev@glumira.ai</a>. This tool does not collect or store any personal health information.</p>
       </footer>
     </div>

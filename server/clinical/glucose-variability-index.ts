@@ -174,7 +174,7 @@ export function calculateVariabilityIndex(readings: GlucoseReading[]): Variabili
       hyperRiskLevel: "low",
       interpretation: ["No readings provided."],
       recommendations: ["Upload CGM data to calculate variability metrics."],
-      disclaimer: "GluMira™ is an informational and educational tool only. It is NOT a medical device.",
+      disclaimer: "GluMira™ is an educational platform. The science of insulin, made visible. ",
     };
   }
 
@@ -268,7 +268,7 @@ export function calculateVariabilityIndex(readings: GlucoseReading[]): Variabili
     interpretation,
     recommendations,
     disclaimer:
-      "GluMira™ is an informational and educational tool only. It is NOT a medical device. " +
+      "GluMira™ is an educational platform. The science of insulin, made visible. " +
       "Discuss variability metrics with your healthcare team for clinical interpretation.",
   };
 }

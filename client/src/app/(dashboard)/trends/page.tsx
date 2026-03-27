@@ -11,7 +11,7 @@
  *  - Pattern detection alerts
  *  - Time range selector (24h / 7d / 14d / 30d)
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 "use client";
@@ -291,7 +291,7 @@ export default function TrendsPage() {
                 ))}
               </ul>
               <p className="text-xs text-amber-600 mt-3">
-                These patterns are informational only. Discuss with your healthcare provider before making any changes.
+                These patterns are educational only. Discuss with your healthcare provider before making any changes.
               </p>
             </div>
           )}
@@ -318,7 +318,7 @@ export default function TrendsPage() {
       )}
 
       <p className="text-xs text-gray-400 text-center">
-        GluMira™ is an informational tool only. Not a medical device.
+        GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
       </p>
     </div>
   );

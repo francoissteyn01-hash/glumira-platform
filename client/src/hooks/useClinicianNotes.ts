@@ -6,7 +6,7 @@
  * Fetches, adds, and deletes clinician notes for a given patient.
  * Consumes: GET/POST/DELETE /api/clinician/notes
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import { useCallback, useEffect, useRef, useState } from "react";

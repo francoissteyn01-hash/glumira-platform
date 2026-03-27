@@ -12,7 +12,7 @@
  *   - Success/error state handling
  *   - Accessible (keyboard navigable, ARIA labels)
  *
- * DISCLAIMER: GluMira™ is an informational tool only. Not a medical device.
+ * DISCLAIMER: GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 "use client";
@@ -324,7 +324,7 @@ export function BetaFeedbackModal({
             </button>
 
             <p className="text-xs text-gray-400 text-center">
-              GluMira™ is an informational tool only. Not a medical device.
+              GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
             </p>
           </div>
         )}

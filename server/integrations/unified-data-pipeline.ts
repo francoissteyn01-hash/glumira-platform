@@ -16,7 +16,7 @@
  *   - If Nightscout URL is available, use Nightscout for treatments + fallback SGV
  *   - Both sources can run simultaneously for maximum data coverage
  *
- * DISCLAIMER: GluMira™ is an informational tool only. Not a medical device.
+ * DISCLAIMER: GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import {

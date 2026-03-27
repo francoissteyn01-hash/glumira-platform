@@ -158,7 +158,7 @@ export function assessFootCare(input: FootAssessmentInput): FootRiskResult {
     footwearRecommendations,
     referrals,
     disclaimer:
-      "GluMira™ is an informational and educational tool only. It is NOT a medical device. " +
+      "GluMira™ is an educational platform. The science of insulin, made visible. " +
       "This assessment does not replace a clinical foot examination by a healthcare professional.",
   };
 }

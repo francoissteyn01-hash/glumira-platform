@@ -208,7 +208,7 @@ export function calculateBolus(input: BolusInput): BolusResult {
     warnings,
     notes,
     disclaimer:
-      "GluMira™ is an informational and educational tool only. It is NOT a medical device. " +
+      "GluMira™ is an educational platform. The science of insulin, made visible. " +
       "Always verify bolus calculations with your own judgment and healthcare team guidance.",
   };
 }

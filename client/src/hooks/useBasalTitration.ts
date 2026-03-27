@@ -4,7 +4,7 @@
  * Wraps POST /api/doses/basal-titration.
  * Returns titration result, loading state, and compute trigger.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 "use client";

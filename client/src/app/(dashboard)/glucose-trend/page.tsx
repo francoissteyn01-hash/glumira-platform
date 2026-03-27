@@ -4,7 +4,7 @@
  * Displays 14-day glucose trend analysis including TIR, GMI, CV,
  * detected patterns, and regime comparison.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 "use client";
@@ -111,7 +111,7 @@ export default function GlucoseTrendPage() {
 
       {/* Disclaimer */}
       <p className="text-center text-xs text-slate-400">
-        GluMira™ is an informational tool only. Not a medical device. Always consult your healthcare provider.
+        GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice. Always consult your healthcare provider.
       </p>
     </div>
   );

@@ -4,7 +4,7 @@
  * Looks up carbohydrate content for a food item from the built-in FOOD_DB.
  * Returns carb estimate, glycaemic load classification, and ICR dose suggestion.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import { NextRequest, NextResponse } from "next/server";

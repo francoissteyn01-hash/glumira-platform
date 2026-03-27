@@ -11,8 +11,8 @@
  *   - Safety flags panel (colour-coded by severity)
  *   - Hypo risk score bar
  *
- * DISCLAIMER: GluMira™ is an informational tool only. Not a medical device.
- * All AI-generated content is for informational purposes only.
+ * DISCLAIMER: GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
+ * All AI-generated content is for educational purposes only.
  * Always consult a qualified diabetes care team.
  */
 
@@ -456,8 +456,8 @@ export function ClinicianDashboard({
       {/* Disclaimer Banner */}
       <div className="bg-blue-50 border-b border-blue-100 px-6 py-2">
         <p className="text-xs text-blue-700 text-center max-w-7xl mx-auto">
-          GluMira™ is an informational tool only. Not a medical device.
-          AI-generated analysis is for informational purposes only.
+          GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
+          AI-generated analysis is for educational purposes only.
           Always consult a qualified diabetes care team before making any clinical decisions.
         </p>
       </div>

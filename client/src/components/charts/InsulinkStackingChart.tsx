@@ -5,7 +5,7 @@
  * Visualises combined IOB over time for multiple overlapping doses.
  * Uses Recharts AreaChart with per-dose stacked areas and a risk band overlay.
  *
- * DISCLAIMER: GluMira™ is an informational tool only. Not a medical device.
+ * DISCLAIMER: GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 "use client";
@@ -189,7 +189,7 @@ export function InsulinkStackingChart({ result, compact = false }: InsulinkStack
         <div className="px-5 py-4 border-t border-gray-100 bg-gray-50">
           <p className="text-xs text-gray-600 leading-relaxed">{narrative}</p>
           <p className="text-xs text-gray-400 mt-2">
-            GluMira™ is an informational tool only. Not a medical device. Not a dosing tool.
+            GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice. Not a dosing tool.
           </p>
         </div>
       )}

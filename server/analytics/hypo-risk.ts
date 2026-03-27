@@ -5,7 +5,7 @@
  * Computes a composite hypo risk score from glucose readings, IOB, and meal data.
  * Supports: LBGI, hypo frequency, nocturnal hypo rate, and composite risk tier.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 // ─── Types ────────────────────────────────────────────────────────────────────

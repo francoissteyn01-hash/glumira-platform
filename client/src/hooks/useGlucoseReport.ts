@@ -4,7 +4,7 @@
  * Wraps POST /api/reports/glucose-report to generate structured
  * glucose reports with period summaries, trends, and insights.
  *
- * GluMira is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 "use client";

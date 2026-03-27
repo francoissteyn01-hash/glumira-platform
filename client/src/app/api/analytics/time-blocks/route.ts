@@ -4,7 +4,7 @@
  * GET /api/analytics/time-blocks?days=14
  * Returns glucose statistics segmented by time of day.
  *
- * GluMira is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import { NextRequest, NextResponse } from "next/server";

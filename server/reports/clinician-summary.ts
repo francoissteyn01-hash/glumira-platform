@@ -293,7 +293,7 @@ export function generateClinicianSummary(
     clinicalFlags: flags,
     actionItems,
     disclaimer:
-      "GluMira™ is an informational and educational tool only. It is NOT a medical device. " +
+      "GluMira™ is an educational platform. The science of insulin, made visible. " +
       "All clinical decisions should be made by qualified healthcare professionals based on " +
       "comprehensive patient assessment. Data accuracy depends on user input quality.",
   };

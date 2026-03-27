@@ -313,7 +313,7 @@ export default function ClinicianPage() {
 
       {/* Disclaimer */}
       <p className="text-xs text-gray-400 text-center pb-4">
-        GluMira™ is an informational tool only. Not a medical device. Not a dosing tool.
+        GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice. Not a dosing tool.
         Always consult your diabetes care team.
       </p>
     </div>

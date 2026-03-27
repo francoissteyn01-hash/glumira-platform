@@ -11,7 +11,7 @@
  *  3. GluMira AI — Powered by IOB Hunter™
  *
  * Tagline: "The science of insulin, made visible."
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import React, { useState } from "react";

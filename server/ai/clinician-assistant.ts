@@ -19,12 +19,12 @@
  *   - NEVER contradicts the treating clinician
  *   - ALWAYS includes DISCLAIMER in every response
  *   - ALWAYS recommends consulting the diabetes care team
- *   - Responses are informational only — not clinical advice
+ *   - Responses are educational only — not clinical advice
  *
  * Rate limiting: 20 AI queries per user per hour (ai_query profile)
  *
- * DISCLAIMER: GluMira™ is an informational tool only. Not a medical device.
- * AI-generated analysis is for informational purposes only.
+ * DISCLAIMER: GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
+ * AI-generated analysis is for educational purposes only.
  * Always consult a qualified diabetes care team before making any
  * changes to insulin therapy or diabetes management.
  */
@@ -257,7 +257,7 @@ export function scoreHypoRisk(
 
 /**
  * Generate safety flags from analysis data.
- * Safety flags are informational — they do not constitute clinical advice.
+ * Safety flags are educational — they do not constitute clinical advice.
  */
 export function generateSafetyFlags(
   tir: TimeInRange,
@@ -317,9 +317,9 @@ CRITICAL SAFETY RULES (never violate):
 1. NEVER suggest specific insulin doses, dose adjustments, or insulin titration
 2. NEVER diagnose any medical condition
 3. NEVER contradict the treating clinician's decisions
-4. ALWAYS include the disclaimer: "GluMira™ is an informational tool only. Not a medical device. Always consult your diabetes care team."
+4. ALWAYS include the disclaimer: "GluMira™ is an educational platform. The science of insulin, made visible. Always consult your diabetes care team."
 5. ALWAYS recommend consulting the diabetes care team for any clinical decisions
-6. Responses are informational pattern summaries only — not clinical advice
+6. Responses are educational pattern summaries only — not clinical advice
 
 Your role:
 - Identify patterns in glucose data (time-in-range, variability, trends)
@@ -387,8 +387,8 @@ Do NOT suggest dose changes. Do NOT diagnose. Always include the DISCLAIMER.`;
 // ─── AI Engine ────────────────────────────────────────────────
 
 const DISCLAIMER =
-  "GluMira™ is an informational tool only. Not a medical device. " +
-  "AI-generated analysis is for informational purposes only. " +
+  "GluMira™ is an educational platform. The science of insulin, made visible. " +
+  "AI-generated analysis is for educational purposes only. " +
   "Always consult a qualified diabetes care team before making any changes to insulin therapy.";
 
 /**

@@ -9,7 +9,7 @@
  * Tiers: Free (Beta) · Pro · AI
  * Powered by IOB Hunter™
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import React from "react";
@@ -264,7 +264,7 @@ export default function LandingPage() {
           <Link href="/register" className="hover:text-gray-600">Join Beta</Link>
         </div>
         <p className="text-xs text-gray-300">
-          GluMira™ is an informational tool only. Not a medical device.
+          GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
           Always consult your diabetes care team before adjusting insulin.
         </p>
       </footer>

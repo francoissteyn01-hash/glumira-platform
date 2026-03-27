@@ -11,7 +11,7 @@
  *   - Beta feedback prompt (first 30 days)
  *   - Disclaimer banner
  *
- * DISCLAIMER: GluMira™ is an informational tool only. Not a medical device.
+ * DISCLAIMER: GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  * Always consult your diabetes care team.
  */
 
@@ -399,7 +399,7 @@ export default function DashboardPage() {
       {/* Disclaimer */}
       <div className="bg-amber-50 border-b border-amber-100 px-6 py-2">
         <p className="text-xs text-amber-700 text-center max-w-7xl mx-auto">
-          GluMira™ is an informational tool only. Not a medical device. Not a dosing tool.
+          GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice. Not a dosing tool.
           Always consult your diabetes care team before making any changes to your management.
         </p>
       </div>

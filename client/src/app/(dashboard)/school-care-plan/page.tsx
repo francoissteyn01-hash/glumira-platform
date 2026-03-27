@@ -15,7 +15,7 @@
  *  4. Preview HTML output in iframe
  *  5. Print via browser (Ctrl+P / Cmd+P)
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import React, { useState } from "react";
@@ -204,7 +204,7 @@ export default function SchoolCarePlanPage() {
 
       {/* Disclaimer */}
       <p className="text-xs text-gray-400 text-center pb-4">
-        GluMira™ is an informational tool only. Not a medical device.
+        GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
         School Care Plans should be reviewed and approved by your diabetes care team before distribution.
       </p>
     </div>

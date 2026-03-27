@@ -4,7 +4,7 @@
  * Dashboard page showing glucose variability metrics:
  * CV, MAGE, LBGI, HBGI, BGRI, J-index, eA1c, GRI, TIR breakdown.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 "use client";
@@ -76,7 +76,7 @@ export default function VariabilityPage() {
 
       {/* Disclaimer */}
       <div className="rounded-lg bg-amber-50 border border-amber-200 p-3 text-xs text-amber-800">
-        GluMira™ is an informational tool only. Not a medical device.
+        GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
       </div>
 
       {/* Loading */}

@@ -184,7 +184,7 @@ export function estimateA1C(input: A1CInput): A1CResult {
     interpretation,
     recommendations,
     disclaimer:
-      "GluMira™ is an informational and educational tool only. It is NOT a medical device. " +
+      "GluMira™ is an educational platform. The science of insulin, made visible. " +
       "GMI is an estimate and may differ from lab-measured HbA1c.",
   };
 }

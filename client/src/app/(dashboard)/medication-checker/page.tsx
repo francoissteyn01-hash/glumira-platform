@@ -106,7 +106,7 @@ export default function MedicationCheckerPage() {
           </div>
 
           <p className="text-xs text-gray-400 text-center">
-            GluMira™ is an informational tool only. Not a medical device.
+            GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
             Always consult your healthcare team before making medication changes.
           </p>
         </div>

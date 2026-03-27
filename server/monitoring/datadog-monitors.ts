@@ -18,7 +18,7 @@
  *   import { GLUMIRA_MONITORS, createAllMonitors } from "./datadog-monitors";
  *   await createAllMonitors(datadogApiKey);
  *
- * DISCLAIMER: GluMira™ is an informational tool only. Not a medical device.
+ * DISCLAIMER: GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 // ─── Types ────────────────────────────────────────────────────
@@ -284,7 +284,7 @@ More than 5 extreme IOB values (>50 units or <0) calculated in the past hour.
 2. Check IOB engine version and test results
 3. Do NOT alert patients — this is an internal monitoring alert
 
-**DISCLAIMER:** GluMira™ is an informational tool only. Not a medical device.
+**DISCLAIMER:** GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
 
 @pagerduty-glumira-oncall @slack-glumira-alerts`,
     tags: ["service:glumira", "team:engineering", "severity:high", "module:iob-engine"],

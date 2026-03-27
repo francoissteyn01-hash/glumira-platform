@@ -13,7 +13,7 @@
  *  - ClinicianNotesPanel (full CRUD)
  *  - Link to generate patient report
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import { useEffect, useState } from "react";
@@ -310,7 +310,7 @@ export default function PatientDetailPage() {
 
       {/* Disclaimer */}
       <div className="bg-amber-50 border border-amber-200 rounded-lg px-4 py-2 text-xs text-amber-800">
-        <strong>GluMira™ is an informational tool only.</strong> Data shown is not a substitute
+        <strong>GluMira™ is an educational platform only.</strong> Data shown is not a substitute
         for clinical assessment. Always apply clinical judgement.
       </div>
 

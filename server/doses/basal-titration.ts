@@ -5,7 +5,7 @@
  * Implements: 303 rule, 2-0-2 rule, fasting test analysis,
  * dawn phenomenon detection, and basal adequacy scoring.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  * All titration suggestions must be reviewed by a qualified clinician.
  */
 

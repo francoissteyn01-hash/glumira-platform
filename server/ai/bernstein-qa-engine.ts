@@ -20,7 +20,7 @@
  *   - Offline FAQ fallback when API is unavailable
  *   - Safety guardrails: never contradicts treating clinician
  *
- * DISCLAIMER: GluMira™ is an informational tool only. Not a medical device.
+ * DISCLAIMER: GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import { assembleContext, type RawPatientData, type AssembledContext } from "./rag-context-engine";
@@ -348,7 +348,7 @@ export function isOutOfScope(question: string): boolean {
 
 const DISCLAIMER =
   "**Disclaimer:** This information is based on Dr. Bernstein's educational principles. " +
-  "GluMira™ is an informational tool only — not a medical device. " +
+  "GluMira™ is an educational platform only — not a medical device. " +
   "Always consult your diabetes care team before making changes to your management.";
 
 /**

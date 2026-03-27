@@ -15,7 +15,7 @@
  *   ai_query:   20  req / 60s — Claude pattern analysis
  *   iob_calc:   100 req / 60s — IOB calculations
  *
- * DISCLAIMER: GluMira™ is an informational tool only. Not a medical device.
+ * DISCLAIMER: GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import type { Request, Response, NextFunction } from "express";

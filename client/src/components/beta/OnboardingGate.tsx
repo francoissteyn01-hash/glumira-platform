@@ -16,7 +16,7 @@
  * from Day 1 — critical for grant applications that require longitudinal
  * TIR improvement metrics.
  *
- * DISCLAIMER: GluMira™ is an informational tool only. Not a medical device.
+ * DISCLAIMER: GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 "use client";
@@ -575,7 +575,7 @@ export function OnboardingGate({ children }: OnboardingGateProps) {
         </Card>
 
         <p className="text-center text-xs text-gray-400 mt-6">
-          GluMira™ is an informational tool only. Not a medical device.
+          GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
         </p>
       </div>
     </div>

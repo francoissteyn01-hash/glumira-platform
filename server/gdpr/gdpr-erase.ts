@@ -21,7 +21,7 @@
  *   - Returns erasure certificate with SHA-256 proof
  *   - Cannot be undone — no soft-delete
  *
- * DISCLAIMER: GluMira™ is an informational tool only. Not a medical device.
+ * DISCLAIMER: GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import { createHash, randomBytes } from "crypto";
@@ -231,7 +231,7 @@ gdprEraseRouter.get("/export/:userId", async (req: Request, res: Response) => {
   const exportData = {
     userId,
     exportedAt: new Date().toISOString(),
-    disclaimer: "GluMira™ is an informational tool only. Not a medical device.",
+    disclaimer: "GluMira™ is an educational platform. The science of insulin, made visible.",
     data: {
       userProfile: null,
       patients: [],

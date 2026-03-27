@@ -4,7 +4,7 @@
  * Carbohydrate estimation and insulin-to-carb ratio (ICR) utilities.
  * Used for meal bolus calculation and carb tracking.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 // ─── Types ────────────────────────────────────────────────────────────────────

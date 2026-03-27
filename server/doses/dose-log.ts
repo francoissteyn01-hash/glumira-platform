@@ -8,7 +8,7 @@
  *  - Delete a dose
  *  - Compute active IOB across all logged doses using the IOB Hunter™ engine
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 // ─── Types ────────────────────────────────────────────────────

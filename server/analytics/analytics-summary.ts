@@ -4,7 +4,7 @@
  * Aggregates multi-period glucose analytics for the patient dashboard.
  * Computes 7-day and 14-day TIR, GMI, CV, and trend comparison.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import { computeTrendReport } from "./glucose-trend";

@@ -4,7 +4,7 @@
  * Calculates meal + correction bolus using the bolus-calculator server module.
  * Requires authentication. Rate-limited to 100 req/60s.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import { NextRequest, NextResponse } from "next/server";

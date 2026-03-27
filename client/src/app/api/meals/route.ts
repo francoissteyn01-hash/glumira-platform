@@ -4,7 +4,7 @@
  * GET  /api/meals?page=1&pageSize=20&mealType=breakfast&from=ISO&to=ISO
  * POST /api/meals  { mealType, carbsGrams, proteinGrams?, fatGrams?, notes?, loggedAt? }
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import { NextRequest, NextResponse } from "next/server";

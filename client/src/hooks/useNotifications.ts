@@ -4,7 +4,7 @@
  * React hook for fetching and managing in-app notifications.
  * Polls every 30 seconds for new notifications.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import { useState, useEffect, useCallback, useRef } from "react";

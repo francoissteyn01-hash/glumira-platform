@@ -4,7 +4,7 @@
  * Checks common medications that affect blood glucose levels.
  * Flags potential interactions and provides educational information.
  *
- * GluMira is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 // ─── Types ────────────────────────────────────────────────────────────────────

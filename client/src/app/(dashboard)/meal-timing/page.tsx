@@ -4,7 +4,7 @@
  * Displays meal timing analysis with post-meal excursion patterns,
  * pre-bolus timing recommendations, and late-night eating detection.
  *
- * GluMira is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 "use client";
@@ -33,7 +33,7 @@ export default function MealTimingPage() {
       {data && <MealTimingInsights data={data} />}
 
       <p className="text-xs text-gray-400">
-        GluMira is an informational tool only. Not a medical device.
+        GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
       </p>
     </div>
   );

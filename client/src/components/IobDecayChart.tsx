@@ -4,7 +4,7 @@
  * Renders a pure-SVG area chart showing insulin-on-board decay over time.
  * Supports multiple stacked doses with individual decay curves.
  *
- * GluMira is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 "use client";
@@ -162,7 +162,7 @@ export default function IobDecayChart({
       </div>
 
       <p className="text-[10px] text-gray-300 text-center mt-2">
-        GluMira is an informational tool only. Not a medical device.
+        GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
       </p>
     </div>
   );

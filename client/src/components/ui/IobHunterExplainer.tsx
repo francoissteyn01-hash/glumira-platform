@@ -11,7 +11,7 @@
  * Designed for the patient dashboard and onboarding flow.
  * Uses CSS transitions only — no animation library required.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 "use client";
@@ -180,7 +180,7 @@ export function IobHunterExplainer({ compact = false, onDismiss }: Props) {
       {/* Disclaimer */}
       <div className="border-t border-gray-100 px-5 py-3">
         <p className="text-xs text-gray-400">
-          GluMira™ is an informational tool only. Not a medical device. Always consult your healthcare provider before making any changes to your insulin regimen.
+          GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice. Always consult your healthcare provider before making any changes to your insulin regimen.
         </p>
       </div>
     </div>

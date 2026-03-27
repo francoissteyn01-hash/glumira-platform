@@ -4,7 +4,7 @@
  * Computes basal titration recommendation from fasting glucose readings.
  * Uses the 3-0-3 and 2-0-2 rules with dawn phenomenon detection.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import { NextRequest, NextResponse } from "next/server";

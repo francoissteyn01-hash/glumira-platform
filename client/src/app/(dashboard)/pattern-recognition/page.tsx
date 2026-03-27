@@ -4,7 +4,7 @@
  * Displays the full pattern recognition analysis for the patient's
  * recent glucose readings.
  *
- * GluMira is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 "use client";
@@ -60,7 +60,7 @@ export default function PatternRecognitionPage() {
 
       {/* Disclaimer */}
       <p className="text-xs text-gray-300 text-center">
-        GluMira is an informational tool only. Not a medical device.
+        GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
       </p>
     </div>
   );

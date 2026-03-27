@@ -502,7 +502,7 @@ export default function ProfilePage() {
             <div className="p-4 bg-amber-50 border border-amber-200 rounded-lg">
               <p className="text-xs font-medium text-amber-800 mb-1">⚠ Disclaimer</p>
               <p className="text-xs text-amber-700">
-                GluMira™ alert thresholds are for informational purposes only. They do not replace
+                GluMira™ alert thresholds are for educational purposes only. They do not replace
                 clinical CGM alarms or medical advice. Always follow the guidance of your diabetes
                 care team for alert settings.
               </p>

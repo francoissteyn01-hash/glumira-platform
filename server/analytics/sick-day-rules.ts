@@ -5,7 +5,7 @@
  * insulin-dependent diabetes. Covers glucose monitoring frequency,
  * ketone checking, fluid intake, and insulin adjustment rules.
  *
- * GluMira is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 // ─── Types ────────────────────────────────────────────────────────────────────

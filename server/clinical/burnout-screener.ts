@@ -165,7 +165,7 @@ export function screenBurnout(responses: BurnoutResponse[]): BurnoutResult {
     recommendations,
     resources,
     disclaimer:
-      "GluMira™ is an informational and educational tool only. It is NOT a medical device. " +
+      "GluMira™ is an educational platform. The science of insulin, made visible. " +
       "This screener is not a clinical diagnosis. If you are in crisis, please contact a healthcare professional immediately.",
   };
 }

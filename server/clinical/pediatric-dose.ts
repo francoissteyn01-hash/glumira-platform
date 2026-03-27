@@ -294,7 +294,7 @@ export function calculatePediatricDose(input: PediatricInput): PediatricDoseResu
     guidance,
     warnings,
     disclaimer:
-      "GluMira™ is an informational and educational tool only. It is NOT a medical device. " +
+      "GluMira™ is an educational platform. The science of insulin, made visible. " +
       "Pediatric insulin doses must be determined by a qualified pediatric endocrinologist. " +
       "These estimates are starting points only.",
   };

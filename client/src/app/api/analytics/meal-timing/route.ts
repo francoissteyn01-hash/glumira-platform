@@ -4,7 +4,7 @@
  * Analyses meal timing patterns from a set of meal records.
  * Returns timing score, late-night eating flag, and post-meal glucose rise.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import { NextRequest, NextResponse } from "next/server";

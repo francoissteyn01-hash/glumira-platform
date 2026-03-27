@@ -15,7 +15,7 @@
  *   - Output buffer never written to disk — streamed directly to response
  *   - Rate-limited: max 10 PDF exports per user per hour (PDF_EXPORT profile)
  *
- * DISCLAIMER: GluMira™ is an informational tool only. Not a medical device.
+ * DISCLAIMER: GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import { createHash } from "crypto";

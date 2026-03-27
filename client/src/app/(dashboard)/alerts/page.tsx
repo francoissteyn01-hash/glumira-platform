@@ -4,7 +4,7 @@
  * Displays all active glucose alerts with severity filtering.
  * Includes hypo risk score summary at the top.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 "use client";
@@ -125,7 +125,7 @@ export default function AlertsPage() {
 
       {/* Disclaimer */}
       <p className="text-xs text-gray-300 text-center">
-        GluMira™ is an informational tool only. Not a medical device.
+        GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
       </p>
     </div>
   );

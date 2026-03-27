@@ -4,7 +4,7 @@
  * Test suite for server/school-care-plan.ts
  * Covers: generateSchoolCarePlan, validateSchoolCarePlanInput
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import { describe, it, expect } from "vitest";
@@ -168,7 +168,7 @@ describe("generateSchoolCarePlan", () => {
   it("html contains GluMira disclaimer", () => {
     const result = generateSchoolCarePlan(VALID_INPUT);
     const hasDisclaimer =
-      result.html.toLowerCase().includes("informational") ||
+      result.html.toLowerCase().includes("educational") ||
       result.html.toLowerCase().includes("not a medical device") ||
       result.html.toLowerCase().includes("glumira");
     expect(hasDisclaimer).toBe(true);

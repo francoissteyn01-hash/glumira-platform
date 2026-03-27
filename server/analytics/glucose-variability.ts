@@ -4,7 +4,7 @@
  * Advanced glucose variability metrics beyond TIR/GMI/CV.
  * Implements: MAGE, MODD, LBGI, HBGI, eA1c, GRI, J-index.
  *
- * All calculations are for informational purposes only.
+ * All calculations are for educational purposes only.
  * GluMira™ is not a medical device.
  */
 

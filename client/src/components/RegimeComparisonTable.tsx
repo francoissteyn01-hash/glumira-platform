@@ -4,7 +4,7 @@
  * Displays a side-by-side comparison of insulin regime windows.
  * Highlights the winning regime with a trophy badge.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 "use client";
@@ -105,7 +105,7 @@ export function RegimeComparisonTable({ result, className = "" }: RegimeComparis
 
       <div className="border-t border-slate-100 bg-slate-50 px-4 py-2 text-xs text-slate-400">
         Generated {new Date(result.generatedAt).toLocaleString()} ·
-        GluMira™ is an informational tool only. Not a medical device.
+        GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
       </div>
     </div>
   );

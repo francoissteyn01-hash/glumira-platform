@@ -333,7 +333,7 @@ export function generateSickDayProtocol(input: SickDayInput): SickDayResult {
     whenToCallDoctor,
     warnings,
     disclaimer:
-      "GluMira™ is an informational and educational tool only. It is NOT a medical device. " +
+      "GluMira™ is an educational platform. The science of insulin, made visible. " +
       "Always follow your personal sick-day plan from your healthcare team. " +
       "When in doubt, seek medical attention immediately.",
   };

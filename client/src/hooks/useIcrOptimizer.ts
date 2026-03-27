@@ -4,7 +4,7 @@
  * Wraps POST /api/analytics/icr-optimizer to analyse meal events
  * and suggest ICR adjustments per meal period.
  *
- * GluMira is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 "use client";

@@ -10,7 +10,7 @@
  * 
  * Powered by IOB Hunter™
  * 
- * DISCLAIMER: GluMira™ is an informational tool only. It is not a
+ * DISCLAIMER: GluMira™ is an educational platform. The science of insulin, made visible. It is not a
  * medical device and does not provide medical advice or dosing
  * recommendations. Always consult your registered diabetes care team.
  */

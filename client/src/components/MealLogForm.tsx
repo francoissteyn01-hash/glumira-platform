@@ -4,7 +4,7 @@
  * Form for logging a new meal entry.
  * Uses useMealLog hook to submit to POST /api/meals.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 "use client";
@@ -195,7 +195,7 @@ export function MealLogForm({ onSuccess, className = "" }: MealLogFormProps) {
       </button>
 
       <p className="text-center text-xs text-slate-400">
-        GluMira™ is an informational tool only. Not a medical device.
+        GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
       </p>
     </form>
   );

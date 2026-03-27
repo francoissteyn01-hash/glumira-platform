@@ -4,7 +4,7 @@
  * Sends glucose readings to POST /api/analytics/hypo-risk and returns
  * the hypoglycaemia risk assessment.
  *
- * GluMira is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 "use client";

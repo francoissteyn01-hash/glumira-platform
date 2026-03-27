@@ -15,7 +15,7 @@
  *   NAM-001 — Africa region participant
  *   ZA-001  — South Africa participant (Africa region)
  *
- * DISCLAIMER: GluMira™ is an informational tool only. Not a medical device.
+ * DISCLAIMER: GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import { createHash } from "crypto";
@@ -218,7 +218,7 @@ export function generateWelcomeEmail(
       <p>Once you are logged in, please follow the Nightscout sync instructions we will send separately to connect your CGM data.</p>
       <p>If you have any questions, reply to this email or contact us at <a href="mailto:dev@glumira.ai">dev@glumira.ai</a>.</p>
       <div class="disclaimer">
-        <strong>Important:</strong> GluMira™ is an informational tool only. It is not a medical device and does not provide medical advice, diagnoses, or treatment recommendations. Always consult your diabetes care team before making any changes to your diabetes management.
+        <strong>Important:</strong> GluMira™ is an educational platform only. It is not a medical device and does not provide medical advice, diagnoses, or treatment recommendations. Always consult your diabetes care team before making any changes to your diabetes management.
       </div>
     </div>
     <div class="footer">
@@ -245,7 +245,7 @@ This link is unique to you — please do not share it.
 Questions? Contact us at dev@glumira.ai
 
 ---
-DISCLAIMER: GluMira™ is an informational tool only. Not a medical device.
+DISCLAIMER: GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
 Always consult your diabetes care team before making any clinical decisions.
 
 GluMira™ · Powered by IOB Hunter™ · v7.0.0

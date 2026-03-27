@@ -4,7 +4,7 @@
  * Returns glucose variability metrics for a patient over a given period.
  * Uses the glucose-variability server module.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import { NextRequest, NextResponse } from "next/server";

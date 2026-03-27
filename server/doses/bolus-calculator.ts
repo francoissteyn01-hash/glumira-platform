@@ -4,7 +4,7 @@
  * Advanced bolus dose calculation engine (IOB Hunter™ integration).
  * Computes: meal bolus, correction bolus, combined bolus, super-bolus.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  * All outputs must be reviewed by a qualified healthcare professional.
  */
 

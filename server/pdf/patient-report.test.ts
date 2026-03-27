@@ -176,7 +176,7 @@ describe("buildReportHtml", () => {
 
   it("includes GluMira disclaimer", () => {
     const html = buildReportHtml(basePayload);
-    expect(html.toLowerCase()).toContain("educational informational tool");
+    expect(html.toLowerCase()).toContain("educational platform");
   });
 
   it("includes TIR section", () => {

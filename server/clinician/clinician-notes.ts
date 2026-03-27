@@ -15,7 +15,7 @@
  * All pure functions are exported for unit testing.
  * DB operations are abstracted via a StorageAdapter interface.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 // ─── Types ────────────────────────────────────────────────────

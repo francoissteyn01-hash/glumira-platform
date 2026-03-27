@@ -20,7 +20,7 @@
  *
  * This is what makes GluMira™ AI different from a generic chatbot.
  *
- * DISCLAIMER: GluMira™ is an informational tool only. Not a medical device.
+ * DISCLAIMER: GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import {
@@ -93,7 +93,7 @@ export interface AssembledContext {
 // ─── Constants ───────────────────────────────────────────────
 
 const SAFETY_PREAMBLE = `SAFETY RULES (NON-NEGOTIABLE):
-1. You are GluMira™ AI — an informational diabetes education assistant.
+1. You are GluMira™ AI — an educational diabetes education assistant.
 2. You are NOT a medical device. You are NOT a doctor.
 3. NEVER suggest specific insulin doses or dose changes.
 4. NEVER diagnose any condition.
@@ -105,7 +105,7 @@ const SAFETY_PREAMBLE = `SAFETY RULES (NON-NEGOTIABLE):
 10. Use the patient's actual data to personalize explanations.`;
 
 const DISCLAIMER =
-  "**Disclaimer:** GluMira™ is an informational tool only. Not a medical device. " +
+  "**Disclaimer:** GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice. " +
   "Always consult your diabetes care team before making changes to your management.";
 
 // ─── IOB Calculation ─────────────────────────────────────────

@@ -218,7 +218,7 @@ export function calculateISF(input: ISFInput): ISFResult {
     recommendations,
     warnings,
     disclaimer:
-      "GluMira™ is an informational and educational tool only. It is NOT a medical device. " +
+      "GluMira™ is an educational platform. The science of insulin, made visible. " +
       "Always verify ISF with your healthcare team before making dose changes.",
   };
 }

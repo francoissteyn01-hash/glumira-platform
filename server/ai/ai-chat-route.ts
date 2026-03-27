@@ -22,7 +22,7 @@
  *   - GluMira Pro: Full chat + pattern analysis (20 queries/hour)
  *   - GluMira AI: All features + clinician notes + school care plans
  *
- * DISCLAIMER: GluMira™ is an informational tool only. Not a medical device.
+ * DISCLAIMER: GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import { Router, type Request, type Response } from "express";
@@ -96,7 +96,7 @@ async function callLLM(messages: Array<{ role: string; content: string }>): Prom
 // ─── Constants ───────────────────────────────────────────────
 
 const DISCLAIMER =
-  "**Disclaimer:** GluMira™ is an informational tool only. Not a medical device. " +
+  "**Disclaimer:** GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice. " +
   "Always consult your diabetes care team before making changes to your management.";
 
 // ─── Router ──────────────────────────────────────────────────

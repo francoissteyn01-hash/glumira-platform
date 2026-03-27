@@ -5,7 +5,7 @@
  * Evaluates the most recent glucose readings against thresholds
  * using the glucose-alert-engine.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import { NextRequest, NextResponse } from "next/server";

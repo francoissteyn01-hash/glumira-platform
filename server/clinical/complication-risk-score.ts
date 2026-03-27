@@ -245,7 +245,7 @@ export function assessComplicationRisk(input: ComplicationInput): ComplicationRe
     urgentActions,
     screeningSchedule,
     disclaimer:
-      "GluMira™ is an informational and educational tool only. It is NOT a medical device. " +
+      "GluMira™ is an educational platform. The science of insulin, made visible. " +
       "Risk scores are estimates and should not replace clinical assessment.",
   };
 }

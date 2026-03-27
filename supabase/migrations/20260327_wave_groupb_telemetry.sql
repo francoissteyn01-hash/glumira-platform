@@ -8,7 +8,7 @@
 --   3. beta_metrics_daily — materialized daily aggregates for grant dashboards
 --   4. beta_cohort_summary view — real-time cohort analytics
 --
--- GluMira™ is an informational tool only. Not a medical device.
+-- GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
 
 -- ─── 1. telemetry_events ─────────────────────────────────────
 

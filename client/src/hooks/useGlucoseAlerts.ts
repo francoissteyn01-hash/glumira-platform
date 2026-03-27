@@ -4,7 +4,7 @@
  * Fetches active glucose alerts from GET /api/alerts with 60s polling.
  * Returns alerts, unread count, and dismiss/acknowledge helpers.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 "use client";

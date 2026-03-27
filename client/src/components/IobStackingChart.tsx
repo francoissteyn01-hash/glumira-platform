@@ -4,7 +4,7 @@
  * Renders an IOB stacking chart using SVG (no external chart library).
  * Shows total IOB over time with bolus/basal/correction breakdown.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 "use client";
@@ -184,7 +184,7 @@ export function IobStackingChart({
       </svg>
 
       <p className="mt-1 text-center text-xs text-slate-400">
-        GluMira™ is an informational tool only. Not a medical device.
+        GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
       </p>
     </div>
   );

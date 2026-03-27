@@ -4,7 +4,7 @@
  * Test suite for server/security/rate-limiter.ts
  * Covers: sanitiseIdentifier, checkRateLimit, RATE_LIMIT_PROFILES
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import { describe, it, expect, beforeEach } from "vitest";

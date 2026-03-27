@@ -4,7 +4,7 @@
  * React hook for reading and updating user application settings.
  * Wraps GET/PATCH /api/settings.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 "use client";

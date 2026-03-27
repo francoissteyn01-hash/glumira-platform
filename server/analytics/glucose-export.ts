@@ -5,7 +5,7 @@
  * Supports date range filtering, unit conversion (mmol/L ↔ mg/dL),
  * and summary statistics header.
  *
- * GluMira™ is an informational tool only. Not a medical device.
+ * GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.
  */
 
 import type { GlucosePoint } from "./glucose-trend";
@@ -118,7 +118,7 @@ export function exportToCsv(
     lines.push(`# Readings: ${stats.count}`);
     lines.push(`# Average: ${stats.avgGlucose} ${unitLabel}`);
     lines.push(`# TIR: ${stats.tirPercent}%`);
-    lines.push(`# GluMira™ is an informational tool only. Not a medical device.`);
+    lines.push(`# GluMira™ is an educational platform. The science of insulin, made visible. Consult your clinician for any medical advice.`);
     lines.push("");
   }
 
@@ -152,7 +152,7 @@ export function exportToJson(
     count:       readings.length,
     unit:        unit === "mgdl" ? "mg/dL" : "mmol/L",
     readings:    rows,
-    disclaimer:  "GluMira™ is an informational tool only. Not a medical device.",
+    disclaimer:  "GluMira™ is an educational platform. The science of insulin, made visible.",
   };
 
   if (stats) {
