@@ -212,7 +212,7 @@ export default function ThyroidPage() {
             </Card>
 
             <div className="text-xs text-slate-500 p-2 text-center space-y-1">
-              <p><strong>Disclaimer:</strong> GluMira™ is an educational platform and not a medical device. All information is for educational purposes only. Consult a qualified healthcare provider for medical advice.</p>
+              <p><strong>Disclaimer:</strong> GluMira™ is an educational platform and educational platform. All information is for educational purposes only. Consult a qualified healthcare provider for medical advice.</p>
               <p>Partnership Target: <a href="https://www.thyroid.org" target="_blank" rel="noopener noreferrer" className="text-teal-600 hover:underline">American Thyroid Association</a> | Contact: <a href="mailto:dev@glumira.ai" className="text-teal-600 hover:underline">dev@glumira.ai</a></p>
             </div>
           </div>

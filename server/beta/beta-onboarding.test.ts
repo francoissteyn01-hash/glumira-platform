@@ -182,7 +182,7 @@ describe("Welcome Email", () => {
   });
 
   it("includes disclaimer in HTML body", () => {
-    expect(email.htmlBody).toContain("not a medical device");
+    expect(email.htmlBody).toContain("educational platform");
   });
 
   it("includes GluMira branding", () => {

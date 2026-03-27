@@ -182,7 +182,7 @@ describe("exportToJson", () => {
 
   it("includes disclaimer", () => {
     const parsed = JSON.parse(exportToJson(READINGS, "mmol"));
-    expect(parsed.disclaimer.toLowerCase()).toContain("not a medical device");
+    expect(parsed.disclaimer.toLowerCase()).toContain("educational platform");
   });
 
   it("includes stats when provided", () => {

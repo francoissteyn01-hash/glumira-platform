@@ -21,7 +21,7 @@ describe("calculatePediatricDose — structure", () => {
   it("returns complete result", () => {
     const r = calculatePediatricDose(baseInput);
     expect(r.estimatedTDD).toBeGreaterThan(0);
-    expect(r.disclaimer).toContain("NOT a medical device");
+    expect(r.disclaimer).toContain("educational platform");
     expect(r.guidance.length).toBeGreaterThan(0);
   });
 

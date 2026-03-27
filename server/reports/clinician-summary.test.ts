@@ -75,7 +75,7 @@ describe("generateClinicianSummary — structure", () => {
     const r = generateClinicianSummary(baseProfile, baseData);
     expect(r.reportTitle).toContain("GluMira");
     expect(r.generatedAt).toBeDefined();
-    expect(r.disclaimer).toContain("NOT a medical device");
+    expect(r.disclaimer).toContain("educational platform");
   });
 
   it("includes patient demographics", () => {

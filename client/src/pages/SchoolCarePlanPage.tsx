@@ -96,7 +96,7 @@ export default function SchoolCarePlanPage() {
             <Info className="h-4 w-4" />
             <AlertTitle>Educational Platform Disclaimer</AlertTitle>
             <AlertDescription>
-              GluMira™ is an educational platform, not a medical device. The information provided is for guidance and should be reviewed by a qualified healthcare professional. For medical advice, please consult your doctor. Contact: <a href="mailto:dev@glumira.ai" className="underline">dev@glumira.ai</a>.
+              GluMira™ is an educational platform, educational platform. The information provided is for guidance and should be reviewed by a qualified healthcare professional. For medical advice, please consult your doctor. Contact: <a href="mailto:dev@glumira.ai" className="underline">dev@glumira.ai</a>.
             </AlertDescription>
           </Alert>
 

@@ -50,7 +50,7 @@ describe("generateBasalProfile — structure", () => {
 
   it("includes disclaimer", () => {
     const r = generateBasalProfile(baseInput);
-    expect(r.disclaimer).toContain("NOT a medical device");
+    expect(r.disclaimer).toContain("educational platform");
   });
 
   it("includes recommendations", () => {

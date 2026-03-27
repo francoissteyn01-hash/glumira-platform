@@ -100,7 +100,7 @@ export function calculateISF(input: ISFInput): ISFResult {
       timeOfDayVariation: [],
       recommendations: ["Enter your total daily dose (TDD) to calculate ISF."],
       warnings: ["TDD must be greater than 0."],
-      disclaimer: "GluMira™ is NOT a medical device.",
+      disclaimer: "GluMira™ is an educational platform. The science of insulin, made visible.",
     };
   }
 

@@ -113,7 +113,7 @@ export function calculateICR(input: ICRInput): ICRResult {
       timeOfDayFactors: [],
       recommendations: ["Enter your total daily dose (TDD) to calculate ICR."],
       warnings: ["TDD must be greater than 0."],
-      disclaimer: "GluMira™ is NOT a medical device.",
+      disclaimer: "GluMira™ is an educational platform. The science of insulin, made visible.",
     };
   }
 

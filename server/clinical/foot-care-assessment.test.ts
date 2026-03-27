@@ -157,6 +157,6 @@ describe("assessFootCare — referrals", () => {
 describe("assessFootCare — disclaimer", () => {
   it("includes disclaimer", () => {
     const r = assessFootCare(lowRiskInput);
-    expect(r.disclaimer).toContain("NOT a medical device");
+    expect(r.disclaimer).toContain("educational platform");
   });
 });

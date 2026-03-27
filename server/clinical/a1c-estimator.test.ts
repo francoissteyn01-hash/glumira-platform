@@ -29,7 +29,7 @@ describe("estimateA1C — structure", () => {
     const r = estimateA1C(baseInput);
     expect(r.gmi).toBeGreaterThan(0);
     expect(r.estimates.length).toBe(3);
-    expect(r.disclaimer).toContain("NOT a medical device");
+    expect(r.disclaimer).toContain("educational platform");
   });
 
   it("handles empty readings", () => {

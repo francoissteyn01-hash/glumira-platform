@@ -44,7 +44,7 @@ describe("assessComplicationRisk — structure", () => {
 
   it("includes disclaimer", () => {
     const r = assessComplicationRisk(lowRiskInput);
-    expect(r.disclaimer).toContain("NOT a medical device");
+    expect(r.disclaimer).toContain("educational platform");
   });
 });
 

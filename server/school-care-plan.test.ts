@@ -129,7 +129,7 @@ describe("generateSchoolCarePlan — HTML content", () => {
 
   it("HTML contains disclaimer", () => {
     const result = generateSchoolCarePlan(BASE_INPUT);
-    expect(result.html).toContain("not a medical device");
+    expect(result.html).toContain("educational platform");
   });
 
   it("HTML contains signature section", () => {

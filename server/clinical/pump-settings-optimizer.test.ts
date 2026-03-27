@@ -33,7 +33,7 @@ const baseInput: PumpSettingsInput = {
 describe("optimizePumpSettings — structure", () => {
   it("returns complete result", () => {
     const r = optimizePumpSettings(baseInput);
-    expect(r.disclaimer).toContain("NOT a medical device");
+    expect(r.disclaimer).toContain("educational platform");
     expect(r.safetyNotes.length).toBeGreaterThan(0);
     expect(r.overallAssessment.length).toBeGreaterThan(0);
   });

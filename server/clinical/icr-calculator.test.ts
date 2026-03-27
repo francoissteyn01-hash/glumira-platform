@@ -26,7 +26,7 @@ describe("calculateICR — structure", () => {
     const r = calculateICR(baseInput);
     expect(r.estimates.length).toBeGreaterThan(0);
     expect(r.bestEstimate).toBeGreaterThan(0);
-    expect(r.disclaimer).toContain("NOT a medical device");
+    expect(r.disclaimer).toContain("educational platform");
   });
 
   it("handles zero TDD", () => {

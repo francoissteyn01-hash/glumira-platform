@@ -356,7 +356,7 @@ export default function Home() {
           </div>
           <div className="border-t border-border pt-8">
             <p className="glum-disclaimer">
-              GluMira™ is an educational platform, not a medical device. It does not provide medical advice or dosing recommendations.
+              GluMira™ is an educational platform, educational platform. It does not provide medical advice or dosing recommendations.
               Always consult your registered diabetes care team.
             </p>
             <p className="text-xs text-muted-foreground text-center mt-3" style={{ fontFamily: "'DM Sans', sans-serif" }}>

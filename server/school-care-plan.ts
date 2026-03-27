@@ -141,7 +141,7 @@ function renderHeader(input: SchoolCarePlanInput): string {
       <span><strong>Review Date:</strong> ${formatDate(input.reviewDate)}</span>
     </div>
     <div class="disclaimer">
-      ⚠️ This plan is an educational reference only. It is not a medical device or dosing tool.
+      ⚠️ GluMira™ is an educational platform. The science of insulin, made visible. This plan is an educational reference only.
       Always follow the guidance of the child's registered diabetes care team.
     </div>
   </div>`;

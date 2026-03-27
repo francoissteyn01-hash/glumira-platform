@@ -177,6 +177,6 @@ describe("scoreQuiz — grade", () => {
 describe("scoreQuiz — disclaimer", () => {
   it("includes disclaimer", () => {
     const r = scoreQuiz([], []);
-    expect(r.disclaimer).toContain("NOT a medical device");
+    expect(r.disclaimer).toContain("educational platform");
   });
 });

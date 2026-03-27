@@ -32,7 +32,7 @@ describe("generatePatientReport — structure", () => {
     const r = generatePatientReport(baseInput);
     expect(r.title).toContain("GluMira");
     expect(r.generatedAt).toBeDefined();
-    expect(r.disclaimer).toContain("NOT a medical device");
+    expect(r.disclaimer).toContain("educational platform");
   });
 
   it("includes summary stats", () => {

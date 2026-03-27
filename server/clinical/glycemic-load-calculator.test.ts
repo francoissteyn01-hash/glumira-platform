@@ -126,6 +126,6 @@ describe("calculateMealGL — swaps", () => {
 describe("calculateMealGL — disclaimer", () => {
   it("includes disclaimer", () => {
     const r = calculateMealGL([lowGIFood]);
-    expect(r.disclaimer).toContain("NOT a medical device");
+    expect(r.disclaimer).toContain("educational platform");
   });
 });

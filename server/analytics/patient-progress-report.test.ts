@@ -238,7 +238,7 @@ describe("generateProgressReport", () => {
   it("includes disclaimer with GluMira branding", () => {
     const report = generateProgressReport(BASE_INPUT);
     expect(report.disclaimer.toLowerCase()).toContain("glumira");
-    expect(report.disclaimer.toLowerCase()).toContain("not a medical device");
+    expect(report.disclaimer.toLowerCase()).toContain("educational platform");
   });
 
   it("handles empty readings gracefully", () => {

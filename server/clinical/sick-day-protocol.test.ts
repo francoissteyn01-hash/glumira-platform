@@ -21,7 +21,7 @@ describe("generateSickDayProtocol — structure", () => {
     expect(r.alertLevel).toBeDefined();
     expect(r.alertMessage).toBeDefined();
     expect(r.monitoringFrequency).toBeDefined();
-    expect(r.disclaimer).toContain("NOT a medical device");
+    expect(r.disclaimer).toContain("educational platform");
   });
 
   it("includes emergency signs", () => {

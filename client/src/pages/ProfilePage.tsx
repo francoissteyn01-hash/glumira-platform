@@ -263,7 +263,7 @@ export default function ProfilePage() {
       </Card>
 
       <p className="glum-disclaimer">
-        GluMira™ is an educational platform, not a medical device. Always consult your registered diabetes care team.
+        GluMira™ is an educational platform, educational platform. Always consult your registered diabetes care team.
       </p>
     </div>
   );

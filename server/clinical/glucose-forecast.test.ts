@@ -20,7 +20,7 @@ describe("forecastGlucose — structure", () => {
   it("returns forecast points", () => {
     const r = forecastGlucose(baseInput);
     expect(r.points.length).toBeGreaterThan(0);
-    expect(r.disclaimer).toContain("NOT a medical device");
+    expect(r.disclaimer).toContain("educational platform");
   });
 
   it("points are 15 min apart", () => {

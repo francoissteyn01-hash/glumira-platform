@@ -63,7 +63,7 @@ export function screenBurnout(responses: BurnoutResponse[]): BurnoutResult {
       supportiveMessages: ["Complete the burnout screener to check in on your diabetes wellbeing."],
       recommendations: [],
       resources: [],
-      disclaimer: "GluMira™ is NOT a medical device. This is a screening tool, not a diagnosis.",
+      disclaimer: "GluMira™ is an educational platform. The science of insulin, made visible. This is a screening tool, not a diagnosis.",
     };
   }
 

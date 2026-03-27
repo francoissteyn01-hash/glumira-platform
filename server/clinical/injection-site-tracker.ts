@@ -78,7 +78,7 @@ export function analyzeRotation(records: InjectionRecord[]): RotationResult {
       overusedSites: [],
       warnings: ["No injection records found. Start logging to track rotation."],
       tips: ["Log each injection with its site to build a rotation history."],
-      disclaimer: "GluMira™ is NOT a medical device.",
+      disclaimer: "GluMira™ is an educational platform. The science of insulin, made visible.",
     };
   }
 

@@ -224,7 +224,7 @@ export default function RegisterPage() {
               className="mt-0.5 w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
             />
             <span className="text-xs text-gray-500 leading-relaxed">
-              I understand that GluMira™ is an educational tool only, not a medical device, and not a dosing tool. I will always consult my diabetes care team before making any management changes.
+              I understand that GluMira™ is an educational tool only, educational platform, and not a dosing tool. I will always consult my diabetes care team before making any management changes.
             </span>
           </label>
 

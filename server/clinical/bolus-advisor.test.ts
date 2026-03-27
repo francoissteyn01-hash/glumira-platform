@@ -20,7 +20,7 @@ describe("calculateBolus — structure", () => {
     const r = calculateBolus(baseInput);
     expect(r.breakdown).toBeDefined();
     expect(r.strategy).toBeDefined();
-    expect(r.disclaimer).toContain("NOT a medical device");
+    expect(r.disclaimer).toContain("educational platform");
   });
 });
 

@@ -309,7 +309,7 @@ export default function PregnancyPage() {
       </main>
 
       <footer className="text-center text-xs text-gray-500 pt-6 mt-6 border-t">
-        <p className="font-semibold">Disclaimer: GluMira™ is an educational platform, not a medical device.</p>
+        <p className="font-semibold">Disclaimer: GluMira™ is an educational platform, educational platform.</p>
         <p>All information presented is for educational purposes only and should not replace advice from a qualified healthcare professional. Do not make changes to your medical treatment without consulting your provider.</p>
         <p className="mt-2">Contact for support: <a href="mailto:dev@glumira.ai" className="text-teal-600 hover:underline">dev@glumira.ai</a></p>
       </footer>

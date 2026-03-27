@@ -106,7 +106,7 @@ export default function DashboardLayout({
             Sign in to continue
           </Button>
           <p className="text-xs text-muted-foreground text-center italic">
-            GluMira™ is an educational platform, not a medical device.
+            GluMira™ is an educational platform, educational platform.
           </p>
         </div>
       </div>

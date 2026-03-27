@@ -87,7 +87,7 @@ export function estimateA1C(input: A1CInput): A1CResult {
       riskCategory: "low",
       interpretation: ["No readings provided."],
       recommendations: ["Upload CGM data to estimate A1C."],
-      disclaimer: "GluMira™ is NOT a medical device.",
+      disclaimer: "GluMira™ is an educational platform. The science of insulin, made visible.",
     };
   }
 

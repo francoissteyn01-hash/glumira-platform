@@ -30,7 +30,7 @@ describe("calculateVariabilityIndex — structure", () => {
   it("returns complete result", () => {
     const r = calculateVariabilityIndex(stableReadings);
     expect(r.metrics).toBeDefined();
-    expect(r.disclaimer).toContain("NOT a medical device");
+    expect(r.disclaimer).toContain("educational platform");
     expect(r.interpretation.length).toBeGreaterThan(0);
   });
 

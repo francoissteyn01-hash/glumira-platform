@@ -21,7 +21,7 @@ describe("predictHypoRisk — structure", () => {
     const r = predictHypoRisk(baseInput);
     expect(r.riskLevel).toBeDefined();
     expect(r.riskScore).toBeDefined();
-    expect(r.disclaimer).toContain("NOT a medical device");
+    expect(r.disclaimer).toContain("educational platform");
   });
 });
 

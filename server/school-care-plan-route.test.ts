@@ -169,7 +169,7 @@ describe("generateSchoolCarePlan", () => {
     const result = generateSchoolCarePlan(VALID_INPUT);
     const hasDisclaimer =
       result.html.toLowerCase().includes("educational") ||
-      result.html.toLowerCase().includes("not a medical device") ||
+      result.html.toLowerCase().includes("educational platform") ||
       result.html.toLowerCase().includes("glumira");
     expect(hasDisclaimer).toBe(true);
   });

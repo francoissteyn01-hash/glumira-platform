@@ -30,7 +30,7 @@ describe("assessPregnancyGlucose — structure", () => {
   it("returns complete result", () => {
     const r = assessPregnancyGlucose(baseInput);
     expect(r.targets.length).toBeGreaterThan(0);
-    expect(r.disclaimer).toContain("NOT a medical device");
+    expect(r.disclaimer).toContain("educational platform");
     expect(r.monitoringSchedule.length).toBeGreaterThan(0);
   });
 

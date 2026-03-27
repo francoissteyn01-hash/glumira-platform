@@ -149,6 +149,6 @@ describe("screenBurnout — resources", () => {
 describe("screenBurnout — disclaimer", () => {
   it("includes disclaimer", () => {
     const r = screenBurnout(lowBurnout);
-    expect(r.disclaimer).toContain("NOT a medical device");
+    expect(r.disclaimer).toContain("educational platform");
   });
 });

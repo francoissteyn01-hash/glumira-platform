@@ -72,7 +72,7 @@ export function calculateMealGL(foods: FoodItem[]): MealGLResult {
       averageGI: 0,
       recommendations: ["Add foods to calculate glycemic load."],
       swapSuggestions: [],
-      disclaimer: "GluMira™ is NOT a medical device.",
+      disclaimer: "GluMira™ is an educational platform. The science of insulin, made visible.",
     };
   }
 
