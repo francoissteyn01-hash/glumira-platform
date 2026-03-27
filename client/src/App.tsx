@@ -20,6 +20,11 @@ import RewardsPage from "./pages/RewardsPage";
 import { GamificationProvider } from "./lib/gamification/GamificationContext";
 import { GamificationOverlay } from "./components/gamification/GamificationOverlay";
 
+// ── Onboarding — StoryEngine routes (Onboarding 3) ───────────────────────────
+import OnboardingStoryPage from "./pages/onboarding/OnboardingStoryPage";
+import FirstWinPage from "./pages/onboarding/first-win/FirstWinPage";
+import FirstWinClinicianSamplePage from "./pages/onboarding/first-win/FirstWinClinicianSamplePage";
+
 /**
  * GluMira™ V7 — The science of insulin, made visible
  * Soft Editorial design system with navy, teal, and amber colors
@@ -55,8 +60,24 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+
+      {/* ── Onboarding StoryEngine routes ────────────────────────────────── */}
+      {/* /onboarding/story/:profile — plays the StoryEngine for that profile */}
+      <Route path="/onboarding/story/:profile" component={OnboardingStoryPage} />
+
+      {/* /onboarding/first-win/clinician/sample — clinician dual-CTA option */}
+      <Route
+        path="/onboarding/first-win/clinician/sample"
+        component={FirstWinClinicianSamplePage}
+      />
+
+      {/* /onboarding/first-win/:profile — post-story first action for all profiles */}
+      <Route path="/onboarding/first-win/:profile" component={FirstWinPage} />
+
+      {/* ── Dashboard routes ──────────────────────────────────────────────── */}
       <Route path="/dashboard/:rest*" component={DashboardRoutes} />
       <Route path="/dashboard" component={DashboardRoutes} />
+
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>

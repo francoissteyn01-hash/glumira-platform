@@ -1,7 +1,7 @@
 {
   "profile": "child",
   "voice_style": "friendly_upbeat",
-  "total_duration_ms": 48000,
+  "total_duration_ms": 40000,
   "scenes": [
     {
       "scene_id": "CH1-S1",
