@@ -1,33 +1,212 @@
-import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { getLoginUrl } from "@/const";
-import { Activity, BarChart3, Brain, MessageCircle, Syringe, UtensilsCrossed, Shield, ArrowRight } from "lucide-react";
-import { useLocation } from "wouter";
+import { Activity, BarChart3, Brain, MessageCircle, Syringe, UtensilsCrossed, Shield, ArrowRight, X, Check, Mail } from "lucide-react";
+import { useState, useCallback } from "react";
 
 /**
- * GluMira™ V7 Landing Page
- * Soft Editorial design system: Navy primary, Teal accents, Amber highlights
- * Powered by IOB Hunter™
+ * GluMira™ V7 Landing Page — Standalone
+ * No tRPC / no backend dependency — works as a static site on Netlify
+ * Supabase waitlist integration via REST API
  */
 
-export default function Home() {
-  const { isAuthenticated, loading } = useAuth();
-  const loginUrl = getLoginUrl();
-  const [, setLocation] = useLocation();
+const SUPABASE_URL = "https://jxkdtvwlzhdgzhkbilbf.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp4a2R0dndsemhkZ3poa2JpbGJmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5OTE2NzksImV4cCI6MjA4OTU2NzY3OX0.ka74Ohcq8r3HhlZcEWaqRU15FR6TdlkwuGLdGLrnyfc";
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
-        <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-          <p className="mt-4 text-foreground">Loading GluMira™...</p>
-        </div>
+type ModalState = "closed" | "form" | "success" | "error";
+
+function WaitlistModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [role, setRole] = useState("patient");
+  const [state, setState] = useState<ModalState>("form");
+  const [submitting, setSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+    setSubmitting(true);
+    setErrorMsg("");
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/beta_participants`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "apikey": SUPABASE_ANON_KEY,
+          "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+          "Prefer": "return=minimal",
+        },
+        body: JSON.stringify({
+          email: email.trim().toLowerCase(),
+          name: name.trim() || null,
+          status: "pending",
+          cohort: "wave_a",
+          notes: `Role: ${role}. Source: landing-page.`,
+        }),
+      });
+      if (res.ok || res.status === 201) {
+        setState("success");
+      } else {
+        const text = await res.text();
+        if (text.includes("duplicate") || text.includes("unique")) {
+          setState("success"); // Already registered = success
+        } else {
+          setErrorMsg("Something went wrong. Please try again or email info@glumira.ai");
+          setState("error");
+        }
+      }
+    } catch {
+      setErrorMsg("Connection error. Please try again or email info@glumira.ai");
+      setState("error");
+    } finally {
+      setSubmitting(false);
+    }
+  }, [email, name, role]);
+
+  const handleClose = () => {
+    setState("form");
+    setEmail("");
+    setName("");
+    setErrorMsg("");
+    onClose();
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4" onClick={handleClose}>
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+      <div
+        className="relative bg-background rounded-2xl shadow-2xl max-w-md w-full p-8 border border-border"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button onClick={handleClose} className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors">
+          <X className="w-5 h-5" />
+        </button>
+
+        {state === "success" ? (
+          <div className="text-center py-6">
+            <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-6">
+              <Check className="w-8 h-8 text-green-600" />
+            </div>
+            <h3 className="text-2xl font-bold text-primary mb-3" style={{ fontFamily: "'Playfair Display', serif" }}>
+              You're on the list!
+            </h3>
+            <p className="text-muted-foreground mb-2" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+              We'll notify you when GluMira™ beta access is ready.
+            </p>
+            <p className="text-sm text-muted-foreground" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+              Check your inbox for a confirmation email.
+            </p>
+            <Button className="mt-6 glum-btn-primary" onClick={handleClose}>
+              Done
+            </Button>
+          </div>
+        ) : (
+          <>
+            <div className="text-center mb-6">
+              <div className="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center mx-auto mb-4">
+                <Mail className="w-6 h-6 text-secondary" />
+              </div>
+              <h3 className="text-2xl font-bold text-primary" style={{ fontFamily: "'Playfair Display', serif" }}>
+                Join the Beta
+              </h3>
+              <p className="text-sm text-muted-foreground mt-2" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                Get early access to GluMira™ — free during beta testing.
+              </p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-foreground mb-1.5" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                  Email address *
+                </label>
+                <input
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@example.com"
+                  className="w-full px-4 py-2.5 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-colors"
+                  style={{ fontFamily: "'DM Sans', sans-serif" }}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-foreground mb-1.5" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                  Full name
+                </label>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Your name (optional)"
+                  className="w-full px-4 py-2.5 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-colors"
+                  style={{ fontFamily: "'DM Sans', sans-serif" }}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-foreground mb-1.5" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                  I am a...
+                </label>
+                <select
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                  className="w-full px-4 py-2.5 rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-colors"
+                  style={{ fontFamily: "'DM Sans', sans-serif" }}
+                >
+                  <option value="patient">Patient / Caregiver</option>
+                  <option value="clinician">Clinician / Healthcare Provider</option>
+                  <option value="educator">Diabetes Educator</option>
+                  <option value="researcher">Researcher</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+
+              {state === "error" && (
+                <p className="text-sm text-red-500" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                  {errorMsg}
+                </p>
+              )}
+
+              <Button
+                type="submit"
+                className="w-full glum-btn-primary text-base py-3"
+                disabled={submitting || !email}
+              >
+                {submitting ? (
+                  <span className="flex items-center gap-2">
+                    <span className="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-white"></span>
+                    Joining...
+                  </span>
+                ) : (
+                  <span className="flex items-center gap-2">
+                    Join Beta Waitlist
+                    <ArrowRight className="w-4 h-4" />
+                  </span>
+                )}
+              </Button>
+
+              <p className="text-xs text-center text-muted-foreground" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                Free during beta. No credit card required.
+              </p>
+            </form>
+          </>
+        )}
       </div>
-    );
-  }
+    </div>
+  );
+}
+
+export default function Home() {
+  const [showWaitlist, setShowWaitlist] = useState(false);
+
+  const openWaitlist = useCallback(() => setShowWaitlist(true), []);
+  const closeWaitlist = useCallback(() => setShowWaitlist(false), []);
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
+      {/* Waitlist Modal */}
+      <WaitlistModal isOpen={showWaitlist} onClose={closeWaitlist} />
+
       {/* Navigation */}
       <nav className="border-b border-border sticky top-0 bg-background/95 backdrop-blur z-50">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
@@ -41,34 +220,21 @@ export default function Home() {
             </div>
           </div>
           <div className="flex gap-3">
-            {isAuthenticated ? (
-              <Button className="glum-btn-primary" onClick={() => setLocation("/dashboard")}>
-                Open Dashboard
-                <ArrowRight className="w-4 h-4 ml-1" />
-              </Button>
-            ) : (
-              <>
-                <Button variant="outline" asChild className="hidden sm:inline-flex">
-                  <a href="#features">Features</a>
-                </Button>
-                <Button className="glum-btn-primary" asChild>
-                  <a href={loginUrl} target="_blank" rel="noopener noreferrer">
-                    Get Started Free
-                  </a>
-                </Button>
-              </>
-            )}
+            <Button variant="outline" asChild className="hidden sm:inline-flex">
+              <a href="#features">Features</a>
+            </Button>
+            <Button className="glum-btn-primary" onClick={openWaitlist}>
+              Get Started Free
+            </Button>
           </div>
         </div>
       </nav>
 
       {/* Hero Section */}
       <section className="relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0f1b3d 0%, #1a2a5e 40%, #1a3a5e 100%)' }}>
-        {/* Background wave image */}
         <div className="absolute inset-0 opacity-40" style={{ backgroundImage: 'url(/glumira-hero-bg.png)', backgroundSize: 'cover', backgroundPosition: 'center bottom' }}></div>
         <div className="container mx-auto px-4 relative z-10 py-10 md:py-16">
           <div className="grid md:grid-cols-2 gap-8 items-center">
-            {/* Left: Text */}
             <div>
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/20 text-secondary text-sm font-medium mb-8">
                 <Activity className="w-4 h-4" />
@@ -85,26 +251,15 @@ export default function Home() {
                 The science of insulin, made visible
               </p>
               <div className="flex gap-4 flex-wrap">
-                {isAuthenticated ? (
-                  <Button size="lg" className="glum-btn-primary text-base px-8" onClick={() => setLocation("/dashboard")}>
-                    Open Dashboard
-                    <ArrowRight className="w-5 h-5 ml-2" />
-                  </Button>
-                ) : (
-                  <>
-                    <Button size="lg" className="glum-btn-primary text-base px-8" asChild>
-                      <a href={loginUrl} target="_blank" rel="noopener noreferrer">
-                        Try GluMira™ Free
-                      </a>
-                    </Button>
-                    <Button size="lg" variant="outline" className="text-base px-8 border-white/30 text-white hover:bg-white/10" asChild>
-                      <a href="#features">Explore Features</a>
-                    </Button>
-                  </>
-                )}
+                <Button size="lg" className="glum-btn-primary text-base px-8" onClick={openWaitlist}>
+                  Try GluMira™ Free
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Button>
+                <Button size="lg" variant="outline" className="text-base px-8 border-white/30 text-white hover:bg-white/10" asChild>
+                  <a href="#features">Explore Features</a>
+                </Button>
               </div>
             </div>
-            {/* Right: Owl Hero Image */}
             <div className="flex justify-center">
               <img
                 src="/glumira-hero-owl.png"
@@ -129,7 +284,6 @@ export default function Home() {
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {/* IOB Engine */}
             <div className="p-8 rounded-xl border border-border bg-background hover:border-secondary/50 transition-all hover:shadow-lg group">
               <div className="w-14 h-14 rounded-xl bg-secondary/10 flex items-center justify-center mb-6 group-hover:bg-secondary/20 transition-colors">
                 <Activity className="w-7 h-7 text-secondary" />
@@ -141,7 +295,6 @@ export default function Home() {
               </p>
             </div>
 
-            {/* Glucose Visualization */}
             <div className="p-8 rounded-xl border border-border bg-background hover:border-secondary/50 transition-all hover:shadow-lg group">
               <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
                 <BarChart3 className="w-7 h-7 text-primary" />
@@ -153,7 +306,6 @@ export default function Home() {
               </p>
             </div>
 
-            {/* Meal Regimes */}
             <div className="p-8 rounded-xl border border-border bg-background hover:border-secondary/50 transition-all hover:shadow-lg group">
               <div className="w-14 h-14 rounded-xl bg-green-100 flex items-center justify-center mb-6 group-hover:bg-green-200 transition-colors">
                 <UtensilsCrossed className="w-7 h-7 text-green-600" />
@@ -165,7 +317,6 @@ export default function Home() {
               </p>
             </div>
 
-            {/* Insulin Tracking */}
             <div className="p-8 rounded-xl border border-border bg-background hover:border-secondary/50 transition-all hover:shadow-lg group">
               <div className="w-14 h-14 rounded-xl bg-accent/10 flex items-center justify-center mb-6 group-hover:bg-accent/20 transition-colors">
                 <Syringe className="w-7 h-7 text-accent" />
@@ -177,7 +328,6 @@ export default function Home() {
               </p>
             </div>
 
-            {/* Smart Chat */}
             <div className="p-8 rounded-xl border border-border bg-background hover:border-secondary/50 transition-all hover:shadow-lg group">
               <div className="w-14 h-14 rounded-xl bg-purple-100 flex items-center justify-center mb-6 group-hover:bg-purple-200 transition-colors">
                 <MessageCircle className="w-7 h-7 text-purple-600" />
@@ -189,7 +339,6 @@ export default function Home() {
               </p>
             </div>
 
-            {/* Security */}
             <div className="p-8 rounded-xl border border-border bg-background hover:border-secondary/50 transition-all hover:shadow-lg group">
               <div className="w-14 h-14 rounded-xl bg-red-100 flex items-center justify-center mb-6 group-hover:bg-red-200 transition-colors">
                 <Shield className="w-7 h-7 text-red-600" />
@@ -205,7 +354,7 @@ export default function Home() {
       </section>
 
       {/* Product Tiers Section */}
-      <section className="py-20 md:py-28">
+      <section id="pricing" className="py-20 md:py-28">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl text-primary mb-4">
@@ -215,7 +364,7 @@ export default function Home() {
               Start free during beta. Upgrade when you need more.
             </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {/* Free Tier */}
             <div className="p-8 rounded-xl border-2 border-secondary bg-background relative">
               <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
@@ -234,15 +383,9 @@ export default function Home() {
                 <li className="flex gap-2"><span className="text-secondary font-bold">✓</span><span>School care plan generator</span></li>
                 <li className="flex gap-2"><span className="text-secondary font-bold">✓</span><span>1 patient profile</span></li>
               </ul>
-              {isAuthenticated ? (
-                <Button className="w-full glum-btn-primary" onClick={() => setLocation("/dashboard")}>
-                  Open Dashboard
-                </Button>
-              ) : (
-                <Button className="w-full glum-btn-primary" asChild>
-                  <a href={loginUrl} target="_blank" rel="noopener noreferrer">Get Started Free</a>
-                </Button>
-              )}
+              <Button className="w-full glum-btn-primary" onClick={openWaitlist}>
+                Get Started Free
+              </Button>
             </div>
 
             {/* Pro Tier */}
@@ -291,26 +434,25 @@ export default function Home() {
       </section>
 
       {/* Mission Section */}
-      <section className="py-20 md:py-28 section-navy">
+      <section id="about" className="py-20 md:py-28 section-navy">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl mb-6" style={{ color: 'white', fontFamily: "'Playfair Display', serif" }}>
             The Science of Insulin, Made Visible
           </h2>
-          <p className="text-lg max-w-2xl mx-auto mb-8 opacity-80" style={{ fontFamily: "'DM Sans', sans-serif", color: 'rgba(255,255,255,0.85)' }}>
+          <p className="text-lg max-w-2xl mx-auto mb-4 opacity-80" style={{ fontFamily: "'DM Sans', sans-serif", color: 'rgba(255,255,255,0.85)' }}>
             GluMira™ was born from a simple question: why can't patients see what their insulin is doing?
             We believe that understanding insulin behavior is the first step to better diabetes management.
           </p>
-          <p className="text-base opacity-60 mb-8" style={{ fontFamily: "'DM Sans', sans-serif", color: 'rgba(255,255,255,0.7)' }}>
-            Contact: info@glumira.ai
+          <p className="text-base max-w-2xl mx-auto mb-4 opacity-70" style={{ fontFamily: "'DM Sans', sans-serif", color: 'rgba(255,255,255,0.75)' }}>
+            Built in Namibia. Designed for the world.
           </p>
-          {!isAuthenticated && (
-            <Button size="lg" className="bg-white text-primary hover:bg-white/90 font-semibold px-8" asChild>
-              <a href={loginUrl} target="_blank" rel="noopener noreferrer">
-                Start Your Free Account
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </a>
-            </Button>
-          )}
+          <p className="text-base opacity-60 mb-8" style={{ fontFamily: "'DM Sans', sans-serif", color: 'rgba(255,255,255,0.7)' }}>
+            Contact: <a href="mailto:info@glumira.ai" className="underline hover:text-white transition-colors">info@glumira.ai</a>
+          </p>
+          <Button size="lg" className="bg-white text-primary hover:bg-white/90 font-semibold px-8" onClick={openWaitlist}>
+            Start Your Free Account
+            <ArrowRight className="w-5 h-5 ml-2" />
+          </Button>
         </div>
       </section>
 
@@ -333,30 +475,27 @@ export default function Home() {
               <h4 className="font-bold text-primary mb-4 text-sm">Product</h4>
               <ul className="space-y-2 text-sm text-muted-foreground" style={{ fontFamily: "'DM Sans', sans-serif" }}>
                 <li><a href="#features" className="hover:text-primary transition-colors">Features</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Documentation</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">API Reference</a></li>
+                <li><a href="#pricing" className="hover:text-primary transition-colors">Pricing</a></li>
+                <li><button onClick={openWaitlist} className="hover:text-primary transition-colors text-left">Join Beta</button></li>
               </ul>
             </div>
             <div>
               <h4 className="font-bold text-primary mb-4 text-sm">Company</h4>
               <ul className="space-y-2 text-sm text-muted-foreground" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                <li><a href="#" className="hover:text-primary transition-colors">About</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Blog</a></li>
+                <li><a href="#about" className="hover:text-primary transition-colors">About</a></li>
                 <li><a href="mailto:info@glumira.ai" className="hover:text-primary transition-colors">Contact</a></li>
               </ul>
             </div>
             <div>
               <h4 className="font-bold text-primary mb-4 text-sm">Legal</h4>
               <ul className="space-y-2 text-sm text-muted-foreground" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                <li><a href="#" className="hover:text-primary transition-colors">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Terms of Service</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Medical Disclaimer</a></li>
+                <li><a href="#disclaimer" className="hover:text-primary transition-colors">Medical Disclaimer</a></li>
               </ul>
             </div>
           </div>
-          <div className="border-t border-border pt-8">
+          <div id="disclaimer" className="border-t border-border pt-8">
             <p className="glum-disclaimer">
-              GluMira™ is an educational platform, educational platform. It does not provide medical advice or dosing recommendations.
+              GluMira™ is an educational platform. It does not provide medical advice or dosing recommendations.
               Always consult your registered diabetes care team.
             </p>
             <p className="text-xs text-muted-foreground text-center mt-3" style={{ fontFamily: "'DM Sans', sans-serif" }}>
