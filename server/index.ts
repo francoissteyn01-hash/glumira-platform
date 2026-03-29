@@ -10,13 +10,21 @@ import helmet from "helmet";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
 import { appRouter } from "./router";
 import { createContext } from "./trpc";
-import { analyticsRouter } from "./routes/analytics";
-import { nightscoutRouter } from "./routes/nightscout";
-import { mealsRouter } from "./routes/meals";
-import { dosesRouter } from "./routes/doses";
-import { notificationsRouter } from "./routes/notifications";
-import { settingsRouter } from "./routes/settings";
-import { telemetryRouter } from "./routes/telemetry";
+
+// ── REST route imports ────────────────────────────────────────────────────────
+import { analyticsRouter }        from "./routes/analytics.route";
+import { nightscoutRouter }       from "./routes/nightscout";
+import { mealsRouter }            from "./routes/meals";
+import { dosesRouter }            from "./routes/doses";
+import { notificationsRouter }    from "./routes/notifications";
+import { settingsRouter }         from "./routes/settings";
+import { telemetryRouter }        from "./routes/telemetry";
+import { betaFeedbackRouter }     from "./routes/beta-feedback.route";
+import { glucoseTrendRouter }     from "./routes/glucose-trend.route";
+import { subscriptionRouter }     from "./routes/subscription";
+import { cronNightscoutRouter }   from "./routes/cron-nightscout-sync.route";
+import { badgesRouter }           from "./routes/badges.route";
+import { miraRouter }             from "./routes/mira.route";
 
 const app = express();
 const PORT = parseInt(process.env.PORT ?? "3001", 10);
@@ -34,8 +42,7 @@ app.get("/health", (_req, res) => {
 // ── tRPC ──────────────────────────────────────────────────────────────────────
 app.use("/trpc", createExpressMiddleware({ router: appRouter, createContext }));
 
-// ── REST (V6 Next.js routes → V7 Express adapters) ───────────────────────────
-// These adapt the 04.1.x route handlers to Express middleware.
+// ── REST routes ───────────────────────────────────────────────────────────────
 app.use("/api/analytics",     analyticsRouter);
 app.use("/api/nightscout",    nightscoutRouter);
 app.use("/api/meals",         mealsRouter);
@@ -43,6 +50,12 @@ app.use("/api/doses",         dosesRouter);
 app.use("/api/notifications", notificationsRouter);
 app.use("/api/settings",      settingsRouter);
 app.use("/api/telemetry",     telemetryRouter);
+app.use("/api/beta-feedback", betaFeedbackRouter);
+app.use("/api/glucose-trend", glucoseTrendRouter);
+app.use("/api/subscription",  subscriptionRouter);
+app.use("/api/cron",          cronNightscoutRouter);
+app.use("/api/badges",        badgesRouter);
+app.use("/api/mira",          miraRouter);
 
 // ── 404 / Error ───────────────────────────────────────────────────────────────
 app.use((_req, res) => res.status(404).json({ error: "Not found" }));

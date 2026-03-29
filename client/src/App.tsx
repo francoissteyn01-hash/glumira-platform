@@ -1,79 +1,72 @@
 /**
  * GluMira™ V7 — client/src/App.tsx
- * React root with routing. Vite + React + React Router.
+ * Client-side routing — all pages wired
  */
 
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { AuthProvider, useAuth } from "./hooks/useAuth";
+import { BrowserRouter, Routes, Route, Navigate, NavLink } from "react-router-dom";
 import { Suspense, lazy } from "react";
+import { NAV_LINKS } from "./lib/constants";
 
-// Lazy-loaded pages
-const SignInPage         = lazy(() => import("./pages/auth/SignInPage"));
-const RegisterPage       = lazy(() => import("./pages/auth/RegisterPage"));
-const CaregiverPage      = lazy(() => import("./pages/auth/CaregiverPage"));
-const DashboardPage      = lazy(() => import("./pages/dashboard/DashboardPage"));
-const IOBCalculatorPage  = lazy(() => import("./pages/iob/IOBCalculatorPage"));
-const WeeklySummaryPage  = lazy(() => import("./pages/analytics/WeeklySummaryPage"));
-const GlucosePredPage    = lazy(() => import("./pages/analytics/GlucosePredictionPage"));
-const DoseTitrationPage  = lazy(() => import("./pages/doses/DoseTitrationPage"));
-const PatientsPage       = lazy(() => import("./pages/patients/PatientsPage"));
-const PatientDetailPage  = lazy(() => import("./pages/patients/PatientDetailPage"));
-const SettingsPage       = lazy(() => import("./pages/settings/SettingsPage"));
+// Lazy-load pages for code splitting
+const DashboardPage  = lazy(() => import("./pages/DashboardPage"));
+const EducationPage  = lazy(() => import("./pages/EducationPage"));
+const MiraPage       = lazy(() => import("./pages/MiraPage"));
+const BadgesPage     = lazy(() => import("./pages/BadgesPage"));
+const FAQPage        = lazy(() => import("./pages/FAQPage"));
 
-function LoadingSpinner() {
+function LoadingFallback() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="flex flex-col items-center gap-3">
-        <div className="w-8 h-8 border-2 border-teal-500 border-t-transparent rounded-full animate-spin" />
-        <p className="text-sm text-gray-400 font-mono">GluMira™</p>
-      </div>
+    <div className="min-h-screen flex items-center justify-center">
+      <p className="text-gray-400 animate-pulse text-sm">Loading…</p>
     </div>
   );
 }
 
-function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { user, loading } = useAuth();
-  if (loading) return <LoadingSpinner />;
-  if (!user) return <Navigate to="/auth/signin" replace />;
-  return <>{children}</>;
-}
-
-function PublicRoute({ children }: { children: React.ReactNode }) {
-  const { user, loading } = useAuth();
-  if (loading) return <LoadingSpinner />;
-  if (user) return <Navigate to="/dashboard" replace />;
-  return <>{children}</>;
+function NavBar() {
+  return (
+    <nav className="border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 px-4 py-3">
+      <div className="max-w-5xl mx-auto flex items-center justify-between">
+        <span className="font-bold text-violet-600 dark:text-violet-400 text-lg">GluMira™</span>
+        <div className="flex items-center gap-1 overflow-x-auto">
+          {NAV_LINKS.map((link) => (
+            <NavLink
+              key={link.href}
+              to={link.href}
+              className={({ isActive }) =>
+                `px-3 py-1.5 rounded-lg text-sm font-medium transition-colors whitespace-nowrap ${
+                  isActive
+                    ? "bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300"
+                    : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                }`
+              }
+            >
+              {link.label}
+            </NavLink>
+          ))}
+        </div>
+      </div>
+    </nav>
+  );
 }
 
 export default function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Suspense fallback={<LoadingSpinner />}>
+    <BrowserRouter>
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+        <NavBar />
+        <Suspense fallback={<LoadingFallback />}>
           <Routes>
-            {/* Root → dashboard or sign in */}
-            <Route path="/" element={<Navigate to="/dashboard" replace />} />
-
-            {/* Auth */}
-            <Route path="/auth/signin" element={<PublicRoute><SignInPage /></PublicRoute>} />
-            <Route path="/auth/register" element={<PublicRoute><RegisterPage /></PublicRoute>} />
-            <Route path="/auth/caregiver" element={<CaregiverPage />} />
-
-            {/* Protected app */}
-            <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
-            <Route path="/iob" element={<ProtectedRoute><IOBCalculatorPage /></ProtectedRoute>} />
-            <Route path="/analytics/weekly" element={<ProtectedRoute><WeeklySummaryPage /></ProtectedRoute>} />
-            <Route path="/analytics/prediction" element={<ProtectedRoute><GlucosePredPage /></ProtectedRoute>} />
-            <Route path="/doses/titration" element={<ProtectedRoute><DoseTitrationPage /></ProtectedRoute>} />
-            <Route path="/patients" element={<ProtectedRoute><PatientsPage /></ProtectedRoute>} />
-            <Route path="/patients/:id" element={<ProtectedRoute><PatientDetailPage /></ProtectedRoute>} />
-            <Route path="/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
-
-            {/* 404 */}
-            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+            <Route path="/"            element={<Navigate to="/dashboard" replace />} />
+            <Route path="/dashboard"   element={<DashboardPage />} />
+            <Route path="/education"   element={<EducationPage />} />
+            <Route path="/mira"        element={<MiraPage />} />
+            <Route path="/badges"      element={<BadgesPage />} />
+            <Route path="/faq"         element={<FAQPage />} />
+            <Route path="/settings"    element={<div className="p-8 text-gray-400">Settings — coming soon</div>} />
+            <Route path="*"            element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </Suspense>
-      </BrowserRouter>
-    </AuthProvider>
+      </div>
+    </BrowserRouter>
   );
 }
