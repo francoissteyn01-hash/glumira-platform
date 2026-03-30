@@ -1,9 +1,9 @@
-[build]
-  command       = "npm run build:client"
-  publish       = "dist/client"
+﻿[build]
+  command     = "npm run build:client"
+  publish     = "dist/client"
 
 [build.environment]
-  NODE_VERSION  = "20"
+  NODE_VERSION = "20"
 
 [[redirects]]
   from   = "/*"
