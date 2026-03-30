@@ -1,4 +1,4 @@
-/**
+﻿/**
  * GluMira™ V7 — client/src/pages/BadgesPage.tsx
  */
 
@@ -19,7 +19,7 @@ interface Badge {
 
 const TIER_COLOURS: Record<BadgeTier, string> = {
   bronze:   "border-amber-600  bg-amber-50  dark:bg-amber-900/20  text-amber-700  dark:text-amber-400",
-  silver:   "border-gray-400   bg-gray-50   dark:bg-gray-800      text-gray-600   dark:text-gray-300",
+  silver:   "border-gray-400   bg-gray-50   dark:bg-[#f0f4f8]      text-[#718096]   dark:text-[#4a5568]",
   gold:     "border-yellow-400 bg-yellow-50 dark:bg-yellow-900/20 text-yellow-700 dark:text-yellow-300",
   platinum: "border-violet-400 bg-violet-50 dark:bg-violet-900/20 text-violet-700 dark:text-violet-300",
 };
@@ -42,18 +42,18 @@ export default function BadgesPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p className="text-gray-400 animate-pulse">Loading badges…</p>
+        <p className="text-[#718096] animate-pulse">Loading badges…</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#f8f9fa]">
       <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">
 
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Your Badges</h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-[#1a2a5e]">Your Badges</h1>
+          <p className="text-sm text-[#718096] dark:text-[#718096] mt-1">
             {earned.length} of {badges.length} earned
           </p>
         </div>
@@ -66,7 +66,7 @@ export default function BadgesPage() {
 
         {earned.length > 0 && (
           <section>
-            <h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">Earned</h2>
+            <h2 className="text-sm font-semibold text-[#718096] dark:text-[#718096] uppercase tracking-wide mb-3">Earned</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
               {earned.map((b) => <BadgeCard key={b.id} badge={b} />)}
             </div>
@@ -75,7 +75,7 @@ export default function BadgesPage() {
 
         {locked.length > 0 && (
           <section>
-            <h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">Locked</h2>
+            <h2 className="text-sm font-semibold text-[#718096] dark:text-[#718096] uppercase tracking-wide mb-3">Locked</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
               {locked.map((b) => <BadgeCard key={b.id} badge={b} locked />)}
             </div>

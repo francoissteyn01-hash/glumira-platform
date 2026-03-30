@@ -1,4 +1,4 @@
-// ============================================================
+﻿// ============================================================
 // GluMira™ V7 — tRPC Procedures + TypeScript Types
 // Stack: Express + tRPC + Drizzle + Supabase
 // Version: v1.0 · 2026-03-29
@@ -612,4 +612,4 @@ export type AppRouter = typeof appRouter;
 // GluMira™ never says "you should".
 // GluMira™ never uses fear as motivation.
 //
-// ── Powered by IOB Hunter™ · Built in Namibia ─────────────────
+// ── Powered by IOB Hunter™ ─────────────────

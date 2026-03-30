@@ -1,4 +1,4 @@
-/**
+﻿/**
  * GluMira™ V7 — client/src/pages/MiraPage.tsx
  * Mira AI — powered by Claude (Anthropic) via /api/mira
  */
@@ -70,16 +70,16 @@ export default function MiraPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#f8f9fa] flex flex-col">
 
       {/* Header */}
-      <div className="border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 px-4 py-3 flex items-center gap-3">
-        <div className="w-9 h-9 rounded-full bg-violet-600 flex items-center justify-center text-white font-bold text-sm">
+      <div className="border-b border-gray-200 dark:border-[#e2e8f0] bg-white dark:bg-white px-4 py-3 flex items-center gap-3">
+        <div className="w-9 h-9 rounded-full bg-[#2ab5c1] flex items-center justify-center text-[#1a2a5e] font-bold text-sm">
           M
         </div>
         <div>
-          <p className="font-semibold text-gray-900 dark:text-white text-sm">Mira AI</p>
-          <p className="text-xs text-gray-400">Educational assistant · Not medical advice</p>
+          <p className="font-semibold text-gray-900 dark:text-[#1a2a5e] text-sm">Mira AI</p>
+          <p className="text-xs text-[#718096]">Educational assistant · Not medical advice</p>
         </div>
       </div>
 
@@ -97,8 +97,8 @@ export default function MiraPage() {
               className={cn(
                 "max-w-[80%] rounded-2xl px-4 py-3 text-sm whitespace-pre-wrap",
                 msg.role === "user"
-                  ? "bg-violet-600 text-white rounded-br-sm"
-                  : "bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-200 rounded-bl-sm"
+                  ? "bg-[#2ab5c1] text-[#1a2a5e] rounded-br-sm"
+                  : "bg-white dark:bg-[#f0f4f8] border border-gray-200 dark:border-[#e2e8f0] text-gray-800 dark:text-[#4a5568] rounded-bl-sm"
               )}
             >
               {msg.content}
@@ -107,7 +107,7 @@ export default function MiraPage() {
         ))}
         {loading && (
           <div className="flex justify-start">
-            <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl rounded-bl-sm px-4 py-3">
+            <div className="bg-white dark:bg-[#f0f4f8] border border-gray-200 dark:border-[#e2e8f0] rounded-2xl rounded-bl-sm px-4 py-3">
               <span className="flex gap-1">
                 <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce [animation-delay:0ms]" />
                 <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce [animation-delay:150ms]" />
@@ -121,23 +121,23 @@ export default function MiraPage() {
 
       {/* Disclaimer */}
       <div className="px-4 py-1 max-w-2xl mx-auto w-full">
-        <p className="text-xs text-gray-400 text-center">{DISCLAIMER}</p>
+        <p className="text-xs text-[#718096] text-center">{DISCLAIMER}</p>
       </div>
 
       {/* Input */}
-      <div className="border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 px-4 py-3 max-w-2xl mx-auto w-full">
+      <div className="border-t border-gray-200 dark:border-[#e2e8f0] bg-white dark:bg-white px-4 py-3 max-w-2xl mx-auto w-full">
         <div className="flex gap-2">
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && sendMessage()}
             placeholder="Ask Mira a question…"
-            className="flex-1 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-950 px-4 py-2.5 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-violet-500"
+            className="flex-1 rounded-xl border border-gray-200 dark:border-[#e2e8f0] bg-gray-50 dark:bg-[#f8f9fa] px-4 py-2.5 text-sm text-gray-900 dark:text-[#1a2a5e] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#2ab5c1]"
           />
           <button
             onClick={sendMessage}
             disabled={loading || !input.trim()}
-            className="rounded-xl bg-violet-600 hover:bg-violet-700 disabled:opacity-40 text-white px-4 py-2.5 text-sm font-medium transition-colors"
+            className="rounded-xl bg-[#2ab5c1] hover:bg-[#229aaa] disabled:opacity-40 text-[#1a2a5e] px-4 py-2.5 text-sm font-medium transition-colors"
           >
             Send
           </button>

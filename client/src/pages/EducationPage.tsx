@@ -1,4 +1,4 @@
-/**
+﻿/**
  * GluMira™ V7 — client/src/pages/EducationPage.tsx
  */
 
@@ -9,12 +9,12 @@ export default function EducationPage() {
   const [activeId, setActiveId] = useState<string | null>(null);
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#f8f9fa]">
       <div className="max-w-4xl mx-auto px-4 py-8 space-y-6">
 
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Education Centre</h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-[#1a2a5e]">Education Centre</h1>
+          <p className="text-sm text-[#718096] dark:text-[#718096] mt-1">
             Learn at your own pace. Completing modules earns you badges.
           </p>
         </div>
@@ -28,16 +28,16 @@ export default function EducationPage() {
             <button
               key={mod.id}
               onClick={() => setActiveId(activeId === mod.id ? null : mod.id)}
-              className="text-left rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 hover:border-violet-400 dark:hover:border-violet-500 transition-colors"
+              className="text-left rounded-xl border border-gray-200 dark:border-[#e2e8f0] bg-white dark:bg-white p-5 hover:border-violet-400 dark:hover:border-violet-500 transition-colors"
             >
               <div className="flex items-center justify-between">
-                <p className="font-semibold text-gray-900 dark:text-white">{mod.title}</p>
-                <span className="text-xs text-gray-400 border border-gray-200 dark:border-gray-700 rounded-full px-2 py-0.5">
+                <p className="font-semibold text-gray-900 dark:text-[#1a2a5e]">{mod.title}</p>
+                <span className="text-xs text-[#718096] border border-gray-200 dark:border-[#e2e8f0] rounded-full px-2 py-0.5">
                   {activeId === mod.id ? "Close" : "Open"}
                 </span>
               </div>
               {activeId === mod.id && (
-                <p className="mt-3 text-sm text-gray-600 dark:text-gray-400">
+                <p className="mt-3 text-sm text-[#718096] dark:text-[#718096]">
                   Module content for <strong>{mod.title}</strong> will load here from the CMS or static MDX files.
                   Complete this module to unlock the associated badge.
                 </p>

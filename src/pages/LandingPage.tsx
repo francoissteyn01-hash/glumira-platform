@@ -1,4 +1,4 @@
-/**
+﻿/**
  * GluMira™ V7 — LandingPage.tsx
  * Dark Clinical Depth hero with brand background, friendly owl with insulin graph,
  * countdown to go-live, all above the fold on 1366×768.
@@ -403,7 +403,7 @@ export default function LandingPage() {
             lineHeight: 1.5,
           }}
         >
-          Built in Namibia. Designed for the world. — GluMira™ is an educational platform, not a medical device.
+          . Designed for the world. — GluMira™ is an educational platform, not a medical device.
         </p>
         <p
           style={{

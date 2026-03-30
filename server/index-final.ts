@@ -1,8 +1,8 @@
-/**
+﻿/**
  * GluMira™ V7 — server/index.ts  (FINAL — use this version)
  * Express entry point — Vite + React + Express + Drizzle + Supabase
  * Version: v1.1 · 2026-03-29 — all routes wired
- * Built in Namibia. Designed for the world.
+ * . Designed for the world.
  *
  * ROUTES WIRED:
  *   POST   /api/auth/...             auth (Supabase JWT)
@@ -98,7 +98,7 @@ app.use((err: Error, _req: express.Request, res: express.Response, _next: expres
 
 // ── Start ──────────────────────────────────────────────────────────────────────
 app.listen(PORT, () => {
-  console.log(`🦉 GluMira™ API v7 :${PORT} — IOB Hunter™ — Built in Namibia`);
+  console.log(`🦉 GluMira™ API v7 :${PORT} — IOB Hunter™ — `);
 });
 
 export default app;
