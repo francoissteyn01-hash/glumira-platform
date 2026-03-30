@@ -2,6 +2,8 @@
 export default {
   content: [
     "./client/src/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+    "./*.tsx",
     "./index.html",
   ],
   darkMode: "class",
