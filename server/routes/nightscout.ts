@@ -25,7 +25,7 @@ nightscoutRouter.post("/sync", async (req: Request, res: Response) => {
     if (!nsRes.ok) {
       return res.status(400).json({ error: `Nightscout returned ${nsRes.status}` });
     }
-    const entries: Array<{ sgv: number; dateString: string; direction?: string }> = await nsRes.json();
+    const entries = (await nsRes.json()) as Array<{ sgv: number; dateString: string; direction?: string }>;
 
     const readings = entries.map((e) => ({
       glucose: parseFloat((e.sgv / 18.0182).toFixed(1)), // mg/dL → mmol/L

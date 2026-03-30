@@ -172,7 +172,7 @@ export function scheduleSyncJob() {
         method: "POST",
         headers: { "x-cron-secret": CRON_SECRET },
       });
-      const data = await res.json();
+      const data = (await res.json()) as Record<string, unknown>;
       console.log("[nightscout-sync] Internal trigger:", data.syncedCount, "synced");
     } catch (err) {
       console.error("[nightscout-sync] Internal trigger failed:", err);

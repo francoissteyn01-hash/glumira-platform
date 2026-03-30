@@ -130,7 +130,7 @@ bernsteinRouter.post("/ask", requireAuth, async (req: AuthRequest, res) => {
     });
 
     if (!r.ok) throw new Error(`Anthropic ${r.status}`);
-    const d    = await r.json();
+    const d    = (await r.json()) as Record<string, any>;
     const text = d.content?.[0]?.text ?? "{}";
     const parsed = JSON.parse(text.replace(/```json|```/g, "").trim());
 

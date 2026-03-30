@@ -291,3 +291,20 @@ export async function injectSubscription(
   }
   next();
 }
+
+// ─── Subscription REST router ────────────────────────────────────────────
+import { Router } from "express";
+import { requireAuth } from "../middleware/auth";
+
+export const subscriptionRouter = Router();
+
+subscriptionRouter.get("/status", requireAuth, async (req: AuthRequest, res: Response) => {
+  if (!req.user) return res.status(401).json({ error: "Unauthorized" });
+  try {
+    const sub = await getUserSubscription(req.user.id);
+    return res.json({ ok: true, subscription: sub });
+  } catch (err) {
+    console.error("[subscription/status]", err);
+    return res.status(500).json({ error: "Failed to fetch subscription" });
+  }
+});

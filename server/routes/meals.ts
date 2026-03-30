@@ -37,7 +37,7 @@ mealsRouter.get("/carb-lookup", (req: Request, res: Response) => {
       carbsGrams: carbEstimate.totalCarbs,
       netCarbs: carbEstimate.netCarbs,
       glycaemicLoad: glLoad,
-      suggestedDoseUnits: dose?.suggestedDose ?? null,
+      suggestedDoseUnits: dose?.units ?? null,
       disclaimer: "GluMira™ is an educational platform, not a medical device.",
     });
   } catch (err) {

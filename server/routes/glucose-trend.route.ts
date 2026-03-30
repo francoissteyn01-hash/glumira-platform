@@ -29,7 +29,7 @@ const rl = rateLimitMiddleware({ limit: 60, windowMs: 60_000 });
 glucoseTrendRouter.get(
   "/trend",
   requireAuth,
-  rl as Parameters<typeof glucoseTrendRouter.get>[1],
+  rl as any,
   async (req: AuthRequest, res) => {
     const daysParam = req.query.days as string | undefined;
     const days = daysParam

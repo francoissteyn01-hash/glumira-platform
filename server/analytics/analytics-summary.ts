@@ -91,3 +91,6 @@ export function gmiCategory(gmi: number): string {
 export function tirColour(tir: number): string {
   return tir >= 70 ? "text-emerald-600" : tir >= 50 ? "text-amber-600" : "text-red-600";
 }
+
+// Alias used by analytics.route.ts
+export const computeAnalyticsSummary = generateAnalyticsSummary;

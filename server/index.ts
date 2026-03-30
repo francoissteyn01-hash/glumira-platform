@@ -23,7 +23,7 @@ import { telemetryRouter }        from "./routes/telemetry";
 import { betaFeedbackRouter }     from "./routes/beta-feedback.route";
 import { glucoseTrendRouter }     from "./routes/glucose-trend.route";
 import { subscriptionRouter }     from "./routes/subscription";
-import { cronNightscoutRouter }   from "./routes/cron-nightscout-sync.route";
+import { cronNightscoutSyncRouter as cronNightscoutRouter } from "./routes/cron-nightscout-sync.route";
 import { badgesRouter }           from "./routes/badges.route";
 import { miraRouter }             from "./routes/mira.route";
 
