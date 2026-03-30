@@ -46,19 +46,19 @@ function OwlIcon({ size = 24 }: { size?: number }) {
   );
 }
 
-/* ─── Light navbar (landing page) ────────────────────────────────────────── */
+/* ─── Light navbar (landing page — transparent over dark hero) ───────────── */
 function LightNavBar() {
   const navigate = useNavigate();
   return (
     <nav
       style={{
-        position: "sticky",
+        position: "absolute",
         top: 0,
+        left: 0,
+        right: 0,
         zIndex: 50,
-        background: "rgba(255,255,255,0.95)",
-        backdropFilter: "blur(12px)",
-        borderBottom: "1px solid #e2e8f0",
-        padding: "12px 24px",
+        background: "transparent",
+        padding: "14px 24px",
       }}
     >
       <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
@@ -67,7 +67,7 @@ function LightNavBar() {
           onClick={() => navigate("/")}
         >
           <OwlIcon size={28} />
-          <span style={{ fontWeight: 700, fontSize: 17, color: "#1a2a5e", letterSpacing: "-0.01em" }}>
+          <span style={{ fontWeight: 700, fontSize: 17, color: "#ffffff", letterSpacing: "-0.01em" }}>
             GluMira<sup style={{ fontSize: 8, verticalAlign: "super", color: "#2ab5c1" }}>™</sup>
           </span>
         </span>

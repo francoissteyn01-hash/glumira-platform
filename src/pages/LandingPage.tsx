@@ -1,16 +1,15 @@
 /**
  * GluMira™ V7 — LandingPage.tsx
- * Coat of Arms concept. Mira is not a mascot — she is a sovereign emblem.
- * Clean white hero, no clinical data, brand-only.
- * Fits above the fold on 1366×768.
+ * Dark Clinical Depth hero with brand background, friendly owl with insulin graph,
+ * countdown to go-live, all above the fold on 1366×768.
  */
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 /* ─── Assets ─────────────────────────────────────────────────────────────── */
-// Identity owl — heraldic wings-spread, amber badge on chest, transparent bg
-const OWL_IDENTITY = "/mira-owl-identity.png";
+const OWL_HERO = "/mira-owl-hero.png";
+const HERO_BG = "/glumira-hero-bg-dark.png";
 
 /* ─── Fonts ──────────────────────────────────────────────────────────────── */
 const FONT_HREF =
@@ -19,11 +18,12 @@ const FONT_HREF =
 /* ─── Design tokens ──────────────────────────────────────────────────────── */
 const T = {
   navy: "#1a2a5e",
+  navyDeep: "#0d1b3e",
   teal: "#2ab5c1",
   amber: "#f59e0b",
   white: "#ffffff",
   light: "#f8fafd",
-  mutedText: "#4a5e7a",
+  mutedText: "#94a3b8",
   heading: "'Playfair Display', Georgia, serif",
   body: "'DM Sans', -apple-system, sans-serif",
   mono: "'JetBrains Mono', monospace",
@@ -46,33 +46,6 @@ function useCountdown() {
   return { d, h, m, s };
 }
 
-/* ─── ECG / glucose trace SVG (heraldic banner beneath owl) ──────────────── */
-function HeraldicTrace() {
-  return (
-    <svg
-      viewBox="0 0 800 40"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      style={{
-        width: "min(600px, 80vw)",
-        height: "auto",
-        display: "block",
-        margin: "0 auto",
-        opacity: 0.35,
-      }}
-    >
-      {/* Flat baseline with gentle glucose-like undulation and a single heartbeat spike */}
-      <path
-        d="M0 24 L120 24 C160 24 180 20 200 22 L240 18 260 20 280 16 300 22 320 14 330 24 340 8 350 32 360 24 370 24 L400 22 440 20 480 24 520 22 560 20 600 24 640 22 680 24 720 22 760 24 800 24"
-        stroke={T.teal}
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
 /* ═══════════════════════════════════════════════════════════════════════════ */
 export default function LandingPage() {
   const navigate = useNavigate();
@@ -91,272 +64,351 @@ export default function LandingPage() {
     <div
       style={{
         fontFamily: T.body,
-        color: T.navy,
-        background: T.light,
+        color: T.white,
+        background: T.navyDeep,
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
       }}
     >
-      {/* ═══ COUNTDOWN TIMER PILL ═══════════════════════════════════════════ */}
-      <div
-        style={{
-          position: "fixed",
-          top: 14,
-          right: 20,
-          zIndex: 100,
-          background: T.teal,
-          color: T.white,
-          fontFamily: T.mono,
-          fontSize: 12,
-          fontWeight: 600,
-          padding: "6px 14px",
-          borderRadius: 20,
-          maxHeight: 32,
-          display: "flex",
-          alignItems: "center",
-          gap: 6,
-          boxShadow: "0 2px 12px rgba(42,181,193,0.35)",
-          letterSpacing: "0.02em",
-        }}
-      >
-        <span style={{ opacity: 0.8, fontSize: 10, fontWeight: 400, textTransform: "uppercase", letterSpacing: "0.06em" }}>
-          Beta
-        </span>
-        {countdown.d}d {String(countdown.h).padStart(2, "0")}h{" "}
-        {String(countdown.m).padStart(2, "0")}m{" "}
-        {String(countdown.s).padStart(2, "0")}s
-      </div>
-
       {/* ═══ HERO — ABOVE THE FOLD ══════════════════════════════════════════ */}
       <section
         style={{
           flex: 1,
           display: "flex",
-          flexDirection: "column",
+          flexDirection: "row",
           alignItems: "center",
           justifyContent: "center",
-          textAlign: "center",
-          padding: "40px 24px 24px",
-          minHeight: "calc(100vh - 48px)",
+          padding: "20px 40px 16px",
+          minHeight: "calc(100vh - 56px)",
           maxHeight: "100vh",
-          background: T.light,
+          background: `linear-gradient(135deg, ${T.navyDeep} 0%, #0f1f4a 40%, #152348 70%, ${T.navy} 100%)`,
           position: "relative",
           overflow: "hidden",
         }}
       >
-        {/* Subtle radial glow behind owl */}
+        {/* Background image overlay */}
         <div
           style={{
             position: "absolute",
-            top: "18%",
-            left: "50%",
-            transform: "translateX(-50%)",
-            width: 500,
-            height: 500,
-            borderRadius: "50%",
-            background: `radial-gradient(circle, rgba(42,181,193,0.06) 0%, transparent 70%)`,
+            inset: 0,
+            backgroundImage: `url(${HERO_BG})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            opacity: 0.25,
             pointerEvents: "none",
           }}
         />
 
-        {/* Mira — The Sentinel — sovereign, centered, large */}
-        <img
-          src={OWL_IDENTITY}
-          alt="Mira — The Sentinel"
+        {/* Radial glow overlays */}
+        <div
           style={{
-            width: "clamp(220px, 30vw, 400px)",
-            height: "auto",
-            display: "block",
-            margin: "0 auto 8px",
-            filter: "drop-shadow(0 4px 40px rgba(42,181,193,0.12))",
-            position: "relative",
-            zIndex: 2,
+            position: "absolute",
+            inset: 0,
+            background: `radial-gradient(ellipse 600px 400px at 70% 50%, rgba(42,181,193,0.1) 0%, transparent 65%),
+                          radial-gradient(ellipse 400px 300px at 30% 60%, rgba(245,158,11,0.05) 0%, transparent 70%)`,
+            pointerEvents: "none",
           }}
         />
 
-        {/* Heraldic ECG trace beneath her feet */}
-        <div style={{ marginBottom: 16, position: "relative", zIndex: 2 }}>
-          <HeraldicTrace />
-        </div>
-
-        {/* GluMira™ wordmark — large, bold, prominent */}
-        <h1
-          style={{
-            fontFamily: T.heading,
-            fontSize: "clamp(36px, 4.5vw, 52px)",
-            fontWeight: 700,
-            color: T.navy,
-            lineHeight: 1.1,
-            margin: "0 0 10px",
-            letterSpacing: "-0.01em",
-            position: "relative",
-            zIndex: 2,
-          }}
-        >
-          GluMira<sup style={{ fontSize: "0.4em", verticalAlign: "super", color: T.teal }}>™</sup>
-        </h1>
-
-        {/* Tagline */}
-        <p
-          style={{
-            fontFamily: T.heading,
-            fontSize: "clamp(16px, 2vw, 22px)",
-            fontWeight: 700,
-            fontStyle: "italic",
-            color: T.teal,
-            margin: "0 0 10px",
-            position: "relative",
-            zIndex: 2,
-          }}
-        >
-          The science of insulin, made visible
-        </p>
-
-        {/* Motto */}
-        <p
-          style={{
-            fontSize: 12,
-            fontWeight: 500,
-            color: T.navy,
-            letterSpacing: "0.22em",
-            textTransform: "uppercase",
-            margin: "0 0 28px",
-            position: "relative",
-            zIndex: 2,
-          }}
-        >
-          Silent. Vigilant. Yours.
-        </p>
-
-        {/* CTA buttons */}
+        {/* ── LEFT: Text content ── */}
         <div
           style={{
-            display: "flex",
-            gap: 14,
-            justifyContent: "center",
-            flexWrap: "wrap",
             position: "relative",
             zIndex: 2,
+            flex: "1 1 50%",
+            maxWidth: 520,
+            paddingRight: 32,
           }}
         >
-          <button
-            onClick={() => navigate("/auth")}
+          {/* Powered by badge */}
+          <p
             style={{
-              padding: "13px 32px",
-              borderRadius: 10,
-              border: "none",
-              background: T.teal,
-              color: T.white,
-              fontSize: 15,
-              fontWeight: 600,
-              fontFamily: T.body,
-              cursor: "pointer",
-              boxShadow: "0 4px 20px rgba(42,181,193,0.25)",
-              transition: "transform 0.2s, box-shadow 0.2s",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "translateY(-2px)";
-              e.currentTarget.style.boxShadow = "0 6px 28px rgba(42,181,193,0.4)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.boxShadow = "0 4px 20px rgba(42,181,193,0.25)";
-            }}
-          >
-            Get Started Free
-          </button>
-          <button
-            onClick={() => navigate("/auth")}
-            style={{
-              padding: "13px 32px",
-              borderRadius: 10,
-              border: `2px solid ${T.navy}`,
-              background: "transparent",
-              color: T.navy,
-              fontSize: 15,
+              fontSize: 11,
               fontWeight: 500,
-              fontFamily: T.body,
-              cursor: "pointer",
-              transition: "background 0.2s, color 0.2s",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = T.navy;
-              e.currentTarget.style.color = T.white;
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = "transparent";
-              e.currentTarget.style.color = T.navy;
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              color: T.teal,
+              marginBottom: 14,
             }}
           >
-            Sign In
-          </button>
+            Powered by IOB Hunter™
+          </p>
+
+          {/* GluMira™ wordmark */}
+          <h1
+            style={{
+              fontFamily: T.heading,
+              fontSize: "clamp(32px, 4vw, 48px)",
+              fontWeight: 700,
+              color: T.white,
+              lineHeight: 1.1,
+              margin: "0 0 8px",
+              letterSpacing: "-0.01em",
+            }}
+          >
+            GluMira<sup style={{ fontSize: "0.4em", verticalAlign: "super", color: T.teal }}>™</sup>
+          </h1>
+
+          {/* Tagline */}
+          <p
+            style={{
+              fontFamily: T.heading,
+              fontSize: "clamp(16px, 2vw, 22px)",
+              fontWeight: 700,
+              fontStyle: "italic",
+              color: T.teal,
+              margin: "0 0 12px",
+            }}
+          >
+            The science of insulin, made visible
+          </p>
+
+          {/* Description */}
+          <p
+            style={{
+              fontSize: 15,
+              fontWeight: 300,
+              color: "rgba(255,255,255,0.78)",
+              lineHeight: 1.65,
+              maxWidth: 420,
+              margin: "0 0 20px",
+            }}
+          >
+            For caregivers sitting awake at 2am, watching glucose numbers, asking why.
+            We answer that question with science, not guesswork.
+          </p>
+
+          {/* Motto */}
+          <p
+            style={{
+              fontSize: 11,
+              fontWeight: 500,
+              color: "rgba(255,255,255,0.5)",
+              letterSpacing: "0.22em",
+              textTransform: "uppercase",
+              margin: "0 0 22px",
+            }}
+          >
+            Silent. Vigilant. Yours.
+          </p>
+
+          {/* CTA buttons */}
+          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+            <button
+              onClick={() => navigate("/auth")}
+              style={{
+                padding: "11px 28px",
+                borderRadius: 8,
+                border: "none",
+                background: T.teal,
+                color: T.white,
+                fontSize: 14,
+                fontWeight: 600,
+                fontFamily: T.body,
+                cursor: "pointer",
+                boxShadow: "0 4px 20px rgba(42,181,193,0.3)",
+                transition: "transform 0.2s, box-shadow 0.2s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-2px)";
+                e.currentTarget.style.boxShadow = "0 6px 28px rgba(42,181,193,0.45)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow = "0 4px 20px rgba(42,181,193,0.3)";
+              }}
+            >
+              Get Started Free
+            </button>
+            <button
+              onClick={() => navigate("/auth")}
+              style={{
+                padding: "11px 28px",
+                borderRadius: 8,
+                border: `1.5px solid rgba(255,255,255,0.3)`,
+                background: "rgba(255,255,255,0.05)",
+                color: T.white,
+                fontSize: 14,
+                fontWeight: 500,
+                fontFamily: T.body,
+                cursor: "pointer",
+                transition: "background 0.2s, border-color 0.2s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "rgba(255,255,255,0.12)";
+                e.currentTarget.style.borderColor = "rgba(255,255,255,0.5)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "rgba(255,255,255,0.05)";
+                e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)";
+              }}
+            >
+              Sign In
+            </button>
+          </div>
+
+          {/* Stat pills */}
+          <div
+            style={{
+              display: "flex",
+              gap: 10,
+              flexWrap: "wrap",
+              marginTop: 20,
+            }}
+          >
+            {["9 insulin types", "4 modules", "3 months free"].map((stat) => (
+              <span
+                key={stat}
+                style={{
+                  display: "inline-block",
+                  fontFamily: T.mono,
+                  fontSize: 11,
+                  fontWeight: 500,
+                  color: "rgba(255,255,255,0.65)",
+                  background: "rgba(42,181,193,0.08)",
+                  border: "1px solid rgba(42,181,193,0.15)",
+                  borderRadius: 16,
+                  padding: "5px 14px",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {stat}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* ── RIGHT: Owl ── */}
+        <div
+          style={{
+            position: "relative",
+            zIndex: 2,
+            flex: "0 0 auto",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <img
+            src={OWL_HERO}
+            alt="Mira — The Sentinel"
+            style={{
+              width: "clamp(200px, 22vw, 280px)",
+              maxHeight: 280,
+              height: "auto",
+              display: "block",
+              filter: "drop-shadow(0 4px 40px rgba(42,181,193,0.2)) drop-shadow(0 0 60px rgba(245,158,11,0.1))",
+            }}
+          />
+        </div>
+
+        {/* ── COUNTDOWN — centered bottom ── */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: 20,
+            left: "50%",
+            transform: "translateX(-50%)",
+            zIndex: 10,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 6,
+          }}
+        >
+          <span
+            style={{
+              fontSize: 10,
+              fontWeight: 500,
+              letterSpacing: "0.14em",
+              textTransform: "uppercase",
+              color: "rgba(255,255,255,0.45)",
+            }}
+          >
+            Countdown to Go Live
+          </span>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 4,
+            }}
+          >
+            {[
+              { val: countdown.d, label: "d" },
+              { val: countdown.h, label: "h" },
+              { val: countdown.m, label: "m" },
+              { val: countdown.s, label: "s" },
+            ].map((unit, i) => (
+              <div key={unit.label} style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                <div
+                  style={{
+                    background: "rgba(42,181,193,0.12)",
+                    border: "1px solid rgba(42,181,193,0.2)",
+                    borderRadius: 6,
+                    padding: "5px 10px",
+                    minWidth: 40,
+                    textAlign: "center",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: T.mono,
+                      fontSize: 16,
+                      fontWeight: 600,
+                      color: T.teal,
+                      letterSpacing: "0.04em",
+                    }}
+                  >
+                    {String(unit.val).padStart(2, "0")}
+                  </span>
+                  <span
+                    style={{
+                      fontSize: 9,
+                      fontWeight: 400,
+                      color: "rgba(255,255,255,0.4)",
+                      marginLeft: 2,
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {unit.label}
+                  </span>
+                </div>
+                {i < 3 && (
+                  <span style={{ color: "rgba(42,181,193,0.3)", fontSize: 14, fontWeight: 300 }}>:</span>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* ═══ BELOW THE FOLD — MINIMAL ═══════════════════════════════════════ */}
+      {/* ═══ BELOW THE FOLD — MINIMAL FOOTER ═══════════════════════════════ */}
       <section
         style={{
-          background: T.white,
-          borderTop: "1px solid #e8ecf1",
-          padding: "36px 24px 28px",
+          background: T.navyDeep,
+          borderTop: "1px solid rgba(42,181,193,0.1)",
+          padding: "16px 24px",
           textAlign: "center",
         }}
       >
-        {/* 3 stat pills */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            gap: 12,
-            flexWrap: "wrap",
-            marginBottom: 20,
-          }}
-        >
-          {[
-            "9 insulin types modelled",
-            "4 specialist modules",
-            "3 months free",
-          ].map((stat) => (
-            <span
-              key={stat}
-              style={{
-                display: "inline-block",
-                fontFamily: T.mono,
-                fontSize: 12,
-                fontWeight: 500,
-                color: T.navy,
-                background: "#f0f4f8",
-                border: "1px solid #e2e8f0",
-                borderRadius: 20,
-                padding: "7px 18px",
-                whiteSpace: "nowrap",
-              }}
-            >
-              {stat}
-            </span>
-          ))}
-        </div>
-
-        {/* Disclaimer */}
+        {/* Origin + Disclaimer */}
         <p
           style={{
             fontSize: 11,
-            color: T.mutedText,
-            maxWidth: 480,
-            margin: "0 auto",
+            color: "rgba(255,255,255,0.4)",
+            maxWidth: 500,
+            margin: "0 auto 6px",
             lineHeight: 1.5,
           }}
         >
-          GluMira™ is an educational platform, not a medical device.
+          Built in Namibia. Designed for the world. — GluMira™ is an educational platform, not a medical device.
         </p>
-
-        {/* Copyright */}
         <p
           style={{
             fontSize: 10,
-            color: "#94a3b8",
-            marginTop: 12,
+            color: "rgba(255,255,255,0.25)",
           }}
         >
           © {new Date().getFullYear()} GluMira™. All rights reserved.

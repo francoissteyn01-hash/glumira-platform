@@ -390,14 +390,24 @@ function RightPanel() {
 
   /* ─── Auth handlers ─────────────────────────────────────────────────────── */
   async function handleSignIn() {
+    if (!siEmail.trim() || !siPassword) {
+      setMsg({ type: "error", text: "Please enter your email and password." });
+      return;
+    }
     setLoading(true);
     setMsg(null);
     try {
-      const { error } = await supabase.auth.signInWithPassword({ email: siEmail, password: siPassword });
+      const { error } = await supabase.auth.signInWithPassword({ email: siEmail.trim(), password: siPassword });
       if (error) throw error;
       window.location.href = "/dashboard";
     } catch (e: any) {
-      setMsg({ type: "error", text: e.message ?? "Incorrect email or password." });
+      const message = e.message ?? "Incorrect email or password.";
+      // Surface helpful message if Supabase is misconfigured
+      if (message.includes("fetch") || message.includes("network") || message.includes("Failed")) {
+        setMsg({ type: "error", text: "Unable to connect to authentication service. Please try again later." });
+      } else {
+        setMsg({ type: "error", text: message });
+      }
     } finally {
       setLoading(false);
     }
