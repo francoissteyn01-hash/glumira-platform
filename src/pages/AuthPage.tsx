@@ -11,7 +11,11 @@
 import { useState, useEffect, useCallback, type CSSProperties } from "react";
 import { supabase } from "@/hooks/useAuth";
 import { DISCLAIMER } from "@/lib/constants";
-import MiraOwl from "@/components/MiraOwl";
+/* ─── CDN assets (approved brand images) ─────────────────────────────────── */
+const CDN = {
+  owlGlow: "https://d2xsxph8kpxj0f.cloudfront.net/310519663458340082/7pTbwMW7uihCCsypZFsqz6/glumira_v6_asset_owl_glow_608d9d80.png",
+  appIcon: "https://d2xsxph8kpxj0f.cloudfront.net/310519663458340082/7pTbwMW7uihCCsypZFsqz6/glumira_v6_matched_icon_17a09028.png",
+};
 
 /* ─── Google Fonts injection ──────────────────────────────────────────────── */
 const FONT_HREF =
@@ -62,22 +66,16 @@ const T = {
 type Tab = "signin" | "register" | "caregiver" | "reset";
 type Role = "" | "clinician" | "patient" | "researcher";
 
-/* ─── Owl SVG (inline, matches glumira-auth.html) ─────────────────────────── */
-function OwlIcon({ size = 34 }: { size?: number }) {
+/* ─── Owl logo (cropped face from CDN) ────────────────────────────────────── */
+function OwlLogo({ size = 32 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 34 34" fill="none">
-      <circle cx="17" cy="17" r="17" fill="rgba(26,42,94,0.7)" />
-      <ellipse cx="17" cy="19" rx="9" ry="10" fill="#1a5fb4" />
-      <ellipse cx="17" cy="12.5" rx="8.5" ry="7.5" fill="#1a5fb4" />
-      <circle cx="12.5" cy="12.5" r="3.8" fill="#d4a229" />
-      <circle cx="21.5" cy="12.5" r="3.8" fill="#d4a229" />
-      <circle cx="12.5" cy="12.5" r="2.3" fill="#0d1b3e" />
-      <circle cx="21.5" cy="12.5" r="2.3" fill="#0d1b3e" />
-      <circle cx="13.2" cy="11.8" r="0.9" fill="white" />
-      <circle cx="22.2" cy="11.8" r="0.9" fill="white" />
-      <ellipse cx="17" cy="25" rx="2.2" ry="3" fill="#f59e0b" />
-      <circle cx="17" cy="23" r="1.8" fill="#f59e0b" />
-    </svg>
+    <img
+      src={CDN.appIcon}
+      alt="GluMira™ Mira owl"
+      width={size}
+      height={size}
+      style={{ borderRadius: "50%", objectFit: "cover" }}
+    />
   );
 }
 
@@ -218,7 +216,7 @@ function LeftPanel() {
 
       {/* Brand */}
       <div style={{ position: "relative", zIndex: 2, display: "flex", alignItems: "center", gap: 10 }}>
-        <OwlIcon />
+        <OwlLogo size={32} />
         <span style={{ fontWeight: 500, fontSize: 20, color: T.white, letterSpacing: "-0.01em" }}>
           GluMira<sup style={{ fontSize: 10, verticalAlign: "super", color: T.teal }}>™</sup>
         </span>
@@ -279,7 +277,13 @@ function LeftPanel() {
             marginBottom: 32,
           }}
         >
-          <MiraOwl size={64} />
+          <img
+            src={CDN.owlGlow}
+            alt="Mira — The Sentinel owl"
+            width={120}
+            height={120}
+            style={{ borderRadius: 12, flexShrink: 0 }}
+          />
           <div>
             <p
               style={{
@@ -289,18 +293,16 @@ function LeftPanel() {
                 marginBottom: 2,
               }}
             >
-              Hi, I'm Mira 👋
+              Hi, I'm Mira
             </p>
             <p
               style={{
-                fontSize: 12,
+                fontSize: 13,
                 fontWeight: 300,
-                color: "rgba(255,255,255,0.7)",
-                lineHeight: 1.4,
+                color: "rgba(255,255,255,0.75)",
+                lineHeight: 1.5,
               }}
             >
-              The Sentinel — your wise owl companion.
-              <br />
               I watch over your numbers so you can rest.
             </p>
           </div>
