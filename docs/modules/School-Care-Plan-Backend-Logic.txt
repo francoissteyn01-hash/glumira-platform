@@ -1,0 +1,216 @@
+GluMira™ V6 — MODULE: School Care Plan
+Backend Logic Specification v1.0
+Last Updated: 2026-03-28
+Status: READY FOR IMPLEMENTATION
+================================================================================
+
+OVERVIEW
+--------
+The School Care Plan Module generates structured educational documents for
+parents, caregivers, and school staff to support children with T1D in the
+school environment. It does not replace a formal medical management plan
+(DMMP) but provides an educational companion document.
+
+GluMira is an educational platform, not a medical device.
+
+================================================================================
+SCHOOL DAY PROFILE
+================================================================================
+
+STANDARD SCHOOL DAY STRUCTURE:
+  Pre-school breakfast:    07:00–07:30
+  Morning snack:           10:00–10:30
+  Lunch:                   12:00–13:00
+  Afternoon snack:         14:30–15:00
+  After-school activity:   15:30–17:00
+  Dinner:                  18:00–19:00
+
+CRITICAL SCHOOL PERIODS:
+  1. PE/Sports (variable timing)
+     - Exercise sensitivity window: 2–4 hrs post-activity
+     - Temp basal reduction educational reference: 20–50% during activity
+     - Hypo risk: highest 4–8 hrs post-exercise (delayed effect)
+
+  2. Exam/Test Stress
+     - Cortisol release → glucose elevation
+     - Pattern: glucose rises 1–2 mmol/L during high-stress periods
+     - Educational note: stress-related glucose rise is temporary
+
+  3. Lunch Bolus Timing
+     - School lunch timing often irregular
+     - Educational guidance: bolus with food, not before, in school settings
+     - Reason: unpredictable serving times, activity between bolus and eating
+
+================================================================================
+EMERGENCY PROTOCOL FRAMEWORK
+================================================================================
+
+HYPOGLYCAEMIA PROTOCOL (Educational Reference):
+
+MILD (glucose 3.0–3.9 mmol/L, child conscious and cooperative):
+  Step 1: Administer 15g fast-acting carbs
+          (3–4 glucose tablets, 150ml regular juice, 1 glucose gel)
+  Step 2: Wait 15 minutes, recheck glucose
+  Step 3: If glucose < 4.0 mmol/L, repeat Step 1
+  Step 4: Once glucose > 4.0 mmol/L, give 15–20g slow-acting carbs
+          (half sandwich, crackers with cheese)
+  Step 5: Do NOT leave child alone. Inform parents.
+
+MODERATE (glucose < 3.0 mmol/L, child drowsy or confused):
+  Step 1: Do NOT give food or drink (aspiration risk)
+  Step 2: Apply glucose gel to inner cheek/gums
+  Step 3: CALL PARENTS IMMEDIATELY
+  Step 4: If no improvement in 10 minutes, CALL EMERGENCY SERVICES (10111/112)
+
+SEVERE (unconscious, seizure):
+  Step 1: CALL EMERGENCY SERVICES IMMEDIATELY (10111/112)
+  Step 2: Do NOT give anything by mouth
+  Step 3: If glucagon available and trained: administer per instructions
+  Step 4: Place in recovery position if breathing
+  Step 5: CALL PARENTS
+
+HYPERGLYCAEMIA PROTOCOL (Educational Reference):
+
+MILD (glucose 10–15 mmol/L):
+  Step 1: Check for ketones if possible
+  Step 2: Encourage water intake
+  Step 3: Inform parents — correction dose per child's individual plan
+  Step 4: Monitor every 30–60 minutes
+
+HIGH (glucose > 15 mmol/L):
+  Step 1: Check for ketones
+  Step 2: CALL PARENTS IMMEDIATELY
+  Step 3: If ketones present or child unwell: seek medical attention
+
+================================================================================
+BACKEND LOGIC
+================================================================================
+
+FUNCTION: generateSchoolCarePlan(patientProfile)
+  Input:  {
+    childName: string (anonymised in output),
+    dateOfBirth: date,
+    diagnosisDate: date,
+    insulinType: string,
+    pumpOrMDI: "pump"|"mdi",
+    cgmDevice: string,
+    emergencyContacts: array (parent/guardian),
+    schoolNurseContact: string,
+    endocrinologistContact: string,
+    targetGlucoseRange: {low, high} mmol/L,
+    lunchCarbEstimate: integer (grams),
+    snackCarbEstimate: integer (grams),
+    peSchedule: array of {day, time, duration, activity}
+  }
+  Output: SchoolCarePlanDocument (structured text/PDF)
+
+FUNCTION: calculateLunchBolus(carbGrams, icr, currentGlucose, targetGlucose, isf, iobValue)
+  Input:  standard IOB Hunter inputs + school context
+  Output: {
+    carbBolus: decimal,
+    correctionBolus: decimal,
+    totalBolus: decimal,
+    educationalNote: string,
+    schoolNote: "Administer with food, not before"
+  }
+
+FUNCTION: generatePEProtocol(peSchedule, patientProfile)
+  Input:  PE schedule, patient insulin profile
+  Output: {
+    prePEGlucoseTarget: mmol/L (educational reference),
+    snackRecommendation: string,
+    postPEMonitoringSchedule: array of {hoursAfter, action},
+    educationalWarning: "Delayed hypoglycaemia risk 4–8 hours post-exercise"
+  }
+
+FUNCTION: generateTeacherAlertCard(patientProfile)
+  Input:  patientProfile
+  Output: Plain-language one-page alert card for classroom teacher
+  Includes:
+    - Hypo signs (shaking, sweating, confusion, pale)
+    - Hyper signs (frequent urination, thirst, fatigue)
+    - Emergency steps (simplified 3-step)
+    - Emergency contacts
+
+================================================================================
+CARB COUNTING REFERENCE (School Lunch)
+================================================================================
+
+Common school lunch items (Namibia/South Africa context):
+
+| Food Item                  | Serving    | Carbs (g) |
+|----------------------------|------------|-----------|
+| White bread (1 slice)      | 30g        | 15        |
+| Brown bread (1 slice)      | 30g        | 13        |
+| Pap/Maize porridge         | 100g       | 22        |
+| White rice (cooked)        | 100g       | 28        |
+| Potato (boiled, medium)    | 150g       | 25        |
+| Apple (medium)             | 120g       | 15        |
+| Banana (medium)            | 120g       | 27        |
+| Orange juice (200ml)       | 200ml      | 20        |
+| Milk (full cream, 200ml)   | 200ml      | 10        |
+| Yoghurt (plain, 125g)      | 125g       | 12        |
+
+================================================================================
+UI COMPONENTS REQUIRED
+================================================================================
+
+1. SchoolCarePlanGenerator
+   - Form: child profile, insulin details, emergency contacts
+   - Output: downloadable/printable care plan document
+
+2. TeacherAlertCardGenerator
+   - Simplified one-page card for classroom teacher
+   - Large font, clear steps, no medical jargon
+
+3. PEProtocolCard
+   - PE schedule input
+   - Displays pre-PE glucose target, snack recommendation, post-PE monitoring
+
+4. LunchCarbEstimator
+   - School lunch carb lookup table
+   - Simple carb count entry for school staff
+
+5. EmergencyContactDisplay
+   - Always-visible emergency contacts
+   - One-tap call buttons (mobile)
+
+================================================================================
+DATABASE SCHEMA
+================================================================================
+
+Table: patient_school_profiles
+  id                    UUID PRIMARY KEY
+  patient_id            UUID REFERENCES patient_profiles(id)
+  school_name           VARCHAR(200)
+  school_nurse_contact  VARCHAR(100)
+  lunch_carb_estimate   INTEGER (grams)
+  snack_carb_estimate   INTEGER (grams)
+  pe_schedule           JSONB DEFAULT '[]'
+  emergency_contacts    JSONB DEFAULT '[]'
+  care_plan_version     INTEGER DEFAULT 1
+  care_plan_generated   TIMESTAMP
+  created_at            TIMESTAMP DEFAULT NOW()
+  updated_at            TIMESTAMP DEFAULT NOW()
+
+================================================================================
+EDUCATIONAL REFERENCES
+================================================================================
+
+1. ISPAD Clinical Practice Consensus Guidelines 2022 — Diabetes in School.
+2. Diabetes UK: Care in Schools Guidance (2023).
+3. ADA: Safe at School Campaign — Diabetes Medical Management Plan template.
+4. South African Diabetes Association: School Guidelines.
+
+================================================================================
+EDUCATIONAL DISCLAIMER
+================================================================================
+
+GluMira is an educational platform, not a medical device. The School Care Plan
+Module generates educational companion documents only. A formal Diabetes Medical
+Management Plan (DMMP) must be created by the child's endocrinologist and
+reviewed annually. School staff must receive proper training from qualified
+healthcare professionals. This document does not replace medical advice.
+
+Contact: dev@glumira.ai
+================================================================================
