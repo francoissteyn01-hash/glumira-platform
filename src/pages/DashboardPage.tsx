@@ -34,14 +34,14 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-gray-950">
       <div className="max-w-5xl mx-auto px-4 py-8 space-y-6">
-        <div><h1 className="text-2xl font-bold text-white">Dashboard</h1><p className="text-sm text-gray-500">Welcome back{user?.email?`, ${user.email.split("@")[0]}`:""}</p></div>
+        <div><h1 className="text-2xl font-bold text-white">Dashboard</h1><p className="text-sm text-gray-300">Welcome back{user?.email?`, ${user.email.split("@")[0]}`:""}</p></div>
         <div className="rounded-lg bg-amber-950/40 border border-amber-800 px-4 py-3"><p className="text-xs text-amber-400">{DISCLAIMER}</p></div>
         <div className={cn("rounded-2xl border-2 bg-gray-900 p-6 flex items-center justify-between",latest?COLOURS[status]:"border-gray-800")}>
           <div>
-            <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">Latest Glucose</p>
-            {latest ? <><p className={cn("text-5xl font-bold",COLOURS[status].split(" ")[0])}>{formatGlucose(latest.glucose)}<span className="text-2xl ml-2">{ARROWS[latest.trend]??"—"}</span></p><p className="text-xs text-gray-500 mt-1">{timeAgo(latest.time)}</p></> : <p className="text-3xl font-bold text-gray-600">—</p>}
+            <p className="text-xs text-gray-300 uppercase tracking-wide mb-1">Latest Glucose</p>
+            {latest ? <><p className={cn("text-5xl font-bold",COLOURS[status].split(" ")[0])}>{formatGlucose(latest.glucose)}<span className="text-2xl ml-2">{ARROWS[latest.trend]??"—"}</span></p><p className="text-xs text-gray-400 mt-1">{timeAgo(latest.time)}</p></> : <p className="text-3xl font-bold text-gray-600">—</p>}
           </div>
-          <button onClick={syncNS} disabled={syncing||!nsUrl} className="text-xs text-gray-500 hover:text-white border border-gray-700 rounded-lg px-3 py-1.5 transition-colors disabled:opacity-40">{syncing?"Syncing…":"↻ Sync"}</button>
+          <button onClick={syncNS} disabled={syncing||!nsUrl} className="text-xs text-gray-300 hover:text-white border border-gray-700 rounded-lg px-3 py-1.5 transition-colors disabled:opacity-40">{syncing?"Syncing…":"↻ Sync"}</button>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <StatCard label="Readings (24h)" value={readings.length>0?readings.length.toString():"—"} unit="entries"/>
@@ -64,7 +64,7 @@ export default function DashboardPage() {
               {readings.slice(0,20).map((r,i)=>(
                 <div key={i} className="flex items-center justify-between px-5 py-3">
                   <span className={cn("text-sm font-semibold",COLOURS[glucoseStatus(r.glucose)].split(" ")[0])}>{formatGlucose(r.glucose)} {ARROWS[r.trend]??""}</span>
-                  <span className="text-xs text-gray-500">{timeAgo(r.time)}</span>
+                  <span className="text-xs text-gray-400">{timeAgo(r.time)}</span>
                 </div>
               ))}
             </div>
@@ -74,4 +74,4 @@ export default function DashboardPage() {
     </div>
   );
 }
-function StatCard({label,value,unit}:{label:string;value:string;unit:string}){return(<div className="rounded-xl border border-gray-800 bg-gray-900 p-5"><p className="text-xs text-gray-500 uppercase tracking-wide">{label}</p><p className="mt-1 text-2xl font-bold text-white">{value}</p><p className="text-xs text-gray-600">{unit}</p></div>);}
+function StatCard({label,value,unit}:{label:string;value:string;unit:string}){return(<div className="rounded-xl border border-gray-800 bg-gray-900 p-5"><p className="text-xs text-gray-300 uppercase tracking-wide">{label}</p><p className="mt-1 text-2xl font-bold text-white">{value}</p><p className="text-xs text-gray-400">{unit}</p></div>);}
