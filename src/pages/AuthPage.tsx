@@ -11,9 +11,10 @@
 import { useState, useEffect, useCallback, type CSSProperties } from "react";
 import { supabase } from "@/hooks/useAuth";
 import { DISCLAIMER } from "@/lib/constants";
-/* ─── CDN assets (approved brand images) ─────────────────────────────────── */
+/* ─── Assets ─────────────────────────────────────────────────────────────── */
+// Identity owl — heraldic wings-spread, amber badge on chest, transparent bg
+const OWL_IDENTITY = "/mira-owl-identity.png";
 const CDN = {
-  owlGlow: "https://d2xsxph8kpxj0f.cloudfront.net/310519663458340082/7pTbwMW7uihCCsypZFsqz6/glumira_v6_asset_owl_glow_608d9d80.png",
   appIcon: "https://d2xsxph8kpxj0f.cloudfront.net/310519663458340082/7pTbwMW7uihCCsypZFsqz6/glumira_v6_matched_icon_17a09028.png",
 };
 
@@ -278,7 +279,7 @@ function LeftPanel() {
           }}
         >
           <img
-            src={CDN.owlGlow}
+            src={OWL_IDENTITY}
             alt="Mira — The Sentinel owl"
             width={120}
             height={120}

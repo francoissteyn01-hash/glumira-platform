@@ -10,9 +10,9 @@ import { NAV_LINKS } from "@/lib/constants";
 import { useAuth } from "@/hooks/useAuth";
 import ProtectedRoute from "@/components/ProtectedRoute";
 
-/* ─── CDN assets ─────────────────────────────────────────────────────────── */
-const CDN_ICON =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663458340082/7pTbwMW7uihCCsypZFsqz6/glumira_v6_matched_icon_17a09028.png";
+/* ─── Assets ─────────────────────────────────────────────────────────────── */
+// Identity owl — heraldic wings-spread, transparent bg
+const CDN_ICON = "/mira-owl-identity.png";
 
 /* ─── Lazy pages ─────────────────────────────────────────────────────────── */
 const LandingPage   = lazy(() => import("@/pages/LandingPage"));

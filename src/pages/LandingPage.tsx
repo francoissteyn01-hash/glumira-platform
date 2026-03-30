@@ -8,11 +8,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-/* ─── CDN assets ─────────────────────────────────────────────────────────── */
-const CDN = {
-  owlGlow:
-    "https://d2xsxph8kpxj0f.cloudfront.net/310519663458340082/7pTbwMW7uihCCsypZFsqz6/glumira_v6_asset_owl_glow_608d9d80.png",
-};
+/* ─── Assets ─────────────────────────────────────────────────────────────── */
+// Identity owl — heraldic wings-spread, amber badge on chest, transparent bg
+const OWL_IDENTITY = "/mira-owl-identity.png";
 
 /* ─── Fonts ──────────────────────────────────────────────────────────────── */
 const FONT_HREF =
@@ -164,7 +162,7 @@ export default function LandingPage() {
 
         {/* Mira — The Sentinel — sovereign, centered, large */}
         <img
-          src={CDN.owlGlow}
+          src={OWL_IDENTITY}
           alt="Mira — The Sentinel"
           style={{
             width: "clamp(220px, 30vw, 400px)",
