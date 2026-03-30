@@ -11,6 +11,7 @@
 import { useState, useEffect, useCallback, type CSSProperties } from "react";
 import { supabase } from "@/hooks/useAuth";
 import { DISCLAIMER } from "@/lib/constants";
+import MiraOwl from "@/components/MiraOwl";
 
 /* ─── Google Fonts injection ──────────────────────────────────────────────── */
 const FONT_HREF =
@@ -39,7 +40,7 @@ const T = {
   amber: "#f59e0b",
   amberLt: "#fcd34d",
   white: "#ffffff",
-  bodyText: "#52667a",
+  bodyText: "#1a2a5e",
   border: "#dee2e6",
   bg: "#f8f9fa",
   error: "#D32F2F",
@@ -255,7 +256,7 @@ function LeftPanel() {
           style={{
             fontSize: 16,
             fontWeight: 300,
-            color: "rgba(255,255,255,0.5)",
+            color: "rgba(255,255,255,0.82)",
             lineHeight: 1.7,
             maxWidth: 400,
             marginBottom: 40,
@@ -264,6 +265,46 @@ function LeftPanel() {
           For caregivers sitting awake at 2am, watching glucose numbers, asking why. We answer that question with
           science, not guesswork.
         </p>
+
+        {/* ── Mira welcome ── */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 16,
+            background: "rgba(42,181,193,0.06)",
+            border: "1px solid rgba(42,181,193,0.15)",
+            borderRadius: T.rXl,
+            padding: "16px 20px",
+            marginBottom: 32,
+          }}
+        >
+          <MiraOwl size={64} />
+          <div>
+            <p
+              style={{
+                fontSize: 15,
+                fontWeight: 500,
+                color: T.white,
+                marginBottom: 2,
+              }}
+            >
+              Hi, I'm Mira 👋
+            </p>
+            <p
+              style={{
+                fontSize: 12,
+                fontWeight: 300,
+                color: "rgba(255,255,255,0.7)",
+                lineHeight: 1.4,
+              }}
+            >
+              The Sentinel — your wise owl companion.
+              <br />
+              I watch over your numbers so you can rest.
+            </p>
+          </div>
+        </div>
 
         {/* Stats */}
         <div style={{ display: "flex", gap: 32, flexWrap: "wrap" }}>
@@ -276,7 +317,7 @@ function LeftPanel() {
               <span style={{ fontFamily: T.fontMono, fontSize: 22, fontWeight: 600, color: T.white }}>
                 {s.num}
               </span>
-              <span style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", fontWeight: 300 }}>{s.lbl}</span>
+              <span style={{ fontSize: 11, color: "rgba(255,255,255,0.6)", fontWeight: 300 }}>{s.lbl}</span>
             </div>
           ))}
         </div>
@@ -300,7 +341,7 @@ function LeftPanel() {
                 fontSize: 11,
                 letterSpacing: "0.08em",
                 textTransform: "uppercase",
-                color: "rgba(255,255,255,0.3)",
+                color: "rgba(255,255,255,0.6)",
               }}
             >
               Nightscout · Live
@@ -332,7 +373,7 @@ function LeftPanel() {
             <span style={{ fontFamily: T.fontMono, fontSize: 36, fontWeight: 600, color: T.white, lineHeight: 1 }}>
               6.4
             </span>
-            <span style={{ fontFamily: T.fontMono, fontSize: 12, color: "rgba(255,255,255,0.3)" }}>mmol/L</span>
+            <span style={{ fontFamily: T.fontMono, fontSize: 12, color: "rgba(255,255,255,0.6)" }}>mmol/L</span>
           </div>
           <div>
             <span
@@ -370,12 +411,12 @@ function LeftPanel() {
                 marginBottom: 6,
               }}
             >
-              <span style={{ fontSize: 11, color: "rgba(255,255,255,0.3)" }}>{row.lbl}</span>
+              <span style={{ fontSize: 11, color: "rgba(255,255,255,0.6)" }}>{row.lbl}</span>
               <span style={{ fontFamily: T.fontMono, fontSize: 13, fontWeight: 500, color: T.white }}>{row.val}</span>
             </div>
           ))}
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 8 }}>
-            <span style={{ fontSize: 11, color: "rgba(255,255,255,0.25)" }}>Stacking score</span>
+            <span style={{ fontSize: 11, color: "rgba(255,255,255,0.6)" }}>Stacking score</span>
             <span
               style={{
                 fontFamily: T.fontMono,
@@ -400,7 +441,7 @@ function LeftPanel() {
           position: "relative",
           zIndex: 2,
           fontSize: 11,
-          color: "rgba(255,255,255,0.18)",
+          color: "rgba(255,255,255,0.55)",
           fontWeight: 300,
           lineHeight: 1.5,
         }}

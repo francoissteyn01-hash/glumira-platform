@@ -5,15 +5,15 @@ export default function FAQPage() {
   return (
     <div className="min-h-screen bg-gray-950">
       <div className="max-w-2xl mx-auto px-4 py-8 space-y-6">
-        <div><h1 className="text-2xl font-bold text-white">Frequently Asked Questions</h1><p className="text-sm text-gray-500 mt-1">Can't find an answer? Ask Mira AI.</p></div>
+        <div><h1 className="text-2xl font-bold text-white">Frequently Asked Questions</h1><p className="text-sm text-gray-300 mt-1">Can't find an answer? Ask Mira AI.</p></div>
         <div className="space-y-2">
           {FAQ_ITEMS.map((item,i)=>(
             <div key={i} className="rounded-xl border border-gray-800 bg-gray-900 overflow-hidden">
               <button onClick={()=>setOpen(open===i?null:i)} className="w-full text-left px-5 py-4 flex items-center justify-between">
                 <span className="font-medium text-white text-sm">{item.q}</span>
-                <span className="text-gray-400 ml-4 flex-shrink-0">{open===i?"−":"+"}</span>
+                <span className="text-gray-300 ml-4 flex-shrink-0">{open===i?"−":"+"}</span>
               </button>
-              {open===i&&<div className="px-5 pb-4"><p className="text-sm text-gray-400">{item.a}</p></div>}
+              {open===i&&<div className="px-5 pb-4"><p className="text-sm text-gray-300">{item.a}</p></div>}
             </div>
           ))}
         </div>

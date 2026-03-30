@@ -11,16 +11,16 @@ export default function BadgesPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError]     = useState<string|null>(null);
   useEffect(()=>{ apiFetch<Badge[]>("/api/badges").then(setBadges).catch(e=>setError(e.message)).finally(()=>setLoading(false)); },[]);
-  if (loading) return <div className="min-h-screen flex items-center justify-center bg-gray-950"><p className="text-gray-500 animate-pulse">Loading badges…</p></div>;
+  if (loading) return <div className="min-h-screen flex items-center justify-center bg-gray-950"><p className="text-gray-300 animate-pulse">Loading badges…</p></div>;
   const earned = badges.filter(b=>b.earnedAt!==null);
   const locked = badges.filter(b=>b.earnedAt===null);
   return (
     <div className="min-h-screen bg-gray-950">
       <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">
-        <div><h1 className="text-2xl font-bold text-white">Your Badges</h1><p className="text-sm text-gray-500 mt-1">{earned.length} of {badges.length} earned</p></div>
+        <div><h1 className="text-2xl font-bold text-white">Your Badges</h1><p className="text-sm text-gray-300 mt-1">{earned.length} of {badges.length} earned</p></div>
         {error&&<div className="rounded-lg bg-red-950/40 border border-red-800 px-4 py-3"><p className="text-sm text-red-400">{error}</p></div>}
-        {earned.length>0&&<section><h2 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Earned</h2><div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">{earned.map(b=><Card key={b.id} badge={b}/>)}</div></section>}
-        {locked.length>0&&<section><h2 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Locked</h2><div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">{locked.map(b=><Card key={b.id} badge={b} locked/>)}</div></section>}
+        {earned.length>0&&<section><h2 className="text-xs font-semibold text-gray-300 uppercase tracking-wide mb-3">Earned</h2><div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">{earned.map(b=><Card key={b.id} badge={b}/>)}</div></section>}
+        {locked.length>0&&<section><h2 className="text-xs font-semibold text-gray-300 uppercase tracking-wide mb-3">Locked</h2><div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">{locked.map(b=><Card key={b.id} badge={b} locked/>)}</div></section>}
       </div>
     </div>
   );
