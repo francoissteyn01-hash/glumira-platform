@@ -10,6 +10,7 @@ import helmet from "helmet";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
 import { appRouter } from "./router";
 import { createContext } from "./trpc";
+import { supabase, db } from "./db";
 
 // ── REST route imports ────────────────────────────────────────────────────────
 import { analyticsRouter }        from "./routes/analytics.route";
@@ -65,4 +66,5 @@ app.use((err: Error, _req: express.Request, res: express.Response, _next: expres
 });
 
 app.listen(PORT, () => console.log(`GluMira™ V7 server :${PORT}`));
+export { supabase, db };
 export { app };

@@ -19,7 +19,7 @@ export default defineConfig({
     sourcemap: true,
     rollupOptions: {
       output: {
-        manualChunks: { recharts: ["recharts"], react: ["react", "react-dom"] },
+        manualChunks: { react: ["react", "react-dom"] },
       },
     },
   },

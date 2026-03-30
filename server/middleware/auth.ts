@@ -37,6 +37,11 @@ export function requireAuth(req: Request, res: Response, next: NextFunction) {
   });
 }
 
+// AuthRequest — Express Request with authenticated user fields
+export interface AuthRequest extends Request {
+  user?: { id: string; email?: string };
+}
+
 export function getUserId(req: Request): string {
   if (!req.userId) throw new Error("userId not set — requireAuth must run first");
   return req.userId;
