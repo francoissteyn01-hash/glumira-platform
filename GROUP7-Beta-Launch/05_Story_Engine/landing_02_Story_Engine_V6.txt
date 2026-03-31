@@ -1,0 +1,15 @@
+GluMira™ Landing Page — Story Engine (V6 Archive)
+====================================================
+
+URL: https://glumira-se-kjyxatzh.manus.space
+
+Description:
+Landing page for the GluMira™ Story Engine — a platform for creating,
+publishing, and playing branching narrative experiences. Designed for
+educators, clinicians, and storytellers. Features branching narrative
+editor, rich scene renderer, real-time analytics, auto-save/resume,
+public story library, and offline mode.
+
+Version: V6 (ARCHIVED — superseded by V7 landing pages)
+Status: Archived
+Filed: 2026-03-28

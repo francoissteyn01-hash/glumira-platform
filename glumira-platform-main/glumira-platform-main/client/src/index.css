@@ -1,0 +1,371 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* GluMira™ Brand Colors */
+  --color-glumira-navy: oklch(0.27 0.09 258);
+  --color-glumira-teal: oklch(0.70 0.12 196);
+  --color-glumira-amber: oklch(0.78 0.16 75);
+  --color-glumira-bg: oklch(0.98 0.005 220);
+
+  /* Glucose Status Colors (WCAG AA compliant) */
+  --color-glucose-hypo: oklch(0.53 0.19 25);
+  --color-glucose-low: oklch(0.65 0.16 55);
+  --color-glucose-target: oklch(0.52 0.14 150);
+  --color-glucose-high: oklch(0.65 0.16 55);
+  --color-glucose-very-high: oklch(0.53 0.19 25);
+  --color-glucose-iob-line: oklch(0.50 0.12 250);
+
+  /* Font families */
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+:root {
+  /* GluMira™ Soft Editorial Design System */
+  /* Navy Primary (#1a2a5e) */
+  --primary: oklch(0.27 0.09 258);
+  --primary-foreground: oklch(0.99 0.01 60);
+  
+  /* Teal Accent (#2ab5c1) */
+  --secondary: oklch(0.70 0.12 196);
+  --secondary-foreground: oklch(0.99 0.01 60);
+  
+  /* Amber Highlight (#f59e0b) */
+  --accent: oklch(0.78 0.16 75);
+  --accent-foreground: oklch(0.17 0.02 260);
+  
+  /* Neutral Palette */
+  --background: oklch(0.99 0.01 60);
+  --foreground: oklch(0.17 0.02 260);
+  --card: oklch(0.98 0.01 60);
+  --card-foreground: oklch(0.17 0.02 260);
+  --popover: oklch(0.98 0.01 60);
+  --popover-foreground: oklch(0.17 0.02 260);
+  --muted: oklch(0.75 0.02 260);
+  --muted-foreground: oklch(0.45 0.02 260);
+  --destructive: oklch(0.63 0.26 29);
+  --destructive-foreground: oklch(0.99 0.01 60);
+  --border: oklch(0.90 0.02 260);
+  --input: oklch(0.96 0.02 220);
+  --ring: oklch(0.70 0.12 196);
+  
+  /* Sidebar */
+  --sidebar: oklch(0.98 0.01 60);
+  --sidebar-foreground: oklch(0.17 0.02 260);
+  --sidebar-primary: oklch(0.27 0.09 258);
+  --sidebar-primary-foreground: oklch(0.99 0.01 60);
+  --sidebar-accent: oklch(0.70 0.12 196);
+  --sidebar-accent-foreground: oklch(0.99 0.01 60);
+  --sidebar-border: oklch(0.90 0.02 260);
+  --sidebar-ring: oklch(0.70 0.12 196);
+  
+  /* Chart Colors — IOB, Glucose, Basal, Bolus, Stacking */
+  --chart-1: oklch(0.70 0.12 196);
+  --chart-2: oklch(0.78 0.16 75);
+  --chart-3: oklch(0.27 0.09 258);
+  --chart-4: oklch(0.85 0.08 196);
+  --chart-5: oklch(0.95 0.08 75);
+  
+  --radius: 0.65rem;
+}
+
+.dark {
+  --primary: oklch(0.55 0.12 258);
+  --primary-foreground: oklch(0.99 0.01 60);
+  --sidebar-primary: oklch(0.55 0.12 258);
+  --sidebar-primary-foreground: oklch(0.99 0.01 60);
+  --background: oklch(0.14 0.02 260);
+  --foreground: oklch(0.92 0.01 60);
+  --card: oklch(0.18 0.02 260);
+  --card-foreground: oklch(0.92 0.01 60);
+  --popover: oklch(0.18 0.02 260);
+  --popover-foreground: oklch(0.92 0.01 60);
+  --secondary: oklch(0.24 0.02 260);
+  --secondary-foreground: oklch(0.85 0.01 60);
+  --muted: oklch(0.27 0.02 260);
+  --muted-foreground: oklch(0.65 0.02 260);
+  --accent: oklch(0.27 0.02 260);
+  --accent-foreground: oklch(0.92 0.01 60);
+  --destructive: oklch(0.70 0.19 22);
+  --destructive-foreground: oklch(0.99 0.01 60);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.70 0.12 196);
+  --chart-1: oklch(0.75 0.12 196);
+  --chart-2: oklch(0.80 0.16 75);
+  --chart-3: oklch(0.55 0.12 258);
+  --chart-4: oklch(0.65 0.08 196);
+  --chart-5: oklch(0.70 0.08 75);
+  --sidebar: oklch(0.18 0.02 260);
+  --sidebar-foreground: oklch(0.92 0.01 60);
+  --sidebar-accent: oklch(0.27 0.02 260);
+  --sidebar-accent-foreground: oklch(0.99 0.01 60);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.70 0.12 196);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'DM Sans', sans-serif;
+  }
+  
+  /* GluMira™ Typography — Playfair Display for headings */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    @apply font-bold leading-tight;
+  }
+  
+  h1 { @apply text-4xl md:text-5xl lg:text-6xl; }
+  h2 { @apply text-3xl md:text-4xl; }
+  h3 { @apply text-2xl md:text-3xl; }
+  h4 { @apply text-xl md:text-2xl; }
+  h5 { @apply text-lg md:text-xl; }
+  h6 { @apply text-base md:text-lg; }
+  
+  p, span, li, td, th, label, input, textarea, select {
+    font-family: 'DM Sans', sans-serif;
+  }
+  
+  /* Clinical data values use JetBrains Mono */
+  .font-data, [data-clinical], .glucose-value, .iob-value, .dose-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  strong {
+    @apply font-semibold text-primary;
+  }
+
+  /* Minimum 44px touch targets (WCAG 2.1 AA — UI-02 compliance) */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  [type="button"]:not(:disabled),
+  [type="submit"]:not(:disabled),
+  [type="reset"]:not(:disabled),
+  a[href],
+  select:not(:disabled),
+  input[type="checkbox"]:not(:disabled),
+  input[type="radio"]:not(:disabled) {
+    @apply cursor-pointer;
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+@layer components {
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .flex {
+    min-height: 0;
+    min-width: 0;
+  }
+
+  @media (min-width: 640px) {
+    .container {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+      max-width: 1280px;
+    }
+  }
+  
+  /* ─── GluMira™ Component Classes ─── */
+  
+  /* Card with soft editorial shadow */
+  .glum-card {
+    @apply bg-card text-card-foreground rounded-xl border border-border;
+    box-shadow: 0 1px 3px rgba(26, 42, 94, 0.06), 0 4px 12px rgba(26, 42, 94, 0.04);
+  }
+  
+  /* Primary action button */
+  .glum-btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-semibold transition-all duration-200;
+    background: linear-gradient(135deg, #2ab5c1, #1a9ba6);
+    color: white;
+    min-height: 44px;
+  }
+  .glum-btn-primary:hover {
+    background: linear-gradient(135deg, #1a9ba6, #168f99);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(42, 181, 193, 0.35);
+  }
+  
+  /* Secondary / outline button */
+  .glum-btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-semibold border-2 border-current transition-all duration-200;
+    color: #1a2a5e;
+    min-height: 44px;
+  }
+  .glum-btn-secondary:hover {
+    background: rgba(26, 42, 94, 0.06);
+  }
+  
+  /* Input field */
+  .glum-input {
+    @apply w-full rounded-lg border border-border bg-input px-4 py-3 text-sm transition-colors;
+    font-family: 'DM Sans', sans-serif;
+    min-height: 44px;
+  }
+  .glum-input:focus {
+    @apply border-ring ring-2 ring-ring/20 outline-none;
+  }
+  
+  /* Label */
+  .glum-label {
+    @apply block text-sm font-medium mb-1.5;
+    font-family: 'DM Sans', sans-serif;
+    color: #1a2a5e;
+  }
+  
+  /* ─── Glucose Status Badges ─── */
+  .glum-glucose-badge {
+    @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .glum-glucose-hypo {
+    background: rgba(211, 47, 47, 0.12);
+    color: #D32F2F;
+  }
+  .glum-glucose-low {
+    background: rgba(245, 124, 0, 0.12);
+    color: #F57C00;
+  }
+  .glum-glucose-target {
+    background: rgba(46, 125, 50, 0.12);
+    color: #2E7D32;
+  }
+  .glum-glucose-high {
+    background: rgba(245, 124, 0, 0.12);
+    color: #F57C00;
+  }
+  .glum-glucose-very-high {
+    background: rgba(211, 47, 47, 0.12);
+    color: #D32F2F;
+  }
+  
+  /* ─── Alert Variants ─── */
+  .glum-alert-info {
+    @apply rounded-lg p-4 border;
+    background: rgba(42, 181, 193, 0.08);
+    border-color: rgba(42, 181, 193, 0.25);
+    color: #1a2a5e;
+  }
+  .glum-alert-warning {
+    @apply rounded-lg p-4 border;
+    background: rgba(245, 158, 11, 0.08);
+    border-color: rgba(245, 158, 11, 0.25);
+    color: #92400e;
+  }
+  .glum-alert-danger {
+    @apply rounded-lg p-4 border;
+    background: rgba(211, 47, 47, 0.08);
+    border-color: rgba(211, 47, 47, 0.25);
+    color: #b91c1c;
+  }
+  .glum-alert-success {
+    @apply rounded-lg p-4 border;
+    background: rgba(46, 125, 50, 0.08);
+    border-color: rgba(46, 125, 50, 0.25);
+    color: #166534;
+  }
+  
+  /* ─── Medical Disclaimer ─── */
+  .glum-disclaimer {
+    @apply text-xs text-muted-foreground italic text-center py-3;
+    font-family: 'DM Sans', sans-serif;
+  }
+  
+  /* ─── Predictive Text Components ─── */
+  .typo-underline {
+    @apply border-b-2 border-dotted border-accent;
+  }
+  .suggestion-pill {
+    @apply inline-flex items-center gap-1 px-2 py-1 bg-amber-100 text-amber-900 rounded text-xs font-semibold;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .correction-flash {
+    @apply text-green-600 font-medium;
+  }
+  
+  /* ─── IOB Stacking Indicators ─── */
+  .stacking-safe {
+    @apply text-green-600;
+  }
+  .stacking-moderate {
+    @apply text-amber-500;
+  }
+  .stacking-high {
+    @apply text-red-600 font-bold;
+  }
+  
+  /* ─── Section Backgrounds ─── */
+  .section-navy {
+    background: linear-gradient(135deg, #1a2a5e 0%, #0f1b3d 100%);
+    color: white;
+  }
+  .section-teal-gradient {
+    background: linear-gradient(135deg, #2ab5c1 0%, #1a9ba6 100%);
+    color: white;
+  }
+  .section-light {
+    background: #f8fafd;
+  }
+}

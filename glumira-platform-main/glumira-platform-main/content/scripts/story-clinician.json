@@ -1,0 +1,65 @@
+{
+  "profile": "clinician",
+  "voice_style": "professional_measured",
+  "total_duration_ms": 58000,
+  "scenes": [
+    {
+      "scene_id": "CL1-S1",
+      "duration_ms": 8000,
+      "voice_text": "GluMira is a clinical-grade glucose pattern intelligence platform. It gives you IOB-aware patient summaries, anomaly detection, and exportable structured reports — without replacing your workflow.",
+      "subtitle_text": "Clinical-grade glucose intelligence. Workflow-compatible.",
+      "visual_id": "anim_clinician_dashboard",
+      "visual_note": "Clean, clinical dashboard. Patient list on left. Summary panel on right. No decorative elements."
+    },
+    {
+      "scene_id": "CL1-S2",
+      "duration_ms": 11000,
+      "voice_text": "IOB Hunter applies pharmacokinetic decay modelling per insulin type to calculate real-time insulin-on-board. It flags stacking risk, predicts nadir timing, and overlays dose events on the glucose timeline.",
+      "subtitle_text": "PK-modelled IOB. Stacking risk. Nadir prediction.",
+      "visual_id": "anim_iob_clinical",
+      "visual_note": "IOB curve with pharmacokinetic parameters visible. Clinical labelling. Stacking risk zone highlighted."
+    },
+    {
+      "scene_id": "CL1-S3",
+      "duration_ms": 11000,
+      "voice_text": "The pattern engine performs statistical analysis across 7, 14, and 30-day windows — identifying recurring hypoglycaemia clusters, nocturnal spikes, post-prandial excursions, and basal drift. All flags are exportable.",
+      "subtitle_text": "Statistical pattern detection across rolling windows.",
+      "visual_id": "anim_pattern_clinical",
+      "visual_note": "Clinical AGP-style layout. Flagged anomalies annotated. Export button visible."
+    },
+    {
+      "scene_id": "CL1-S4",
+      "duration_ms": 10000,
+      "voice_text": "Patient profiles include diabetes type, comorbidity flags, medication records, dietary regime, and regional parameters. All data is structured for clinical review — not just personal tracking.",
+      "subtitle_text": "Structured clinical profiles. Comorbidities. Medication. Regime.",
+      "visual_id": "anim_patient_profile_clinical",
+      "visual_note": "Patient profile in clinical view — all fields visible, structured layout, no consumer-facing styling"
+    },
+    {
+      "scene_id": "CL1-S5",
+      "duration_ms": 10000,
+      "voice_text": "Reports are AGP-compatible and include TIR, GMI, coefficient of variation, hypoglycaemia exposure, and a full IOB event log. Available as PDF or shareable link — configurable date range.",
+      "subtitle_text": "AGP-compatible reports. TIR. GMI. CV. IOB event log.",
+      "visual_id": "anim_clinical_report",
+      "visual_note": "Report preview with AGP-style layout. All clinical metrics visible. PDF export button."
+    },
+    {
+      "scene_id": "CL1-S6",
+      "duration_ms": 8000,
+      "voice_text": "View a sample patient summary now — or proceed directly to the dashboard. All features are available immediately.",
+      "subtitle_text": "View a sample patient — or go straight to the dashboard.",
+      "visual_id": "anim_clinician_cta",
+      "visual_note": "Two clear CTA buttons. Clinical, minimal. No decorative elements."
+    }
+  ],
+  "cta_options": [
+    {
+      "text": "View sample patient summary",
+      "route": "/onboarding/first-win/clinician/sample"
+    },
+    {
+      "text": "Go to dashboard",
+      "route": "/dashboard"
+    }
+  ]
+}

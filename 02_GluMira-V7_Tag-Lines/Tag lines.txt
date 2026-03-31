@@ -1,0 +1,217 @@
+# GluMira™ Brand Standards — V7
+### Powered by IOB Hunter™
+**Document:** 01_GluMira-Brand-Standards-V7.md
+**Version:** 1.0
+**Status:** LOCKED
+**Filed:** Personal/04_Claude/
+
+---
+
+## 1. BRAND IDENTITY
+
+### 1.1 Full Brand Name
+GluMira™ powered by IOB Hunter™
+
+### 1.2 Short Brand Name
+GluMira™
+
+### 1.3 Tagline
+The science of insulin, made visible.
+
+### 1.4 Brand Promise
+We make the invisible visible — for every child, every caregiver,
+every clinician who has ever stared at a number and not known why.
+
+### 1.5 Brand Personality
+- Precise — never vague
+- Warm — never cold or clinical
+- Trustworthy — never overpromising
+- Empowering — never patronising
+- Vigilant — like an owl, always watching
+
+---
+
+## 2. TRADEMARK DISPLAY RULES
+
+### 2.1 GluMira™
+- Always written as: GluMira™
+- Never: Glumira / GLUMIRA / glumira
+- The ™ symbol appears on EVERY first mention in any document,
+  page, post, or screen
+- Subsequent mentions on the same page: GluMira (no symbol needed)
+
+### 2.2 IOB Hunter™
+- Always written as: IOB Hunter™
+- Never: IOB hunter / iob hunter / IOBHUNTER
+- The ™ symbol appears on EVERY first mention
+- Never used alone without context — always "powered by IOB Hunter™"
+
+### 2.3 Mira
+- No trademark symbol on Mira
+- Always capitalised: Mira
+- Never: mira / MIRA
+
+---
+
+## 3. COLOUR PALETTE — LOCKED
+
+### 3.1 Primary — GluMira Navy
+The dominant colour. Used for all primary elements,
+backgrounds, headers, and the glass indicator liquid.
+
+| Shade | Name | HEX | Usage |
+|---|---|---|---|
+| Navy Deep | Midnight Insulin | #0A1628 | Dark backgrounds, night mode base |
+| Navy Core | GluMira Navy | #0D2149 | Primary brand colour, buttons, headers |
+| Navy Mid | Insight Blue | #1A3A6B | Cards, secondary backgrounds |
+
+### 3.2 Secondary — GluMira Blue
+Three shades of blue with teal blending at opacity stages.
+Teal is an ACCENT only — never the dominant colour.
+
+| Shade | Name | HEX | Usage |
+|---|---|---|---|
+| Blue Light | Dawn Blue | #2D6DB4 | Links, active states, highlights |
+| Blue Teal | Glucose Teal | #2A8FA8 | Accent only, max 20% of any screen |
+| Blue Pale | Clarity | #EBF4FC | Light mode backgrounds, card fills |
+
+### 3.3 Accent — GluMira Amber
+Three amber shades. Used for glucose teardrop, alerts,
+rewards, and Mira badges. Never used as background.
+
+| Shade | Name | HEX | Usage |
+|---|---|---|---|
+| Amber Deep | Bronze Glucose | #B45309 | Alert states, critical indicators |
+| Amber Core | Golden Drop | #D97706 | Glucose teardrop, logo accent, badges |
+| Amber Light | Honey Signal | #FCD34D | Highlights, reward animations |
+
+### 3.4 Neutrals
+
+| Shade | Name | HEX | Usage |
+|---|---|---|---|
+| White | Pure | #FFFFFF | Light mode text backgrounds |
+| Off White | Clinical White | #F8FAFC | Light mode cards |
+| Grey Light | Whisper | #E2E8F0 | Dividers, borders |
+| Grey Mid | Slate | #64748B | Secondary text |
+| Dark | Depth | #1E293B | Dark mode cards |
+
+### 3.5 Colour Rules — LOCKED
+- Navy is ALWAYS dominant
+- Teal NEVER exceeds 20% of any screen or design
+- Amber is ACCENT only — never background
+- No gradients mixing amber and blue together
+- No pure black backgrounds — use Navy Deep instead
+- No pure white text on teal — fails accessibility
+
+---
+
+## 4. TYPOGRAPHY
+
+### 4.1 Primary Font
+**Inter** — clean, medical-grade readability
+- Free on Google Fonts
+- Used for all body text, UI elements, data displays
+
+### 4.2 Display Font
+**Plus Jakarta Sans** — modern, trustworthy
+- Free on Google Fonts
+- Used for headings, hero text, marketing materials
+
+### 4.3 Data Font
+**JetBrains Mono** — monospaced, precise
+- Free on Google Fonts
+- Used for glucose numbers, IOB values, data readouts only
+
+### 4.4 Type Scale
+| Element | Font | Size | Weight |
+|---|---|---|---|
+| Hero Heading | Plus Jakarta Sans | 48px | 700 |
+| Page Heading | Plus Jakarta Sans | 32px | 700 |
+| Section Heading | Plus Jakarta Sans | 24px | 600 |
+| Body | Inter | 16px | 400 |
+| Small / Caption | Inter | 14px | 400 |
+| Data Readout | JetBrains Mono | 20px | 600 |
+| Legal / Fine Print | Inter | 12px | 400 |
+
+---
+
+## 5. LOGO RULES
+
+### 5.1 The Mira Owl
+- Blue owl with spread wings
+- Wave base beneath feet — representing glucose waves
+- Amber glucose teardrop — the core data drop
+- Symbolises: vigilance, nighttime monitoring, wisdom
+
+### 5.2 Logo Versions Required
+| Asset ID | Description | Mode |
+|---|---|---|
+| IMG_LOGO_LIGHT | Full logo on white/pale background | Day |
+| IMG_LOGO_DARK | Full logo on navy background | Night |
+| IMG_LOGO_FAVICON | Owl head only, square crop | Both |
+| IMG_OWL_WINGS | Spread wings — hero/banner use | Both |
+
+### 5.3 Logo Rules
+- Never stretch or distort the owl
+- Never place on a teal background
+- Never remove the amber teardrop
+- Never use the owl without the wave base in formal contexts
+- Minimum size: 120px wide for digital use
+- Always maintain clear space equal to the height of the teardrop
+  on all four sides
+
+---
+
+## 6. DAY / NIGHT MODE
+
+### 6.1 Rule
+The platform detects the user's local sunrise and sunset time.
+- **Day mode** loads automatically from sunrise to sunset
+- **Night mode** loads automatically from sunset to sunrise
+
+### 6.2 Day Mode Palette
+- Background: Clinical White #F8FAFC
+- Primary text: Navy Core #0D2149
+- Cards: Pure White #FFFFFF
+- Accents: Dawn Blue #2D6DB4
+
+### 6.3 Night Mode Palette
+- Background: Midnight Insulin #0A1628
+- Primary text: Pure White #FFFFFF
+- Cards: Depth #1E293B
+- Accents: Glucose Teal #2A8FA8 (accent only)
+
+---
+
+## 7. SPACING & LAYOUT
+
+- Base unit: 8px
+- All spacing in multiples of 8
+- Border radius: 12px for cards, 8px for buttons, 4px for inputs
+- Max content width: 1200px
+- Mobile first — all layouts designed for 375px width upward
+
+---
+
+## 8. IMAGE RULES
+
+- ALL images removed from code until final assets confirmed
+- Images referenced by placeholder ID only in all code
+- No images generated in Lovable — UI layout only
+- All final brand images generated in Canva Pro or Midjourney
+- All assets filed in GluMira-V7/07_BRAND/Assets/
+- Full image registry: see 09_GluMira-Image-Registry-V7.md
+
+---
+
+## 9. WHAT THIS DOCUMENT GOVERNS
+Every screen, document, social post, presentation, pitch deck,
+email, and printed material produced under the GluMira™ brand
+must comply with these standards without exception.
+
+When in doubt — navy dominant, amber accent, Mira watching. 🦉
+
+---
+*GluMira™ powered by IOB Hunter™*
+*The science of insulin, made visible.*
+*Document locked V7 — do not alter without founder approval.*

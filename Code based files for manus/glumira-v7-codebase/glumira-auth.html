@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GluMira™ — Sign In</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#1a2a5e;--navy-deep:#0d1b3e;--navy-mid:#152348;
+  --teal:#2ab5c1;--teal-lt:#7dd3c0;--teal-dim:#1e8a94;
+  --amber:#f59e0b;--amber-lt:#fcd34d;
+  --white:#ffffff;--body-text:#52667a;--border:#dee2e6;--bg:#f8f9fa;
+  --error:#D32F2F;--error-bg:rgba(211,47,47,0.06);--error-border:rgba(211,47,47,0.25);
+  --success:#2E7D32;--success-bg:rgba(46,125,50,0.06);--success-border:rgba(46,125,50,0.25);
+  --font-disp:'Playfair Display',Georgia,serif;
+  --font-body:'DM Sans',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+  --r-sm:4px;--r-md:8px;--r-lg:12px;--r-xl:16px;--r-2xl:24px;
+  --sh-card:0 1px 3px rgba(26,42,94,0.08),0 4px 16px rgba(26,42,94,0.06);
+  --sh-hover:0 4px 20px rgba(26,42,94,0.14),0 8px 32px rgba(26,42,94,0.08);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;height:100%;}
+body{font-family:var(--font-body);background:var(--navy-deep);color:var(--navy);line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column;}
+
+/* LAYOUT */
+.auth-layout{display:grid;grid-template-columns:1fr 480px;min-height:100vh;}
+
+/* LEFT PANEL — Clinical Depth */
+.auth-left{
+  background:linear-gradient(155deg,var(--navy-deep) 0%,#0f1f4a 45%,#152348 75%,#1a2a5e 100%);
+  padding:48px;display:flex;flex-direction:column;justify-content:space-between;
+  position:relative;overflow:hidden;
+}
+.auth-left::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 700px 500px at 80% 40%,rgba(42,181,193,0.08) 0%,transparent 65%),
+    radial-gradient(ellipse 400px 300px at 10% 75%,rgba(42,181,193,0.04) 0%,transparent 70%);
+  pointer-events:none;
+}
+.auth-left::after{
+  content:'';position:absolute;inset:0;opacity:0.025;pointer-events:none;
+  background-image:repeating-linear-gradient(0deg,transparent,transparent 59px,rgba(42,181,193,0.5) 60px),
+    repeating-linear-gradient(60deg,transparent,transparent 59px,rgba(42,181,193,0.5) 60px),
+    repeating-linear-gradient(120deg,transparent,transparent 59px,rgba(42,181,193,0.5) 60px);
+}
+.left-brand{position:relative;z-index:2;display:flex;align-items:center;gap:10px;}
+.left-wordmark{font-weight:500;font-size:20px;color:var(--white);letter-spacing:-0.01em;}
+.left-wordmark sup{font-size:10px;vertical-align:super;color:var(--teal);}
+.left-content{position:relative;z-index:2;}
+.left-eyebrow{font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal);margin-bottom:20px;}
+.left-title{font-family:var(--font-disp);font-size:clamp(32px,4vw,44px);font-weight:700;color:var(--white);line-height:1.12;margin-bottom:20px;}
+.left-title em{font-style:italic;color:var(--teal);}
+.left-body{font-size:16px;font-weight:300;color:rgba(255,255,255,0.5);line-height:1.7;max-width:400px;margin-bottom:40px;}
+
+/* Stats row */
+.left-stats{display:flex;gap:32px;flex-wrap:wrap;}
+.stat{display:flex;flex-direction:column;gap:3px;}
+.stat-num{font-family:var(--font-mono);font-size:22px;font-weight:600;color:var(--white);}
+.stat-lbl{font-size:11px;color:rgba(255,255,255,0.3);font-weight:300;}
+
+/* Mini IOB card on left */
+.left-card{
+  position:relative;z-index:2;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(42,181,193,0.12);
+  border-radius:var(--r-xl);
+  padding:24px;
+  margin-top:40px;
+  backdrop-filter:blur(8px);
+}
+.lc-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.lc-label{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.3);}
+.lc-live{display:flex;align-items:center;gap:5px;font-family:var(--font-mono);font-size:11px;color:var(--teal);}
+.live-dot{width:5px;height:5px;border-radius:50%;background:var(--teal);animation:blink 2s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.25}}
+.lc-glucose{display:flex;align-items:baseline;gap:6px;margin-bottom:4px;}
+.lc-num{font-family:var(--font-mono);font-size:36px;font-weight:600;color:var(--white);line-height:1;}
+.lc-unit{font-family:var(--font-mono);font-size:12px;color:rgba(255,255,255,0.3);}
+.lc-badge{display:inline-flex;align-items:center;gap:5px;font-family:var(--font-mono);font-size:11px;font-weight:500;padding:3px 10px;border-radius:100px;background:rgba(46,125,50,0.15);border:1px solid rgba(46,125,50,0.25);color:#6fcf7a;margin-bottom:16px;}
+.lc-iob-row{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.04);border-radius:var(--r-md);padding:9px 12px;margin-bottom:6px;}
+.lc-iob-lbl{font-size:11px;color:rgba(255,255,255,0.3);}
+.lc-iob-val{font-family:var(--font-mono);font-size:13px;font-weight:500;color:var(--white);}
+.lc-risk{display:flex;align-items:center;justify-content:space-between;margin-top:8px;}
+.lc-risk-lbl{font-size:11px;color:rgba(255,255,255,0.25);}
+.lc-risk-pill{font-family:var(--font-mono);font-size:11px;font-weight:600;padding:2px 9px;border-radius:100px;background:rgba(46,125,50,0.13);color:#6fcf7a;border:1px solid rgba(46,125,50,0.2);}
+
+.left-footer{position:relative;z-index:2;font-size:11px;color:rgba(255,255,255,0.18);font-weight:300;line-height:1.5;}
+
+/* RIGHT PANEL — Scandinavian Minimalist */
+.auth-right{
+  background:var(--white);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:48px 56px;
+  min-height:100vh;
+}
+.auth-form-wrap{width:100%;max-width:360px;}
+
+/* TAB NAV */
+.tab-nav{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:36px;}
+.tab-btn{
+  flex:1;padding:10px 0;font-size:13px;font-weight:400;
+  color:var(--body-text);background:none;border:none;
+  border-bottom:2px solid transparent;margin-bottom:-1px;
+  cursor:pointer;transition:all 0.15s;font-family:var(--font-body);
+  text-align:center;
+}
+.tab-btn:hover{color:var(--navy);}
+.tab-btn.active{color:var(--teal);border-bottom-color:var(--teal);font-weight:500;}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+
+/* FORM HEADER */
+.form-title{font-family:var(--font-disp);font-size:24px;font-weight:700;color:var(--navy);margin-bottom:6px;}
+.form-sub{font-size:14px;color:var(--body-text);font-weight:300;margin-bottom:28px;line-height:1.5;}
+
+/* ROLE SELECTOR */
+.role-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:24px;}
+.role-btn{
+  border:1px solid var(--border);border-radius:var(--r-lg);
+  padding:14px 10px;text-align:center;cursor:pointer;
+  transition:all 0.15s;background:var(--white);
+}
+.role-btn:hover{border-color:rgba(42,181,193,0.3);background:rgba(42,181,193,0.03);}
+.role-btn.selected{border-color:var(--teal);background:rgba(42,181,193,0.05);}
+.role-btn.selected .role-icon-wrap{background:rgba(42,181,193,0.12);}
+.role-icon-wrap{width:36px;height:36px;border-radius:9px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:16px;margin:0 auto 8px;}
+.role-name{font-size:12px;font-weight:500;color:var(--navy);}
+.role-desc{font-size:10px;color:var(--body-text);margin-top:2px;line-height:1.3;}
+
+/* FORM FIELDS */
+.field{margin-bottom:16px;}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:0;}
+.field-row .field{margin-bottom:0;}
+label{display:block;font-size:12px;font-weight:500;color:var(--navy);margin-bottom:5px;letter-spacing:0.01em;}
+input,select{
+  display:block;width:100%;height:40px;
+  background:var(--bg);border:1px solid var(--border);border-radius:var(--r-md);
+  padding:0 12px;font-family:var(--font-body);font-size:14px;color:var(--navy);
+  transition:border-color 0.15s,box-shadow 0.15s;outline:none;
+  -webkit-appearance:none;appearance:none;
+}
+input:focus,select:focus{
+  border-color:var(--teal);
+  box-shadow:0 0 0 3px rgba(42,181,193,0.12);
+  background:var(--white);
+}
+input.error-field{border-color:var(--error);box-shadow:0 0 0 3px rgba(211,47,47,0.08);}
+input::placeholder{color:#b0bec5;}
+.field-hint{font-size:11px;color:var(--body-text);margin-top:4px;font-weight:300;}
+.field-error{font-size:11px;color:var(--error);margin-top:4px;display:none;}
+.field-error.show{display:block;}
+
+/* SPECIALTY PILLS */
+.spec-pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;}
+.spec-pill{
+  font-size:11px;padding:4px 10px;border-radius:100px;
+  border:1px solid var(--border);background:var(--white);cursor:pointer;
+  color:var(--body-text);transition:all 0.12s;
+}
+.spec-pill:hover{border-color:rgba(42,181,193,0.3);}
+.spec-pill.selected{border-color:var(--teal);background:rgba(42,181,193,0.07);color:var(--teal-dim);font-weight:500;}
+
+/* SUBMIT BTN */
+.btn-submit{
+  display:block;width:100%;height:44px;
+  background:var(--teal);color:var(--navy-deep);
+  font-family:var(--font-body);font-size:15px;font-weight:600;
+  border:none;border-radius:var(--r-md);cursor:pointer;
+  transition:all 0.15s;margin-top:8px;
+  letter-spacing:0.01em;
+}
+.btn-submit:hover{background:var(--teal-lt);box-shadow:0 4px 14px rgba(42,181,193,0.35);}
+.btn-submit.amber{background:var(--amber);color:var(--navy-deep);}
+.btn-submit.amber:hover{background:var(--amber-lt);box-shadow:0 4px 14px rgba(245,158,11,0.35);}
+.btn-submit:disabled{opacity:0.55;cursor:not-allowed;}
+
+/* DIVIDER */
+.divider{display:flex;align-items:center;gap:12px;margin:20px 0;}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
+.divider span{font-size:11px;color:var(--body-text);white-space:nowrap;}
+
+/* GOOGLE BTN */
+.btn-google{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  width:100%;height:40px;background:var(--white);
+  border:1px solid var(--border);border-radius:var(--r-md);
+  font-family:var(--font-body);font-size:14px;font-weight:400;color:var(--navy);
+  cursor:pointer;transition:all 0.15s;
+}
+.btn-google:hover{border-color:rgba(42,181,193,0.3);background:var(--bg);}
+
+/* ALERT */
+.alert{
+  border-radius:var(--r-md);padding:11px 14px;
+  font-size:13px;line-height:1.5;margin-bottom:18px;
+  display:none;border-left:3px solid;
+}
+.alert.show{display:block;}
+.alert-error{background:var(--error-bg);border-color:var(--error);color:var(--error);}
+.alert-success{background:var(--success-bg);border-color:var(--success);color:var(--success);}
+.alert-info{background:rgba(42,181,193,0.06);border-color:var(--teal);color:var(--teal-dim);}
+
+/* FOOTER LINKS */
+.form-footer{margin-top:24px;text-align:center;font-size:13px;color:var(--body-text);}
+.form-footer a{color:var(--teal);font-weight:500;}
+.form-footer a:hover{text-decoration:underline;}
+
+/* PROGRESS STEPS */
+.progress{display:flex;align-items:center;gap:0;margin-bottom:28px;}
+.step{
+  display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;
+  position:relative;
+}
+.step::after{content:'';position:absolute;top:12px;left:50%;right:-50%;height:1px;background:var(--border);z-index:0;}
+.step:last-child::after{display:none;}
+.step-dot{width:24px;height:24px;border-radius:50%;border:2px solid var(--border);background:var(--white);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--body-text);z-index:1;position:relative;transition:all 0.2s;}
+.step.done .step-dot{background:var(--teal);border-color:var(--teal);color:var(--white);}
+.step.active .step-dot{border-color:var(--teal);color:var(--teal);box-shadow:0 0 0 3px rgba(42,181,193,0.15);}
+.step::after{transition:background 0.2s;}
+.step.done::after{background:var(--teal);}
+.step-lbl{font-size:10px;color:var(--body-text);white-space:nowrap;}
+.step.active .step-lbl{color:var(--teal);font-weight:500;}
+
+/* CONSENT BOX */
+.consent-box{
+  background:var(--bg);border:1px solid var(--border);border-radius:var(--r-md);
+  padding:14px;margin-bottom:16px;
+}
+.consent-row{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--body-text);line-height:1.5;}
+.consent-row input[type=checkbox]{width:16px;height:16px;border-radius:3px;flex-shrink:0;margin-top:2px;accent-color:var(--teal);}
+.consent-row a{color:var(--teal);}
+
+/* SHARE TOKEN SECTION */
+.token-box{
+  background:rgba(42,181,193,0.06);
+  border:1px solid rgba(42,181,193,0.2);
+  border-radius:var(--r-lg);
+  padding:16px;
+  margin-bottom:20px;
+  text-align:center;
+}
+.token-label{font-size:11px;color:var(--teal-dim);font-weight:500;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;}
+.token-value{font-family:var(--font-mono);font-size:14px;color:var(--navy);letter-spacing:0.1em;background:var(--white);border:1px solid var(--border);border-radius:var(--r-sm);padding:8px 14px;display:inline-block;}
+
+/* TIER BADGE */
+.tier-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:11px;font-weight:500;padding:3px 10px;border-radius:100px;
+  margin-bottom:20px;
+}
+.badge-free{background:rgba(42,181,193,0.08);border:1px solid rgba(42,181,193,0.2);color:var(--teal-dim);}
+.badge-pro{background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);color:#8a5c00;}
+
+/* PASSWORD STRENGTH */
+.pw-strength{margin-top:5px;}
+.pw-bars{display:flex;gap:3px;margin-bottom:3px;}
+.pw-bar{height:3px;border-radius:2px;flex:1;background:var(--border);transition:background 0.2s;}
+.pw-bar.weak{background:#D32F2F;}
+.pw-bar.fair{background:#F57C00;}
+.pw-bar.good{background:#2E7D32;}
+.pw-text{font-size:10px;color:var(--body-text);}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .auth-layout{grid-template-columns:1fr;}
+  .auth-left{display:none;}
+  .auth-right{padding:40px 24px;}
+}
+</style>
+</head>
+<body>
+
+<div class="auth-layout">
+
+  <!-- LEFT PANEL -->
+  <div class="auth-left">
+    <div class="left-brand">
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
+        <circle cx="17" cy="17" r="17" fill="rgba(26,42,94,0.7)"/>
+        <ellipse cx="17" cy="19" rx="9" ry="10" fill="#1a5fb4"/>
+        <ellipse cx="17" cy="12.5" rx="8.5" ry="7.5" fill="#1a5fb4"/>
+        <circle cx="12.5" cy="12.5" r="3.8" fill="#d4a229"/>
+        <circle cx="21.5" cy="12.5" r="3.8" fill="#d4a229"/>
+        <circle cx="12.5" cy="12.5" r="2.3" fill="#0d1b3e"/>
+        <circle cx="21.5" cy="12.5" r="2.3" fill="#0d1b3e"/>
+        <circle cx="13.2" cy="11.8" r="0.9" fill="white"/>
+        <circle cx="22.2" cy="11.8" r="0.9" fill="white"/>
+        <ellipse cx="17" cy="25" rx="2.2" ry="3" fill="#f59e0b"/>
+        <circle cx="17" cy="23" r="1.8" fill="#f59e0b"/>
+      </svg>
+      <span class="left-wordmark">GluMira<sup>™</sup></span>
+    </div>
+
+    <div class="left-content">
+      <p class="left-eyebrow">Powered by IOB Hunter™</p>
+      <h2 class="left-title">The science of insulin,<br><em>made visible</em></h2>
+      <p class="left-body">For caregivers sitting awake at 2am, watching glucose numbers, asking why. We answer that question with science, not guesswork.</p>
+      <div class="left-stats">
+        <div class="stat"><span class="stat-num">9</span><span class="stat-lbl">Insulin types modelled</span></div>
+        <div class="stat"><span class="stat-num">4</span><span class="stat-lbl">Specialist modules</span></div>
+        <div class="stat"><span class="stat-num">3mo</span><span class="stat-lbl">Free, no card</span></div>
+      </div>
+      <div class="left-card">
+        <div class="lc-row">
+          <span class="lc-label">Nightscout · Live</span>
+          <span class="lc-live"><span class="live-dot"></span>Connected</span>
+        </div>
+        <div class="lc-glucose"><span class="lc-num">6.4</span><span class="lc-unit">mmol/L</span></div>
+        <div><span class="lc-badge">↗ In range</span></div>
+        <div class="lc-iob-row"><span class="lc-iob-lbl">IOB</span><span class="lc-iob-val">1.4 U</span></div>
+        <div class="lc-iob-row"><span class="lc-iob-lbl">Decay window</span><span class="lc-iob-val">3h 12m</span></div>
+        <div class="lc-risk"><span class="lc-risk-lbl">Stacking score</span><span class="lc-risk-pill">18 — Safe</span></div>
+      </div>
+    </div>
+
+    <div class="left-footer">
+      GluMira™ is an educational platform, not a medical device.<br>
+      Always discuss clinical decisions with your care team.
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="auth-right">
+    <div class="auth-form-wrap">
+
+      <!-- TAB NAV -->
+      <div class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab('signin')">Sign in</button>
+        <button class="tab-btn" onclick="switchTab('register')">Clinician sign-up</button>
+        <button class="tab-btn" onclick="switchTab('caregiver')">Caregiver access</button>
+      </div>
+
+      <!-- ══ SIGN IN ══ -->
+      <div class="tab-panel active" id="tab-signin">
+        <h2 class="form-title">Welcome back</h2>
+        <p class="form-sub">Sign in to your GluMira™ account</p>
+
+        <div class="alert alert-error" id="signin-error">Incorrect email or password. Please try again.</div>
+
+        <button class="btn-google" onclick="handleGoogle()">
+          <svg width="18" height="18" viewBox="0 0 18 18"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 01-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z" fill="#34A853"/><path d="M3.964 10.71A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z" fill="#EA4335"/></svg>
+          Continue with Google
+        </button>
+
+        <div class="divider"><span>or continue with email</span></div>
+
+        <div class="field">
+          <label for="si-email">Email address</label>
+          <input type="email" id="si-email" placeholder="you@clinic.com" autocomplete="email">
+        </div>
+        <div class="field">
+          <label for="si-password">Password</label>
+          <input type="password" id="si-password" placeholder="••••••••" autocomplete="current-password">
+          <div class="field-hint" style="text-align:right;"><a href="#" onclick="switchTab('reset')" style="color:var(--teal);font-size:11px;">Forgot password?</a></div>
+        </div>
+
+        <button class="btn-submit" onclick="handleSignin()">Sign in to GluMira™</button>
+
+        <div class="form-footer">
+          Don't have an account? <a href="#" onclick="switchTab('register')">Create one free →</a>
+        </div>
+      </div>
+
+      <!-- ══ CLINICIAN REGISTRATION ══ -->
+      <div class="tab-panel" id="tab-register">
+        <!-- Progress -->
+        <div class="progress" id="reg-progress">
+          <div class="step active" id="step-1"><div class="step-dot">1</div><div class="step-lbl">Role</div></div>
+          <div class="step" id="step-2"><div class="step-dot">2</div><div class="step-lbl">Account</div></div>
+          <div class="step" id="step-3"><div class="step-dot">3</div><div class="step-lbl">Clinic</div></div>
+          <div class="step" id="step-4"><div class="step-dot">4</div><div class="step-lbl">Done</div></div>
+        </div>
+
+        <!-- STEP 1 — Role -->
+        <div id="reg-step-1">
+          <h2 class="form-title">Who are you?</h2>
+          <p class="form-sub">Choose your role to customise your GluMira™ experience.</p>
+          <div class="tier-badge badge-free">✓ 3-month free trial — no card needed</div>
+
+          <div class="role-grid">
+            <div class="role-btn" onclick="selectRole('clinician', this)">
+              <div class="role-icon-wrap">🧑‍⚕️</div>
+              <div class="role-name">Clinician</div>
+              <div class="role-desc">Doctor, nurse, educator</div>
+            </div>
+            <div class="role-btn" onclick="selectRole('patient', this)">
+              <div class="role-icon-wrap">🩺</div>
+              <div class="role-name">Patient</div>
+              <div class="role-desc">T1D or T2D</div>
+            </div>
+            <div class="role-btn" onclick="selectRole('researcher', this)">
+              <div class="role-icon-wrap">🔬</div>
+              <div class="role-name">Researcher</div>
+              <div class="role-desc">Institutional</div>
+            </div>
+          </div>
+
+          <div class="field" id="spec-field" style="display:none;">
+            <label>Specialisation</label>
+            <div class="spec-pills">
+              <span class="spec-pill" onclick="toggleSpec(this)">Endocrinologist</span>
+              <span class="spec-pill" onclick="toggleSpec(this)">Diabetes educator</span>
+              <span class="spec-pill" onclick="toggleSpec(this)">Nurse</span>
+              <span class="spec-pill" onclick="toggleSpec(this)">Paediatrician</span>
+              <span class="spec-pill" onclick="toggleSpec(this)">GP / Family medicine</span>
+              <span class="spec-pill" onclick="toggleSpec(this)">Obstetrician</span>
+            </div>
+          </div>
+
+          <button class="btn-submit" onclick="goStep(2)" style="margin-top:20px;">Continue →</button>
+
+          <div class="form-footer">Already registered? <a href="#" onclick="switchTab('signin')">Sign in</a></div>
+        </div>
+
+        <!-- STEP 2 — Account -->
+        <div id="reg-step-2" style="display:none;">
+          <h2 class="form-title">Create your account</h2>
+          <p class="form-sub">Your GluMira™ credentials</p>
+
+          <button class="btn-google" onclick="handleGoogle()">
+            <svg width="18" height="18" viewBox="0 0 18 18"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 01-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z" fill="#34A853"/><path d="M3.964 10.71A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z" fill="#EA4335"/></svg>
+            Sign up with Google
+          </button>
+          <div class="divider"><span>or use email</span></div>
+
+          <div class="field-row" style="margin-bottom:16px;">
+            <div class="field">
+              <label>First name</label>
+              <input type="text" id="reg-fname" placeholder="Sarah" autocomplete="given-name">
+            </div>
+            <div class="field">
+              <label>Last name</label>
+              <input type="text" id="reg-lname" placeholder="Nakamura" autocomplete="family-name">
+            </div>
+          </div>
+          <div class="field">
+            <label>Email address</label>
+            <input type="email" id="reg-email" placeholder="sarah@clinic.com" autocomplete="email">
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <input type="password" id="reg-password" placeholder="Min. 8 characters" autocomplete="new-password" oninput="checkPassword(this.value)">
+            <div class="pw-strength">
+              <div class="pw-bars">
+                <div class="pw-bar" id="pb1"></div>
+                <div class="pw-bar" id="pb2"></div>
+                <div class="pw-bar" id="pb3"></div>
+                <div class="pw-bar" id="pb4"></div>
+              </div>
+              <div class="pw-text" id="pw-text">Enter a password</div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Region</label>
+            <select id="reg-region">
+              <option value="">Select your region</option>
+              <option value="AF">Africa (30% discount applies)</option>
+              <option value="UAE">UAE / Gulf</option>
+              <option value="UK">United Kingdom</option>
+              <option value="EU">European Union</option>
+              <option value="US">United States</option>
+              <option value="INT">International</option>
+            </select>
+            <div class="field-hint">African residents receive 30% discount on Pro tier automatically.</div>
+          </div>
+
+          <div style="display:flex;gap:10px;margin-top:8px;">
+            <button class="btn-submit" style="background:var(--bg);color:var(--navy);border:1px solid var(--border);flex:0 0 auto;width:80px;" onclick="goStep(1)">← Back</button>
+            <button class="btn-submit" style="flex:1;" onclick="goStep(3)">Continue →</button>
+          </div>
+        </div>
+
+        <!-- STEP 3 — Clinic (clinician only) -->
+        <div id="reg-step-3" style="display:none;">
+          <h2 class="form-title">Your practice</h2>
+          <p class="form-sub">Helps us customise reporting and regional guidelines.</p>
+
+          <div class="field">
+            <label>Clinic / hospital name</label>
+            <input type="text" id="reg-clinic" placeholder="Windhoek Central Hospital">
+          </div>
+          <div class="field">
+            <label>HPCSA / licence number <span style="color:var(--body-text);font-weight:300;">(optional)</span></label>
+            <input type="text" id="reg-license" placeholder="MP 123456">
+            <div class="field-hint">Used for professional verification only. Never displayed publicly.</div>
+          </div>
+
+          <div class="consent-box">
+            <div class="consent-row" style="margin-bottom:10px;">
+              <input type="checkbox" id="consent-terms">
+              <label for="consent-terms" style="font-size:13px;font-weight:300;">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+            </div>
+            <div class="consent-row" style="margin-bottom:10px;">
+              <input type="checkbox" id="consent-hipaa">
+              <label for="consent-hipaa" style="font-size:13px;font-weight:300;">I understand GluMira™ is an educational platform, not a medical device. All clinical insights must be discussed with a qualified care team.</label>
+            </div>
+            <div class="consent-row">
+              <input type="checkbox" id="consent-comms">
+              <label for="consent-comms" style="font-size:13px;font-weight:300;">Send me product updates and clinical insights (optional)</label>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:10px;">
+            <button class="btn-submit" style="background:var(--bg);color:var(--navy);border:1px solid var(--border);flex:0 0 auto;width:80px;" onclick="goStep(2)">← Back</button>
+            <button class="btn-submit amber" style="flex:1;" onclick="goStep(4)">Create account →</button>
+          </div>
+        </div>
+
+        <!-- STEP 4 — Success -->
+        <div id="reg-step-4" style="display:none;text-align:center;">
+          <div style="font-size:48px;margin-bottom:16px;">🦉</div>
+          <h2 class="form-title" style="text-align:center;">You're in.</h2>
+          <p class="form-sub" style="text-align:center;max-width:280px;margin:0 auto 24px;">Check your email to verify your account, then start your 3-month free trial.</p>
+          <div class="alert alert-success show">Account created. Verification email sent.</div>
+          <button class="btn-submit" onclick="switchTab('signin')">Go to sign in</button>
+          <div class="form-footer" style="margin-top:16px;font-size:12px;color:var(--body-text);">
+            Discuss all clinical insights with your care team.
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ CAREGIVER ACCESS ══ -->
+      <div class="tab-panel" id="tab-caregiver">
+        <h2 class="form-title">Caregiver access</h2>
+        <p class="form-sub">Enter your share token from the clinician or patient who invited you.</p>
+
+        <div class="token-box">
+          <div class="token-label">Share token</div>
+          <div class="token-value" id="token-display">GLM-XXXX-XXXX-XXXX</div>
+        </div>
+
+        <div class="field">
+          <label>Your share token</label>
+          <input type="text" id="cg-token" placeholder="GLM-XXXX-XXXX-XXXX" style="font-family:var(--font-mono);letter-spacing:0.06em;text-transform:uppercase;" oninput="formatToken(this)">
+          <div class="field-hint">Your clinician or patient sends this token when they create a caregiver share link.</div>
+        </div>
+        <div class="field">
+          <label>Your email address</label>
+          <input type="email" id="cg-email" placeholder="parent@family.com" autocomplete="email">
+          <div class="field-hint">Must match the email address your clinician used to invite you.</div>
+        </div>
+
+        <div class="alert alert-info show" style="display:flex!important;align-items:flex-start;gap:10px;">
+          <span>ℹ️</span>
+          <span>Caregiver access is <strong>view-only by default</strong> unless your clinician granted edit permissions. Discuss all clinical decisions with your care team.</span>
+        </div>
+
+        <button class="btn-submit" onclick="handleCaregiverAccess()">Access patient profile</button>
+
+        <div class="divider"><span>no token?</span></div>
+        <div style="text-align:center;">
+          <p style="font-size:13px;color:var(--body-text);margin-bottom:10px;">Ask your clinician or the patient's account holder to generate a caregiver share link from their dashboard.</p>
+          <a href="#" onclick="switchTab('signin')" style="font-size:13px;color:var(--teal);font-weight:500;">Already have an account? Sign in →</a>
+        </div>
+      </div>
+
+      <!-- ══ RESET PASSWORD ══ -->
+      <div class="tab-panel" id="tab-reset">
+        <h2 class="form-title">Reset password</h2>
+        <p class="form-sub">Enter your email and we'll send a reset link.</p>
+
+        <div class="alert alert-success" id="reset-success">Reset link sent. Check your inbox.</div>
+
+        <div class="field">
+          <label>Email address</label>
+          <input type="email" id="reset-email" placeholder="you@clinic.com">
+        </div>
+        <button class="btn-submit" onclick="handleReset()">Send reset link</button>
+        <div class="form-footer"><a href="#" onclick="switchTab('signin')">← Back to sign in</a></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+let currentRole = '';
+let currentStep = 1;
+
+function switchTab(name) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  const panel = document.getElementById('tab-' + name);
+  if (panel) {
+    panel.classList.add('active');
+    // highlight matching nav btn
+    const btns = document.querySelectorAll('.tab-btn');
+    const map = {signin:0, register:1, caregiver:2};
+    if (map[name] !== undefined) btns[map[name]].classList.add('active');
+  }
+}
+
+function selectRole(role, el) {
+  document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+  currentRole = role;
+  document.getElementById('spec-field').style.display = (role === 'clinician') ? 'block' : 'none';
+}
+
+function toggleSpec(el) {
+  el.classList.toggle('selected');
+}
+
+function goStep(n) {
+  // hide all steps
+  [1,2,3,4].forEach(i => {
+    const s = document.getElementById('reg-step-' + i);
+    if(s) s.style.display = 'none';
+    const dot = document.getElementById('step-' + i);
+    if(dot) dot.classList.remove('active','done');
+  });
+  // show target
+  const target = document.getElementById('reg-step-' + n);
+  if(target) target.style.display = 'block';
+  // update progress
+  for(let i=1; i<n; i++) {
+    const d = document.getElementById('step-' + i);
+    if(d) { d.classList.add('done'); d.querySelector('.step-dot').textContent = '✓'; }
+  }
+  const active = document.getElementById('step-' + n);
+  if(active) active.classList.add('active');
+  currentStep = n;
+}
+
+function checkPassword(val) {
+  const bars = [1,2,3,4].map(i => document.getElementById('pb' + i));
+  const txt = document.getElementById('pw-text');
+  bars.forEach(b => { b.className = 'pw-bar'; });
+  if(!val) { txt.textContent = 'Enter a password'; return; }
+  let score = 0;
+  if(val.length >= 8) score++;
+  if(/[A-Z]/.test(val)) score++;
+  if(/[0-9]/.test(val)) score++;
+  if(/[^A-Za-z0-9]/.test(val)) score++;
+  const levels = ['','weak','fair','fair','good'];
+  const labels = ['','Weak','Fair','Good','Strong'];
+  for(let i=0; i<score; i++) bars[i].classList.add(levels[score]);
+  txt.textContent = labels[score] || 'Weak';
+}
+
+function formatToken(input) {
+  let v = input.value.replace(/[^a-zA-Z0-9]/g,'').toUpperCase();
+  let parts = [];
+  parts.push(v.slice(0,3));
+  if(v.length > 3) parts.push(v.slice(3,7));
+  if(v.length > 7) parts.push(v.slice(7,11));
+  if(v.length > 11) parts.push(v.slice(11,15));
+  const formatted = 'GLM-' + parts.filter(Boolean).join('-');
+  input.value = formatted;
+  document.getElementById('token-display').textContent = formatted || 'GLM-XXXX-XXXX-XXXX';
+}
+
+function handleSignin() {
+  const email = document.getElementById('si-email').value;
+  const password = document.getElementById('si-password').value;
+  const err = document.getElementById('signin-error');
+  err.classList.remove('show');
+  if(!email || !password) { err.textContent = 'Please enter your email and password.'; err.classList.add('show'); return; }
+  // Simulate — in real app: supabase.auth.signInWithPassword({email, password})
+  const btn = event.target;
+  btn.disabled = true; btn.textContent = 'Signing in…';
+  setTimeout(() => { btn.disabled = false; btn.textContent = 'Sign in to GluMira™'; alert('In production: redirect to dashboard'); }, 1200);
+}
+
+function handleGoogle() {
+  // In real app: supabase.auth.signInWithOAuth({ provider: 'google' })
+  alert('In production: Google OAuth redirect');
+}
+
+function handleCaregiverAccess() {
+  const token = document.getElementById('cg-token').value;
+  const email = document.getElementById('cg-email').value;
+  if(!token || !email) { alert('Please enter your share token and email address.'); return; }
+  const btn = event.target;
+  btn.disabled = true; btn.textContent = 'Verifying token…';
+  setTimeout(() => { btn.disabled = false; btn.textContent = 'Access patient profile'; alert('In production: validate token, redirect to caregiver view'); }, 1200);
+}
+
+function handleReset() {
+  const email = document.getElementById('reset-email').value;
+  if(!email) return;
+  // In real app: supabase.auth.resetPasswordForEmail(email)
+  document.getElementById('reset-success').classList.add('show');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+GluMira™ Dashboard — Phase 2 Clinician Dashboard (Deployed)
+==============================================================
+
+URL: https://glumiradash-9pjsvhaf.manus.space
+User Tag: Check
+
+Description:
+Sign-in page for the GluMira™ Clinician Dashboard (Phase 2). Provides
+access to patient management dashboard and clinical tools. Includes
+disclaimer that GluMira™ is an educational platform, not a medical device.
+
+Category: Dashboard / Deployed App
+Version: Phase 2
+Status: Live
+Filed: 2026-03-28

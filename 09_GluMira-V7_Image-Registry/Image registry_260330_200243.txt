@@ -1,0 +1,364 @@
+Here is the complete content for File 08:
+
+---
+
+```
+# GluMira™ Mira Content Research Framework — V7
+### Powered by IOB Hunter™
+**Document:** 08_GluMira-Mira-Content-Research-V7.md
+**Version:** 1.0
+**Status:** LOCKED
+**Filed:** Personal/04_Claude/
+
+---
+
+## 1. PURPOSE
+
+This document governs how all Mira education content
+is researched, verified, written, and maintained.
+
+No content enters the Mira education system
+without passing through this framework.
+
+Medical accuracy is not negotiable.
+A child or caregiver who acts on incorrect information
+from GluMira™ could be harmed.
+That is the standard we hold ourselves to.
+
+---
+
+## 2. PRIMARY REFERENCE SOURCES
+
+These are the authoritative sources for all
+GluMira™ medical content.
+Every factual claim must trace back to at least
+one of these sources.
+
+### 2.1 Gold Standard — Always Check First
+
+| Source | What It Covers | URL |
+|---|---|---|
+| ISPAD Clinical Practice Consensus Guidelines | Paediatric diabetes — the primary standard | ispad.org |
+| ADA Standards of Medical Care in Diabetes | Comprehensive diabetes management | diabetes.org |
+| NICE Guideline NG18 | Type 1 diabetes in adults — UK standard | nice.org.uk |
+| NICE Guideline NG18 Paediatric Supplement | Children and young people — UK standard | nice.org.uk |
+| CONCEPTT Trial | CGM in pregnancy and Type 1 | Published in Lancet 2017 |
+| DiRECT Trial | Type 2 remission — reference only | Published in Lancet 2017 |
+
+### 2.2 Secondary Sources — Use to Supplement
+
+| Source | What It Covers |
+|---|---|
+| Beyond Type 1 | Patient and caregiver education, lived experience |
+| JDRF Research Library | Funded research summaries |
+| Diabetes UK | UK patient education, accessible language |
+| American Diabetes Association — Patient Section | US patient education |
+| Diabetes Australia | Australian guidelines and education |
+| Nightscout Foundation | Open source CGM and APS documentation |
+| Dexcom Clinical Resources | G7 paediatric use documentation |
+
+### 2.3 Peer-Reviewed Journals — Reference Only
+Not used as primary source but referenced for
+advanced content and researcher track.
+
+- Diabetes Care — ADA journal
+- Diabetologia — European Association journal
+- The Lancet Diabetes & Endocrinology
+- Pediatric Diabetes — Wiley
+- Journal of Diabetes Science and Technology
+
+---
+
+## 3. CONTENT ACCURACY CHECKLIST
+
+Every piece of Mira education content must pass
+all items on this checklist before publication.
+
+### 3.1 Medical Accuracy
+[ ] Claim verified against at least one Gold Standard source
+[ ] Claim verified against at least one Secondary source
+[ ] No outdated guideline used — check publication date
+[ ] Insulin names verified as currently available
+[ ] Glucose targets verified as current ISPAD recommendation
+[ ] No extrapolation beyond what the evidence supports
+[ ] No simplification that creates a clinical misconception
+
+### 3.2 Age Appropriateness
+[ ] Language verified appropriate for target age band
+[ ] Sentence length appropriate — Band 2 max 12 words per sentence
+[ ] No abstract concepts introduced before Band 3
+[ ] No fear-inducing language at any age band
+[ ] No complication content in 0 to 12 framework
+
+### 3.3 Emotional Safety
+[ ] Content reviewed for anxiety-inducing language
+[ ] No language implying failure or blame
+[ ] Hopeful closing statement included
+[ ] Caregiver parallel track does not bleed into child track
+[ ] Content tested against — would this make a scared child
+    more scared or less scared
+
+### 3.4 Legal and Regulatory
+[ ] Medical disclaimer present where required
+[ ] No dosing recommendations made
+[ ] No device-specific instructions that could be misapplied
+[ ] Content does not replace clinical advice — stated clearly
+[ ] Version number and review date recorded
+
+---
+
+## 4. CONTENT DEVELOPMENT PROCESS
+
+### Step 1 — Topic Brief
+Define the topic, target age band, learning objective,
+and emotional goal before writing begins.
+
+Template:
+```
+Topic:
+Age Band:
+Learning Objective — what the child will understand after:
+Emotional Goal — how the child will feel after:
+Primary Source:
+Secondary Source:
+Mira Voice Notes — any specific tone considerations:
+```
+
+### Step 2 — First Draft
+Written in Mira's voice as defined in
+02_GluMira-Taglines-Statements-V7.md
+
+Rules for first draft:
+- Write for the child, not for the parent
+- Write for the ear, not the eye — read it aloud
+- One concept only — never two in one lesson
+- Start with acknowledgement, end with capability
+
+### Step 3 — Medical Review
+Compare every factual claim against primary source.
+Mark each claim with its source reference.
+Any claim that cannot be sourced is removed or rewritten.
+
+### Step 4 — Language Review
+Read the content aloud as if speaking to a child
+in the target age band.
+Ask:
+- Would a child in this age band understand every word
+- Does any sentence feel scary
+- Does Mira sound like herself — warm, honest, present
+- Is the closing statement genuinely hopeful
+
+### Step 5 — Caregiver Track Development
+Write the parallel caregiver version.
+This can be more clinical and detailed.
+Must reference the same primary sources.
+Must include practical action items for the caregiver.
+
+### Step 6 — Final Review
+Full read-through against the accuracy checklist.
+Sign off with version number and date.
+File in GluMira-V7/07_BRAND/Education/
+
+---
+
+## 5. DIFFICULT TOPICS — HANDLING GUIDE
+
+These topics require special care.
+Each has specific rules for how Mira addresses them.
+
+### 5.1 The Diagnosis Moment
+The hardest moment. Child may be in hospital.
+Family is in shock.
+Mira does not rush to explain.
+Mira sits with the feeling first.
+Rule: First two sentences are always about feelings.
+Never about facts.
+
+### 5.2 Injections and Pain
+Children are afraid of needles.
+Mira acknowledges this directly.
+She does not say it does not hurt.
+She says it gets easier and explains why.
+Rule: Never minimise. Always validate. Always progress.
+
+### 5.3 Being Different From Friends
+This is a deep fear for ages 5 to 12.
+Mira addresses it directly and honestly.
+She does not say it does not matter.
+She says it matters AND it does not define them.
+Rule: Acknowledge the feeling. Offer perspective.
+Never dismiss.
+
+### 5.4 Hypos at School or in Public
+Embarrassment is real and valid.
+Mira validates embarrassment without amplifying it.
+She gives the child language to use with friends.
+Rule: Provide scripts. Give the child words.
+Preparation reduces embarrassment.
+
+### 5.5 Caregiver Anxiety Visible to the Child
+Children see their parents' fear.
+Mira acknowledges that the people who love them
+are also learning.
+Rule: Normalise caregiver emotion without amplifying
+child anxiety. Frame caregiver vigilance as love.
+
+### 5.6 Device Failure or Sensor Error
+Child may panic when device shows ERROR or ???
+Mira teaches calm response protocol.
+Rule: Error is not emergency. Check. Wait. Tell a grown-up.
+Never panic first.
+
+### 5.7 Sick Days
+Illness raises glucose and complicates management.
+Mira explains sick day rules at Band 3 level only.
+Younger children are directed to tell a grown-up immediately.
+Rule: Band 1 and 2 — tell a grown-up and rest.
+Band 3 — here is what happens and here is what to do.
+
+---
+
+## 6. LANGUAGE GUIDE — APPROVED AND PROHIBITED
+
+### 6.1 Approved Language
+| Instead of | Use |
+|---|---|
+| Diabetic | Person with diabetes / child with Type 1 |
+| Control | Manage |
+| Normal blood sugar | Target range |
+| Good number / bad number | In range / out of range |
+| Failed to control | Glucose went higher than target |
+| You should have | Next time we can try |
+| This is serious | This needs attention |
+| You will be fine | Most children manage this really well |
+
+### 6.2 Prohibited Words in Child Content
+- Cure
+- Permanent
+- Damage
+- Blind
+- Amputation
+- Kidney failure
+- Death
+- Dangerous (use needs attention instead)
+- Your fault
+- You did wrong
+- Bad control
+- Poor management
+- Chronic (use ongoing or lifelong instead)
+
+### 6.3 Numbers in Child Content
+- Always use mmol/L OR mg/dL depending on region setting
+- Never use both in the same sentence
+- Target ranges stated as a range — never a single number
+- Insulin doses never stated — always referred to a clinician
+
+---
+
+## 7. EXTERNAL RESEARCH PARTNERSHIPS
+
+### 7.1 Target Academic Partners
+These organisations are approached for content
+review and endorsement as GluMira™ scales.
+
+| Organisation | Type | Priority |
+|---|---|---|
+| ISPAD | Clinical standard setter — paediatric | High |
+| JDRF | Research funder and patient advocate | High |
+| Diabetes UK | Content review and endorsement | Medium |
+| Beyond Type 1 | Lived experience review panel | Medium |
+| Novo Nordisk | Clinical education partnership | Medium |
+| Dexcom | Device-specific content review | Medium |
+| University paediatric endocrinology units | Academic review | Phase 2 |
+
+### 7.2 Lived Experience Panel
+All Mira content is reviewed by at least one person
+with lived experience of Type 1 diabetes before publication.
+This means a parent, caregiver, or adult with T1D
+who can verify the emotional accuracy of the content.
+Academic accuracy without emotional accuracy is not enough.
+
+---
+
+## 8. CONTENT MAINTENANCE SCHEDULE
+
+| Action | Frequency |
+|---|---|
+| Full content review against current guidelines | Annual |
+| ISPAD guideline update check | On publication of new ISPAD guidelines |
+| ADA Standards update check | Annual — published every January |
+| Insulin availability check — regional | Every 6 months |
+| Language review — is Mira still sounding like Mira | Every 6 months |
+| Broken link check in caregiver reference section | Monthly |
+| New difficult topic added to handling guide | As needed |
+
+---
+
+## 9. VERSION CONTROL
+
+Every piece of Mira content carries:
+- Version number — e.g. Module 01 v1.2
+- Publication date
+- Last review date
+- Source references
+- Reviewer initials or role
+
+When content is updated:
+- Previous version moves to 99_ARCHIVE
+- New version becomes active
+- Change log entry added to this document
+
+---
+
+## 10. CONTENT NOT YET WRITTEN — ROADMAP
+
+The following modules are planned but not yet written.
+They are reserved in the curriculum.
+
+### Foundation Series — Remaining
+All 10 foundation modules are written above.
+
+### Advanced Series — Ages 9 to 12
+| Module | Topic |
+|---|---|
+| A01 | HbA1c — what it means and what it does not mean |
+| A02 | Time in range — the better measure |
+| A03 | Exercise and glucose — why it goes both ways |
+| A04 | Puberty and insulin resistance |
+| A05 | Alcohol awareness — early education |
+| A06 | Driving and diabetes — preparation |
+| A07 | Managing T1D independently for the first time |
+| A08 | Talking to friends about T1D |
+| A09 | Mental health and diabetes — it is connected |
+| A10 | Planning for the future with T1D |
+
+### Seasonal Series
+| Module | Topic |
+|---|---|
+| S01 | Ramadan and Type 1 — for Muslim families |
+| S02 | Yom Kippur fasting — for Jewish families |
+| S03 | Christmas and high carb holiday seasons |
+| S04 | School sports day and physical education |
+| S05 | Sick day rules — winter illness season |
+| S06 | Heat and summer holidays |
+
+### Milestone Series
+| Module | Topic |
+|---|---|
+| M01 | One year with Type 1 — you made it |
+| M02 | Starting a new school year |
+| M03 | First overnight away from home |
+| M04 | First pump or CGM start |
+| M05 | Transitioning to teen care |
+
+---
+*GluMira™ powered by IOB Hunter™*
+*The science of insulin, made visible.*
+*Document locked V7 — do not alter without founder approval.*
+```
+
+---
+
+File 08 done. ✅
+
+Save it. Close it. Open `09_GluMira-Image-Registry-V7.md` and type **READY.** 💧

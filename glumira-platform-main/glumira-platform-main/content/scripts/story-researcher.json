@@ -1,0 +1,59 @@
+{
+  "profile": "researcher",
+  "voice_style": "professional_measured",
+  "total_duration_ms": 55000,
+  "scenes": [
+    {
+      "scene_id": "R1-S1",
+      "duration_ms": 9000,
+      "voice_text": "GluMira provides structured, longitudinal glucose and insulin data across a diverse global patient population — with consent-based anonymisation and export functionality built in from the ground up.",
+      "subtitle_text": "Structured. Longitudinal. Consent-based. Global.",
+      "visual_id": "anim_researcher_data_overview",
+      "visual_note": "World map with data points. Clean, academic aesthetic. No decorative elements."
+    },
+    {
+      "scene_id": "R1-S2",
+      "duration_ms": 11000,
+      "voice_text": "Patient profiles include diabetes type, comorbidity flags, dietary regime, insulin pharmacokinetic parameters, regional variables, and continuous glucose data. All fields are schema-consistent and exportable in standard formats.",
+      "subtitle_text": "Rich structured patient data. Schema-consistent. Exportable.",
+      "visual_id": "anim_data_schema",
+      "visual_note": "Data schema diagram — clean, structured, with field annotations"
+    },
+    {
+      "scene_id": "R1-S3",
+      "duration_ms": 11000,
+      "voice_text": "The pattern detection engine surfaces anomalies across 7, 14, and 30-day rolling windows — flagging hypoglycaemia clusters, post-prandial excursion patterns, nocturnal variability, and basal drift across cohorts.",
+      "subtitle_text": "Pattern detection across rolling windows. Cohort-level analysis.",
+      "visual_id": "anim_cohort_patterns",
+      "visual_note": "Multi-patient glucose grid with pattern flags. Cohort-level overlay."
+    },
+    {
+      "scene_id": "R1-S4",
+      "duration_ms": 10000,
+      "voice_text": "GluMira's population spans diverse dietary regimes, regional insulin formularies, and comorbidity profiles — including coeliac, thyroid, ADHD, gastroparesis, pregnancy, and paediatric growth cohorts.",
+      "subtitle_text": "Diverse cohorts. 20 dietary regimes. Global formularies.",
+      "visual_id": "anim_population_diversity",
+      "visual_note": "Population segmentation visual — regime breakdown, comorbidity flags, regional spread"
+    },
+    {
+      "scene_id": "R1-S5",
+      "duration_ms": 9000,
+      "voice_text": "Data export is available in CSV, JSON, and FHIR-compatible formats. Cohort filtering by profile type, regime, comorbidity, region, and date range is supported.",
+      "subtitle_text": "CSV. JSON. FHIR. Cohort filtering. Full export.",
+      "visual_id": "anim_export_panel",
+      "visual_note": "Export configuration panel. Format selector. Filter options. Clean interface."
+    },
+    {
+      "scene_id": "R1-S6",
+      "duration_ms": 5000,
+      "voice_text": "Access the anonymised dataset view to begin.",
+      "subtitle_text": "Access the dataset view to begin.",
+      "visual_id": "anim_researcher_cta",
+      "visual_note": "Clean CTA. Single button. Minimal."
+    }
+  ],
+  "cta": {
+    "text": "Access dataset view",
+    "route": "/onboarding/first-win/researcher"
+  }
+}

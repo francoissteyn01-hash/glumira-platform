@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GluMira™ — The Science of Insulin, Made Visible</title>
+<meta name="description" content="GluMira™ powered by IOB Hunter™ makes insulin science visible for caregivers, clinicians, and patients managing Type 1 and Type 2 diabetes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700;1,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#1a2a5e;--navy-deep:#0d1b3e;--navy-mid:#152348;
+  --teal:#2ab5c1;--teal-lt:#7dd3c0;--teal-dim:#1e8a94;
+  --amber:#f59e0b;--amber-lt:#fcd34d;
+  --white:#ffffff;--body-text:#52667a;--border:#dee2e6;--bg:#f8f9fa;--surface:#ffffff;
+  --g-hypo:#D32F2F;--g-low:#F57C00;--g-range:#2E7D32;
+  --font-disp:'Playfair Display',Georgia,serif;
+  --font-body:'DM Sans',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+  --r-sm:4px;--r-md:8px;--r-lg:12px;--r-xl:16px;--r-2xl:24px;
+  --sh-card:0 1px 3px rgba(26,42,94,0.06),0 4px 12px rgba(26,42,94,0.04);
+  --sh-hover:0 4px 14px rgba(26,42,94,0.12),0 8px 28px rgba(26,42,94,0.08);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font-body);background:var(--navy-deep);color:var(--navy);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:inherit;text-decoration:none;}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;background:rgba(13,27,62,0.94);backdrop-filter:blur(16px);border-bottom:1px solid rgba(42,181,193,0.12);display:flex;align-items:center;justify-content:space-between;padding:0 48px;}
+.nav-brand{display:flex;align-items:center;gap:10px;}
+.nav-wordmark{font-family:var(--font-body);font-weight:500;font-size:18px;color:var(--white);letter-spacing:-0.01em;}
+.nav-wordmark sup{font-size:9px;vertical-align:super;color:var(--teal);}
+.nav-links{display:flex;align-items:center;gap:4px;}
+.nav-links a{color:rgba(255,255,255,0.5);font-size:14px;padding:6px 14px;border-radius:6px;transition:color 0.15s,background 0.15s;}
+.nav-links a:hover{color:rgba(255,255,255,0.9);background:rgba(255,255,255,0.06);}
+.nav-cta{background:var(--amber)!important;color:var(--navy-deep)!important;font-weight:600!important;border-radius:8px!important;padding:8px 20px!important;transition:background 0.15s,box-shadow 0.15s!important;}
+.nav-cta:hover{background:var(--amber-lt)!important;box-shadow:0 4px 14px rgba(245,158,11,0.4)!important;}
+
+/* HERO */
+.hero{min-height:100vh;background:linear-gradient(160deg,var(--navy-deep) 0%,#0f1f4a 40%,#152348 70%,#1a2a5e 100%);position:relative;overflow:hidden;display:flex;flex-direction:column;padding-top:64px;}
+.hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 900px 600px at 75% 55%,rgba(42,181,193,0.07) 0%,transparent 65%),radial-gradient(ellipse 400px 300px at 10% 75%,rgba(42,181,193,0.04) 0%,transparent 70%);}
+.hero::after{content:'';position:absolute;inset:0;pointer-events:none;opacity:0.025;background-image:repeating-linear-gradient(0deg,transparent,transparent 59px,rgba(42,181,193,0.5) 60px),repeating-linear-gradient(60deg,transparent,transparent 59px,rgba(42,181,193,0.5) 60px),repeating-linear-gradient(120deg,transparent,transparent 59px,rgba(42,181,193,0.5) 60px);}
+.hero-inner{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:80px 48px 60px;display:grid;grid-template-columns:1fr 420px;gap:60px;align-items:center;min-height:calc(100vh - 64px);}
+.eyebrow-badge{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal);background:rgba(42,181,193,0.1);border:1px solid rgba(42,181,193,0.2);border-radius:100px;padding:5px 14px;margin-bottom:24px;}
+.hero-title{font-family:var(--font-disp);font-size:clamp(40px,5.5vw,64px);font-weight:800;color:var(--white);line-height:1.08;letter-spacing:-0.02em;margin-bottom:22px;}
+.hero-title em{font-style:italic;background:linear-gradient(135deg,var(--teal) 0%,var(--teal-lt) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-body{font-size:18px;font-weight:300;color:rgba(255,255,255,0.58);line-height:1.72;max-width:480px;margin-bottom:36px;}
+.hero-body strong{color:rgba(255,255,255,0.82);font-weight:400;}
+.hero-actions{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:44px;}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--amber);color:var(--navy-deep);font-weight:600;font-size:15px;padding:14px 28px;border-radius:var(--r-md);border:none;cursor:pointer;transition:all 0.15s;font-family:var(--font-body);text-decoration:none;}
+.btn-primary:hover{background:var(--amber-lt);box-shadow:0 4px 20px rgba(245,158,11,0.4);transform:translateY(-1px);}
+.btn-secondary{display:inline-flex;align-items:center;gap:8px;background:transparent;color:rgba(255,255,255,0.7);font-weight:400;font-size:15px;padding:14px 24px;border-radius:var(--r-md);border:1px solid rgba(255,255,255,0.15);cursor:pointer;transition:all 0.15s;font-family:var(--font-body);text-decoration:none;}
+.btn-secondary:hover{color:var(--white);border-color:rgba(255,255,255,0.3);background:rgba(255,255,255,0.05);}
+.hero-trust{display:flex;align-items:center;gap:24px;padding-top:28px;border-top:1px solid rgba(255,255,255,0.06);flex-wrap:wrap;}
+.trust-item{display:flex;align-items:center;gap:7px;font-size:12px;color:rgba(255,255,255,0.3);font-weight:300;}
+.trust-dot{width:5px;height:5px;border-radius:50%;background:var(--teal);opacity:0.6;}
+
+/* HERO VISUAL CARD */
+.hero-visual{position:relative;display:flex;flex-direction:column;align-items:center;gap:16px;}
+.hero-card{background:rgba(255,255,255,0.04);border:1px solid rgba(42,181,193,0.14);border-radius:var(--r-2xl);padding:32px 28px;width:100%;backdrop-filter:blur(8px);}
+.hc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.hc-label{font-size:11px;font-weight:400;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.3);}
+.hc-live{display:flex;align-items:center;gap:5px;font-family:var(--font-mono);font-size:11px;color:var(--teal);}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--teal);animation:blink 2s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.25}}
+.glucose-num{font-family:var(--font-mono);font-size:52px;font-weight:600;color:var(--white);line-height:1;text-align:center;letter-spacing:-0.02em;}
+.glucose-unit{font-family:var(--font-mono);font-size:13px;color:rgba(255,255,255,0.3);text-align:center;margin-top:4px;}
+.glucose-status{display:flex;justify-content:center;margin:10px 0 20px;}
+.gstatus-pill{font-family:var(--font-mono);font-size:12px;font-weight:500;padding:3px 14px;border-radius:100px;background:rgba(46,125,50,0.15);border:1px solid rgba(46,125,50,0.3);color:#6fcf7a;}
+.mini-chart{height:56px;margin-bottom:18px;}
+.mini-chart svg{width:100%;height:100%;}
+.iob-row{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.04);border-radius:var(--r-md);padding:11px 14px;margin-bottom:8px;}
+.iob-left{flex:1;}
+.iob-lbl{font-size:11px;color:rgba(255,255,255,0.35);font-weight:300;margin-bottom:5px;}
+.iob-bar-bg{height:3px;background:rgba(255,255,255,0.07);border-radius:2px;width:110px;overflow:hidden;}
+.iob-bar{height:100%;border-radius:2px;}
+.iob-val{font-family:var(--font-mono);font-size:14px;font-weight:500;color:var(--white);}
+.risk-line{display:flex;align-items:center;justify-content:space-between;margin-top:4px;}
+.risk-lbl{font-size:11px;color:rgba(255,255,255,0.28);}
+.risk-pill{font-family:var(--font-mono);font-size:11px;font-weight:600;padding:3px 10px;border-radius:100px;background:rgba(46,125,50,0.14);color:#6fcf7a;border:1px solid rgba(46,125,50,0.2);}
+.float-card{position:absolute;background:rgba(10,20,55,0.96);border:1px solid rgba(42,181,193,0.18);border-radius:var(--r-lg);padding:11px 15px;backdrop-filter:blur(14px);box-shadow:0 8px 30px rgba(0,0,0,0.35);}
+.fc1{right:-36px;top:50px;animation:flt1 5s ease-in-out infinite;}
+.fc2{left:-36px;bottom:70px;animation:flt2 6s ease-in-out infinite;}
+@keyframes flt1{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes flt2{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+.fc-lbl{font-size:10px;color:rgba(255,255,255,0.28);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:3px;}
+.fc-val{font-family:var(--font-mono);font-size:16px;font-weight:600;color:var(--white);}
+.fc-sub{font-size:10px;color:var(--teal);margin-top:2px;}
+.hero-disclaimer{font-size:11px;color:rgba(255,255,255,0.18);text-align:center;font-family:var(--font-mono);margin-top:4px;}
+
+/* HERO BOTTOM STRIP */
+.hero-strip{background:rgba(42,181,193,0.06);border-top:1px solid rgba(42,181,193,0.1);padding:12px 48px;text-align:center;font-size:11px;color:rgba(255,255,255,0.22);font-weight:300;position:relative;z-index:2;}
+
+/* WAVE */
+.wave{display:block;width:100%;overflow:hidden;line-height:0;}
+.wave svg{display:block;}
+
+/* SECTIONS */
+.sec{padding:96px 48px;}
+.sec-white{background:var(--white);}
+.sec-bg{background:var(--bg);}
+.sec-dark{background:var(--navy-deep);position:relative;overflow:hidden;}
+.sec-dark::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 800px 500px at 80% 50%,rgba(42,181,193,0.06) 0%,transparent 70%);pointer-events:none;}
+.sec-inner{max-width:1200px;margin:0 auto;position:relative;z-index:2;}
+.sec-label{font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.sec-label::before{content:'';display:block;width:20px;height:1px;background:var(--teal);opacity:0.5;}
+.sec-label-dark{color:var(--teal);}
+.sec-title{font-family:var(--font-disp);font-size:clamp(28px,4vw,44px);font-weight:700;color:var(--navy);line-height:1.15;margin-bottom:18px;max-width:600px;}
+.sec-title-dark{color:var(--white);}
+.sec-title em{font-style:italic;color:var(--teal);}
+.sec-body{font-size:16px;color:var(--body-text);line-height:1.75;max-width:540px;font-weight:300;}
+.sec-body-dark{color:rgba(255,255,255,0.45);}
+
+/* TWO COL */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;}
+
+/* PROBLEM ITEMS */
+.problem-list{display:flex;flex-direction:column;gap:14px;margin-top:36px;}
+.prob{display:flex;gap:14px;align-items:flex-start;padding:18px 22px;background:var(--bg);border-radius:var(--r-lg);border:1px solid var(--border);transition:all 0.2s;}
+.prob:hover{box-shadow:var(--sh-hover);border-color:rgba(42,181,193,0.2);}
+.prob-icon{width:38px;height:38px;border-radius:9px;background:rgba(42,181,193,0.09);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.prob-q{font-size:14px;font-weight:500;color:var(--navy);margin-bottom:3px;}
+.prob-a{font-size:13px;color:var(--body-text);line-height:1.5;}
+.prob-pill{display:inline-block;background:rgba(42,181,193,0.07);color:var(--teal-dim);font-size:11px;font-weight:500;padding:2px 10px;border-radius:100px;border:1px solid rgba(42,181,193,0.18);margin-top:6px;}
+
+/* IOB FEATURES */
+.iob-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:56px;}
+.iob-card{background:rgba(255,255,255,0.03);border:1px solid rgba(42,181,193,0.1);border-radius:var(--r-xl);padding:30px 26px;transition:all 0.2s;}
+.iob-card:hover{background:rgba(42,181,193,0.05);border-color:rgba(42,181,193,0.25);transform:translateY(-3px);}
+.iob-icon{width:46px;height:46px;border-radius:11px;background:rgba(42,181,193,0.1);border:1px solid rgba(42,181,193,0.14);display:flex;align-items:center;justify-content:center;font-size:21px;margin-bottom:18px;}
+.iob-title{font-size:15px;font-weight:500;color:var(--white);margin-bottom:9px;}
+.iob-body{font-size:13px;color:rgba(255,255,255,0.4);line-height:1.65;}
+.formula{font-family:var(--font-mono);font-size:11px;color:var(--teal);opacity:0.7;margin-top:12px;background:rgba(42,181,193,0.06);padding:8px 11px;border-radius:var(--r-sm);border-left:2px solid rgba(42,181,193,0.3);}
+
+/* RISK ZONES */
+.rz-row{display:flex;gap:3px;margin-top:44px;border-radius:var(--r-md);overflow:hidden;}
+.rz{flex:1;padding:15px 18px;text-align:center;}
+.rz-safe{background:rgba(46,125,50,0.13);border:1px solid rgba(46,125,50,0.18);}
+.rz-caution{background:rgba(245,158,11,0.11);border:1px solid rgba(245,158,11,0.18);}
+.rz-elevated{background:rgba(230,100,0,0.11);border:1px solid rgba(230,100,0,0.18);}
+.rz-high{background:rgba(211,47,47,0.11);border:1px solid rgba(211,47,47,0.18);}
+.rz-num{font-family:var(--font-mono);font-size:13px;font-weight:600;}
+.rz-safe .rz-num{color:#6fcf7a;}
+.rz-caution .rz-num{color:var(--amber-lt);}
+.rz-elevated .rz-num{color:#f4965a;}
+.rz-high .rz-num{color:#f08080;}
+.rz-name{font-size:11px;color:rgba(255,255,255,0.35);margin-top:3px;}
+
+/* MODULES */
+.mod-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-top:52px;}
+.mod-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-xl);padding:26px;box-shadow:var(--sh-card);transition:all 0.2s;position:relative;overflow:hidden;}
+.mod-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--teal),var(--teal-lt));opacity:0;transition:opacity 0.2s;}
+.mod-card:hover{box-shadow:var(--sh-hover);border-color:rgba(42,181,193,0.2);transform:translateY(-3px);}
+.mod-card:hover::before{opacity:1;}
+.mod-icon{font-size:26px;margin-bottom:14px;}
+.mod-badge{position:absolute;top:18px;right:18px;font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;padding:2px 8px;border-radius:100px;}
+.badge-new{background:rgba(42,181,193,0.09);color:var(--teal-dim);border:1px solid rgba(42,181,193,0.2);}
+.badge-pro{background:rgba(245,158,11,0.09);color:#92600a;border:1px solid rgba(245,158,11,0.2);}
+.mod-title{font-size:15px;font-weight:500;color:var(--navy);margin-bottom:7px;}
+.mod-body{font-size:13px;color:var(--body-text);line-height:1.6;}
+.mod-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:14px;}
+.mod-tag{font-size:11px;color:var(--body-text);background:var(--bg);border:1px solid var(--border);border-radius:100px;padding:2px 9px;}
+
+/* WHO */
+.who-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:52px;}
+.who-card{border-radius:var(--r-xl);padding:28px 22px;text-align:center;border:1px solid var(--border);transition:all 0.2s;}
+.who-card:hover{transform:translateY(-4px);box-shadow:var(--sh-hover);}
+.who-avatar{width:60px;height:60px;border-radius:50%;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:26px;}
+.who-c1{background:rgba(42,181,193,0.06);border-color:rgba(42,181,193,0.18);}
+.who-c1 .who-avatar{background:rgba(42,181,193,0.1);}
+.who-c2{background:rgba(26,42,94,0.03);}
+.who-c2 .who-avatar{background:rgba(26,42,94,0.07);}
+.who-c3{background:rgba(46,125,50,0.04);border-color:rgba(46,125,50,0.13);}
+.who-c3 .who-avatar{background:rgba(46,125,50,0.09);}
+.who-c4{background:rgba(245,158,11,0.04);border-color:rgba(245,158,11,0.13);}
+.who-c4 .who-avatar{background:rgba(245,158,11,0.09);}
+.who-role{font-size:14px;font-weight:500;color:var(--navy);margin-bottom:7px;}
+.who-desc{font-size:13px;color:var(--body-text);line-height:1.55;}
+
+/* PRICING */
+.pricing-header{text-align:center;max-width:500px;margin:0 auto 52px;}
+.pricing-header .sec-label{justify-content:center;}
+.pricing-header .sec-title{max-width:100%;text-align:center;}
+.africa-banner{display:inline-flex;align-items:center;gap:8px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.18);border-radius:var(--r-md);padding:10px 18px;font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:40px;}
+.africa-banner strong{color:var(--amber-lt);}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:960px;margin:0 auto;}
+.pc{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:var(--r-2xl);padding:34px 30px;transition:all 0.2s;position:relative;}
+.pc.featured{background:rgba(42,181,193,0.07);border-color:rgba(42,181,193,0.28);box-shadow:0 0 0 1px rgba(42,181,193,0.12),0 20px 60px rgba(0,0,0,0.25);}
+.pc-feat-badge{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:var(--teal);color:var(--navy-deep);font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;padding:4px 16px;border-radius:100px;white-space:nowrap;}
+.pc-tier{font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:6px;}
+.pc-name{font-size:20px;font-weight:600;color:var(--white);margin-bottom:2px;}
+.pc-price{display:flex;align-items:baseline;gap:3px;margin:18px 0;}
+.pc-cur{font-size:16px;color:rgba(255,255,255,0.35);font-weight:300;}
+.pc-amt{font-family:var(--font-mono);font-size:42px;font-weight:600;color:var(--white);line-height:1;}
+.pc-per{font-size:13px;color:rgba(255,255,255,0.28);margin-left:2px;}
+.pc-desc{font-size:13px;color:rgba(255,255,255,0.38);line-height:1.6;margin-bottom:22px;min-height:42px;}
+.pc-feats{list-style:none;display:flex;flex-direction:column;gap:9px;margin-bottom:28px;}
+.pc-feats li{display:flex;align-items:flex-start;gap:9px;font-size:13px;color:rgba(255,255,255,0.5);line-height:1.4;}
+.pc-check{color:var(--teal);flex-shrink:0;margin-top:1px;}
+.pc-btn{display:block;width:100%;text-align:center;padding:12px 18px;border-radius:var(--r-md);font-family:var(--font-body);font-size:14px;font-weight:500;cursor:pointer;transition:all 0.15s;border:none;text-decoration:none;}
+.pc-btn-outline{background:transparent;border:1px solid rgba(255,255,255,0.14);color:rgba(255,255,255,0.6);}
+.pc-btn-outline:hover{border-color:rgba(255,255,255,0.28);color:var(--white);background:rgba(255,255,255,0.05);}
+.pc-btn-teal{background:var(--teal);color:var(--navy-deep);font-weight:600;}
+.pc-btn-teal:hover{background:var(--teal-lt);box-shadow:0 4px 14px rgba(42,181,193,0.35);}
+.pc-btn-amber{background:var(--amber);color:var(--navy-deep);font-weight:600;}
+.pc-btn-amber:hover{background:var(--amber-lt);box-shadow:0 4px 14px rgba(245,158,11,0.35);}
+.pricing-note{text-align:center;margin-top:28px;font-size:12px;color:rgba(255,255,255,0.2);}
+.pricing-note a{color:var(--teal);opacity:0.65;}
+
+/* TRUST */
+.trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:52px;}
+.tc{background:var(--white);border:1px solid var(--border);border-radius:var(--r-xl);padding:30px;box-shadow:var(--sh-card);}
+.tc-quote{font-size:15px;color:var(--body-text);line-height:1.7;font-style:italic;font-family:var(--font-disp);font-weight:400;margin-bottom:22px;}
+.tc-meta{display:flex;align-items:center;gap:12px;}
+.tc-avatar{width:38px;height:38px;border-radius:50%;background:rgba(42,181,193,0.1);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.tc-name{font-size:13px;font-weight:500;color:var(--navy);}
+.tc-role{font-size:11px;color:var(--body-text);}
+.clinical-box{margin-top:44px;background:rgba(42,181,193,0.05);border:1px solid rgba(42,181,193,0.14);border-radius:var(--r-lg);padding:20px 26px;display:flex;align-items:flex-start;gap:14px;font-size:14px;color:var(--body-text);line-height:1.65;}
+.cbox-icon{font-size:19px;flex-shrink:0;margin-top:1px;}
+.cbox-icon+div strong{color:var(--navy);}
+
+/* CTA */
+.cta-sec{background:linear-gradient(155deg,var(--navy) 0%,var(--navy-deep) 100%);padding:100px 48px;text-align:center;position:relative;overflow:hidden;}
+.cta-sec::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 700px 500px at 50% 50%,rgba(42,181,193,0.08) 0%,transparent 70%);pointer-events:none;}
+.cta-inner{position:relative;z-index:2;max-width:560px;margin:0 auto;}
+.cta-title{font-family:var(--font-disp);font-size:clamp(30px,4vw,48px);font-weight:800;color:var(--white);line-height:1.12;margin-bottom:14px;}
+.cta-title em{font-style:italic;color:var(--teal);}
+.cta-body{font-size:17px;color:rgba(255,255,255,0.45);font-weight:300;margin-bottom:34px;}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+.cta-legal{margin-top:22px;font-size:12px;color:rgba(255,255,255,0.18);}
+
+/* FOOTER */
+footer{background:var(--navy-deep);border-top:1px solid rgba(255,255,255,0.05);padding:56px 48px 36px;}
+.footer-inner{max-width:1200px;margin:0 auto;}
+.ft-top{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:44px;margin-bottom:44px;}
+.ft-brand-name{font-weight:500;font-size:18px;color:var(--white);margin-bottom:10px;}
+.ft-tagline{font-size:13px;font-weight:300;color:rgba(255,255,255,0.28);line-height:1.65;max-width:230px;margin-bottom:18px;}
+.ft-iob{font-family:var(--font-mono);font-size:11px;color:rgba(42,181,193,0.45);}
+.ft-col-title{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.22);margin-bottom:14px;}
+.ft-links{list-style:none;display:flex;flex-direction:column;gap:9px;}
+.ft-links a{font-size:13px;color:rgba(255,255,255,0.32);transition:color 0.15s;font-weight:300;}
+.ft-links a:hover{color:rgba(255,255,255,0.65);}
+.ft-bottom{display:flex;align-items:flex-start;justify-content:space-between;padding-top:28px;border-top:1px solid rgba(255,255,255,0.05);gap:20px;flex-wrap:wrap;}
+.ft-copy{font-size:12px;color:rgba(255,255,255,0.18);}
+.ft-disc{font-size:11px;color:rgba(255,255,255,0.13);max-width:480px;line-height:1.5;margin-top:5px;}
+.ft-built{font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,0.12);text-align:right;}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity 0.6s ease,transform 0.6s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.d1{transition-delay:0.1s}.d2{transition-delay:0.2s}.d3{transition-delay:0.3s}.d4{transition-delay:0.4s}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .hero-inner{grid-template-columns:1fr;}
+  .hero-visual{display:none;}
+  .two-col{grid-template-columns:1fr;gap:44px;}
+  .iob-grid{grid-template-columns:1fr 1fr;}
+  .who-grid{grid-template-columns:1fr 1fr;}
+  .trust-grid{grid-template-columns:1fr 1fr;}
+  .pricing-grid{grid-template-columns:1fr;max-width:400px;}
+  .ft-top{grid-template-columns:1fr 1fr;gap:28px;}
+}
+@media(max-width:768px){
+  .nav{padding:0 20px;}.nav-links{display:none;}
+  .hero-inner,.sec,.cta-sec,footer{padding-left:20px;padding-right:20px;}
+  .iob-grid,.trust-grid{grid-template-columns:1fr;}
+  .who-grid{grid-template-columns:1fr 1fr;}
+  .rz-row{flex-direction:column;gap:4px;}
+  .ft-top{grid-template-columns:1fr;}
+}
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none;}
+  .fc1,.fc2{animation:none;}
+  .live-dot{animation:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-brand">
+    <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
+      <circle cx="17" cy="17" r="17" fill="rgba(26,42,94,0.7)"/>
+      <ellipse cx="17" cy="19" rx="9" ry="10" fill="#1a5fb4"/>
+      <ellipse cx="17" cy="12.5" rx="8.5" ry="7.5" fill="#1a5fb4"/>
+      <circle cx="12.5" cy="12.5" r="3.8" fill="#d4a229"/>
+      <circle cx="21.5" cy="12.5" r="3.8" fill="#d4a229"/>
+      <circle cx="12.5" cy="12.5" r="2.3" fill="#0d1b3e"/>
+      <circle cx="21.5" cy="12.5" r="2.3" fill="#0d1b3e"/>
+      <circle cx="13.2" cy="11.8" r="0.9" fill="white"/>
+      <circle cx="22.2" cy="11.8" r="0.9" fill="white"/>
+      <ellipse cx="17" cy="25" rx="2.2" ry="3" fill="#f59e0b"/>
+      <circle cx="17" cy="23" r="1.8" fill="#f59e0b"/>
+    </svg>
+    <span class="nav-wordmark">GluMira<sup>™</sup></span>
+  </div>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#modules">Modules</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#about">About</a>
+    <a href="#" style="color:rgba(255,255,255,0.45)">Sign in</a>
+    <a href="#pricing" class="nav-cta">Start free →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="eyebrow-badge">
+        <svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M5 2.5v3l1.5 1" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg>
+        Powered by IOB Hunter™
+      </div>
+      <h1 class="hero-title">The science of insulin,<br><em>made visible</em></h1>
+      <p class="hero-body">We exist for caregivers sitting awake at 2am, watching glucose numbers, asking <strong>"why is this happening?"</strong> We answer that question — with science, not guesswork.</p>
+      <div class="hero-actions">
+        <a href="#pricing" class="btn-primary">Start your free trial <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M3 7.5h9M8.5 4l3.5 3.5-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a href="#features" class="btn-secondary">How it works</a>
+      </div>
+      <div class="hero-trust">
+        <span class="trust-item"><span class="trust-dot"></span>T1D & T2D</span>
+        <span class="trust-item"><span class="trust-dot"></span>Clinician-led</span>
+        <span class="trust-item"><span class="trust-dot"></span>HIPAA ready</span>
+        <span class="trust-item"><span class="trust-dot"></span>WCAG 2.1 AA</span>
+      </div>
+    </div>
+
+    <!-- Visual card -->
+    <div class="hero-visual">
+      <div style="position:relative;width:100%;">
+        <div class="float-card fc1">
+          <div class="fc-lbl">Stacking risk</div>
+          <div class="fc-val" style="color:#6fcf7a;">Safe</div>
+          <div class="fc-sub">Score: 18 / 100</div>
+        </div>
+        <div class="float-card fc2">
+          <div class="fc-lbl">Next dose window</div>
+          <div class="fc-val">4h 20m</div>
+          <div class="fc-sub">IOB below threshold</div>
+        </div>
+        <div class="hero-card">
+          <div class="hc-header">
+            <span class="hc-label">Nightscout CGM</span>
+            <span class="hc-live"><span class="live-dot"></span>Live</span>
+          </div>
+          <div class="glucose-num">6.4</div>
+          <div class="glucose-unit">mmol / L</div>
+          <div class="glucose-status"><span class="gstatus-pill">↗ In range</span></div>
+          <div class="mini-chart">
+            <svg viewBox="0 0 300 56" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="sg" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#2ab5c1" stop-opacity="0.28"/>
+                  <stop offset="100%" stop-color="#2ab5c1" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <rect x="0" y="10" width="300" height="30" fill="rgba(46,125,50,0.07)"/>
+              <path d="M0 43 Q25 38 50 40 Q75 42 100 33 Q125 24 150 20 Q175 16 200 18 Q225 20 250 15 Q275 10 300 12 L300 56 L0 56Z" fill="url(#sg)"/>
+              <path d="M0 43 Q25 38 50 40 Q75 42 100 33 Q125 24 150 20 Q175 16 200 18 Q225 20 250 15 Q275 10 300 12" fill="none" stroke="#2ab5c1" stroke-width="1.8" stroke-linecap="round"/>
+              <circle cx="300" cy="12" r="3.5" fill="#2ab5c1"/>
+              <circle cx="300" cy="12" r="7" fill="rgba(42,181,193,0.18)"/>
+            </svg>
+          </div>
+          <div class="iob-row">
+            <div class="iob-left">
+              <div class="iob-lbl">Insulin on board (IOB)</div>
+              <div class="iob-bar-bg"><div class="iob-bar" style="width:22%;background:linear-gradient(90deg,var(--teal),var(--teal-lt));"></div></div>
+            </div>
+            <div class="iob-val">1.4 U</div>
+          </div>
+          <div class="iob-row">
+            <div class="iob-left">
+              <div class="iob-lbl">Active decay window</div>
+              <div class="iob-bar-bg"><div class="iob-bar" style="width:62%;background:linear-gradient(90deg,var(--amber),var(--amber-lt));"></div></div>
+            </div>
+            <div class="iob-val">3h 12m</div>
+          </div>
+          <div class="risk-line" style="margin-top:10px;">
+            <span class="risk-lbl">Stacking score (0–100)</span>
+            <span class="risk-pill">18 — Safe</span>
+          </div>
+        </div>
+      </div>
+      <p class="hero-disclaimer">Educational only. Not a medical device. Always discuss with your care team.</p>
+    </div>
+  </div>
+  <div class="hero-strip">GluMira™ is an educational platform, not a medical device. All clinical insights are for informational purposes only. Always discuss with your qualified care team.</div>
+</section>
+
+<!-- WAVE dark → white -->
+<div class="wave" style="background:var(--navy-deep);"><svg viewBox="0 0 1440 40"><path d="M0 20 Q360 40 720 20 Q1080 0 1440 20 L1440 40 L0 40Z" fill="#ffffff"/></svg></div>
+
+<!-- 2AM SECTION -->
+<section class="sec sec-white" id="features">
+  <div class="sec-inner">
+    <div class="two-col">
+      <div class="reveal">
+        <p class="sec-label">Why GluMira™ exists</p>
+        <h2 class="sec-title">Every number has a reason.<br><em>We find it.</em></h2>
+        <p class="sec-body">Managing insulin is not guesswork — it is pharmacokinetics. GluMira™ translates exponential decay curves and insulin sensitivity calculations into language a caregiver can act on at 3am.</p>
+      </div>
+      <div class="problem-list reveal d2">
+        <div class="prob">
+          <div class="prob-icon">🌙</div>
+          <div>
+            <p class="prob-q">"Why is this happening at 2am?"</p>
+            <p class="prob-a">Dawn phenomenon — cortisol rises between 03:00–08:00, reducing sensitivity by ×0.8. GluMira™ shows this with time-of-day ISF modifiers.</p>
+            <span class="prob-pill">IOB Hunter explains it</span>
+          </div>
+        </div>
+        <div class="prob">
+          <div class="prob-icon">📊</div>
+          <div>
+            <p class="prob-q">"Is it safe to give another correction?"</p>
+            <p class="prob-a">The stacking risk score (0–100) calculates residual IOB from every previous dose using real pharmacokinetic modelling per insulin type.</p>
+            <span class="prob-pill">Stacking calculator answers it</span>
+          </div>
+        </div>
+        <div class="prob">
+          <div class="prob-icon">🍽️</div>
+          <div>
+            <p class="prob-q">"How much carbohydrate does this cover?"</p>
+            <p class="prob-a">Using the 500 Rule (ICR = 500 ÷ TDD), GluMira™ calculates the insulin-to-carb ratio and adjusts for active IOB automatically.</p>
+            <span class="prob-pill">Meal bolus calculator</span>
+          </div>
+        </div>
+        <div class="prob">
+          <div class="prob-icon">🌸</div>
+          <div>
+            <p class="prob-q">"Why does control change through the month?"</p>
+            <p class="prob-a">Hormone-driven ISF/ICR shifts of 20–40% tracked by cycle phase. No other diabetes platform does this. New in Phase 2.</p>
+            <span class="prob-pill">Menstrual module — new</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WAVE white → dark -->
+<div class="wave" style="background:#ffffff;"><svg viewBox="0 0 1440 40"><path d="M0 20 Q360 0 720 20 Q1080 40 1440 20 L1440 40 L0 40Z" fill="#0d1b3e"/></svg></div>
+
+<!-- IOB ENGINE -->
+<section class="sec sec-dark">
+  <div class="sec-inner">
+    <div style="text-align:center;max-width:580px;margin:0 auto 16px;">
+      <p class="sec-label sec-label-dark" style="justify-content:center;">The engine inside</p>
+      <h2 class="sec-title sec-title-dark" style="max-width:100%;text-align:center;">IOB Hunter™ — Pharmacokinetic<br>precision, made visible</h2>
+      <p class="sec-body sec-body-dark" style="max-width:100%;margin:0 auto;">First-order exponential decay modelling for every known insulin type — Degludec, Aspart, Glargine U300 — with stacking risk zones, optimal timing, and correction factor integration.</p>
+    </div>
+    <div class="iob-grid">
+      <div class="iob-card reveal">
+        <div class="iob-icon">⚗️</div>
+        <h3 class="iob-title">Exponential decay model</h3>
+        <p class="iob-body">Every insulin type has a defined duration of action. IOB Hunter calculates residual insulin to the minute, for every injection in your history.</p>
+        <div class="formula">IOB(t) = dose × e^(−λt)<br>λ = ln(2) / (DOA × 0.5)</div>
+      </div>
+      <div class="iob-card reveal d1">
+        <div class="iob-icon">📐</div>
+        <h3 class="iob-title">ISF / ICR framework</h3>
+        <p class="iob-body">Insulin Sensitivity Factor and Insulin-to-Carb Ratio derived from Total Daily Dose, with time-of-day modifiers for overnight and dawn sensitivity.</p>
+        <div class="formula">ISF = 100 / TDD (100 Rule)<br>ICR = 500 / TDD (500 Rule)</div>
+      </div>
+      <div class="iob-card reveal d2">
+        <div class="iob-icon">🎯</div>
+        <h3 class="iob-title">Stacking risk scoring</h3>
+        <p class="iob-body">A 0–100 risk score from all active IOB across multiple doses. Four clinical risk zones guide safe decision-making with colour-coded alerts.</p>
+        <div class="formula">score = min(100, (totalIOB / basalDose) × 100)</div>
+      </div>
+    </div>
+    <div class="rz-row reveal d1">
+      <div class="rz rz-safe"><div class="rz-num">0 – 30</div><div class="rz-name">Safe</div></div>
+      <div class="rz rz-caution"><div class="rz-num" style="color:var(--amber-lt);">31 – 55</div><div class="rz-name">Caution — monitor</div></div>
+      <div class="rz rz-elevated"><div class="rz-num" style="color:#f4965a;">56 – 75</div><div class="rz-name">Elevated risk</div></div>
+      <div class="rz rz-high"><div class="rz-num" style="color:#f08080;">76 – 100</div><div class="rz-name">Clinical review needed</div></div>
+    </div>
+    <p style="text-align:center;margin-top:26px;font-size:11px;color:rgba(255,255,255,0.18);font-family:var(--font-mono);">Discuss all insights with your care team. GluMira™ is an educational platform, not a medical device.</p>
+  </div>
+</section>
+
+<!-- WAVE dark → bg -->
+<div class="wave" style="background:#0d1b3e;"><svg viewBox="0 0 1440 40"><path d="M0 0 Q360 40 720 20 Q1080 0 1440 40 L1440 40 L0 40Z" fill="#f8f9fa"/></svg></div>
+
+<!-- MODULES -->
+<section class="sec sec-bg" id="modules">
+  <div class="sec-inner">
+    <p class="sec-label">Specialist modules</p>
+    <h2 class="sec-title">Built for every age,<br>every circumstance</h2>
+    <p class="sec-body">Clinician-created patient profiles with modules that adapt the IOB engine to the specific physiology of your patient — from newborns to pregnancy to menstrual cycle shifts.</p>
+    <div class="mod-grid">
+      <div class="mod-card reveal">
+        <div class="mod-icon">👶</div>
+        <h3 class="mod-title">Pediatric</h3>
+        <p class="mod-body">Age-based carb ratios, growth tracking, school integration. Preset curves for every developmental stage from toddler to teen.</p>
+        <div class="mod-tags"><span class="mod-tag">Ages 0–17</span><span class="mod-tag">Growth tracking</span><span class="mod-tag">Age presets</span></div>
+      </div>
+      <div class="mod-card reveal d1">
+        <span class="mod-badge badge-new">New</span>
+        <div class="mod-icon">🌸</div>
+        <h3 class="mod-title">Menstrual cycle</h3>
+        <p class="mod-body">Hormone-driven ISF/ICR adjustments by cycle phase. 20–40% sensitivity variation tracked automatically. Unique to GluMira™.</p>
+        <div class="mod-tags"><span class="mod-tag">Follicular</span><span class="mod-tag">Luteal</span><span class="mod-tag">Auto-adjustments</span></div>
+      </div>
+      <div class="mod-card reveal d2">
+        <div class="mod-icon">🏫</div>
+        <h3 class="mod-title">School care plan</h3>
+        <p class="mod-body">Emergency protocols, teacher alerts, and lunch carb counting in a shareable plan. School nurses get view-only access via secure link.</p>
+        <div class="mod-tags"><span class="mod-tag">Ages 5–18</span><span class="mod-tag">Teacher alerts</span><span class="mod-tag">Emergency protocol</span></div>
+      </div>
+      <div class="mod-card reveal d3">
+        <div class="mod-icon">🤰</div>
+        <h3 class="mod-title">Pregnancy</h3>
+        <p class="mod-body">Trimester-based glucose targets, fetal monitoring, and postpartum adjustment. Aligned with CONCEPTT study findings.</p>
+        <div class="mod-tags"><span class="mod-tag">Gestational</span><span class="mod-tag">Trimester targets</span><span class="mod-tag">Postpartum</span></div>
+      </div>
+      <div class="mod-card reveal">
+        <span class="mod-badge badge-pro">Pro</span>
+        <div class="mod-icon">📈</div>
+        <h3 class="mod-title">Advanced analytics</h3>
+        <p class="mod-body">IOB decay curve visualisation, trend analysis, dawn phenomenon detection, and branded PDF clinical reports.</p>
+        <div class="mod-tags"><span class="mod-tag">IOB decay curves</span><span class="mod-tag">PDF reports</span><span class="mod-tag">Pattern detection</span></div>
+      </div>
+      <div class="mod-card reveal d1">
+        <span class="mod-badge badge-pro">Pro</span>
+        <div class="mod-icon">👥</div>
+        <h3 class="mod-title">Caregiver sharing</h3>
+        <p class="mod-body">Share profiles with parents, partners, school nurses. Granular view-only or edit permissions. Secure link with expiry control.</p>
+        <div class="mod-tags"><span class="mod-tag">View / edit roles</span><span class="mod-tag">Link sharing</span><span class="mod-tag">Expiry</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WAVE bg → white -->
+<div class="wave" style="background:#f8f9fa;"><svg viewBox="0 0 1440 40"><path d="M0 20 Q360 0 720 20 Q1080 40 1440 20 L1440 40 L0 40Z" fill="#ffffff"/></svg></div>
+
+<!-- WHO -->
+<section class="sec sec-white" id="about">
+  <div class="sec-inner">
+    <p class="sec-label">Who uses GluMira™</p>
+    <h2 class="sec-title">From the 2am caregiver<br>to the research institution</h2>
+    <div class="who-grid">
+      <div class="who-card who-c1 reveal"><div class="who-avatar">🧑‍⚕️</div><p class="who-role">Clinicians</p><p class="who-desc">Endocrinologists, nurses, and diabetes educators create and manage patient profiles with full clinical control.</p></div>
+      <div class="who-card who-c2 reveal d1"><div class="who-avatar">👨‍👩‍👧</div><p class="who-role">Caregivers</p><p class="who-desc">Parents watching CGM data at 2am — finally with the science to understand and context to act.</p></div>
+      <div class="who-card who-c3 reveal d2"><div class="who-avatar">🩺</div><p class="who-role">Patients</p><p class="who-desc">T1D and T2D patients of all ages who want to understand the science behind their insulin management.</p></div>
+      <div class="who-card who-c4 reveal d3"><div class="who-avatar">🔬</div><p class="who-role">Researchers</p><p class="who-desc">Institutions using GluMira AI for population analytics, de-identified data export, and clinical trial support.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- WAVE white → dark -->
+<div class="wave" style="background:#ffffff;"><svg viewBox="0 0 1440 40"><path d="M0 20 Q360 40 720 20 Q1080 0 1440 20 L1440 40 L0 40Z" fill="#0d1b3e"/></svg></div>
+
+<!-- PRICING -->
+<section class="sec sec-dark" id="pricing">
+  <div class="sec-inner">
+    <div class="pricing-header">
+      <p class="sec-label sec-label-dark" style="justify-content:center;">Simple, transparent pricing</p>
+      <h2 class="sec-title sec-title-dark" style="max-width:100%;text-align:center;">Start free. Upgrade when ready.</h2>
+      <p class="sec-body sec-body-dark" style="max-width:100%;text-align:center;margin:0 auto 28px;">Three months free. No credit card. No lock-in. Cancel anytime.</p>
+      <div style="display:flex;justify-content:center;">
+        <div class="africa-banner">🌍 <strong>30% discount</strong> for African residents — applied at checkout</div>
+      </div>
+    </div>
+    <div class="pricing-grid">
+      <div class="pc reveal">
+        <div class="pc-tier">Stage 1</div>
+        <div class="pc-name">GluMira Free</div>
+        <div class="pc-price"><span class="pc-cur">$</span><span class="pc-amt">0</span><span class="pc-per">/ 3 months</span></div>
+        <p class="pc-desc">Full access for 3 months. Everything to experience insulin science made visible.</p>
+        <ul class="pc-feats">
+          <li><span class="pc-check">✓</span>Nightscout CGM integration</li>
+          <li><span class="pc-check">✓</span>Basic IOB calculator</li>
+          <li><span class="pc-check">✓</span>Stacking risk scoring</li>
+          <li><span class="pc-check">✓</span>Glucose target profiles</li>
+          <li><span class="pc-check">✓</span>Photo & file upload</li>
+          <li><span class="pc-check">✓</span>Caregiver sharing</li>
+          <li><span class="pc-check">✓</span>Appointment booking</li>
+          <li><span class="pc-check">✓</span>Menstrual cycle tracking</li>
+        </ul>
+        <a href="#" class="pc-btn pc-btn-outline">Start free — no card needed</a>
+      </div>
+      <div class="pc featured reveal d1">
+        <div class="pc-feat-badge">Most popular</div>
+        <div class="pc-tier">Stage 2</div>
+        <div class="pc-name">GluMira Pro</div>
+        <div class="pc-price"><span class="pc-cur">$</span><span class="pc-amt">29</span><span class="pc-per">.99 / mo</span></div>
+        <p class="pc-desc">Advanced analysis, professional reports, and unlimited patients for clinicians and dedicated caregivers.</p>
+        <ul class="pc-feats">
+          <li><span class="pc-check">✓</span>Everything in Free</li>
+          <li><span class="pc-check">✓</span>Dexcom + Libre integration</li>
+          <li><span class="pc-check">✓</span>Multi-dose stacking analysis</li>
+          <li><span class="pc-check">✓</span>IOB decay curve visualisation</li>
+          <li><span class="pc-check">✓</span>PDF clinical reports</li>
+          <li><span class="pc-check">✓</span>Unlimited patient profiles</li>
+          <li><span class="pc-check">✓</span>All specialist modules</li>
+          <li><span class="pc-check">✓</span>Team collaboration</li>
+        </ul>
+        <a href="#" class="pc-btn pc-btn-teal">Start Pro trial free</a>
+      </div>
+      <div class="pc reveal d2">
+        <div class="pc-tier">Stage 3</div>
+        <div class="pc-name">GluMira AI</div>
+        <div class="pc-price"><span class="pc-cur">$</span><span class="pc-amt">99</span><span class="pc-per">.99 / mo</span></div>
+        <p class="pc-desc">Predictive AI and API access for research institutions, hospital networks, and large clinic systems.</p>
+        <ul class="pc-feats">
+          <li><span class="pc-check">✓</span>Everything in Pro</li>
+          <li><span class="pc-check">✓</span>LSTM predictive glucose model</li>
+          <li><span class="pc-check">✓</span>45-minute ahead predictions</li>
+          <li><span class="pc-check">✓</span>REST API + HL7 FHIR</li>
+          <li><span class="pc-check">✓</span>Population analytics</li>
+          <li><span class="pc-check">✓</span>De-identified data export</li>
+          <li><span class="pc-check">✓</span>99.9% uptime SLA</li>
+          <li><span class="pc-check">✓</span>Dedicated account manager</li>
+        </ul>
+        <a href="#" class="pc-btn pc-btn-amber">Contact for enterprise</a>
+      </div>
+    </div>
+    <p class="pricing-note">Annual plans receive 2 months free. <a href="#">See full comparison →</a></p>
+  </div>
+</section>
+
+<!-- WAVE dark → bg -->
+<div class="wave" style="background:#0d1b3e;"><svg viewBox="0 0 1440 40"><path d="M0 20 Q360 40 720 20 Q1080 0 1440 20 L1440 40 L0 40Z" fill="#f8f9fa"/></svg></div>
+
+<!-- TRUST -->
+<section class="sec sec-bg">
+  <div class="sec-inner">
+    <p class="sec-label">Clinical trust</p>
+    <h2 class="sec-title">Science, not guesswork</h2>
+    <p class="sec-body">Aligned with NICE NG17, ADA Standards of Care, and CONCEPTT study findings. Every recommendation is evidence-based. Every insight ends with one sentence.</p>
+    <div class="trust-grid">
+      <div class="tc reveal">
+        <p class="tc-quote">"For the first time I can show a parent exactly why their child's glucose rises at 6am. The dawn phenomenon is visible. The science is right there."</p>
+        <div class="tc-meta"><div class="tc-avatar">🩺</div><div><div class="tc-name">Endocrinologist, Cape Town</div><div class="tc-role">Beta tester — GluMira Free</div></div></div>
+      </div>
+      <div class="tc reveal d1">
+        <p class="tc-quote">"I've been watching CGM data for four years. GluMira is the first thing that told me what the IOB number actually means and whether another correction was safe."</p>
+        <div class="tc-meta"><div class="tc-avatar">👩‍👧</div><div><div class="tc-name">Parent of T1D child, Namibia</div><div class="tc-role">Beta tester — caregiver</div></div></div>
+      </div>
+      <div class="tc reveal d2">
+        <p class="tc-quote">"The menstrual cycle module is groundbreaking. My patients have never had a tool that accounts for luteal phase insulin resistance. This changes management."</p>
+        <div class="tc-meta"><div class="tc-avatar">👩‍⚕️</div><div><div class="tc-name">Diabetes educator, Johannesburg</div><div class="tc-role">Beta tester — GluMira Pro</div></div></div>
+      </div>
+    </div>
+    <div class="clinical-box reveal">
+      <div class="cbox-icon">🔒</div>
+      <div><strong>GluMira™ never recommends dosing.</strong> We never say "you should". We never say "dose" or "inject" as an instruction. We never use fear. Every clinical insight ends with: <strong>"Discuss this with your care team."</strong> We are the science. Your clinician is the decision maker.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-sec">
+  <div class="cta-inner">
+    <h2 class="cta-title">Ready to make insulin<br><em>visible?</em></h2>
+    <p class="cta-body">Three months free. No card. No commitment. Just the science your family deserves.</p>
+    <div class="cta-btns">
+      <a href="#pricing" class="btn-primary">Start your free trial</a>
+      <a href="#features" class="btn-secondary">Learn how it works</a>
+    </div>
+    <p class="cta-legal">Built in Namibia. Designed for the world. Powered by IOB Hunter™.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="ft-top">
+      <div>
+        <div class="ft-brand-name">GluMira™</div>
+        <p class="ft-tagline">The science of insulin, made visible. For caregivers, clinicians, and patients managing diabetes with intelligence and care.</p>
+        <div class="ft-iob">Powered by IOB Hunter™ · V7</div>
+      </div>
+      <div>
+        <div class="ft-col-title">Platform</div>
+        <ul class="ft-links">
+          <li><a href="#">IOB Calculator</a></li>
+          <li><a href="#">Stacking Analyser</a></li>
+          <li><a href="#">CGM Integration</a></li>
+          <li><a href="#">Clinical Reports</a></li>
+          <li><a href="#">Specialist Modules</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-col-title">Company</div>
+        <ul class="ft-links">
+          <li><a href="#">About GluMira</a></li>
+          <li><a href="#">Clinical evidence</a></li>
+          <li><a href="#">Pricing</a></li>
+          <li><a href="#">For clinicians</a></li>
+          <li><a href="#">Research programme</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-col-title">Legal</div>
+        <ul class="ft-links">
+          <li><a href="#">Privacy policy</a></li>
+          <li><a href="#">Terms of service</a></li>
+          <li><a href="#">HIPAA compliance</a></li>
+          <li><a href="#">GDPR policy</a></li>
+          <li><a href="#">Clinical disclaimer</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ft-bottom">
+      <div>
+        <div class="ft-copy">© 2026 GluMira™. All rights reserved.</div>
+        <div class="ft-disc">GluMira™ is an educational platform, not a medical device. All information is for educational purposes only. Always discuss clinical decisions with your qualified healthcare team.</div>
+      </div>
+      <div class="ft-built">Built in Namibia<br>Designed for the world</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Scroll reveal
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold: 0.1, rootMargin: '0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// Nav highlight
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  document.querySelectorAll('.nav-links a:not(.nav-cta)').forEach(a => a.style.color = '');
+});
+</script>
+</body>
+</html>

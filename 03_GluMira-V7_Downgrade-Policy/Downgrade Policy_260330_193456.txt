@@ -1,0 +1,202 @@
+Here is the complete content for File 02:
+
+---
+
+```
+# GluMira™ Taglines & Approved Statements — V7
+### Powered by IOB Hunter™
+**Document:** 02_GluMira-Taglines-Statements-V7.md
+**Version:** 1.0
+**Status:** LOCKED
+**Filed:** Personal/04_Claude/
+
+---
+
+## 1. MASTER TAGLINE — LOCKED
+
+> **The science of insulin, made visible.**
+
+- Used on every platform, every screen, every document
+- Always sentence case — never all caps
+- Never shortened or paraphrased
+- Always follows GluMira™ on first mention
+
+---
+
+## 2. SUPPORTING TAGLINES
+
+These are approved for use in marketing, social media,
+and platform UI. Use as needed — never alter the wording.
+
+### 2.1 For Caregivers
+> You are not alone in the night watch.
+
+> Every drop of data is a step toward clarity.
+
+> When the numbers don't make sense — we help you find the why.
+
+> You didn't choose this. But you show up anyway. So do we.
+
+### 2.2 For Children
+> Mira is here. She knows it's hard. She's not going anywhere.
+
+> You are braver than you know. Mira thinks so too.
+
+> Every badge you earn is proof of how strong you are.
+
+> It's okay to have questions. Mira has answers.
+
+### 2.3 For Clinicians
+> Pattern intelligence that speaks your language.
+
+> See what your patients can't explain.
+
+> From data to insight — in the time it takes to read a chart.
+
+> GluMira™ sees the pattern. You make the call.
+
+### 2.4 For Researchers
+> Clean data. Consistent methodology. Real-world insight.
+
+> The cohort tool built for the questions that matter.
+
+### 2.5 For Schools & Organisations
+> Every child in your care deserves a plan that works.
+
+> From diagnosis to classroom — we bridge the gap.
+
+### 2.6 For General Marketing
+> Glucose data is not enough. Insulin intelligence is everything.
+
+> IOB Hunter™ — because what's active matters as much as
+  what's measured.
+
+> Free forever for the families who need it most.
+
+> Built for the child who was just diagnosed.
+  Built for the parent who didn't sleep last night.
+  Built for the clinician who needed this yesterday.
+
+---
+
+## 3. TIER STATEMENTS — APPROVED
+
+### GluMira Free
+> Free forever. No credit card. No expiry. No compromise on safety.
+
+### GluMira Pro
+> The full picture — patterns, predictions, and pharmacology
+  in one place.
+
+### GluMira AI
+> Insulin intelligence that learns, adapts, and never sleeps.
+
+### IOB Hunter™
+> Powered by IOB Hunter™ — the engine that tracks what insulin
+  is still active, so you never dose blind again.
+
+---
+
+## 4. BRAND VOICE RULES
+
+### 4.1 We ARE
+- Warm but precise
+- Honest about complexity
+- Compassionate without being sentimental
+- Empowering without being preachy
+- Scientific without being cold
+- Direct without being harsh
+
+### 4.2 We Are NEVER
+- Alarmist or fear-based
+- Overly clinical or robotic
+- Vague or wishy-washy
+- Patronising to caregivers or patients
+- Dismissive of how hard Type 1 diabetes is
+- Making medical promises or guarantees
+
+### 4.3 Words We Use
+- Visible / Clarity / Pattern / Intelligence
+- Vigilant / Precise / Consistent
+- Together / Support / Understand
+- Brave / Strong / Capable (for children only)
+
+### 4.4 Words We Never Use
+- Cure / Treat / Diagnose / Prescribe
+- Easy / Simple / Just (diabetes is never simple)
+- Perfect control (unachievable and harmful)
+- Normal blood sugar (use "target range" instead)
+- Diabetic (use "person with diabetes" or "child with Type 1")
+
+---
+
+## 5. MIRA'S VOICE — CHILDREN'S EDUCATION
+
+Mira speaks differently from the brand. Her voice is:
+- Gentle and warm — never scary
+- Honest — she does not pretend things are not hard
+- Age-appropriate — speaks to a 5-year-old differently
+  than a 12-year-old
+- Never medical jargon — always plain language
+- Always hopeful — there is always a next step
+
+### Mira's Approved Opening Lines
+> "Hi, I'm Mira. I'm an owl, which means I'm really good
+  at seeing things clearly — even in the dark."
+
+> "I know something big just happened. It's okay to feel
+  scared. I'm going to help you understand."
+
+> "You have questions. I have answers. Let's figure this
+  out together."
+
+### Mira's Approved Closing Lines
+> "You did something really brave today. I'm proud of you."
+
+> "I'll be here every time you have a question. Always."
+
+> "That's a lot to take in. Take your time. I'm not going anywhere."
+
+---
+
+## 6. STATEMENTS WE DO NOT MAKE
+
+The following are permanently prohibited across all
+GluMira™ communications:
+
+- Any statement implying GluMira replaces medical advice
+- Any statement guaranteeing glucose outcomes
+- Any statement that minimises the difficulty of Type 1 diabetes
+- Any comparison that demeans competitor products
+- Any statement using personal patient data as marketing material
+- Any promise of a cure or reversal of Type 1 diabetes
+- Any content that could cause anxiety or fear in a child
+
+---
+
+## 7. LEGAL FOOTER — REQUIRED ON ALL PLATFORMS
+
+> GluMira™ is a data intelligence and education platform.
+> It is not a medical device and does not replace the advice
+> of a qualified healthcare professional. Always consult your
+> clinician before making changes to your insulin regimen.
+> GluMira™ powered by IOB Hunter™.
+
+---
+
+## 8. TRADEMARK REMINDER
+- GluMira™ — ™ on every first mention
+- IOB Hunter™ — ™ on every first mention
+- Mira — no symbol, always capitalised
+
+---
+*GluMira™ powered by IOB Hunter™*
+*The science of insulin, made visible.*
+*Document locked V7 — do not alter without founder approval.*
+```
+
+---
+
+File 02 done. ✅
+
+Save it. Close it. Open `03_GluMira-Downgrade-Policy-V7.md` and type **READY.** 💧

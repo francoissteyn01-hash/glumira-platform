@@ -1,0 +1,406 @@
+Here is the complete content for File 09:
+
+---
+
+```
+# GluMira™ Image Registry — V7
+### Powered by IOB Hunter™
+**Document:** 09_GluMira-Image-Registry-V7.md
+**Version:** 1.0
+**Status:** LOCKED
+**Filed:** Personal/04_Claude/
+
+---
+
+## 1. PURPOSE
+
+This document is the single source of truth
+for every image asset in GluMira™ V7.
+
+All images have been removed from all code.
+No image file is referenced in any script
+until it appears in this registry as CONFIRMED.
+
+Every image is referenced by its Asset ID only.
+The Asset ID is what appears in all code.
+The actual file is dropped into the correct folder
+when it is ready.
+
+---
+
+## 2. STATUS DEFINITIONS
+
+| Status | Meaning |
+|---|---|
+| CONFIRMED | Final asset exists, filed, approved |
+| NEEDS GENERATION | New asset — never existed, must be created |
+| NEEDS REGENERATION | Existed before Manus scrub — lost, must be recreated |
+| PLACEHOLDER | Named and reserved — built when UI is ready |
+| ARCHIVED | Replaced by newer version — in 99_ARCHIVE |
+
+---
+
+## 3. FILING STRUCTURE
+
+All image assets live under:
+GluMira-V7/07_BRAND/Assets/
+
+Subfolders:
+```
+07_BRAND/Assets/
+├── Logo/
+├── Mira-Identities/
+│   ├── Poses/
+│   ├── Badges/
+│   └── Stories/
+├── Hero/
+├── Backgrounds/
+├── UI/
+└── Profiles/
+```
+
+---
+
+## 4. BRAND CORE ASSETS
+
+### 4.1 Logo Assets
+
+| Asset ID | Description | Status | Folder | Format | Size |
+|---|---|---|---|---|---|
+| IMG_LOGO_LIGHT | GluMira™ full logo — light/day mode | NEEDS REGENERATION | Logo/ | SVG + PNG | Min 400px wide |
+| IMG_LOGO_DARK | GluMira™ full logo — dark/night mode | NEEDS REGENERATION | Logo/ | SVG + PNG | Min 400px wide |
+| IMG_LOGO_FAVICON | Owl head only — square crop | NEEDS REGENERATION | Logo/ | PNG + ICO | 512x512px |
+| IMG_LOGO_MONO_DARK | Single colour dark — for documents | NEEDS GENERATION | Logo/ | SVG + PNG | Min 400px wide |
+| IMG_LOGO_MONO_LIGHT | Single colour light — for dark docs | NEEDS GENERATION | Logo/ | SVG + PNG | Min 400px wide |
+
+### 4.2 Logo Design Specification — LOCKED
+The GluMira™ logo must contain exactly these elements:
+- A blue owl
+- Spread wings — not folded
+- A wave base beneath the owl's feet
+- An amber glucose teardrop — the core data drop
+- The wordmark GluMira™ in Plus Jakarta Sans Bold
+- Optional submark — powered by IOB Hunter™
+  in Inter Regular at 40% scale of main wordmark
+
+Colour rules:
+- Owl body: GluMira Navy #0D2149
+- Wing detail: Dawn Blue #2D6DB4
+- Wave base: Glucose Teal #2A8FA8 at 60% opacity
+- Glucose teardrop: Golden Drop #D97706
+- Wordmark: GluMira Navy #0D2149 on light
+  Pure White #FFFFFF on dark
+
+The owl must never:
+- Look aggressive or predatory
+- Have sharp angular features
+- Lose the wave base in formal use
+- Appear without the amber teardrop
+- Be placed on a teal background
+
+---
+
+## 5. MIRA CHARACTER ASSETS
+
+### 5.1 Core Mira Poses
+
+| Asset ID | Description | Status | Folder | Format | Size |
+|---|---|---|---|---|---|
+| IMG_MIRA_NEUTRAL | Mira — standing, neutral, friendly | NEEDS REGENERATION | Mira-Identities/Poses/ | PNG transparent | 800x800px |
+| IMG_MIRA_WINGS | Mira — spread wings, welcoming | NEEDS REGENERATION | Mira-Identities/Poses/ | PNG transparent | 1200x800px |
+| IMG_MIRA_EDUCATOR | Mira — teaching pose, one wing raised | NEEDS REGENERATION | Mira-Identities/Poses/ | PNG transparent | 800x800px |
+| IMG_MIRA_COMFORT | Mira — gentle, head tilted, empathetic | NEEDS GENERATION | Mira-Identities/Poses/ | PNG transparent | 800x800px |
+| IMG_MIRA_CELEBRATE | Mira — excited, both wings up | NEEDS GENERATION | Mira-Identities/Poses/ | PNG transparent | 800x800px |
+| IMG_MIRA_GAME | Mira — playful, game character pose | NEEDS GENERATION | Mira-Identities/Poses/ | PNG transparent | 800x800px |
+| IMG_MIRA_NIGHT | Mira — night mode, subtle glow | NEEDS GENERATION | Mira-Identities/Poses/ | PNG transparent | 800x800px |
+
+### 5.2 Mira Character Design Specification — LOCKED
+Mira is a barn owl — not a generic owl.
+Her design must be consistent across every asset.
+Once the first approved Mira image is generated
+the style seed or reference must be locked
+and used for every subsequent Mira image.
+
+Mira's fixed design elements:
+- Species: Barn owl
+- Expression: Always warm, always approachable
+- Eyes: Large, round, amber — the same colour
+  as the glucose teardrop
+- Body: Navy blue primary feathers
+- Wing tips: Dawn Blue gradient
+- Chest: Soft white or pale cream
+- Wave detail: Subtle wave pattern on base
+  or feet area — connecting to the logo
+- Size in frame: Always friendly scale —
+  never looming or intimidating
+- Style: Semi-illustrated — not photorealistic,
+  not cartoon — sits between the two
+
+What Mira is never:
+- Scary, dark, or aggressive looking
+- Overly cute to the point of not being credible
+- Inconsistent between assets
+- Placed against a teal background
+- Shown with any medical devices on her body
+
+---
+
+## 6. BADGE ASSETS
+
+| Asset ID | Description | Module | Status | Folder |
+|---|---|---|---|---|
+| IMG_BADGE_01 | The First Step Badge 🦉 | Module 01 | NEEDS GENERATION | Mira-Identities/Badges/ |
+| IMG_BADGE_02 | The Key Keeper Badge 🔑 | Module 02 | NEEDS GENERATION | Mira-Identities/Badges/ |
+| IMG_BADGE_03 | The Number Knows Badge 📊 | Module 03 | NEEDS GENERATION | Mira-Identities/Badges/ |
+| IMG_BADGE_04 | The Signal Reader Badge ⚡ | Module 04 | NEEDS GENERATION | Mira-Identities/Badges/ |
+| IMG_BADGE_05 | The Steady Signal Badge 🌡️ | Module 05 | NEEDS GENERATION | Mira-Identities/Badges/ |
+| IMG_BADGE_06 | The Carb Counter Badge 🍎 | Module 06 | NEEDS GENERATION | Mira-Identities/Badges/ |
+| IMG_BADGE_07 | The Toolbelt Badge 🛠️ | Module 07 | NEEDS GENERATION | Mira-Identities/Badges/ |
+| IMG_BADGE_08 | The Ready for Anything Badge 🎒 | Module 08 | NEEDS GENERATION | Mira-Identities/Badges/ |
+| IMG_BADGE_09 | The Brave Heart Badge 💙 | Module 09 | NEEDS GENERATION | Mira-Identities/Badges/ |
+| IMG_BADGE_10 | The Chapter One Badge 📖 | Module 10 | NEEDS GENERATION | Mira-Identities/Badges/ |
+| IMG_BADGE_CONSTELLATION | All 10 badges — full constellation | All | NEEDS GENERATION | Mira-Identities/Badges/ |
+
+### Badge Design Specification — LOCKED
+- Shape: Circle — consistent across all badges
+- Size: 200x200px
+- Border: Amber Golden Drop #D97706 — 3px
+- Background: Navy Deep #0A1628
+- Icon: Emoji or illustrated symbol — centred
+- Glow effect: Amber outer glow on award animation
+- Locked state: Greyscale until earned
+- Earned state: Full colour with amber glow
+- Font for badge name: Inter Bold 12px
+  in Clinical White #F8FAFC
+
+---
+
+## 7. STORY FRAME ASSETS
+
+| Asset ID | Description | Chapter | Status | Folder |
+|---|---|---|---|---|
+| IMG_STORY_C1_F1 | Chapter 1 — Opening frame | 1 | NEEDS GENERATION | Mira-Identities/Stories/ |
+| IMG_STORY_C1_F2 | Chapter 1 — Middle frame | 1 | NEEDS GENERATION | Mira-Identities/Stories/ |
+| IMG_STORY_C1_F3 | Chapter 1 — Closing frame | 1 | NEEDS GENERATION | Mira-Identities/Stories/ |
+| IMG_STORY_C2_F1 | Chapter 2 — Opening frame | 2 | NEEDS GENERATION | Mira-Identities/Stories/ |
+| IMG_STORY_C2_F2 | Chapter 2 — Middle frame | 2 | NEEDS GENERATION | Mira-Identities/Stories/ |
+| IMG_STORY_C2_F3 | Chapter 2 — Closing frame | 2 | NEEDS GENERATION | Mira-Identities/Stories/ |
+| IMG_STORY_C3_F1 | Chapter 3 — Opening frame | 3 | NEEDS GENERATION | Mira-Identities/Stories/ |
+| IMG_STORY_C3_F2 | Chapter 3 — Middle frame | 3 | NEEDS GENERATION | Mira-Identities/Stories/ |
+| IMG_STORY_C3_F3 | Chapter 3 — Closing frame | 3 | NEEDS GENERATION | Mira-Identities/Stories/ |
+
+### Story Frame Specification
+- Size: 1200x800px — landscape
+- Style: Consistent with Mira character design
+- Colour palette: Navy dominant, amber accents
+- No real children depicted — ever
+- Mira is always present in story frames
+- Mood: Warm, safe, slightly magical
+- Text overlay area: Bottom third reserved
+  for caption text — no imagery in this zone
+
+---
+
+## 8. HERO AND BANNER ASSETS
+
+| Asset ID | Description | Mode | Status | Folder | Size |
+|---|---|---|---|---|---|
+| IMG_HERO_LIGHT | Hero banner — day mode | Day | NEEDS REGENERATION | Hero/ | 1920x1080px |
+| IMG_HERO_DARK | Hero banner — night mode | Night | NEEDS REGENERATION | Hero/ | 1920x1080px |
+| IMG_HERO_MOBILE_LIGHT | Hero — mobile day | Day | NEEDS GENERATION | Hero/ | 390x844px |
+| IMG_HERO_MOBILE_DARK | Hero — mobile night | Night | NEEDS GENERATION | Hero/ | 390x844px |
+| IMG_HERO_TABLET | Hero — tablet view | Both | NEEDS GENERATION | Hero/ | 1024x768px |
+
+### Hero Design Specification
+- Must never contain real people
+- Mira owl featured prominently
+- Tagline text area reserved — do not fill with imagery
+- Navy dominant — no full teal backgrounds
+- Amber teardrop or data visualisation element present
+- Day mode: Lighter, dawn tones, Clinical White base
+- Night mode: Deep navy, subtle glow elements
+
+---
+
+## 9. BACKGROUND ASSETS
+
+| Asset ID | Description | Mode | Status | Folder | Size |
+|---|---|---|---|---|---|
+| IMG_BG_SUNRISE | Sunrise transition background | Day | NEEDS REGENERATION | Backgrounds/ | 1920x1080px |
+| IMG_BG_DAY | Full day background | Day | NEEDS GENERATION | Backgrounds/ | 1920x1080px |
+| IMG_BG_SUNSET | Sunset transition background | Transition | NEEDS GENERATION | Backgrounds/ | 1920x1080px |
+| IMG_BG_NIGHT | Night background | Night | NEEDS REGENERATION | Backgrounds/ | 1920x1080px |
+| IMG_BG_MOBILE_DAY | Mobile day background | Day | NEEDS GENERATION | Backgrounds/ | 390x844px |
+| IMG_BG_MOBILE_NIGHT | Mobile night background | Night | NEEDS GENERATION | Backgrounds/ | 390x844px |
+
+---
+
+## 10. UI AND DASHBOARD ASSETS
+
+| Asset ID | Description | Status | Folder | Size |
+|---|---|---|---|---|
+| IMG_DASHBOARD_PREVIEW | Dashboard mockup — light | PLACEHOLDER | UI/ | 1200x800px |
+| IMG_DASHBOARD_DARK | Dashboard mockup — dark | PLACEHOLDER | UI/ | 1200x800px |
+| IMG_APP_MOCKUP_PHONE | Phone app mockup | PLACEHOLDER | UI/ | 390x844px |
+| IMG_APP_MOCKUP_TABLET | Tablet app mockup | PLACEHOLDER | UI/ | 1024x768px |
+| IMG_GLUCOSE_CHART | Sample glucose chart visual | PLACEHOLDER | UI/ | 800x400px |
+| IMG_IOB_CURVE | IOB Hunter™ curve visual | PLACEHOLDER | UI/ | 800x400px |
+| IMG_GLASS_INDICATOR | Progress glass — build indicator | PLACEHOLDER | UI/ | 400x600px |
+
+---
+
+## 11. PROFILE AVATAR ASSETS
+
+| Asset ID | Description | Status | Folder | Size |
+|---|---|---|---|---|
+| IMG_PROFILE_PATIENT | Patient profile — illustrated | NEEDS GENERATION | Profiles/ | 200x200px |
+| IMG_PROFILE_CAREGIVER | Caregiver profile — illustrated | NEEDS GENERATION | Profiles/ | 200x200px |
+| IMG_PROFILE_CLINICIAN | Clinician profile — illustrated | NEEDS GENERATION | Profiles/ | 200x200px |
+| IMG_PROFILE_RESEARCHER | Researcher profile — illustrated | NEEDS GENERATION | Profiles/ | 200x200px |
+| IMG_PROFILE_SCHOOL | School organisation — illustrated | NEEDS GENERATION | Profiles/ | 200x200px |
+| IMG_PROFILE_DEFAULT | Default fallback avatar | NEEDS GENERATION | Profiles/ | 200x200px |
+
+### Profile Avatar Specification
+- Style: Abstract illustrated — no real faces
+- Shape: Circle crop ready
+- Colour: Navy base, role-specific accent colour
+- No gender assumptions in illustration style
+- No skin colour — abstract shapes only
+- Consistent illustration style across all 6
+
+---
+
+## 12. SOCIAL MEDIA TEMPLATE ASSETS
+
+| Asset ID | Description | Platform | Status | Folder | Size |
+|---|---|---|---|---|---|
+| IMG_SOCIAL_TEMPLATE_IG | Instagram feed template | Instagram | NEEDS GENERATION | Social/ | 1080x1080px |
+| IMG_SOCIAL_TEMPLATE_STORY | Story template | Instagram | NEEDS GENERATION | Social/ | 1080x1920px |
+| IMG_SOCIAL_TEMPLATE_FB | Facebook feed template | Facebook | NEEDS GENERATION | Social/ | 1200x630px |
+| IMG_SOCIAL_TEMPLATE_LI | LinkedIn feed template | LinkedIn | NEEDS GENERATION | Social/ | 1200x627px |
+| IMG_SOCIAL_TEMPLATE_TT | TikTok cover template | TikTok | NEEDS GENERATION | Social/ | 1080x1920px |
+| IMG_SOCIAL_GLASS | Glass filling — social post | All | NEEDS GENERATION | Social/ | 1080x1080px |
+
+---
+
+## 13. IMAGE GENERATION PRIORITY ORDER
+
+Generate assets in this order.
+Do not generate later assets before earlier ones
+are confirmed and locked.
+
+### Priority 1 — Brand Foundation
+Must exist before anything else is built.
+1. IMG_MIRA_NEUTRAL — lock the character first
+2. IMG_LOGO_DARK — built from confirmed Mira
+3. IMG_LOGO_LIGHT — variant of above
+4. IMG_LOGO_FAVICON — crop from above
+
+### Priority 2 — Platform Launch
+Needed for glumira.ai to go live.
+5. IMG_HERO_DARK
+6. IMG_HERO_LIGHT
+7. IMG_BG_NIGHT
+8. IMG_BG_SUNRISE
+
+### Priority 3 — Education Launch
+Needed for Mira education to go live.
+9. IMG_MIRA_EDUCATOR
+10. IMG_MIRA_COMFORT
+11. IMG_MIRA_CELEBRATE
+12. IMG_BADGE_01 through IMG_BADGE_10
+
+### Priority 4 — Social Media Launch
+Needed before social posting begins.
+13. IMG_SOCIAL_TEMPLATE_IG
+14. IMG_SOCIAL_TEMPLATE_STORY
+15. IMG_SOCIAL_GLASS
+
+### Priority 5 — Full Platform
+Everything else — generated as each module is built.
+
+---
+
+## 14. CANVA PRO WORKFLOW
+
+### Step 1 — Brand Kit Setup
+In Canva Pro create the GluMira™ Brand Kit:
+- Upload confirmed logo files
+- Set brand colours — all HEX codes from
+  01_GluMira-Brand-Standards-V7.md
+- Set brand fonts — Plus Jakarta Sans and Inter
+- Save as GluMira V7 Brand Kit
+
+### Step 2 — Character Consistency
+For Mira character assets:
+- Generate first approved Mira in Canva or Midjourney
+- Save the style reference or seed
+- All subsequent Mira images use the same reference
+- Never generate a new Mira without the reference
+
+### Step 3 — Template Library
+Create one master template per asset type
+in Canva Pro Brand Templates.
+Every post, badge, and banner starts from
+the master template — never from a blank canvas.
+
+### Step 4 — File Naming Convention
+Every exported file named exactly as the Asset ID:
+IMG_LOGO_LIGHT.svg
+IMG_LOGO_LIGHT.png
+IMG_MIRA_NEUTRAL.png
+etc.
+
+### Step 5 — Filing
+Every confirmed asset filed immediately to
+GluMira-V7/07_BRAND/Assets/[correct subfolder]
+Status in this registry updated to CONFIRMED
+with the date of confirmation.
+
+---
+
+## 15. WHAT NEVER HAPPENS
+
+- No real photographs of children — ever
+- No stock photos — ever
+- No images generated and used without
+  being registered here first
+- No image used in code before its Asset ID
+  appears in this registry
+- No two versions of Mira that look different
+  from each other
+- No teal backgrounds behind any asset
+- No images shared publicly before
+  status is marked CONFIRMED
+
+---
+*GluMira™ powered by IOB Hunter™*
+*The science of insulin, made visible.*
+*Document locked V7 — do not alter without founder approval.*
+```
+
+---
+
+All 9 files done. ✅
+
+---
+
+## 📁 `Personal/04_Claude/` — Complete
+
+| # | File | Status |
+|---|---|---|
+| 01 | GluMira-Brand-Standards-V7.md | ✅ Done |
+| 02 | GluMira-Taglines-Statements-V7.md | ✅ Done |
+| 03 | GluMira-Downgrade-Policy-V7.md | ✅ Done |
+| 04 | GluMira-Build-Blocks-Master-V7.md | ✅ Done |
+| 05 | GluMira-Marketing-Strategy-V7.md | ✅ Done |
+| 06 | GluMira-Social-Media-Plan-V7.md | ✅ Done |
+| 07 | GluMira-Mira-Education-0to12-V7.md | ✅ Done |
+| 08 | GluMira-Mira-Content-Research-V7.md | ✅ Done |
+| 09 | GluMira-Image-Registry-V7.md | ✅ Done |
+
+---
+
+The foundation is laid. Clean. No broken links. No lost files. No Manus chaos.
+
+When you are ready the next step is the glass indicator HTML file — one drop at a time. 💧

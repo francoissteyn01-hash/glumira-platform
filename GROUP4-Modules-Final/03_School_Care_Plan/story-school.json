@@ -1,0 +1,59 @@
+{
+  "cta": {
+    "route": "/onboarding/first-win/organisation",
+    "text": "Set up our organisation"
+  },
+  "profile": "organisation",
+  "scenes": [
+    {
+      "duration_ms": 9000,
+      "scene_id": "SC1-S1",
+      "subtitle_text": "Supporting children with diabetes. Confidently.",
+      "visual_id": "anim_school_shield",
+      "visual_note": "A school building with a protective shield animation. Warm, reassuring. Professional.",
+      "voice_text": "GluMira helps schools and care organisations support children with diabetes safely and confidently. You don't need to be a medical expert. GluMira gives you exactly what you need to act correctly."
+    },
+    {
+      "duration_ms": 12000,
+      "scene_id": "SC1-S2",
+      "subtitle_text": "Auto-generated care plans. Always up to date.",
+      "visual_id": "anim_care_plan_school",
+      "visual_note": "Care plan PDF building itself — fields populating with real data. Print and Share buttons visible.",
+      "voice_text": "The School Care Plan generator creates a complete, clinical-grade emergency document for each child in your care — their hypo thresholds, treatment steps, dietary restrictions, EpiPen location, and emergency contacts. It updates automatically when the parent changes anything in their child's profile."
+    },
+    {
+      "duration_ms": 10000,
+      "scene_id": "SC1-S3",
+      "subtitle_text": "Dietary restrictions. Allergy protocols. Nothing assumed.",
+      "visual_id": "anim_allergy_protocol",
+      "visual_note": "Allergy section of care plan highlighted. Clear icons for each restriction. Emergency protocol steps visible.",
+      "voice_text": "Each child's dietary restrictions and allergy protocols are clearly documented — gluten-free, dairy-free, glucose tablet allergies, EpiPen requirements. Nothing is left to assumption."
+    },
+    {
+      "duration_ms": 10000,
+      "scene_id": "SC1-S4",
+      "subtitle_text": "Multiple children. One organisation profile.",
+      "visual_id": "anim_org_dashboard",
+      "visual_note": "Organisation dashboard showing multiple student cards. Each with a status indicator. Clean, list-based layout.",
+      "voice_text": "GluMira supports multiple children under one organisation profile. Each child's care plan is separate, current, and accessible instantly — from any authorised device."
+    },
+    {
+      "duration_ms": 10000,
+      "scene_id": "SC1-S5",
+      "subtitle_text": "Clear protocols. Specific to each child.",
+      "visual_id": "anim_emergency_protocol",
+      "visual_note": "Step-by-step hypo response protocol displayed on a tablet screen. Large text. Clear steps. Calm visual design.",
+      "voice_text": "When an incident happens, staff know exactly what to do. No guessing. No searching. The protocol is clear, accessible, and specific to that child."
+    },
+    {
+      "duration_ms": 9000,
+      "scene_id": "SC1-S6",
+      "subtitle_text": "Set up in under 5 minutes.",
+      "visual_id": "anim_org_cta",
+      "visual_note": "Clean CTA screen. School icon. Single button.",
+      "voice_text": "Let's set up your organisation profile and add your first student. It takes less than five minutes."
+    }
+  ],
+  "total_duration_ms": 60000,
+  "voice_style": "calm_authoritative"
+}

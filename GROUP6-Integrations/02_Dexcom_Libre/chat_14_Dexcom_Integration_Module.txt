@@ -1,0 +1,17 @@
+GluMira™ Chat Archive — Dexcom Integration Module
+====================================================
+
+URL: https://manus.im/share/VByGv6a1RyZrKB9BKLWadM
+User Tag: Update
+
+Description:
+Dexcom integration module with two parts: near-real-time integration
+using Dexcom Share service, and official Dexcom API V3 integration for
+historical data. Database integration with Supabase creating two new
+tables for connection details and glucose readings. Includes FastAPI
+backend, background polling service, Pydantic data models, test suite,
+and comprehensive documentation in glumira-dexcom-integration.zip.
+
+Category: Integration / Development
+Version: V7
+Filed: 2026-03-28

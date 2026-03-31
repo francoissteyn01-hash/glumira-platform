@@ -1,0 +1,38 @@
+{
+	"folders": [
+		{
+			"path": "../GROUP4-Modules-Final"
+		},
+		{
+			"path": "../GROUP4-Modules"
+		},
+		{
+			"path": "../01_GluMira-V7_Brand-Standards"
+		},
+		{
+			"path": "../02_GluMira-V7_Tag-Lines"
+		},
+		{
+			"path": "../03_GluMira-V7_Downgrade-Policy"
+		},
+		{
+			"path": "."
+		},
+		{
+			"path": "../05_GluMira-V7_Marketing-Strategy"
+		},
+		{
+			"path": "../06_GluMira-V7_Social-Media-Plan"
+		},
+		{
+			"path": "../07_GluMira-V7_Mira-Education-0-12"
+		},
+		{
+			"path": "../08_GluMira-V7_Mira-Content-Research"
+		},
+		{
+			"path": "../09_GluMira-V7_Image-Registry"
+		}
+	],
+	"settings": {}
+}

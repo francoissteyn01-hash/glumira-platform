@@ -1,0 +1,154 @@
+GluMira™ V6 — MODULE PM01: Pregnancy
+Backend Logic Specification v1.0
+Last Updated: 2026-03-28
+Status: READY FOR IMPLEMENTATION
+================================================================================
+
+OVERVIEW
+--------
+The Pregnancy Module (PM01) adapts GluMira's IOB Hunter™ engine for gestational
+diabetes and T1D in pregnancy. Insulin sensitivity changes dramatically across
+trimesters, requiring dynamic ISF/ICR recalibration.
+
+GluMira is an educational platform, not a medical device. All outputs are
+educational estimates. Users must consult their endocrinologist or OB/GYN.
+
+================================================================================
+TRIMESTER PROFILES
+================================================================================
+
+TRIMESTER 1 (Weeks 1–13):
+  - ISF multiplier: 1.0x (baseline — no change from pre-pregnancy)
+  - ICR multiplier: 1.0x
+  - Glucose targets (educational reference):
+      Fasting:        3.5–5.0 mmol/L
+      1hr post-meal:  < 7.8 mmol/L
+      2hr post-meal:  < 6.7 mmol/L
+  - Notes: Hypoglycaemia risk elevated in T1 due to nausea/vomiting.
+           Morning sickness may impair carb intake consistency.
+
+TRIMESTER 2 (Weeks 14–27):
+  - ISF multiplier: 0.85x (15% reduction — insulin resistance increases)
+  - ICR multiplier: 0.85x
+  - Glucose targets:
+      Fasting:        3.5–5.0 mmol/L
+      1hr post-meal:  < 7.8 mmol/L
+      2hr post-meal:  < 6.7 mmol/L
+  - Notes: Placental hormones (hPL, progesterone) drive resistance.
+           Basal insulin requirements typically increase 10–20%.
+
+TRIMESTER 3 (Weeks 28–40):
+  - ISF multiplier: 0.70x (30% reduction — peak resistance)
+  - ICR multiplier: 0.70x
+  - Glucose targets:
+      Fasting:        3.5–5.0 mmol/L
+      1hr post-meal:  < 7.8 mmol/L
+      2hr post-meal:  < 6.7 mmol/L
+  - Notes: Highest insulin requirements. Overnight basal adjustments critical.
+           CONCEPTT trial data: CGM use reduces adverse outcomes.
+
+POSTPARTUM (Weeks 1–12 post-delivery):
+  - ISF multiplier: 1.3x (30% increase — rapid sensitivity recovery)
+  - ICR multiplier: 1.3x
+  - Notes: Hypoglycaemia risk highest in first 24–48hrs post-delivery.
+           Breastfeeding further increases insulin sensitivity.
+
+================================================================================
+BACKEND LOGIC
+================================================================================
+
+FUNCTION: calculatePregnancyISF(baseISF, trimester)
+  Input:  baseISF (mmol/L per unit), trimester (1|2|3|"postpartum")
+  Output: adjustedISF (mmol/L per unit)
+
+  Multipliers:
+    trimester 1:      1.00
+    trimester 2:      0.85
+    trimester 3:      0.70
+    postpartum:       1.30
+
+  Formula: adjustedISF = baseISF * multiplier
+
+FUNCTION: calculatePregnancyICR(baseICR, trimester)
+  Input:  baseICR (g carb per unit), trimester (1|2|3|"postpartum")
+  Output: adjustedICR (g carb per unit)
+
+  Formula: adjustedICR = baseICR * multiplier
+
+FUNCTION: getPregnancyTargets(trimester)
+  Returns: { fasting: {low, high}, postMeal1hr: {high}, postMeal2hr: {high} }
+  Units: mmol/L
+
+FUNCTION: assessPregnancyRisk(currentGlucose, trimester, iobValue)
+  Input:  currentGlucose (mmol/L), trimester, iobValue (units)
+  Output: riskLevel ("low"|"moderate"|"high"), educationalMessage
+
+  Risk thresholds:
+    High risk:     glucose > 9.0 mmol/L post-meal, or glucose < 3.5 mmol/L
+    Moderate risk: glucose 7.8–9.0 mmol/L post-meal
+    Low risk:      within targets
+
+================================================================================
+UI COMPONENTS REQUIRED
+================================================================================
+
+1. TrimesterSelector
+   - Dropdown: T1 / T2 / T3 / Postpartum
+   - Displays week range and key notes
+   - Updates ISF/ICR display in real-time
+
+2. PregnancyGlucoseTargetCard
+   - Shows fasting, 1hr, 2hr targets for selected trimester
+   - Source attribution: NICE NG3 / ADA Standards of Care
+
+3. PregnancyIOBDisplay
+   - Adapts IOB Hunter curve using trimester-adjusted ISF
+   - Shows adjusted decay curve vs baseline
+
+4. PregnancyRiskAlert
+   - Educational alert when glucose exceeds trimester targets
+   - NOT a clinical alarm — educational context only
+
+================================================================================
+DATABASE SCHEMA (additions to patient_profiles)
+================================================================================
+
+Table: patient_pregnancy_profiles
+  id                UUID PRIMARY KEY
+  patient_id        UUID REFERENCES patient_profiles(id)
+  trimester         ENUM('T1','T2','T3','postpartum')
+  gestational_week  INTEGER (1–42)
+  due_date          DATE (optional, educational use)
+  base_isf          DECIMAL(5,2)
+  base_icr          DECIMAL(5,2)
+  adjusted_isf      DECIMAL(5,2) GENERATED
+  adjusted_icr      DECIMAL(5,2) GENERATED
+  created_at        TIMESTAMP DEFAULT NOW()
+  updated_at        TIMESTAMP DEFAULT NOW()
+
+================================================================================
+CLINICAL REFERENCES
+================================================================================
+
+1. CONCEPTT Trial (Continuous Glucose Monitoring in Women with T1D in Pregnancy)
+   - Lancet 2017; 390: 2347–2359
+   - Key finding: CGM use in T1D pregnancy reduces large-for-gestational-age
+     births, neonatal hypoglycaemia, and NICU admissions.
+
+2. NICE NG3 (Diabetes in Pregnancy, 2015, updated 2023)
+   - Glucose targets for T1D in pregnancy.
+
+3. ADA Standards of Care 2024 — Section 15: Diabetes and Pregnancy
+   - Recommends pre-conception A1C < 6.5% where achievable without hypoglycaemia.
+
+================================================================================
+EDUCATIONAL DISCLAIMER
+================================================================================
+
+GluMira is an educational platform, not a medical device. The Pregnancy Module
+provides educational estimates based on published clinical guidelines. All insulin
+adjustments must be made under the supervision of a qualified endocrinologist
+and/or obstetrician. Pregnancy with diabetes requires specialist care.
+
+Contact: dev@glumira.ai
+================================================================================

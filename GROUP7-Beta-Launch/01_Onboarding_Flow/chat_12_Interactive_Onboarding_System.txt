@@ -1,0 +1,17 @@
+GluMira™ Chat Archive — Interactive Onboarding System (UNPUBLISHED)
+=====================================================================
+
+URL: https://manus.im/share/C4ERjYfnQDI3I6DWdbntoO
+User Tag: Unpublished — needs publishing
+
+Description:
+Interactive onboarding system for GluMira™ including Welcome Journey,
+StoryEngine for animated explainers, GluMiraMap with interactive zones,
+and GluGuideDrawer persistent help panel. Development included fixing
+TypeScript errors and integrating all components with profile-aware
+theming. Task completed with live URL ready for QA and deployment.
+
+Status: NOT YET PUBLISHED — user asked if they should publish first
+Category: Development Build / Onboarding
+Version: V7
+Filed: 2026-03-28

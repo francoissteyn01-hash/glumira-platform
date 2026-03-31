@@ -1,0 +1,51 @@
+================================================================
+GLUMIRA — MODULE SCRIPTS INDEX v1.0
+File: 04.2_Module-Scripts-Index_v1.0.txt
+Created: 19 March 2026
+================================================================
+
+STATUS KEY:
+[SPEC]  = Specification written, code not yet started
+[WIP]   = Work in progress
+[DONE]  = Code complete
+[TEST]  = In testing
+
+----------------------------------------------------------------
+MODULE SCRIPTS
+----------------------------------------------------------------
+
+[ SPEC ]  02.1_PM01-Pregnancy-Code_v1.0.py
+          → Trimester ISF/ICR modifiers
+          → Postpartum crash detection
+          → Breastfeeding hypo window
+          → ACP document generator
+          → GDM modes + steroid spike alerts
+
+[ SPEC ]  02.2_ADHD-Code_v1.0.py
+          → Stimulant med tracking (Concerta, Ritalin)
+          → Appetite suppression window flag
+          → Irregular meal timing detection
+
+[ SPEC ]  02.3_Thyroid-Code_v1.0.py
+          → Gastric emptying modifier
+          → Hypothyroid: +20 min delay
+          → Hyperthyroid: -15 min delay
+          → Sensitivity variation flag
+
+[ SPEC ]  02.4_School-Care-Plan-Code_v1.0.py
+          → Hypo threshold per meal regime
+          → School-safe alert output
+          → Care plan document generator
+
+----------------------------------------------------------------
+TO ADD IN PHASE 2:
+----------------------------------------------------------------
+
+[ ] Nutrition Module script
+[ ] Pediatric Module script
+[ ] Chronic Condition Module script
+[ ] Sleep Module script
+
+================================================================
+END OF FILE — Last updated: 19 March 2026
+================================================================

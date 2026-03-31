@@ -1,0 +1,203 @@
+Here is the complete content for File 04:
+
+---
+
+```
+# GluMira™ Build Blocks Master List — V7
+### Powered by IOB Hunter™
+**Document:** 04_GluMira-Build-Blocks-Master-V7.md
+**Version:** 1.0
+**Status:** LOCKED
+**Filed:** Personal/04_Claude/
+
+---
+
+## OVERVIEW
+
+This is the master list of all 100 building blocks
+that take GluMira™ from zero to full platform.
+Each block completed = one drop in the glass.
+The glass fills from 0% to 100%.
+100% = GluMira AI — Credits Roll.
+
+Progress is tracked in the glass indicator tool.
+No personal names. No locations. No private data.
+
+---
+
+## TIER 1 — FOUNDATION
+### Drops 1–10 | Target: 10%
+*The platform cannot exist without these.*
+
+| # | Block | Description | Done |
+|---|---|---|---|
+| 1 | Project Root | V7 folder structure locked, no duplicates | [ ] |
+| 2 | Design Tokens | Colours, fonts, spacing — single source of truth | [ ] |
+| 3 | Landing Page Shell | HTML structure, no images, nav and footer | [ ] |
+| 4 | Day/Night Mode Engine | Sunrise/sunset switch working | [ ] |
+| 5 | Supabase Project | Database created, connected, ENV locked | [ ] |
+| 6 | Auth System | Register / Login / Logout working | [ ] |
+| 7 | User Profile Schema | DB tables — patient, caregiver, clinician, researcher, org | [ ] |
+| 8 | Region Lock | Region sets insulin, language, currency automatically | [ ] |
+| 9 | Language Selector | EN-UK / EN-US / Afrikaans at registration | [ ] |
+| 10 | Privacy & Consent | Consent capture, data deletion policy live | [ ] |
+
+---
+
+## TIER 2 — GLUMIRA FREE
+### Drops 11–25 | Target: 25%
+*What every user gets for free, forever.*
+
+| # | Block | Description | Done |
+|---|---|---|---|
+| 11 | Glucose Log | Manual entry — fingerstick and CGM | [ ] |
+| 12 | Bolus Log | MDI pen injection logging | [ ] |
+| 13 | Injection Site Rotation | Site tracker with body map placeholder | [ ] |
+| 14 | Basal Insulin Log | Levemir / Lantus / Tresiba logging | [ ] |
+| 15 | Meal Log | Carb entry linked to meal regime | [ ] |
+| 16 | 20 Meal Regime Profiles | GFD, halal, kosher, Ramadan, vegan and more | [ ] |
+| 17 | Basic Glucose Chart | 24h view, colour-coded ranges | [ ] |
+| 18 | Hypo Alert Engine | Threshold by meal regime, push alert | [ ] |
+| 19 | School Care Plan | Auto-generated PDF, dietary and hypo protocol | [ ] |
+| 20 | Streak & Reward System | Daily use tracking, engagement milestones | [ ] |
+| 21 | Beta Program Module | Participant profiles, feedback loop | [ ] |
+| 22 | Dashboard Shell | Free tier dashboard, no broken links | [ ] |
+| 23 | Mobile Responsive | All pages mobile-first | [ ] |
+| 24 | Offline Mode | Core logging works without internet | [ ] |
+| 25 | Free Tier Complete | Glass = 25% full | [ ] |
+
+---
+
+## TIER 3 — GLUMIRA PRO
+### Drops 26–50 | Target: 50%
+*$9.99/mo — the power user layer.*
+
+| # | Block | Description | Done |
+|---|---|---|---|
+| 26 | IOB Hunter™ Engine | Insulin on board calculation, active curve | [ ] |
+| 27 | ISF / ICR Calculator | Insulin sensitivity and carb ratio per profile | [ ] |
+| 28 | Pattern Intelligence | Glucose pattern detection, trend flags | [ ] |
+| 29 | Basal Density Map | Time-of-day basal pattern visualisation | [ ] |
+| 30 | Nightscout Integration | Live CGM data pull via API | [ ] |
+| 31 | CGM Live 5min Monitor | Real-time glucose every 5 minutes | [ ] |
+| 32 | APS Integration | Loop / AndroidAPS / OpenAPS closed loop | [ ] |
+| 33 | Pump Integration | Omnipod / Medtronic / Tandem / Ypsomed | [ ] |
+| 34 | Wearables Module | Smartwatch and fitness tracker via Validic | [ ] |
+| 35 | Comorbidity Engine | Thyroid / ADHD / gastroparesis / celiac flags | [ ] |
+| 36 | Pregnancy Module PM-01 | Trimester ISF/ICR, postpartum, GDM | [ ] |
+| 37 | Ramadan Engine | Fasting glucose management, suhoor/iftar | [ ] |
+| 38 | Kosher Engine | Meal timing, dietary pattern modifiers | [ ] |
+| 39 | Exercise Engine | Activity impact on glucose, post-exercise window | [ ] |
+| 40 | Sleep Engine | Overnight pattern, dawn phenomenon detection | [ ] |
+| 41 | Mental Health Monitor | Mood and stress glucose correlation | [ ] |
+| 42 | Nutrition Intelligence | Macro tracking linked to glucose response | [ ] |
+| 43 | Environmental Module | Heat and altitude impact on insulin sensitivity | [ ] |
+| 44 | PDF Report Generator | Clinical-grade printable reports | [ ] |
+| 45 | Clinician View | Read-only clinician portal, pattern summary | [ ] |
+| 46 | Researcher View | Anonymised data export, cohort tools | [ ] |
+| 47 | Organisation View | Multi-patient school and org dashboard | [ ] |
+| 48 | Africa PPP Discount | Auto-applied 40–60% regional pricing | [ ] |
+| 49 | Pro Dashboard Complete | All modules live, no placeholder errors | [ ] |
+| 50 | Pro Tier Complete | Glass = 50% full | [ ] |
+
+---
+
+## TIER 4 — GLUMIRA AI
+### Drops 51–85 | Target: 85%
+*$19.99/mo — the intelligence layer.*
+
+| # | Block | Description | Done |
+|---|---|---|---|
+| 51 | AI Engine Core | Model connected, glucose pattern input pipeline | [ ] |
+| 52 | Predictive Glucose | Next 1–4 hour glucose forecast | [ ] |
+| 53 | Bolus Advisor | AI-suggested bolus with confidence score | [ ] |
+| 54 | Hypo Prediction | Early warning 30–60 min before hypo | [ ] |
+| 55 | Hyper Pattern Alert | Post-meal spike pattern recognition | [ ] |
+| 56 | Basal Optimiser | AI-suggested basal adjustment by time block | [ ] |
+| 57 | IOB Hunter™ AI | AI-enhanced IOB curve with meal interaction | [ ] |
+| 58 | Comorbidity AI Flags | AI detects pattern shift from comorbidity | [ ] |
+| 59 | Ramadan AI Mode | AI-adjusted fasting protocol per profile | [ ] |
+| 60 | Pregnancy AI Monitor | AI trimester pattern shift detection | [ ] |
+| 61 | Mira Education Engine | Owl educator, story-driven diabetes education | [ ] |
+| 62 | Mira Stories Chapter 1 | First diagnosis — what is happening in my body | [ ] |
+| 63 | Mira Stories Chapter 2 | Caregiver rough patch support story | [ ] |
+| 64 | Mira Stories Chapter 3 | Clinician insight story | [ ] |
+| 65 | Mira Badge System | Reward badges for education completion | [ ] |
+| 66 | Mira Waiting Room Game | Interactive game for children at clinic | [ ] |
+| 67 | Pediatric Growth Module | Growth hormone impact, age-adjusted targets | [ ] |
+| 68 | Post-Surgical Module | Recovery glucose pattern, medication flags | [ ] |
+| 69 | Psychological Module | Diabetes distress scoring, burnout detection | [ ] |
+| 70 | Community Module | Peer groups, anonymised shared patterns | [ ] |
+| 71 | Dexcom G7 Integration | Pediatric-focused CGM, real-time feed | [ ] |
+| 72 | Nightscout Discord | Open-source pharmacology library contribution | [ ] |
+| 73 | Clinical AI Reports | AI-generated clinical summary for clinicians | [ ] |
+| 74 | Grant Evidence Package | Gates / JDRF / Novo Nordisk data outputs | [ ] |
+| 75 | ISPAD Compliance Layer | Paediatric standard compliance module | [ ] |
+| 76 | Security Audit Clear | All vulnerabilities resolved, RLS locked | [ ] |
+| 77 | BIPA Trademark Confirmed | TM symbol live on all documents | [ ] |
+| 78 | Series A Data Room | Investor dashboard, KPI live feed | [ ] |
+| 79 | API Public Documentation | Developer documentation live | [ ] |
+| 80 | Social Media Integration | Social content pipeline connected to platform | [ ] |
+| 81 | Beta to Launch Migration | Beta data migrated, participants converted | [ ] |
+| 82 | glumira.ai DNS Live | Domain resolving, SSL confirmed | [ ] |
+| 83 | glumira.app DNS Live | App domain live | [ ] |
+| 84 | End-to-End Test Pass | All modules tested, zero broken links | [ ] |
+| 85 | GluMira AI Complete | Glass = 85% full | [ ] |
+
+---
+
+## TIER 5 — THE CREDITS
+### Drops 86–100 | Target: 100%
+*The last 15 drops. The glass overflows.*
+
+| # | Block | Description | Done |
+|---|---|---|---|
+| 86 | Performance Audit | Load time, Lighthouse score 90 or above | [ ] |
+| 87 | Accessibility Audit | WCAG 2.1 AA compliance confirmed | [ ] |
+| 88 | Legal & Compliance Clear | Privacy, consent, medical disclaimer live | [ ] |
+| 89 | Launch Announcement | Press release and community post live | [ ] |
+| 90 | App Store Submission | iOS and Android submitted | [ ] |
+| 91 | First 100 Users | Beta to public, 100 registered profiles | [ ] |
+| 92 | First Clinician Partner | One clinical practice live on Pro | [ ] |
+| 93 | First School Partner | One school care plan live | [ ] |
+| 94 | First Grant Application | Gates / JDRF / Novo Nordisk submitted | [ ] |
+| 95 | First Research Partner | One researcher cohort active | [ ] |
+| 96 | Africa Expansion Active | PPP discount live, regional users onboard | [ ] |
+| 97 | Middle East Expansion | Ramadan Engine users, UAE grant submitted | [ ] |
+| 98 | Series A Deck Ready | Investor pitch deck, data room complete | [ ] |
+| 99 | Mira Education Complete | All story chapters and badges published | [ ] |
+| 100 | GluMira AI Credits Roll | The glass is full. The science of insulin, made visible. | [ ] |
+
+---
+
+## MILESTONE SUMMARY
+
+| Milestone | Block | Glass Level |
+|---|---|---|
+| Foundation Complete | 10 | 10% |
+| GluMira Free Complete | 25 | 25% |
+| GluMira Pro Complete | 50 | 50% |
+| GluMira AI Complete | 85 | 85% |
+| Credits Roll | 100 | 100% |
+
+---
+
+## GLASS INDICATOR TOOL
+File: glassindicator.html
+Location: Personal/04_Claude/
+Tall glass. Navy blue liquid.
+One drop per completed block.
+Saves progress in browser automatically.
+No images. No server. Drag and drop into Chrome.
+
+---
+*GluMira™ powered by IOB Hunter™*
+*The science of insulin, made visible.*
+*Document locked V7 — do not alter without founder approval.*
+```
+
+---
+
+File 04 done. ✅
+
+Save it. Close it. Open `05_GluMira-Marketing-Strategy-V7.md` and type **READY.** 💧
