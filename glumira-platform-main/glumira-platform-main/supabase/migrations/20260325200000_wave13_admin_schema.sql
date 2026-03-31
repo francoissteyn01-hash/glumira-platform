@@ -45,10 +45,7 @@ CREATE TRIGGER beta_participants_updated_at
   FOR EACH ROW EXECUTE FUNCTION public.set_updated_at();
 
 -- ─── 2. role column on patient_profiles ──────────────────────
-
-ALTER TABLE public.patient_profiles
-  ADD COLUMN IF NOT EXISTS role TEXT NOT NULL DEFAULT 'patient'
-  CHECK (role IN ('patient', 'clinician', 'admin'));
+-- (role column already created in foundation migration, skip ALTER)
 
 CREATE INDEX IF NOT EXISTS patient_profiles_role_idx ON public.patient_profiles(role);
 
@@ -73,8 +70,8 @@ SELECT
   category,
   COUNT(*)                              AS count,
   ROUND(AVG(rating)::NUMERIC, 2)        AS avg_rating,
-  MIN(created_at)                       AS first_at,
-  MAX(created_at)                       AS last_at
+  MIN(submitted_at)                     AS first_at,
+  MAX(submitted_at)                     AS last_at
 FROM public.beta_feedback
 GROUP BY category
 ORDER BY count DESC;

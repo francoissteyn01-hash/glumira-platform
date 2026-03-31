@@ -9,6 +9,9 @@
 [build.environment]
   NODE_VERSION = "20"
   PNPM_VERSION = "9"
+  # Supabase — set ANON_KEY in Netlify dashboard (Settings → Environment variables)
+  NEXT_PUBLIC_SUPABASE_URL = "https://lsmxsqgckcxsbayfdtxs.supabase.co"
+  # NEXT_PUBLIC_SUPABASE_ANON_KEY = "set-in-netlify-dashboard"
 
 # SPA fallback — redirect all routes to index.html
 [[redirects]]
