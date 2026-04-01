@@ -10,9 +10,6 @@ import { NAV_LINKS } from "@/lib/constants";
 import { useAuth } from "@/hooks/useAuth";
 import ProtectedRoute from "@/components/ProtectedRoute";
 
-/* ─── Assets ─────────────────────────────────────────────────────────────── */
-import MiraOwl from "@/components/MiraOwl";
-
 /* ─── Lazy pages ─────────────────────────────────────────────────────────── */
 const LandingPage   = lazy(() => import("@/pages/LandingPage"));
 const AuthPage      = lazy(() => import("@/pages/AuthPage"));
@@ -30,11 +27,6 @@ function LoadingFallback() {
       <p className="text-gray-400 animate-pulse text-sm">Loading…</p>
     </div>
   );
-}
-
-/* ─── Owl icon (inline SVG) ──────────────────────────────────────────────── */
-function OwlIcon({ size = 24 }: { size?: number }) {
-  return <MiraOwl size={size} />;
 }
 
 /* ─── Light navbar (landing page — transparent over dark hero) ───────────── */
@@ -57,7 +49,7 @@ function LightNavBar() {
           style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}
           onClick={() => navigate("/")}
         >
-          <OwlIcon size={28} />
+          <div style={{ width: 28, height: 28 }} />
           <span style={{ fontWeight: 700, fontSize: 17, color: "#ffffff", letterSpacing: "-0.01em" }}>
             GluMira<sup style={{ fontSize: 8, verticalAlign: "super", color: "#2ab5c1" }}>™</sup>
           </span>
@@ -91,7 +83,7 @@ function DarkNavBar() {
     <nav className="border-b border-gray-800 bg-gray-900 px-4 py-3 sticky top-0 z-50">
       <div className="max-w-5xl mx-auto flex items-center justify-between">
         <span className="flex items-center gap-2">
-          <OwlIcon size={24} />
+          <div style={{ width: 24, height: 24 }} />
           <span className="font-bold text-violet-400 text-lg tracking-tight">GluMira™</span>
         </span>
         <div className="flex items-center gap-1 overflow-x-auto">

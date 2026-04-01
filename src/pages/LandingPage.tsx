@@ -1,12 +1,12 @@
 ﻿/**
  * GluMira™ V7 — LandingPage.tsx
- * Dark Clinical Depth hero with brand background, friendly owl with insulin graph,
+ * Dark Clinical Depth hero with brand background, insulin graph,
  * countdown to go-live, all above the fold on 1366×768.
  */
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import MiraOwl from "@/components/MiraOwl";
+
 
 /* ─── Fonts ──────────────────────────────────────────────────────────────── */
 const FONT_HREF =
@@ -274,19 +274,16 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* ── RIGHT: Owl ── */}
+        {/* ── RIGHT: placeholder ── */}
         <div
           style={{
             position: "relative",
             zIndex: 2,
             flex: "0 0 auto",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
+            width: 240,
+            height: 240,
           }}
-        >
-          <MiraOwl size={240} />
-        </div>
+        />
 
         {/* ── COUNTDOWN — centered bottom ── */}
         <div

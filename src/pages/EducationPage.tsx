@@ -1,26 +1,11 @@
 import { useState } from "react";
 import { EDUCATION_MODULES, DISCLAIMER } from "@/lib/constants";
-import MiraOwl from "@/components/MiraOwl";
 
 export default function EducationPage() {
   const [activeId, setActiveId] = useState<string | null>(null);
   return (
     <div className="min-h-screen bg-gray-950">
       <div className="max-w-4xl mx-auto px-4 py-8 space-y-6">
-        {/* ── Mira welcome card ── */}
-        <div className="rounded-2xl border border-teal-700/40 bg-gradient-to-r from-teal-950/60 to-teal-900/30 p-6 flex items-center gap-5">
-          <MiraOwl size={72} />
-          <div>
-            <p className="text-lg font-semibold text-white mb-1">
-              Hi! I'm Mira. Let's learn together <span role="img" aria-label="owl">🦉</span>
-            </p>
-            <p className="text-sm text-teal-200/80 leading-relaxed">
-              I'm your wise owl companion — here to help you understand diabetes,
-              one step at a time. Pick a module below and let's get started!
-            </p>
-          </div>
-        </div>
-
         <div>
           <h1 className="text-2xl font-bold text-white">Education Centre</h1>
           <p className="text-sm text-gray-300 mt-1">

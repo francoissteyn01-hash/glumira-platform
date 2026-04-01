@@ -1,7 +1,7 @@
 /**
  * GluMira™ V7 — AuthPage.tsx
  * Two-column branded auth page matching glumira-auth.html design.
- * Left: dark navy Clinical Depth panel with owl, stats, branding.
+ * Left: dark navy Clinical Depth panel with stats, branding.
  * Right: white Scandinavian minimalist login/register/caregiver/reset forms.
  *
  * FIX: All sub-panels are now inline JSX (not nested component functions)
@@ -14,7 +14,7 @@
 import { useState, useEffect, useCallback, type CSSProperties } from "react";
 import { supabase } from "@/hooks/useAuth";
 import { DISCLAIMER } from "@/lib/constants";
-import MiraOwl from "@/components/MiraOwl";
+
 
 /* ─── Google Fonts injection ──────────────────────────────────────────────── */
 const FONT_HREF =
@@ -64,11 +64,6 @@ const T = {
 /* ─── Types ───────────────────────────────────────────────────────────────── */
 type Tab = "signin" | "register" | "caregiver" | "reset";
 type Role = "" | "clinician" | "patient" | "researcher";
-
-/* ─── Owl logo (inline SVG) ──────────────────────────────────────────────── */
-function OwlLogo({ size = 32 }: { size?: number }) {
-  return <MiraOwl size={size} />;
-}
 
 /* ─── Google SVG ──────────────────────────────────────────────────────────── */
 function GoogleIcon() {
@@ -218,7 +213,7 @@ function LeftPanel() {
 
       {/* Brand */}
       <div style={{ position: "relative", zIndex: 2, display: "flex", alignItems: "center", gap: 10 }}>
-        <OwlLogo size={32} />
+        <div style={{ width: 32, height: 32 }} />
         <span style={{ fontWeight: 500, fontSize: 20, color: T.white, letterSpacing: "-0.01em" }}>
           GluMira<sup style={{ fontSize: 10, verticalAlign: "super", color: T.teal }}>™</sup>
         </span>
@@ -265,30 +260,6 @@ function LeftPanel() {
           For caregivers sitting awake at 2am, watching glucose numbers, asking why. We answer that question with
           science, not guesswork.
         </p>
-
-        {/* ── Mira welcome ── */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 16,
-            background: "rgba(42,181,193,0.06)",
-            border: "1px solid rgba(42,181,193,0.15)",
-            borderRadius: T.rXl,
-            padding: "16px 20px",
-            marginBottom: 32,
-          }}
-        >
-          <MiraOwl size={120} />
-          <div>
-            <p style={{ fontSize: 15, fontWeight: 500, color: T.white, marginBottom: 2 }}>
-              Hi, I'm Mira
-            </p>
-            <p style={{ fontSize: 13, fontWeight: 300, color: "rgba(255,255,255,0.75)", lineHeight: 1.5 }}>
-              I watch over your numbers so you can rest.
-            </p>
-          </div>
-        </div>
 
         {/* Stats */}
         <div style={{ display: "flex", gap: 32, flexWrap: "wrap" }}>

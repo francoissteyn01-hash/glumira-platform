@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from "react";
 import { apiFetch } from "@/lib/api";
-import MiraOwl from "@/components/MiraOwl";
 import { cn } from "@/lib/utils";
 import { DISCLAIMER } from "@/lib/constants";
 
@@ -25,7 +24,7 @@ export default function MiraPage() {
   return (
     <div className="min-h-screen bg-gray-950 flex flex-col">
       <div className="border-b border-gray-800 bg-gray-900 px-4 py-3 flex items-center gap-3">
-        <MiraOwl size={36} />
+        <div style={{ width: 36, height: 36 }} />
         <div><p className="font-semibold text-white text-sm">Mira AI</p><p className="text-xs text-gray-300">Educational assistant · Not medical advice</p></div>
       </div>
       <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4 max-w-2xl mx-auto w-full">
