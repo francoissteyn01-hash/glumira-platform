@@ -1,0 +1,244 @@
+Here is the complete content for File 03:
+
+---
+
+```
+# GluMira™ Downgrade Policy — V7
+### Powered by IOB Hunter™
+**Document:** 03_GluMira-Downgrade-Policy-V7.md
+**Version:** 1.0
+**Status:** LOCKED
+**Filed:** Personal/04_Claude/
+
+---
+
+## 1. PHILOSOPHY
+
+Downgrading must never feel like punishment.
+It must never cause anxiety about data loss.
+It must never surprise the user.
+
+The user must always know exactly what they will lose
+before they confirm a downgrade — clearly, honestly,
+and without pressure tactics.
+
+GluMira™ Free is a genuine product.
+It is not a crippled version designed to frustrate.
+It covers safety. It covers logging. It covers the basics
+every person with Type 1 diabetes needs.
+
+---
+
+## 2. TIER STRUCTURE REMINDER
+
+| Tier | Monthly | Annual |
+|---|---|---|
+| GluMira Free | $0 | $0 |
+| GluMira Pro | $12.99 | $9.99/mo |
+| GluMira AI | $24.99 | $19.99/mo |
+| Clinical License | $299 | $299/mo |
+| Africa PPP Discount | 40–60% auto-applied | |
+
+---
+
+## 3. WHAT EACH TIER CONTAINS
+
+### 3.1 GluMira Free — Always Included
+These features are NEVER removed regardless of tier:
+
+- Manual glucose logging (fingerstick + CGM)
+- Bolus logging — MDI pen
+- Injection site rotation tracker
+- Basal insulin logging
+- Meal logging with carb entry
+- 20 meal regime profiles
+- Basic 24-hour glucose chart
+- Hypo alert engine — threshold by meal regime
+- School care plan — auto-generated PDF
+- Streak and reward system
+- Beta program access
+- Offline logging
+- Mobile responsive access
+- Language selection — EN-UK / EN-US / Afrikaans
+
+---
+
+### 3.2 GluMira Pro — Lost on Downgrade to Free
+
+When downgrading from Pro to Free the user loses:
+
+**Intelligence & Calculations**
+- IOB Hunter™ engine — insulin on board tracking
+- ISF / ICR calculator
+- Pattern intelligence and trend flags
+- Basal density map
+
+**Integrations**
+- Nightscout integration
+- Live CGM — 5-minute monitoring
+- APS integration — Loop / AndroidAPS / OpenAPS
+- Pump integration — Omnipod / Medtronic / Tandem / Ypsomed
+- Wearables module via Validic
+
+**Clinical Modules**
+- Comorbidity engine — thyroid / ADHD / gastroparesis / celiac
+- Pregnancy module PM-01
+- Ramadan engine
+- Kosher engine
+- Exercise engine
+- Sleep engine
+- Mental health monitor
+- Nutrition intelligence
+- Environmental module
+
+**Reporting & Portals**
+- PDF clinical report generator
+- Clinician view portal
+- Researcher view and data export
+- Organisation and school dashboard
+- Africa PPP discount (retained if already applied)
+
+---
+
+### 3.3 GluMira AI — Lost on Downgrade to Pro
+
+When downgrading from AI to Pro the user loses:
+
+**AI Engine**
+- Predictive glucose — next 1 to 4 hour forecast
+- Bolus advisor with confidence score
+- Hypo prediction — 30 to 60 min early warning
+- Hyper pattern alert
+- Basal optimiser — AI suggested time block adjustments
+- IOB Hunter™ AI — enhanced curve with meal interaction
+- Comorbidity AI flags
+- Ramadan AI mode
+- Pregnancy AI monitor
+
+**Education — Mira**
+- Mira education engine
+- Mira Stories — all chapters
+- Mira badge reward system
+- Mira waiting room game
+
+**Advanced Modules**
+- Pediatric growth module
+- Post-surgical module
+- Psychological module — diabetes distress scoring
+- Community module — peer groups
+
+**Reporting**
+- AI-generated clinical summary reports
+- Grant evidence package outputs
+- Series A data room access
+
+---
+
+### 3.4 GluMira AI — Lost on Downgrade to Free
+
+Everything listed in 3.2 AND 3.3 above.
+
+---
+
+## 4. DATA RETENTION POLICY
+
+### 4.1 The Rule
+**No data is ever deleted on downgrade.**
+
+All historical data — glucose logs, bolus logs, meal logs,
+patterns, reports — is retained in full.
+
+The user simply loses the ability to generate new
+advanced outputs until they upgrade again.
+
+### 4.2 What This Means in Practice
+- A user who downgrades from AI to Free can still
+  see all their historical AI reports
+- They cannot generate new AI reports until they upgrade
+- Their IOB Hunter™ history is preserved
+- Their Mira education progress and badges are preserved
+- Their streak is preserved
+
+### 4.3 What We Tell the User
+> "Your data is safe. Every log, every report, every badge
+> stays with you. You simply won't be able to generate
+> new advanced reports until you upgrade again.
+> GluMira™ never deletes your history."
+
+---
+
+## 5. DOWNGRADE COMMUNICATION — UI RULES
+
+### 5.1 Before Downgrade — Warning Screen
+The user must see a clear list of what they will lose
+BEFORE they confirm. This screen must:
+
+- List every feature being lost in plain language
+- Show the DATA RETENTION promise prominently
+- Offer a 30-day pause option before full downgrade
+- Never use guilt language or dark patterns
+- Never show countdown timers or pressure tactics
+- Include a single clear CTA: "I understand, downgrade my account"
+
+### 5.2 Approved Warning Screen Text
+> "Before you downgrade, here is what will change."
+> [Feature list]
+> "Your data stays with you — always."
+> "Want more time? Pause your subscription for 30 days instead."
+
+### 5.3 After Downgrade — Confirmation Screen
+> "You are now on GluMira Free."
+> "Your history is safe and your streak is intact."
+> "Upgrade any time to unlock your full toolkit again."
+
+### 5.4 Prohibited UI Patterns
+- No red warning colours on the downgrade screen
+- No language like "Are you sure?" repeated more than once
+- No automatic emails after downgrade reminding them
+  what they lost — one email only, one time
+- No pop-ups after downgrade pushing an upgrade
+
+---
+
+## 6. UPGRADE PROMPTS — IN-APP RULES
+
+When a Free or Pro user encounters a locked feature
+the prompt must be:
+
+> "This feature is available on GluMira [Pro/AI]."
+> "See what's included →"
+
+### Prohibited Upgrade Prompt Language
+- Never: "Unlock this feature NOW"
+- Never: "You are missing out"
+- Never: "Upgrade to stop losing data"
+- Never: Fear-based or urgency-based language
+- Never: More than one upgrade prompt per session
+
+---
+
+## 7. CLINICAL LICENSE DOWNGRADE
+
+Clinical license downgrades follow the same data
+retention rules. Patient data is never deleted.
+The clinician retains read-only access to all
+historical patient records for 12 months after downgrade
+for medico-legal compliance purposes.
+
+---
+
+## 8. REFUND POLICY STATEMENT
+Refund policy is governed by a separate legal document.
+This document covers feature and data policy only.
+
+---
+*GluMira™ powered by IOB Hunter™*
+*The science of insulin, made visible.*
+*Document locked V7 — do not alter without founder approval.*
+```
+
+---
+
+File 03 done. ✅
+
+Save it. Close it. Open `04_GluMira-Build-Blocks-Master-V7.md` and type **READY.** 💧

@@ -1,0 +1,364 @@
+Here is the complete content for File 06:
+
+---
+
+```
+# GluMira™ Social Media Plan — V7
+### Powered by IOB Hunter™
+**Document:** 06_GluMira-Social-Media-Plan-V7.md
+**Version:** 1.0
+**Status:** LOCKED
+**Filed:** Personal/04_Claude/
+
+---
+
+## 1. PHILOSOPHY
+
+Social media is not a billboard.
+It is a conversation.
+
+GluMira™ social media exists to:
+- Build trust before the app is needed
+- Educate caregivers before they know they need us
+- Make children with Type 1 feel seen and not alone
+- Give clinicians a reason to recommend us
+- Build a community that exists whether or not
+  someone is a paying user
+
+We post with purpose.
+We never post just to post.
+Quality over frequency — always.
+
+---
+
+## 2. PLATFORM STRATEGY
+
+### 2.1 Platform Priority
+
+| Platform | Priority | Primary Audience | Content Type |
+|---|---|---|---|
+| Instagram | 1 | Caregivers, newly diagnosed families | Visual, stories, reels |
+| Facebook | 2 | Caregiver groups, older parents | Community, education, sharing |
+| LinkedIn | 3 | Clinicians, researchers, partners, investors | Credibility, milestones, thought leadership |
+| TikTok | 4 | Teen caregivers, newly diagnosed teens | Short education, Mira content |
+| X / Twitter | 5 | Diabetes advocates, Nightscout community | Real-time, community engagement |
+
+### 2.2 Handle — All Platforms
+@glumira
+
+### 2.3 Bio — All Platforms
+> GluMira™ powered by IOB Hunter™
+> The science of insulin, made visible.
+> Caregiver-first. Clinician-trusted. Child-safe.
+> glumira.ai
+
+---
+
+## 3. CONTENT PILLARS — SOCIAL VERSION
+
+All posts fall under one of these 5 pillars.
+Every pillar has a visual style and tone locked below.
+
+### Pillar 1 — EDUCATION
+**Purpose:** Teach one useful thing per post
+**Tone:** Clear, precise, warm — never condescending
+**Visual style:** Navy background, white text,
+amber data highlight, clean minimal layout
+**Frequency:** 3 posts per week across platforms
+**Examples:**
+- What is insulin on board — explained in 60 seconds
+- Why the dawn phenomenon hits hardest between 3am and 6am
+- The difference between ISF and ICR — and why both matter
+- What Dexcom G7 data looks like without context
+  vs with IOB Hunter™
+
+### Pillar 2 — EMPATHY
+**Purpose:** Make caregivers feel understood
+**Tone:** Honest, warm, never sentimental or performative
+**Visual style:** Soft navy fade, single powerful line of text,
+no data — just words
+**Frequency:** 2 posts per week
+**Examples:**
+- "You checked at 2am. You corrected at 3am.
+   You were at work by 7am. That is extraordinary."
+- "A bad diabetes week is not a failure.
+   It is Tuesday."
+- "The number on the screen is not a grade.
+   It is information."
+- "You didn't choose this life.
+   You just chose to show up for it anyway."
+
+### Pillar 3 — FEATURE VISIBILITY
+**Purpose:** Show what GluMira™ does — without selling
+**Tone:** Confident, factual, zero hype
+**Visual style:** App UI mockup, navy frame,
+feature highlighted with amber accent
+**Frequency:** 2 posts per week
+**Examples:**
+- IOB Hunter™ showing active insulin after a meal
+- Pattern intelligence flagging a recurring 3am dip
+- School care plan auto-generating in one click
+- Downgrade screen — showing data is never deleted
+
+### Pillar 4 — MIRA & CHILDREN
+**Purpose:** Content for and about children with Type 1
+**Tone:** Gentle, honest, brave, never patronising
+**Visual style:** Mira illustration, warm navy,
+amber badge glow, child-friendly typography
+**Frequency:** 2 posts per week
+**Examples:**
+- Mira explains what insulin does — age 5 to 8 version
+- Badge of the week — anonymous child achievement
+- Mira waiting room game preview
+- "What Mira says when it's hard" — quote card
+
+### Pillar 5 — COMMUNITY & TRUST
+**Purpose:** Build credibility, mark milestones, acknowledge partners
+**Tone:** Professional, grateful, grounded — never boastful
+**Visual style:** Clean navy, GluMira™ logo prominent,
+milestone number in amber
+**Frequency:** 1 post per week or milestone-driven
+**Examples:**
+- Beta milestone — 50 families onboarded
+- Partnership announcement — ISPAD alignment
+- Grant application submitted
+- Dexcom G7 integration live
+- Build block completed — glass filling visual
+
+---
+
+## 4. POSTING SCHEDULE
+
+### 4.1 Weekly Rhythm
+
+| Day | Pillar | Platform Focus |
+|---|---|---|
+| Monday | Education | Instagram + LinkedIn |
+| Tuesday | Empathy | Instagram + Facebook |
+| Wednesday | Feature Visibility | Instagram + LinkedIn |
+| Thursday | Mira & Children | Instagram + TikTok |
+| Friday | Education | Facebook + X |
+| Saturday | Empathy | Instagram |
+| Sunday | Community & Trust | All platforms — milestone only |
+
+### 4.2 Rules
+- Never post the same content on all platforms
+  on the same day without adapting it
+- LinkedIn posts are longer — 150 to 300 words
+- Instagram captions are shorter — 50 to 100 words
+- TikTok scripts are 30 to 60 seconds spoken
+- Facebook posts include a question to drive comments
+- X posts are single punchy lines — max 2 sentences
+
+---
+
+## 5. VISUAL BRAND ON SOCIAL
+
+### 5.1 Every Post Must Have
+- GluMira™ navy as the base colour
+- Either the GluMira™ logo OR the Mira owl
+  in the corner — never neither
+- Amber used as accent only — one highlight per image
+- Plus Jakarta Sans for headings
+- Inter for body text
+- No stock photos — ever
+- No clip art — ever
+- No images of real children — ever
+
+### 5.2 Post Sizes
+| Platform | Size |
+|---|---|
+| Instagram Feed | 1080 x 1080px |
+| Instagram Story | 1080 x 1920px |
+| Instagram Reel Cover | 1080 x 1920px |
+| Facebook Feed | 1200 x 630px |
+| LinkedIn Feed | 1200 x 627px |
+| TikTok Cover | 1080 x 1920px |
+| X / Twitter | 1600 x 900px |
+
+### 5.3 Canva Pro Setup
+Create a GluMira™ Brand Kit in Canva Pro with:
+- Primary colour: #0D2149
+- Secondary colour: #D97706
+- Accent: #2D6DB4
+- Font 1: Plus Jakarta Sans
+- Font 2: Inter
+- Logo uploaded: IMG_LOGO_LIGHT and IMG_LOGO_DARK
+- All post templates saved as Brand Templates
+
+---
+
+## 6. SOCIAL MEDIA CONTENT SERIES
+
+These are recurring series that build audience habit.
+
+### Series 1 — WHAT IS THAT NUMBER
+Weekly education post explaining one glucose pattern
+or insulin concept in plain language.
+Hashtag: #WhatIsThatNumber
+
+### Series 2 — MIRA MONDAYS
+Every Monday Mira explains one diabetes concept
+for children aged 5 to 12.
+Simple. Visual. Kind.
+Hashtag: #MiraMondays
+
+### Series 3 — THE 2AM CLUB
+Empathy series for caregivers who are awake
+when everyone else is sleeping.
+Posted at 10pm local time where possible.
+Hashtag: #The2AMClub
+
+### Series 4 — THE GLASS IS FILLING
+Progress posts showing the build block glass indicator
+as GluMira™ is built.
+Invites the community to watch the platform being built
+in real time.
+Hashtag: #TheGlassIsFilling
+
+### Series 5 — ASK MIRA
+Community Q&A where followers submit questions
+about Type 1 diabetes and Mira answers them
+in a short visual post.
+Hashtag: #AskMira
+
+---
+
+## 7. HASHTAG STRATEGY
+
+### 7.1 Brand Hashtags — Always Use
+```
+#GluMira
+#IOBHunter
+#TheScienceOfInsulin
+#TheGlassIsFilling
+```
+
+### 7.2 Community Hashtags — Rotate
+```
+#Type1Diabetes
+#T1D
+#T1DFamily
+#T1DKid
+#DiabetesParent
+#CGMLife
+#DexcomG7
+#NightscoutCGM
+#InsulinDependent
+#DiabetesAwareness
+#T1DStrong
+#BeyondType1
+#JDRFAdvocate
+```
+
+### 7.3 Education Hashtags — Use on Education Posts
+```
+#DiabetesEducation
+#T1DEducation
+#InsulinOnBoard
+#GlucosePattern
+#PediatricDiabetes
+#T1DMom
+#T1DDad
+#CaregiverLife
+```
+
+### 7.4 Clinical Hashtags — LinkedIn Only
+```
+#PediatricEndocrinology
+#DiabetesCare
+#ClinicalDiabetes
+#HealthTech
+#DigitalHealth
+#MedTech
+#ISPAD
+#T1DResearch
+```
+
+---
+
+## 8. ENGAGEMENT RULES
+
+### 8.1 We Always
+- Reply to every comment within 24 hours
+- Acknowledge every share of our content
+- Follow back accounts in the Type 1 diabetes community
+- Thank clinicians who engage publicly
+- Repost caregiver stories — with permission only
+
+### 8.2 We Never
+- Argue with negative comments — we respond once,
+  with facts, calmly, then we stop
+- Delete negative comments unless they are abusive
+- Buy followers or engagement
+- Post about competitors
+- Make political statements
+- Respond to trolls
+
+### 8.3 Crisis Response
+If a post receives negative medical feedback:
+1. Do not delete the post
+2. Add a clarifying comment immediately
+3. Pin the clarification
+4. Review the post with the brand standards document
+5. If factually wrong — correct publicly and apologise
+
+---
+
+## 9. SOCIAL MEDIA AND THE BUILD
+
+The glass indicator (#TheGlassIsFilling series) connects
+the social media build to the platform build.
+
+Every time a build block is completed:
+- Post the glass indicator showing the new level
+- Name the block that was just completed
+- Invite the community to watch the next drop fall
+
+This makes the community part of the build.
+They are not waiting for a launch.
+They are watching it happen.
+
+---
+
+## 10. CONTENT CALENDAR TOOL
+
+A Canva Pro content calendar is to be maintained
+for all scheduled posts.
+
+File location: GluMira-V7/08_MARKETING/Social-Calendar/
+Template: Canva Pro Content Planner
+Review cycle: Weekly every Sunday evening
+Approval: Founder sign-off before scheduling
+
+---
+
+## 11. METRICS — SOCIAL MEDIA
+
+### Monthly Targets — Beta Phase
+| Metric | Target |
+|---|---|
+| Instagram followers | +200/month |
+| Facebook page likes | +100/month |
+| LinkedIn followers | +150/month |
+| Average post reach | 500+ per post |
+| Story views | 200+ per story |
+| Comments per post | 5+ |
+| Link clicks to glumira.ai | 50+ per week |
+
+### What We Do Not Chase
+- Viral moments at the cost of accuracy
+- High follower counts from non-target audiences
+- Engagement from bots or purchased activity
+
+---
+*GluMira™ powered by IOB Hunter™*
+*The science of insulin, made visible.*
+*Document locked V7 — do not alter without founder approval.*
+```
+
+---
+
+File 06 done. ✅
+
+Save it. Close it. Open `07_GluMira-Mira-Education-0to12-V7.md` and type **READY.** 💧

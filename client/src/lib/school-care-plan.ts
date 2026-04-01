@@ -473,14 +473,14 @@ const CARE_PLAN_CSS = `
   body {
     font-family: 'Segoe UI', Arial, sans-serif;
     font-size: 12px;
-    color: #1a1a2e;
+    color: #0d1b3e;
     background: #fff;
     padding: 20px;
     max-width: 900px;
     margin: 0 auto;
   }
   .header {
-    border-bottom: 3px solid #1A6DB5;
+    border-bottom: 3px solid #1a2a5e;
     padding-bottom: 16px;
     margin-bottom: 20px;
   }
@@ -493,7 +493,7 @@ const CARE_PLAN_CSS = `
   .brand {
     font-size: 22px;
     font-weight: 800;
-    color: #1A6DB5;
+    color: #1a2a5e;
     letter-spacing: -0.5px;
   }
   .brand-sub {
@@ -502,7 +502,7 @@ const CARE_PLAN_CSS = `
   }
   h1 {
     font-size: 20px;
-    color: #1A6DB5;
+    color: #1a2a5e;
     margin-bottom: 10px;
   }
   .header-meta {
@@ -526,7 +526,7 @@ const CARE_PLAN_CSS = `
   }
   h2 {
     font-size: 14px;
-    color: #1A6DB5;
+    color: #1a2a5e;
     border-bottom: 1px solid #e0e7ef;
     padding-bottom: 4px;
     margin-bottom: 10px;
@@ -534,7 +534,7 @@ const CARE_PLAN_CSS = `
   h3 {
     font-size: 12px;
     margin-bottom: 6px;
-    color: #1a1a2e;
+    color: #0d1b3e;
   }
   .info-table {
     width: 100%;
@@ -568,12 +568,12 @@ const CARE_PLAN_CSS = `
   }
   .threshold-banner {
     background: #e8f4fd;
-    border: 1px solid #1A6DB5;
+    border: 1px solid #1a2a5e;
     border-radius: 4px;
     padding: 8px 12px;
     font-size: 12px;
     margin-bottom: 8px;
-    color: #0d3b6e;
+    color: #0d1b3e;
   }
   .cultural-note, .fasting-note {
     font-size: 11px;
@@ -631,7 +631,7 @@ const CARE_PLAN_CSS = `
   }
   .edu-card h3 {
     font-size: 11px;
-    color: #1A6DB5;
+    color: #1a2a5e;
     margin-bottom: 5px;
   }
   .edu-card p {
@@ -652,11 +652,11 @@ const CARE_PLAN_CSS = `
   }
   .sig-box p { margin-bottom: 6px; font-size: 11px; }
   .sig-line {
-    border-bottom: 1px solid #1A6DB5;
+    border-bottom: 1px solid #1a2a5e;
     height: 32px;
     margin: 8px 0;
     font-size: 13px;
-    color: #1A6DB5;
+    color: #1a2a5e;
     display: flex;
     align-items: flex-end;
     padding-bottom: 2px;

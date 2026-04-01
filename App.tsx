@@ -11,8 +11,7 @@ import { useAuth } from "@/hooks/useAuth";
 import ProtectedRoute from "@/components/ProtectedRoute";
 
 /* ─── Assets ─────────────────────────────────────────────────────────────── */
-// Identity owl — heraldic wings-spread, transparent bg
-const CDN_ICON = "/mira-owl-identity.png";
+import MiraOwl from "@/components/MiraOwl";
 
 /* ─── Lazy pages ─────────────────────────────────────────────────────────── */
 const LandingPage   = lazy(() => import("@/pages/LandingPage"));
@@ -33,17 +32,9 @@ function LoadingFallback() {
   );
 }
 
-/* ─── Owl icon (CDN image, cropped face) ─────────────────────────────────── */
+/* ─── Owl icon (inline SVG) ──────────────────────────────────────────────── */
 function OwlIcon({ size = 24 }: { size?: number }) {
-  return (
-    <img
-      src={CDN_ICON}
-      alt="GluMira™"
-      width={size}
-      height={size}
-      style={{ borderRadius: "50%", objectFit: "cover" }}
-    />
-  );
+  return <MiraOwl size={size} />;
 }
 
 /* ─── Light navbar (landing page — transparent over dark hero) ───────────── */

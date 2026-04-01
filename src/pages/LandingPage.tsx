@@ -6,10 +6,7 @@
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-/* ─── Assets ─────────────────────────────────────────────────────────────── */
-const OWL_HERO = "/mira-owl-hero.png";
-const HERO_BG = "/glumira-hero-bg-dark.png";
+import MiraOwl from "@/components/MiraOwl";
 
 /* ─── Fonts ──────────────────────────────────────────────────────────────── */
 const FONT_HREF =
@@ -82,19 +79,17 @@ export default function LandingPage() {
           padding: "20px 40px 16px",
           minHeight: "calc(100vh - 56px)",
           maxHeight: "100vh",
-          background: `linear-gradient(135deg, ${T.navyDeep} 0%, #0f1f4a 40%, #152348 70%, ${T.navy} 100%)`,
+          background: `linear-gradient(135deg, ${T.navyDeep} 0%, ${T.navyDeep} 40%, ${T.navy} 70%, ${T.navy} 100%)`,
           position: "relative",
           overflow: "hidden",
         }}
       >
-        {/* Background image overlay */}
+        {/* Background overlay (solid) */}
         <div
           style={{
             position: "absolute",
             inset: 0,
-            backgroundImage: `url(${HERO_BG})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
+            background: T.navyDeep,
             opacity: 0.25,
             pointerEvents: "none",
           }}
@@ -290,17 +285,7 @@ export default function LandingPage() {
             alignItems: "center",
           }}
         >
-          <img
-            src={OWL_HERO}
-            alt="Mira — The Sentinel"
-            style={{
-              width: "clamp(200px, 22vw, 280px)",
-              maxHeight: 280,
-              height: "auto",
-              display: "block",
-              filter: "drop-shadow(0 4px 40px rgba(42,181,193,0.2)) drop-shadow(0 0 60px rgba(245,158,11,0.1))",
-            }}
-          />
+          <MiraOwl size={240} />
         </div>
 
         {/* ── COUNTDOWN — centered bottom ── */}

@@ -14,13 +14,7 @@
 import { useState, useEffect, useCallback, type CSSProperties } from "react";
 import { supabase } from "@/hooks/useAuth";
 import { DISCLAIMER } from "@/lib/constants";
-
-/* ─── Assets ─────────────────────────────────────────────────────────────── */
-const OWL_IDENTITY = "/mira-owl-identity.png";
-const CDN = {
-  appIcon:
-    "https://d2xsxph8kpxj0f.cloudfront.net/310519663458340082/7pTbwMW7uihCCsypZFsqz6/glumira_v6_matched_icon_17a09028.png",
-};
+import MiraOwl from "@/components/MiraOwl";
 
 /* ─── Google Fonts injection ──────────────────────────────────────────────── */
 const FONT_HREF =
@@ -42,7 +36,7 @@ function injectFonts() {
 const T = {
   navy: "#1a2a5e",
   navyDeep: "#0d1b3e",
-  navyMid: "#152348",
+  navyMid: "#1a2a5e",
   teal: "#2ab5c1",
   tealLt: "#7dd3c0",
   tealDim: "#1e8a94",
@@ -71,17 +65,9 @@ const T = {
 type Tab = "signin" | "register" | "caregiver" | "reset";
 type Role = "" | "clinician" | "patient" | "researcher";
 
-/* ─── Owl logo (cropped face from CDN) ────────────────────────────────────── */
+/* ─── Owl logo (inline SVG) ──────────────────────────────────────────────── */
 function OwlLogo({ size = 32 }: { size?: number }) {
-  return (
-    <img
-      src={CDN.appIcon}
-      alt="GluMira™ Mira owl"
-      width={size}
-      height={size}
-      style={{ borderRadius: "50%", objectFit: "cover" }}
-    />
-  );
+  return <MiraOwl size={size} />;
 }
 
 /* ─── Google SVG ──────────────────────────────────────────────────────────── */
@@ -198,7 +184,7 @@ function LeftPanel() {
   return (
     <div
       style={{
-        background: `linear-gradient(155deg, ${T.navyDeep} 0%, #0f1f4a 45%, ${T.navyMid} 75%, ${T.navy} 100%)`,
+        background: `linear-gradient(155deg, ${T.navyDeep} 0%, ${T.navyDeep} 45%, ${T.navyMid} 75%, ${T.navy} 100%)`,
         padding: 48,
         display: "flex",
         flexDirection: "column",
@@ -293,13 +279,7 @@ function LeftPanel() {
             marginBottom: 32,
           }}
         >
-          <img
-            src={OWL_IDENTITY}
-            alt="Mira — The Sentinel owl"
-            width={120}
-            height={120}
-            style={{ borderRadius: 12, flexShrink: 0 }}
-          />
+          <MiraOwl size={120} />
           <div>
             <p style={{ fontSize: 15, fontWeight: 500, color: T.white, marginBottom: 2 }}>
               Hi, I'm Mira

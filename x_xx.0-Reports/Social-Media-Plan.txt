@@ -1,0 +1,337 @@
+Here is the complete content for File 05:
+
+---
+
+```
+# GluMira™ Marketing Strategy — V7
+### Powered by IOB Hunter™
+**Document:** 05_GluMira-Marketing-Strategy-V7.md
+**Version:** 1.0
+**Status:** LOCKED
+**Filed:** Personal/04_Claude/
+
+---
+
+## 1. MARKETING PHILOSOPHY
+
+GluMira™ does not sell.
+GluMira™ educates, empowers, and earns trust.
+
+Every piece of marketing must do one of three things:
+1. Teach something useful about Type 1 diabetes management
+2. Show a real problem GluMira™ solves
+3. Make a caregiver, child, or clinician feel understood
+
+We never shout. We never pressure.
+We show up consistently and we earn the right to be trusted.
+
+---
+
+## 2. PRIMARY TARGET AUDIENCES
+
+### 2.1 Tier 1 — Most Important
+These are the people who make the decision to use GluMira™.
+
+**Caregivers of children with Type 1 Diabetes**
+- Parents, grandparents, guardians
+- Predominantly mothers in the primary caregiver role
+- Age range: 25–55
+- Exhausted, anxious, under-informed by the system
+- They search at 2am for answers
+- They need to feel understood before they trust a product
+- Key pain point: "I don't know why the numbers do what they do"
+- Key emotion: Fear mixed with fierce love
+- Where to reach them: Facebook groups, Instagram,
+  WhatsApp communities, pediatric diabetes forums
+
+**Children aged 0–12 newly diagnosed**
+- They do not choose GluMira™ — their caregivers do
+- But Mira must speak directly to them
+- They need to not be afraid
+- They need to feel seen and not different
+- Key emotion: Confusion, fear, wanting to be normal
+- Where to reach them: Through their caregivers first,
+  then through Mira inside the platform
+
+### 2.2 Tier 2 — High Value
+These audiences drive clinical adoption and credibility.
+
+**Pediatric Endocrinologists**
+- They recommend platforms to families
+- One clinician = many patients
+- Key pain point: No tool gives them clean pattern visibility
+  without asking families to bring printouts
+- Key message: "Your patients are already logging.
+  GluMira™ makes that data readable for you."
+- Where to reach them: ISPAD, medical conferences,
+  LinkedIn, direct outreach
+
+**Pediatric Diabetes Nurses and Educators**
+- Front line of newly diagnosed education
+- They are the ones who hand families information
+  on the day of diagnosis
+- Key message: "Give them Mira on the hardest day."
+- Where to reach them: Hospital diabetes education units,
+  LinkedIn, nursing associations
+
+**General Practitioners and Family Doctors**
+- Not specialists but often first contact
+- Need simple pattern summaries not data dumps
+- Key message: "One page. Everything you need to know."
+
+### 2.3 Tier 3 — Growth Audiences
+**Schools and Educational Institutions**
+- School nurses, teachers, administrators
+- Need a care plan that works and is legally defensible
+- Key message: "The school care plan that writes itself."
+
+**Researchers**
+- Academic institutions studying Type 1 diabetes
+- Need clean anonymised cohort data
+- Key message: "Real world data. Consistent methodology."
+
+**Diabetes Organisations and NGOs**
+- JDRF, Diabetes South Africa, IDF
+- Partnership and endorsement targets
+- Key message: "Built for the patients your mission serves."
+
+---
+
+## 3. THE DEXCOM G7 ANGLE
+
+### 3.1 Why This Matters Now
+Dexcom G7 has been approved for children as young as 2 years.
+This is a market-expanding event for GluMira™.
+
+More children on CGM = more families needing
+a platform that makes CGM data meaningful.
+Raw Dexcom data without context is noise.
+GluMira™ powered by IOB Hunter™ turns that noise into insight.
+
+### 3.2 The Message
+> "Dexcom G7 shows you the number.
+> GluMira™ shows you why."
+
+> "Your child is now on Dexcom G7.
+> Now get the platform that tells you what to do with the data."
+
+### 3.3 The Positioning
+- GluMira™ is the intelligence layer on top of Dexcom G7
+- Not a competitor — a companion
+- Position as the essential second step after CGM adoption
+- Target every family that just started on Dexcom G7
+
+### 3.4 Clinical Channel
+- Approach pediatric endocrinologists who prescribe Dexcom G7
+- Offer a free clinical license during beta
+- Ask them to recommend GluMira™ alongside Dexcom G7
+  at the point of prescription
+
+---
+
+## 4. GEOGRAPHIC PRIORITY
+
+### Phase 1 — Launch Markets
+| Market | Reason |
+|---|---|
+| Sub-Saharan Africa | Underserved, high unmet need, PPP pricing |
+| South Africa | English speaking, tech adoption, JDRF presence |
+| United Kingdom | EN-UK language, NICE guidelines built in |
+| Australia | High CGM adoption, English speaking |
+
+### Phase 2 — Expansion Markets
+| Market | Reason |
+|---|---|
+| Middle East | Ramadan Engine, UAE grant opportunity |
+| United States | Largest market, Dexcom G7 penetration |
+| European Union | GDPR compliant, ISPAD headquarters |
+
+### Phase 3 — Scale Markets
+| Market | Reason |
+|---|---|
+| India | Massive Type 1 population, mobile-first |
+| Southeast Asia | Growing CGM adoption |
+| Latin America | Spanish localisation roadmap |
+
+---
+
+## 5. MARKETING CHANNELS
+
+### 5.1 Owned Channels — Build First
+These cost nothing but time and must be built before
+paid marketing begins.
+
+**Platform itself**
+- Every logged-in user who shares data becomes an advocate
+- Streak system drives daily return and word of mouth
+- Badge system creates shareable moments
+
+**Email**
+- Onboarding sequence — 7 emails over 14 days
+- Weekly insight digest for Pro and AI users
+- Monthly education newsletter — free to all users
+- No spam. No daily emails. Respect the inbox.
+
+**Website — glumira.ai**
+- Education blog — SEO driven
+- Mira stories — publicly accessible previews
+- Free resources for newly diagnosed families
+- Clinician resource page
+
+### 5.2 Social Media Channels
+See 06_GluMira-Social-Media-Plan-V7.md for full detail.
+
+Priority order:
+1. Instagram — caregivers and visual storytelling
+2. Facebook — caregiver groups and communities
+3. LinkedIn — clinicians, researchers, partners
+4. TikTok — younger caregivers, newly diagnosed teens
+5. X / Twitter — diabetes community and advocates
+
+### 5.3 Community Channels
+- JDRF community presence
+- Nightscout Discord — open source contribution strategy
+- Diabetes South Africa forums
+- Beyond Type 1 community
+- TypeOneNation community
+
+### 5.4 Clinical Channels
+- Direct outreach to pediatric endocrinology units
+- ISPAD conference presence
+- Medical journal advertising — Phase 2 only
+- GP practice outreach — digital leaflet program
+
+---
+
+## 6. CONTENT PILLARS
+
+Every piece of content falls under one of these 5 pillars.
+This keeps the brand consistent across all channels.
+
+### Pillar 1 — Education
+Teach something useful. No sales.
+Examples:
+- What is insulin on board and why does it matter
+- How the dawn phenomenon affects children differently
+- What to tell the school nurse on day one
+
+### Pillar 2 — Empathy
+Make the caregiver feel understood.
+Examples:
+- The 2am glucose check — you are not alone
+- When the numbers make no sense and you are exhausted
+- What a bad diabetes week looks like and why it happens
+
+### Pillar 3 — Feature Visibility
+Show what GluMira™ does — without selling.
+Examples:
+- Here is what IOB Hunter™ shows you after a meal
+- Here is how the pattern intelligence flagged a trend
+- Here is what a school care plan looks like
+
+### Pillar 4 — Mira & Children
+Content that speaks to and about children with Type 1.
+Examples:
+- Mira explains what insulin does — for ages 5 to 8
+- Badges children have earned this week
+- Stories from the waiting room game
+
+### Pillar 5 — Community & Trust
+Build credibility through association and advocacy.
+Examples:
+- Partnership announcements
+- Beta user milestones — anonymised
+- Grant applications submitted
+- ISPAD and JDRF alignment content
+
+---
+
+## 7. BETA MARKETING STRATEGY
+
+### 7.1 The Beta Promise
+- Free access to Pro tier for all beta participants
+- 3-month beta period
+- Feedback rewarded with extended Pro access
+- No credit card required
+
+### 7.2 Beta Recruitment Channels
+- Direct outreach to diabetes Facebook groups
+- JDRF community posts
+- Clinician referral — one email to participating practices
+- Nightscout Discord community
+
+### 7.3 Beta to Launch Conversion
+- Beta users offered 40% discount on first 12 months
+- Personal email from the founder — not a template
+- Beta badge displayed permanently on their profile
+
+---
+
+## 8. GRANT AND PARTNERSHIP MARKETING
+
+### 8.1 Target Grant Bodies
+| Organisation | Focus | Timeline |
+|---|---|---|
+| Bill & Melinda Gates Foundation | Africa health equity | Phase 2 |
+| JDRF | Type 1 research and technology | Phase 1 |
+| Novo Nordisk Foundation | Diabetes innovation | Phase 1 |
+| MBRGI UAE | Middle East health tech | Phase 2 |
+| African Development Bank | Africa digital health | Phase 2 |
+
+### 8.2 Partnership Targets
+| Organisation | Type | Value |
+|---|---|---|
+| Dexcom | Integration + co-marketing | High |
+| Nightscout Foundation | Open source credibility | High |
+| ISPAD | Clinical endorsement | High |
+| Diabetes South Africa | Community reach | Medium |
+| Beyond Type 1 | Community reach | Medium |
+| Validic | Wearables data pipeline | Technical |
+
+---
+
+## 9. METRICS — WHAT SUCCESS LOOKS LIKE
+
+### Beta Phase
+- 100 registered users
+- 1 clinician partner
+- 1 school partner
+- 70% weekly active users
+- Net Promoter Score above 50
+
+### Launch Phase — Month 6
+- 1,000 registered users
+- 10 clinician partners
+- 5% conversion Free to Pro
+- 1 grant application submitted
+
+### Scale Phase — Month 12
+- 10,000 registered users
+- 50 clinician partners
+- 100 school care plans active
+- Series A deck ready
+
+---
+
+## 10. WHAT WE DO NOT DO
+
+- No paid advertising before 500 organic users
+- No influencer marketing without clinical credibility
+- No partnerships with companies that conflict with
+  our medical accuracy standards
+- No marketing that uses fear as a primary motivator
+- No marketing in channels where children under 13
+  are the primary audience — Mira reaches children
+  through their caregivers only
+
+---
+*GluMira™ powered by IOB Hunter™*
+*The science of insulin, made visible.*
+*Document locked V7 — do not alter without founder approval.*
+```
+
+---
+
+File 05 done. ✅
+
+Save it. Close it. Open `06_GluMira-Social-Media-Plan-V7.md` and type **READY.** 💧
