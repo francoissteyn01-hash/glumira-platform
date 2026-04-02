@@ -17,6 +17,7 @@ import UnitToggle from "@/components/UnitToggle";
 import { useGlucoseUnits } from "@/context/GlucoseUnitsContext";
 import { formatGlucose as fmtGlucose, getUnitLabel } from "@/utils/glucose-units";
 import EmotionalDistressTracker from "@/components/EmotionalDistressTracker";
+import ExportReportButton from "@/components/ExportReportButton";
 
 /* ─── Types ───────────────────────────────────────────────────────────────── */
 
@@ -421,6 +422,14 @@ export default function DashboardPage() {
             </div>
           </div>
         )}
+
+        {/* ── Footer ─────────────────────────────────────────────────── */}
+        <div style={{
+          display: "flex", justifyContent: "flex-end", alignItems: "center",
+          padding: "16px 0", borderTop: "1px solid #e9ecef", marginTop: 8,
+        }}>
+          <ExportReportButton />
+        </div>
 
         {/* Spacer for mobile bottom nav */}
         <div style={{ height: 80 }} />
