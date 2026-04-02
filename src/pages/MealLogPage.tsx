@@ -6,6 +6,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "@/hooks/useAuth";
+import { useGlucoseUnits } from "@/context/GlucoseUnitsContext";
 
 /* ─── Constants ───────────────────────────────────────────────────────────── */
 
@@ -108,11 +109,17 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 /* ═══════════════════════════════════════════════════════════════════════════ */
 export default function MealLogPage() {
   const { session } = useAuth();
-  const [form, setForm] = useState<MealLogForm>(EMPTY_FORM);
+  const { units: globalUnits } = useGlucoseUnits();
+  const [form, setForm] = useState<MealLogForm>({ ...EMPTY_FORM, glucose_units: globalUnits });
   const [saving, setSaving] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [profileInsulins, setProfileInsulins] = useState<{ value: string; label: string }[]>([]);
+
+  // Sync form glucose_units when global toggle changes
+  useEffect(() => {
+    setForm((f) => ({ ...f, glucose_units: globalUnits }));
+  }, [globalUnits]);
 
   /* ─── Load user's insulin types from profile ────────────────────────── */
   useEffect(() => {

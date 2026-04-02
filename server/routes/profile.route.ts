@@ -71,6 +71,7 @@ profileRouter.put("/", async (req: Request, res: Response) => {
       meals_per_day:    body.meals_per_day ?? 3,
       comorbidities:    body.comorbidities ?? [],
       special_conditions: body.special_conditions ?? [],
+      glucose_units:    body.glucose_units ?? "mmol",
       is_caregiver:     body.is_caregiver ?? false,
       patient_name:     body.patient_name ?? null,
       relationship:     body.relationship ?? null,

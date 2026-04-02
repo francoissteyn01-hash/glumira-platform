@@ -1,5 +1,6 @@
 ﻿import { useState } from "react";
 import { useAuth, supabase } from "@/hooks/useAuth";
+import UnitToggle from "@/components/UnitToggle";
 export default function SettingsPage() {
   const { user }            = useAuth();
   const [nsUrl, setNsUrl]   = useState(()=>localStorage.getItem("ns_url")??"");
@@ -24,6 +25,7 @@ export default function SettingsPage() {
           <input type="password" value={nsSecret} onChange={e=>setNs(e.target.value)} placeholder="API Secret (optional)" className="w-full rounded-lg bg-gray-800 border border-gray-700 px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-violet-500"/>
           <button onClick={saveNS} className="rounded-lg bg-violet-600 hover:bg-violet-700 text-white px-4 py-2 text-sm font-medium transition-colors">{saved?"✓ Saved":"Save Nightscout settings"}</button>
         </S>
+        <S title="Glucose Units"><p className="text-xs text-gray-300 mb-2">Choose how glucose values are displayed across GluMira™</p><UnitToggle /></S>
         <S title="Legal"><p className="text-xs text-gray-300 leading-relaxed">GluMira™ is an educational platform, not a registered medical device. Powered by IOB Hunter™</p></S>
       </div>
     </div>

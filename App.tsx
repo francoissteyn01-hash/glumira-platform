@@ -9,6 +9,7 @@ import { Suspense, lazy } from "react";
 import { NAV_LINKS } from "@/lib/constants";
 import { useAuth } from "@/hooks/useAuth";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import { GlucoseUnitsProvider } from "@/context/GlucoseUnitsContext";
 
 /* ─── Lazy pages ─────────────────────────────────────────────────────────── */
 const LandingPage   = lazy(() => import("@/pages/LandingPage"));
@@ -136,25 +137,27 @@ function HomeRoute() {
 export default function App() {
   return (
     <BrowserRouter>
-      <div className="min-h-screen bg-gray-950 text-gray-100">
-        <NavBar />
-        <Suspense fallback={<LoadingFallback />}>
-          <Routes>
-            <Route path="/"          element={<HomeRoute />} />
-            <Route path="/auth"      element={<AuthPage />} />
-            <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
-            <Route path="/education" element={<ProtectedRoute><EducationPage /></ProtectedRoute>} />
-            <Route path="/mira"      element={<ProtectedRoute><MiraPage /></ProtectedRoute>} />
-            <Route path="/badges"    element={<ProtectedRoute><BadgesPage /></ProtectedRoute>} />
-            <Route path="/faq"       element={<ProtectedRoute><FAQPage /></ProtectedRoute>} />
-            <Route path="/settings"  element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
-            <Route path="/log"       element={<ProtectedRoute><MealLogPage /></ProtectedRoute>} />
-            <Route path="/insulin"   element={<ProtectedRoute><InsulinLogPage /></ProtectedRoute>} />
-            <Route path="/profile"   element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
-            <Route path="*"          element={<Navigate to="/" replace />} />
-          </Routes>
-        </Suspense>
-      </div>
+      <GlucoseUnitsProvider>
+        <div className="min-h-screen bg-gray-950 text-gray-100">
+          <NavBar />
+          <Suspense fallback={<LoadingFallback />}>
+            <Routes>
+              <Route path="/"          element={<HomeRoute />} />
+              <Route path="/auth"      element={<AuthPage />} />
+              <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
+              <Route path="/education" element={<ProtectedRoute><EducationPage /></ProtectedRoute>} />
+              <Route path="/mira"      element={<ProtectedRoute><MiraPage /></ProtectedRoute>} />
+              <Route path="/badges"    element={<ProtectedRoute><BadgesPage /></ProtectedRoute>} />
+              <Route path="/faq"       element={<ProtectedRoute><FAQPage /></ProtectedRoute>} />
+              <Route path="/settings"  element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
+              <Route path="/log"       element={<ProtectedRoute><MealLogPage /></ProtectedRoute>} />
+              <Route path="/insulin"   element={<ProtectedRoute><InsulinLogPage /></ProtectedRoute>} />
+              <Route path="/profile"   element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+              <Route path="*"          element={<Navigate to="/" replace />} />
+            </Routes>
+          </Suspense>
+        </div>
+      </GlucoseUnitsProvider>
     </BrowserRouter>
   );
 }

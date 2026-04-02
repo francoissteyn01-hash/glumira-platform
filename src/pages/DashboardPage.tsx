@@ -13,6 +13,9 @@ import InsulinActivityCurve, { type DoseCurve } from "@/components/charts/Insuli
 import BasalHeatmap from "@/components/charts/BasalHeatmap";
 import ActiveInsulinCard, { type PressureClass } from "@/components/widgets/ActiveInsulinCard";
 import HiddenIOBWidget from "@/components/widgets/HiddenIOBWidget";
+import UnitToggle from "@/components/UnitToggle";
+import { useGlucoseUnits } from "@/context/GlucoseUnitsContext";
+import { formatGlucose as fmtGlucose, getUnitLabel } from "@/utils/glucose-units";
 
 /* ─── Types ───────────────────────────────────────────────────────────────── */
 
@@ -43,10 +46,6 @@ function classifyPressure(iob: number, max: number): PressureClass {
   return "overlap";
 }
 
-function formatGlucose(v: number): string {
-  return v.toFixed(1);
-}
-
 function timeAgo(iso: string): string {
   const mins = Math.round((Date.now() - new Date(iso).getTime()) / 60_000);
   if (mins < 1) return "just now";
@@ -70,7 +69,7 @@ export default function DashboardPage() {
   const [nsSecret, setNsSecret] = useState(() => localStorage.getItem("ns_secret") ?? "");
   const [syncing, setSyncing] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [glucoseUnits] = useState<"mmol" | "mg">("mmol");
+  const { units: glucoseUnits } = useGlucoseUnits();
 
   const latest = readings[0] ?? null;
 
@@ -184,17 +183,20 @@ export default function DashboardPage() {
     <div style={{ minHeight: "100vh", background: "#f8f9fa" }}>
       <div style={{ maxWidth: 960, margin: "0 auto", padding: "clamp(16px, 4vw, 32px)" }}>
 
-        {/* Header */}
-        <div style={{ marginBottom: 20 }}>
-          <h1 style={{
-            fontFamily: "'Playfair Display', serif", fontSize: "clamp(24px, 6vw, 32px)",
-            fontWeight: 700, color: "#1a2a5e", margin: "0 0 4px",
-          }}>
-            Dashboard
-          </h1>
-          <p style={{ fontSize: 14, color: "#52667a", margin: 0, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
-            Welcome back{user?.email ? `, ${user.email.split("@")[0]}` : ""}
-          </p>
+        {/* Header + Unit Toggle */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20, flexWrap: "wrap", gap: 12 }}>
+          <div>
+            <h1 style={{
+              fontFamily: "'Playfair Display', serif", fontSize: "clamp(24px, 6vw, 32px)",
+              fontWeight: 700, color: "#1a2a5e", margin: "0 0 4px",
+            }}>
+              Dashboard
+            </h1>
+            <p style={{ fontSize: 14, color: "#52667a", margin: 0, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+              Welcome back{user?.email ? `, ${user.email.split("@")[0]}` : ""}
+            </p>
+          </div>
+          <UnitToggle />
         </div>
 
         {/* Disclaimer */}
@@ -221,7 +223,7 @@ export default function DashboardPage() {
             {latest ? (
               <>
                 <p style={{ margin: "4px 0 0", fontSize: 32, fontWeight: 700, color: "#1a2a5e", fontFamily: "'JetBrains Mono', monospace" }}>
-                  {formatGlucose(latest.glucose)}
+                  {fmtGlucose(latest.glucose, glucoseUnits)}
                   <span style={{ fontSize: 16, marginLeft: 6, color: "#52667a" }}>{ARROWS[latest.trend] ?? "\u2014"}</span>
                 </p>
                 <p style={{ margin: "2px 0 0", fontSize: 11, color: "#94a3b8", fontFamily: "'DM Sans', system-ui, sans-serif" }}>{timeAgo(latest.time)}</p>
@@ -356,7 +358,7 @@ export default function DashboardPage() {
                     fontSize: 14, fontWeight: 600, fontFamily: "'JetBrains Mono', monospace",
                     color: r.glucose < 3.9 ? "#ef4444" : r.glucose > 10 ? "#eab308" : "#22c55e",
                   }}>
-                    {formatGlucose(r.glucose)} {ARROWS[r.trend] ?? ""}
+                    {fmtGlucose(r.glucose, glucoseUnits)} {ARROWS[r.trend] ?? ""}
                   </span>
                   <span style={{ fontSize: 12, color: "#94a3b8", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
                     {timeAgo(r.time)}
