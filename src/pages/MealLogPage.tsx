@@ -7,6 +7,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useGlucoseUnits } from "@/context/GlucoseUnitsContext";
+import DoseReferencePanel from "@/components/DoseReferencePanel";
 
 /* ─── Constants ───────────────────────────────────────────────────────────── */
 
@@ -308,6 +309,7 @@ export default function MealLogPage() {
                 placeholder="e.g. 2 slices toast with peanut butter"
                 style={inputStyle} onFocus={focusIn} onBlur={focusOut}
               />
+              <DoseReferencePanel foodDescription={form.food_description} mealType={form.event_type} />
             </Field>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
               <Field label="Carbs (g)">

@@ -5,6 +5,7 @@
 
 import { z } from "zod";
 import { router, protectedProcedure } from "../trpc";
+import { findSimilarMeals } from "../src/engine/dose-reference";
 
 const mealLogInput = z.object({
   meal_time: z.string(),
@@ -105,5 +106,11 @@ export const mealLogRouter = router({
 
       if (error) throw new Error(error.message);
       return data ?? [];
+    }),
+
+  findSimilar: protectedProcedure
+    .input(z.object({ description: z.string(), mealType: z.string().default("meal") }))
+    .query(async ({ ctx, input }) => {
+      return findSimilarMeals(ctx.supabase, input.description, input.mealType, ctx.user.id, 5);
     }),
 });
