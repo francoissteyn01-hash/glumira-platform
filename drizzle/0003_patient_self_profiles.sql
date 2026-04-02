@@ -20,9 +20,11 @@ CREATE TABLE IF NOT EXISTS patient_self_profiles (
   isf               DECIMAL(5,2),         -- insulin sensitivity factor (optional)
 
   -- Section 3: Dietary Profile
-  dietary_approach  VARCHAR(30) CHECK (dietary_approach IN (
-    'Standard','Low-carb','Keto','Vegetarian','Vegan',
-    'Halal','Kosher','Ramadan','Bernstein'
+  dietary_approach  VARCHAR(50) CHECK (dietary_approach IN (
+    'Standard/Full Carb Count','Moderate Carb','Low Carb','Keto',
+    'Bernstein Protocol','Halal','Kosher','Ramadan Fasting',
+    'Intermittent Fasting','Vegetarian','Vegan','Mediterranean',
+    'High Protein/Low Fat','Grazing/Snacking'
   )),
   allergens         JSONB DEFAULT '[]',   -- array of allergen strings
   meals_per_day     SMALLINT DEFAULT 3,

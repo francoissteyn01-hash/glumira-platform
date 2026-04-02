@@ -27,8 +27,10 @@ const INSULIN_TYPES = [
 const DELIVERY_METHODS = ["MDI (Multiple Daily Injections)", "Insulin Pump", "Insulin Pen", "Inhaled Insulin"] as const;
 
 const DIETARY_APPROACHES = [
-  "Standard", "Low-carb", "Keto", "Vegetarian", "Vegan",
-  "Halal", "Kosher", "Ramadan", "Bernstein",
+  "Standard/Full Carb Count", "Moderate Carb", "Low Carb", "Keto",
+  "Bernstein Protocol", "Halal", "Kosher", "Ramadan Fasting",
+  "Intermittent Fasting", "Vegetarian", "Vegan", "Mediterranean",
+  "High Protein/Low Fat", "Grazing/Snacking",
 ] as const;
 
 const ALLERGENS = [
@@ -37,9 +39,10 @@ const ALLERGENS = [
 ] as const;
 
 const COMORBIDITIES = [
-  "Hypertension", "High cholesterol", "Thyroid condition",
-  "Kidney disease", "Neuropathy", "Retinopathy",
-  "Anxiety/Depression", "PCOS", "Coeliac", "Other",
+  "Hypertension", "High cholesterol", "Thyroid (hypo)", "Thyroid (hyper)",
+  "Kidney disease", "Neuropathy", "Retinopathy", "Depression/Anxiety",
+  "PCOS", "Coeliac", "Cardiovascular disease", "Gastroparesis",
+  "Eating disorders", "ADHD", "Autism Spectrum Disorder",
 ] as const;
 
 /* ─── Types ───────────────────────────────────────────────────────────────── */
