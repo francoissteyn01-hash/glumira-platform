@@ -100,7 +100,7 @@ function DarkNavBar() {
   }
 
   return (
-    <nav className="border-b border-gray-800 bg-gray-900 px-4 py-3 sticky top-0 z-50" data-nav>
+    <nav aria-label="Main navigation" className="border-b border-gray-800 bg-gray-900 px-4 py-3 sticky top-0 z-50" data-nav>
       <div className="max-w-5xl mx-auto flex items-center justify-between">
         <span className="flex items-center gap-2">
           <div style={{ width: 24, height: 24 }} />
@@ -120,7 +120,7 @@ function DarkNavBar() {
               {navLabel(link.label)}
             </NavLink>
           ))}
-          <button onClick={signOut} className="ml-2 px-3 py-1.5 text-xs text-gray-400 hover:text-white transition-colors">
+          <button onClick={signOut} aria-label="Sign out of GluMira" className="ml-2 px-3 py-1.5 text-xs text-gray-400 hover:text-white transition-colors">
             Sign out
           </button>
         </div>
@@ -156,7 +156,9 @@ export default function App() {
       <GlucoseUnitsProvider>
         <PresentationModeProvider>
         <div className="min-h-screen bg-gray-950 text-gray-100">
+          <a href="#main-content" className="skip-link">Skip to content</a>
           <NavBar />
+          <main id="main-content">
           <Suspense fallback={<LoadingFallback />}>
             <Routes>
               <Route path="/"          element={<HomeRoute />} />
@@ -177,6 +179,7 @@ export default function App() {
               <Route path="*"          element={<Navigate to="/" replace />} />
             </Routes>
           </Suspense>
+          </main>
         </div>
         </PresentationModeProvider>
       </GlucoseUnitsProvider>

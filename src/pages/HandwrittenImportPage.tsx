@@ -91,7 +91,7 @@ export default function HandwrittenImportPage() {
         <div style={{ background: "#ffffff", borderRadius: 12, border: "1px solid #dee2e6", padding: 20, marginBottom: 20 }}>
           <label style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12, cursor: "pointer" }}>
             {photo ? (
-              <img src={photo} alt="Logbook" style={{ maxWidth: "100%", maxHeight: 300, borderRadius: 8, border: "1px solid #dee2e6" }} />
+              <img src={photo} alt="Logbook" loading="lazy" style={{ maxWidth: "100%", maxHeight: 300, borderRadius: 8, border: "1px solid #dee2e6" }} />
             ) : (
               <div style={{ width: "100%", height: 150, borderRadius: 8, border: "2px dashed #dee2e6", display: "flex", alignItems: "center", justifyContent: "center", background: "#f8f9fa" }}>
                 <span style={{ fontSize: 14, color: "#94a3b8", fontFamily: "'DM Sans', system-ui, sans-serif" }}>{"\u{1F4F7}"} Tap to capture logbook page</span>

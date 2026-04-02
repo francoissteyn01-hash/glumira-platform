@@ -337,7 +337,7 @@ export default function MealLogPage() {
                 </label>
               </div>
               {photoPreview && (
-                <img src={photoPreview} alt="Meal photo" style={{ width: 80, height: 80, objectFit: "cover", borderRadius: 8, marginTop: 8, border: "1px solid #dee2e6" }} />
+                <img src={photoPreview} alt="Meal photo" loading="lazy" style={{ width: 80, height: 80, objectFit: "cover", borderRadius: 8, marginTop: 8, border: "1px solid #dee2e6" }} />
               )}
               <DoseReferencePanel foodDescription={form.food_description} mealType={form.event_type} />
             </Field>

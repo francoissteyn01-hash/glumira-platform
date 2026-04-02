@@ -110,7 +110,9 @@ export default function CaregiverManagePage() {
         {/* ── Invite form ─────────────────────────────────────────────── */}
         <Card title="Invite Caregiver">
           <div className="space-y-3">
+            <label htmlFor="cg-email" className="sr-only">Caregiver email</label>
             <input
+              id="cg-email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -118,7 +120,9 @@ export default function CaregiverManagePage() {
               className="w-full rounded-lg bg-gray-800 border border-gray-700 px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-500"
             />
             <div className="flex items-center gap-3">
+              <label htmlFor="cg-role" className="sr-only">Role</label>
               <select
+                id="cg-role"
                 value={role}
                 onChange={(e) => setRole(e.target.value as "editor" | "viewer")}
                 className="rounded-lg bg-gray-800 border border-gray-700 px-3 py-2.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
