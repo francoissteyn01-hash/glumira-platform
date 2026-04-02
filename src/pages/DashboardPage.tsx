@@ -16,6 +16,7 @@ import HiddenIOBWidget from "@/components/widgets/HiddenIOBWidget";
 import UnitToggle from "@/components/UnitToggle";
 import { useGlucoseUnits } from "@/context/GlucoseUnitsContext";
 import { formatGlucose as fmtGlucose, getUnitLabel } from "@/utils/glucose-units";
+import EmotionalDistressTracker from "@/components/EmotionalDistressTracker";
 
 /* ─── Types ───────────────────────────────────────────────────────────────── */
 
@@ -62,6 +63,9 @@ export default function DashboardPage() {
   const [iobResult, setIobResult] = useState<IOBResult | null>(null);
   const [activityCurves, setActivityCurves] = useState<DoseCurve[]>([]);
   const [quietTail, setQuietTail] = useState(0);
+
+  // Condition events for timeline markers
+  const [conditionEvents, setConditionEvents] = useState<{ event_time: string; event_type: string; intensity: string | null }[]>([]);
 
   // Glucose / Nightscout state
   const [readings, setReadings] = useState<GlucoseReading[]>([]);
@@ -133,6 +137,16 @@ export default function DashboardPage() {
           }
         }
         setQuietTail(Math.round(tail * 100) / 100);
+      })
+      .catch(() => {});
+
+    // Condition events for timeline markers
+    const today = new Date().toISOString().slice(0, 10);
+    fetch(`/trpc/conditionEvent.list?input=${encodeURIComponent(JSON.stringify({ json: { from: `${today}T00:00:00`, to: `${today}T23:59:59`, limit: 50 } }))}`, { headers })
+      .then((r) => r.json())
+      .then((res) => {
+        const data = res?.result?.data?.json;
+        if (Array.isArray(data)) setConditionEvents(data);
       })
       .catch(() => {});
   }, [session]);
@@ -264,6 +278,40 @@ export default function DashboardPage() {
         {/* ── IOB Stacking Curve ────────────────────────────────────────── */}
         <div style={{ marginBottom: 20 }}>
           <StackingCurve data={stackingData} glucoseUnits={glucoseUnits} />
+          {/* Condition event markers on timeline */}
+          {conditionEvents.length > 0 && (
+            <div style={{
+              display: "flex", gap: 6, flexWrap: "wrap", padding: "8px 4px 0",
+            }}>
+              {conditionEvents.map((ev, i) => {
+                const time = new Date(ev.event_time).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+                const icons: Record<string, string> = {
+                  exercise: "\u{1F3C3}", illness: "\u{1F912}", stress: "\u{1F616}",
+                  sleep: "\u{1F634}", travel: "\u2708\uFE0F", steroid: "\u{1F48A}",
+                  menstrual: "\u{1F319}", exam: "\u{1F4DD}", weather: "\u{1F321}\uFE0F", other: "\u2699\uFE0F",
+                };
+                const intensityColours: Record<string, string> = {
+                  low: "#22c55e", moderate: "#eab308", high: "#f97316", severe: "#ef4444",
+                };
+                return (
+                  <span
+                    key={i}
+                    title={`${time} — ${ev.event_type}${ev.intensity ? ` (${ev.intensity})` : ""}`}
+                    style={{
+                      display: "inline-flex", alignItems: "center", gap: 4,
+                      padding: "4px 10px", borderRadius: 6,
+                      background: "#f1f3f5", border: `1px solid ${ev.intensity ? intensityColours[ev.intensity] ?? "#dee2e6" : "#dee2e6"}`,
+                      fontSize: 11, color: "#1a2a5e", fontFamily: "'DM Sans', system-ui, sans-serif",
+                    }}
+                  >
+                    <span>{icons[ev.event_type] ?? "\u2699\uFE0F"}</span>
+                    <span style={{ fontWeight: 600 }}>{time}</span>
+                    <span style={{ textTransform: "capitalize" }}>{ev.event_type}</span>
+                  </span>
+                );
+              })}
+            </div>
+          )}
         </div>
 
         {/* ── Glucose Overlay ───────────────────────────────────────────── */}
@@ -279,6 +327,11 @@ export default function DashboardPage() {
             <InsulinActivityCurve curves={activityCurves} />
           </div>
         )}
+
+        {/* ── Emotional Distress Tracker ──────────────────────────────── */}
+        <div style={{ marginBottom: 20 }}>
+          <EmotionalDistressTracker />
+        </div>
 
         {/* ── Nightscout Connection ─────────────────────────────────────── */}
         <div style={{

@@ -22,7 +22,8 @@ const FAQPage       = lazy(() => import("@/pages/FAQPage"));
 const SettingsPage  = lazy(() => import("@/pages/SettingsPage"));
 const ProfilePage   = lazy(() => import("@/pages/ProfilePage"));
 const MealLogPage    = lazy(() => import("@/pages/MealLogPage"));
-const InsulinLogPage = lazy(() => import("@/pages/InsulinLogPage"));
+const InsulinLogPage    = lazy(() => import("@/pages/InsulinLogPage"));
+const ConditionLogPage  = lazy(() => import("@/pages/ConditionLogPage"));
 
 /* ─── Loading fallback ───────────────────────────────────────────────────── */
 function LoadingFallback() {
@@ -151,7 +152,8 @@ export default function App() {
               <Route path="/faq"       element={<ProtectedRoute><FAQPage /></ProtectedRoute>} />
               <Route path="/settings"  element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
               <Route path="/log"       element={<ProtectedRoute><MealLogPage /></ProtectedRoute>} />
-              <Route path="/insulin"   element={<ProtectedRoute><InsulinLogPage /></ProtectedRoute>} />
+              <Route path="/insulin"    element={<ProtectedRoute><InsulinLogPage /></ProtectedRoute>} />
+              <Route path="/conditions" element={<ProtectedRoute><ConditionLogPage /></ProtectedRoute>} />
               <Route path="/profile"   element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
               <Route path="*"          element={<Navigate to="/" replace />} />
             </Routes>
