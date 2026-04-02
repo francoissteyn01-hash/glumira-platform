@@ -1,0 +1,44 @@
+{
+  "profile_type": "clinician",
+  "voice_style": "professional_measured",
+  "total_duration_ms": 25000,
+  "scenes": [
+    {
+      "id": "cl_01",
+      "visual_id": "owl_sentinel_reveal",
+      "visual_note": "GluMira branding — professional presentation",
+      "subtitle_text": "GluMira — pharmacokinetic insulin visualisation for clinical education.",
+      "voice_text": "GluMira provides pharmacokinetic insulin visualisation powered by the IOB Hunter engine. Here's what your patients will see.",
+      "duration_ms": 6000
+    },
+    {
+      "id": "cl_02",
+      "visual_id": "stacking_overlap_reveal",
+      "visual_note": "Clinical stacking view with pressure zones",
+      "subtitle_text": "Real-time stacking analysis with exponential decay and Gaussian peak modelling.",
+      "voice_text": "The stacking curve uses exponential decay with Gaussian peak modifiers for each insulin in the thirteen-insulin ZA-NAM formulary.",
+      "duration_ms": 6000
+    },
+    {
+      "id": "cl_03",
+      "visual_id": "pattern_detection_demo",
+      "visual_note": "Pattern detection highlights recurring issues",
+      "subtitle_text": "Pattern Intelligence detects timing anomalies across 7-day rolling windows.",
+      "voice_text": "The Pattern Intelligence Engine analyses seven-day rolling windows, detecting dose compression, dawn phenomenon, rescue clusters, and contextual modifiers.",
+      "duration_ms": 6000
+    },
+    {
+      "id": "cl_04",
+      "visual_id": "report_preview_slide",
+      "visual_note": "Two-page clinical report with basal evaluation gauge",
+      "subtitle_text": "Export two-page PDF reports with basal evaluation scoring for consultations.",
+      "voice_text": "Exportable two-page reports include dose heatmaps, stacking curves, and a basal evaluation gauge scored out of ten.",
+      "duration_ms": 7000,
+      "cta_options": [
+        { "label": "View Dashboard Demo", "href": "/dashboard" },
+        { "label": "Set Up Clinic Profile", "href": "/profile" },
+        { "label": "Read Documentation", "href": "/faq" }
+      ]
+    }
+  ]
+}

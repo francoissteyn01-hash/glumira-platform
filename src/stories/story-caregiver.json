@@ -1,0 +1,48 @@
+{
+  "profile_type": "caregiver",
+  "voice_style": "warm_reassuring",
+  "total_duration_ms": 45000,
+  "scenes": [
+    {
+      "id": "cg_01",
+      "visual_id": "owl_sentinel_reveal",
+      "visual_note": "The GluMira owl watches over your loved one's data",
+      "subtitle_text": "Welcome to GluMira. You're not alone in this journey.",
+      "voice_text": "Welcome to GluMira. Caring for someone with diabetes takes courage — and you're not alone in this journey.",
+      "duration_ms": 9000
+    },
+    {
+      "id": "cg_02",
+      "visual_id": "insulin_curve_building",
+      "visual_note": "Insulin curves build to show how doses work over time",
+      "subtitle_text": "Every dose has a shape — a rise, a peak, and a gentle fade.",
+      "voice_text": "Every insulin dose has a shape. It rises, peaks, and gently fades. GluMira makes that invisible activity visible.",
+      "duration_ms": 9000
+    },
+    {
+      "id": "cg_03",
+      "visual_id": "stacking_overlap_reveal",
+      "visual_note": "Overlapping doses illuminate in amber and red",
+      "subtitle_text": "When doses overlap, stacking risk appears. GluMira shows you where.",
+      "voice_text": "When doses overlap, stacking risk appears. GluMira highlights these moments so you can discuss timing with your healthcare team.",
+      "duration_ms": 9000
+    },
+    {
+      "id": "cg_04",
+      "visual_id": "report_preview_slide",
+      "visual_note": "A two-page PDF report slides into view",
+      "subtitle_text": "Take a clear, visual report to every doctor visit.",
+      "voice_text": "Before every appointment, export a clear visual report. No more guessing — your doctor sees exactly what happened.",
+      "duration_ms": 9000
+    },
+    {
+      "id": "cg_05",
+      "visual_id": "profile_complete_celebration",
+      "visual_note": "Completion badge and confetti",
+      "subtitle_text": "You're ready. Let's set up your profile.",
+      "voice_text": "You're ready. Let's set up your profile and start making insulin visible.",
+      "duration_ms": 9000,
+      "cta": { "label": "Set Up Profile", "href": "/profile" }
+    }
+  ]
+}

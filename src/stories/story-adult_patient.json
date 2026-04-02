@@ -1,0 +1,48 @@
+{
+  "profile_type": "adult_patient",
+  "voice_style": "calm_peer",
+  "total_duration_ms": 35000,
+  "scenes": [
+    {
+      "id": "ap_01",
+      "visual_id": "owl_sentinel_reveal",
+      "visual_note": "The GluMira owl nods in greeting",
+      "subtitle_text": "GluMira — the science of insulin, made visible.",
+      "voice_text": "Hey. Welcome to GluMira — where the science of insulin becomes something you can actually see.",
+      "duration_ms": 7000
+    },
+    {
+      "id": "ap_02",
+      "visual_id": "insulin_curve_building",
+      "visual_note": "Your insulin's activity curve draws itself",
+      "subtitle_text": "Your insulin is always working. Now you can see how.",
+      "voice_text": "Your insulin is always working beneath the surface. GluMira shows you the curve — onset, peak, and tail.",
+      "duration_ms": 7000
+    },
+    {
+      "id": "ap_03",
+      "visual_id": "stacking_overlap_reveal",
+      "visual_note": "Stacking zones glow from green to red",
+      "subtitle_text": "See where doses stack. Adjust timing, not guesswork.",
+      "voice_text": "When multiple doses overlap, you get stacking. GluMira colour-codes the pressure so you know when to watch.",
+      "duration_ms": 7000
+    },
+    {
+      "id": "ap_04",
+      "visual_id": "dashboard_walkthrough",
+      "visual_note": "Dashboard widgets light up sequentially",
+      "subtitle_text": "Your dashboard shows IOB, patterns, and glucose — all in one place.",
+      "voice_text": "Your dashboard brings it all together. Active insulin, patterns, glucose overlay — everything in one view.",
+      "duration_ms": 7000
+    },
+    {
+      "id": "ap_05",
+      "visual_id": "profile_complete_celebration",
+      "visual_note": "Profile setup celebration",
+      "subtitle_text": "Let's get started. Your profile takes two minutes.",
+      "voice_text": "Let's get you set up. Your profile takes about two minutes — then the insights begin.",
+      "duration_ms": 7000,
+      "cta": { "label": "Complete Profile", "href": "/profile" }
+    }
+  ]
+}

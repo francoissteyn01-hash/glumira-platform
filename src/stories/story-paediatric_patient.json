@@ -1,0 +1,48 @@
+{
+  "profile_type": "paediatric_patient",
+  "voice_style": "friendly_upbeat",
+  "total_duration_ms": 30000,
+  "scenes": [
+    {
+      "id": "pp_01",
+      "visual_id": "owl_sentinel_reveal",
+      "visual_note": "A friendly owl waves hello",
+      "subtitle_text": "Meet GluMira! Your insulin helper.",
+      "voice_text": "Hey there! Welcome to GluMira — your friendly insulin helper. Let me show you something cool.",
+      "duration_ms": 6000
+    },
+    {
+      "id": "pp_02",
+      "visual_id": "insulin_curve_building",
+      "visual_note": "A colourful curve grows like a wave",
+      "subtitle_text": "Your insulin works like a wave — it goes up, then slowly comes down.",
+      "voice_text": "Your insulin works like a wave. It goes up when it's working hardest, then slowly comes back down.",
+      "duration_ms": 6000
+    },
+    {
+      "id": "pp_03",
+      "visual_id": "stacking_overlap_reveal",
+      "visual_note": "Colourful blocks stack like building blocks",
+      "subtitle_text": "When waves overlap, they get bigger. That's called stacking!",
+      "voice_text": "When two waves overlap, they get bigger. That's called stacking — and GluMira shows you when it happens!",
+      "duration_ms": 6000
+    },
+    {
+      "id": "pp_04",
+      "visual_id": "safety_shield",
+      "visual_note": "A glowing shield protects the data",
+      "subtitle_text": "Your data is safe and private. Only you and your team can see it.",
+      "voice_text": "Don't worry — your data is super safe. Only you, your parents, and your doctor can see it.",
+      "duration_ms": 6000
+    },
+    {
+      "id": "pp_05",
+      "visual_id": "profile_complete_celebration",
+      "visual_note": "Stars and confetti celebration",
+      "subtitle_text": "Awesome! Let's set up your profile.",
+      "voice_text": "Awesome! Let's set up your profile and start exploring. It's going to be great!",
+      "duration_ms": 6000,
+      "cta": { "label": "Let's Go!", "href": "/profile" }
+    }
+  ]
+}
