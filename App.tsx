@@ -11,6 +11,7 @@ import { useAuth } from "@/hooks/useAuth";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { GlucoseUnitsProvider } from "@/context/GlucoseUnitsContext";
 import { PresentationModeProvider } from "@/components/PresentationMode";
+import { usePatientName } from "@/hooks/usePatientName";
 
 /* ─── Lazy pages ─────────────────────────────────────────────────────────── */
 const LandingPage   = lazy(() => import("@/pages/LandingPage"));

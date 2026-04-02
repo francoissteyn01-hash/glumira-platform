@@ -329,6 +329,11 @@ function RightPanel() {
   /* Caregiver state */
   const [cgToken, setCgToken] = useState("");
   const [cgEmail, setCgEmail] = useState("");
+  const [cgMode, setCgMode] = useState<"register" | "token">("register");
+  const [cgName, setCgName] = useState("");
+  const [cgPatientName, setCgPatientName] = useState("");
+  const [cgRelationship, setCgRelationship] = useState("");
+  const [cgPassword, setCgPassword] = useState("");
 
   /* Reset state */
   const [resetEmail, setResetEmail] = useState("");
@@ -411,6 +416,36 @@ function RightPanel() {
       window.location.href = "/dashboard";
     } catch (e: any) {
       setMsg({ type: "error", text: e.message ?? "Invalid token or email." });
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function handleCaregiverRegister() {
+    if (!cgName.trim() || !cgPatientName.trim() || !cgRelationship || !cgEmail.trim() || !cgPassword) {
+      setMsg({ type: "error", text: "Please fill in all fields." });
+      return;
+    }
+    setLoading(true);
+    setMsg(null);
+    try {
+      const { error } = await supabase.auth.signUp({
+        email: cgEmail.trim(),
+        password: cgPassword,
+        options: {
+          data: {
+            full_name: cgName.trim(),
+            role: "caregiver",
+            is_caregiver: true,
+            patient_name: cgPatientName.trim(),
+            relationship: cgRelationship,
+          },
+        },
+      });
+      if (error) throw error;
+      setMsg({ type: "success", text: `Welcome ${cgName.trim()}! Check your email to confirm your account. You're registered as ${cgRelationship} for ${cgPatientName.trim()}.` });
+    } catch (e: any) {
+      setMsg({ type: "error", text: e.message ?? "Registration failed." });
     } finally {
       setLoading(false);
     }
@@ -1140,133 +1175,91 @@ function RightPanel() {
             <h2 style={{ fontFamily: T.fontDisp, fontSize: 24, fontWeight: 700, color: T.navy, marginBottom: 6 }}>
               Caregiver access
             </h2>
-            <p style={{ fontSize: 14, color: T.bodyText, fontWeight: 300, marginBottom: 28, lineHeight: 1.5 }}>
-              Enter your share token from the clinician or patient who invited you.
+            <p style={{ fontSize: 14, color: T.bodyText, fontWeight: 300, marginBottom: 20, lineHeight: 1.5 }}>
+              Register to manage GluMira™ on behalf of someone you care for.
             </p>
+
+            {/* Mode toggle: Register | Have a token */}
+            <div style={{ display: "flex", gap: 0, marginBottom: 24, borderRadius: T.rMd, overflow: "hidden", border: `1px solid ${T.border}` }}>
+              {(["register", "token"] as const).map((m) => (
+                <button key={m} onClick={() => setCgMode(m)} style={{ flex: 1, padding: "8px 0", border: "none", background: cgMode === m ? T.teal : T.bg, color: cgMode === m ? T.white : T.bodyText, fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: T.fontBody }}>
+                  {m === "register" ? "Register as Caregiver" : "I have a share token"}
+                </button>
+              ))}
+            </div>
 
             {msg && renderAlert(msg.type, msg.text)}
 
-            {/* Token display box */}
-            <div
-              style={{
-                background: "rgba(42,181,193,0.06)",
-                border: "1px solid rgba(42,181,193,0.2)",
-                borderRadius: T.rLg,
-                padding: 16,
-                marginBottom: 20,
-                textAlign: "center",
-              }}
-            >
-              <div
-                style={{
-                  fontSize: 11,
-                  color: T.tealDim,
-                  fontWeight: 500,
-                  letterSpacing: "0.06em",
-                  textTransform: "uppercase",
-                  marginBottom: 8,
-                }}
-              >
-                Share token
-              </div>
-              <div
-                style={{
-                  fontFamily: T.fontMono,
-                  fontSize: 14,
-                  color: T.navy,
-                  letterSpacing: "0.1em",
-                  background: T.white,
-                  border: `1px solid ${T.border}`,
-                  borderRadius: T.rSm,
-                  padding: "8px 14px",
-                  display: "inline-block",
-                }}
-              >
-                {cgToken || "GLM-XXXX-XXXX-XXXX"}
-              </div>
-            </div>
+            {cgMode === "register" ? (
+              <>
+                <div style={fieldStyle}>
+                  <label style={labelStyle}>Your name</label>
+                  <input type="text" value={cgName} onChange={(e) => setCgName(e.target.value)} placeholder="e.g. Sarah Johnson" style={inputStyle} onFocus={focusInput} onBlur={blurInput} autoComplete="name" />
+                  <div style={{ fontSize: 11, color: T.bodyText, marginTop: 4, fontWeight: 300 }}>This is your name — the caregiver.</div>
+                </div>
+                <div style={fieldStyle}>
+                  <label style={labelStyle}>Patient's first name</label>
+                  <input type="text" value={cgPatientName} onChange={(e) => setCgPatientName(e.target.value)} placeholder="e.g. Anouk" style={inputStyle} onFocus={focusInput} onBlur={blurInput} />
+                  <div style={{ fontSize: 11, color: T.bodyText, marginTop: 4, fontWeight: 300 }}>The person you're managing GluMira™ for. Their name will appear throughout the app.</div>
+                </div>
+                <div style={fieldStyle}>
+                  <label style={labelStyle}>Your relationship</label>
+                  <select value={cgRelationship} onChange={(e) => setCgRelationship(e.target.value)} style={{ ...inputStyle, cursor: "pointer" } as any} onFocus={focusInput as any} onBlur={blurInput as any}>
+                    <option value="">Select relationship…</option>
+                    <option value="Parent">Parent</option>
+                    <option value="Guardian">Guardian</option>
+                    <option value="Family member">Family member</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                <div style={fieldStyle}>
+                  <label style={labelStyle}>Your email address</label>
+                  <input type="email" value={cgEmail} onChange={(e) => setCgEmail(e.target.value)} placeholder="parent@family.com" style={inputStyle} onFocus={focusInput} onBlur={blurInput} autoComplete="email" />
+                </div>
+                <div style={fieldStyle}>
+                  <label style={labelStyle}>Password</label>
+                  <input type="password" value={cgPassword} onChange={(e) => setCgPassword(e.target.value)} placeholder="Minimum 8 characters" style={inputStyle} onFocus={focusInput} onBlur={blurInput} autoComplete="new-password" />
+                </div>
 
-            <div style={fieldStyle}>
-              <label style={labelStyle}>Your share token</label>
-              <input
-                type="text"
-                value={cgToken}
-                onChange={(e) => setCgToken(formatToken(e.target.value))}
-                placeholder="GLM-XXXX-XXXX-XXXX"
-                style={{ ...inputStyle, fontFamily: T.fontMono, letterSpacing: "0.06em", textTransform: "uppercase" }}
-                onFocus={focusInput}
-                onBlur={blurInput}
-              />
-              <div style={{ fontSize: 11, color: T.bodyText, marginTop: 4, fontWeight: 300 }}>
-                Your clinician or patient sends this token when they create a caregiver share link.
-              </div>
-            </div>
-            <div style={fieldStyle}>
-              <label style={labelStyle}>Your email address</label>
-              <input
-                type="email"
-                value={cgEmail}
-                onChange={(e) => setCgEmail(e.target.value)}
-                placeholder="parent@family.com"
-                autoComplete="email"
-                style={inputStyle}
-                onFocus={focusInput}
-                onBlur={blurInput}
-              />
-              <div style={{ fontSize: 11, color: T.bodyText, marginTop: 4, fontWeight: 300 }}>
-                Must match the email address your clinician used to invite you.
-              </div>
-            </div>
+                <div style={{ display: "flex", alignItems: "flex-start", gap: 10, borderRadius: T.rMd, padding: "11px 14px", fontSize: 13, lineHeight: 1.5, marginBottom: 18, borderLeft: `3px solid ${T.teal}`, background: "rgba(42,181,193,0.06)", color: T.tealDim }}>
+                  <span>ℹ️</span>
+                  <span>The account belongs to <strong>you</strong> (the caregiver). Inside the app, we'll address <strong>{cgPatientName || "your patient"}</strong> by name.</span>
+                </div>
 
-            <div
-              style={{
-                display: "flex",
-                alignItems: "flex-start",
-                gap: 10,
-                borderRadius: T.rMd,
-                padding: "11px 14px",
-                fontSize: 13,
-                lineHeight: 1.5,
-                marginBottom: 18,
-                borderLeft: `3px solid ${T.teal}`,
-                background: "rgba(42,181,193,0.06)",
-                color: T.tealDim,
-              }}
-            >
-              <span>ℹ️</span>
-              <span>
-                Caregiver access is <strong>view-only by default</strong> unless your clinician granted edit permissions.
-                Discuss all clinical decisions with your care team.
-              </span>
-            </div>
+                <button onClick={handleCaregiverRegister} disabled={loading} style={{ ...btnSubmitBase, opacity: loading ? 0.55 : 1 }}>
+                  {loading ? "Creating account…" : "Register as Caregiver"}
+                </button>
+              </>
+            ) : (
+              <>
+                <div style={{ background: "rgba(42,181,193,0.06)", border: "1px solid rgba(42,181,193,0.2)", borderRadius: T.rLg, padding: 16, marginBottom: 20, textAlign: "center" }}>
+                  <div style={{ fontSize: 11, color: T.tealDim, fontWeight: 500, letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 8 }}>Share token</div>
+                  <div style={{ fontFamily: T.fontMono, fontSize: 14, color: T.navy, letterSpacing: "0.1em", background: T.white, border: `1px solid ${T.border}`, borderRadius: T.rSm, padding: "8px 14px", display: "inline-block" }}>
+                    {cgToken || "GLM-XXXX-XXXX-XXXX"}
+                  </div>
+                </div>
+                <div style={fieldStyle}>
+                  <label style={labelStyle}>Your share token</label>
+                  <input type="text" value={cgToken} onChange={(e) => setCgToken(formatToken(e.target.value))} placeholder="GLM-XXXX-XXXX-XXXX" style={{ ...inputStyle, fontFamily: T.fontMono, letterSpacing: "0.06em", textTransform: "uppercase" }} onFocus={focusInput} onBlur={blurInput} />
+                </div>
+                <div style={fieldStyle}>
+                  <label style={labelStyle}>Your email address</label>
+                  <input type="email" value={cgEmail} onChange={(e) => setCgEmail(e.target.value)} placeholder="parent@family.com" autoComplete="email" style={inputStyle} onFocus={focusInput} onBlur={blurInput} />
+                </div>
+                <button onClick={handleCaregiverAccess} disabled={loading} style={{ ...btnSubmitBase, opacity: loading ? 0.55 : 1 }}>
+                  {loading ? "Verifying token…" : "Access patient profile"}
+                </button>
+              </>
+            )}
 
-            <button
-              onClick={handleCaregiverAccess}
-              disabled={loading}
-              style={{
-                ...btnSubmitBase,
-                opacity: loading ? 0.55 : 1,
-              }}
-            >
-              {loading ? "Verifying token…" : "Access patient profile"}
-            </button>
-
-            {/* Divider */}
             <div style={{ display: "flex", alignItems: "center", gap: 12, margin: "20px 0" }}>
               <div style={{ flex: 1, height: 1, background: T.border }} />
-              <span style={{ fontSize: 11, color: T.bodyText, whiteSpace: "nowrap" }}>no token?</span>
+              <span style={{ fontSize: 11, color: T.bodyText, whiteSpace: "nowrap" }}>already registered?</span>
               <div style={{ flex: 1, height: 1, background: T.border }} />
             </div>
             <div style={{ textAlign: "center" }}>
-              <p style={{ fontSize: 13, color: T.bodyText, marginBottom: 10 }}>
-                Ask your clinician or the patient's account holder to generate a caregiver share link from their dashboard.
-              </p>
-              <a
-                href="#"
-                onClick={(e) => { e.preventDefault(); switchTab("signin"); }}
-                style={{ fontSize: 13, color: T.teal, fontWeight: 500, textDecoration: "none" }}
-              >
-                Already have an account? Sign in →
+              <a href="#" onClick={(e) => { e.preventDefault(); switchTab("signin"); }} style={{ fontSize: 13, color: T.teal, fontWeight: 500, textDecoration: "none" }}>
+                Sign in to your account →
               </a>
             </div>
           </div>
