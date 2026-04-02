@@ -36,6 +36,14 @@ profileRouter.put("/", async (req: Request, res: Response) => {
     const userId = getUserId(req);
     const body = req.body;
 
+    // Coerce empty strings to null for numeric / date fields
+    const toNullIfEmpty = (v: any) => (v === "" || v === undefined ? null : v);
+    const toNumberOrNull = (v: any) => {
+      if (v === "" || v === null || v === undefined) return null;
+      const n = Number(v);
+      return Number.isNaN(n) ? null : n;
+    };
+
     // Calculate under-18 flag from DOB
     let under18Flag = false;
     if (body.date_of_birth) {
@@ -58,17 +66,17 @@ profileRouter.put("/", async (req: Request, res: Response) => {
       user_id:          userId,
       first_name:       body.first_name ?? null,
       last_name:        body.last_name ?? null,
-      date_of_birth:    body.date_of_birth ?? null,
-      diabetes_type:    body.diabetes_type ?? null,
-      diagnosis_date:   body.diagnosis_date ?? null,
+      date_of_birth:    toNullIfEmpty(body.date_of_birth),
+      diabetes_type:    toNullIfEmpty(body.diabetes_type),
+      diagnosis_date:   toNullIfEmpty(body.diagnosis_date),
       country:          body.country ?? null,
       insulin_types:    body.insulin_types ?? [],
-      delivery_method:  body.delivery_method ?? null,
-      icr:              body.icr ?? null,
-      isf:              body.isf ?? null,
-      dietary_approach: body.dietary_approach ?? null,
+      delivery_method:  toNullIfEmpty(body.delivery_method),
+      icr:              toNumberOrNull(body.icr),
+      isf:              toNumberOrNull(body.isf),
+      dietary_approach: toNullIfEmpty(body.dietary_approach),
       allergens:        body.allergens ?? [],
-      meals_per_day:    body.meals_per_day ?? 3,
+      meals_per_day:    toNumberOrNull(body.meals_per_day) ?? 3,
       comorbidities:    body.comorbidities ?? [],
       special_conditions: body.special_conditions ?? [],
       glucose_units:    body.glucose_units ?? "mmol",
