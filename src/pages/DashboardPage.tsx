@@ -24,6 +24,8 @@ import RiskWindowCard from "@/components/widgets/RiskWindowCard";
 import SensorConfidenceCard from "@/components/widgets/SensorConfidenceCard";
 import TimeInRangeDonut from "@/components/widgets/TimeInRangeDonut";
 import EventLogTable from "@/components/widgets/EventLogTable";
+import PresentationToggle from "@/components/PresentationMode";
+import ShareButton from "@/components/ShareButton";
 
 /* ─── Types ───────────────────────────────────────────────────────────────── */
 
@@ -228,6 +230,8 @@ export default function DashboardPage() {
             </p>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <ShareButton />
+            <PresentationToggle />
             <UnitToggle />
           </div>
         </div>

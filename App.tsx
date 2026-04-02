@@ -10,6 +10,7 @@ import { NAV_LINKS } from "@/lib/constants";
 import { useAuth } from "@/hooks/useAuth";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { GlucoseUnitsProvider } from "@/context/GlucoseUnitsContext";
+import { PresentationModeProvider } from "@/components/PresentationMode";
 
 /* ─── Lazy pages ─────────────────────────────────────────────────────────── */
 const LandingPage   = lazy(() => import("@/pages/LandingPage"));
@@ -141,6 +142,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <GlucoseUnitsProvider>
+        <PresentationModeProvider>
         <div className="min-h-screen bg-gray-950 text-gray-100">
           <NavBar />
           <Suspense fallback={<LoadingFallback />}>
@@ -163,6 +165,7 @@ export default function App() {
             </Routes>
           </Suspense>
         </div>
+        </PresentationModeProvider>
       </GlucoseUnitsProvider>
     </BrowserRouter>
   );
