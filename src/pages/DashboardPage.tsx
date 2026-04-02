@@ -20,6 +20,10 @@ import EmotionalDistressTracker from "@/components/EmotionalDistressTracker";
 import ExportReportButton from "@/components/ExportReportButton";
 import PatternHighlights from "@/components/widgets/PatternHighlights";
 import DailySummary from "@/components/widgets/DailySummary";
+import RiskWindowCard from "@/components/widgets/RiskWindowCard";
+import SensorConfidenceCard from "@/components/widgets/SensorConfidenceCard";
+import TimeInRangeDonut from "@/components/widgets/TimeInRangeDonut";
+import EventLogTable from "@/components/widgets/EventLogTable";
 
 /* ─── Types ───────────────────────────────────────────────────────────────── */
 
@@ -223,7 +227,18 @@ export default function DashboardPage() {
               Welcome back{user?.email ? `, ${user.email.split("@")[0]}` : ""}
             </p>
           </div>
-          <UnitToggle />
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <UnitToggle />
+          </div>
+        </div>
+
+        {/* Date range selector */}
+        <div style={{ display: "flex", gap: 6, marginBottom: 16, flexWrap: "wrap" }}>
+          {(["Today", "3D", "7D", "14D", "30D"] as const).map((label) => (
+            <button key={label} style={{ padding: "6px 14px", borderRadius: 6, border: "1px solid #dee2e6", background: label === "Today" ? "#1a2a5e" : "#ffffff", color: label === "Today" ? "#ffffff" : "#52667a", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+              {label}
+            </button>
+          ))}
         </div>
 
         {/* Disclaimer */}
@@ -260,32 +275,14 @@ export default function DashboardPage() {
             )}
           </div>
 
+          {/* Risk Window */}
+          <RiskWindowCard pressure={currentPressure} />
+
+          {/* Sensor Confidence */}
+          <SensorConfidenceCard readingsCount={readings.length} expectedCount={288} />
+
           {/* Hidden IOB */}
           <HiddenIOBWidget quietTailIOB={quietTail} />
-
-          {/* Stats card */}
-          <div style={{
-            background: "#ffffff", borderRadius: 12, border: "1px solid #dee2e6", padding: 20,
-          }}>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-              <div>
-                <p style={{ margin: 0, fontSize: 12, fontWeight: 600, color: "#52667a", textTransform: "uppercase", letterSpacing: 0.5, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
-                  Time in Range
-                </p>
-                <p style={{ margin: "4px 0 0", fontSize: 24, fontWeight: 700, color: "#1a2a5e", fontFamily: "'JetBrains Mono', monospace" }}>
-                  {tirPercent != null ? `${tirPercent}%` : "\u2014"}
-                </p>
-              </div>
-              <div>
-                <p style={{ margin: 0, fontSize: 12, fontWeight: 600, color: "#52667a", textTransform: "uppercase", letterSpacing: 0.5, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
-                  Events Today
-                </p>
-                <p style={{ margin: "4px 0 0", fontSize: 24, fontWeight: 700, color: "#1a2a5e", fontFamily: "'JetBrains Mono', monospace" }}>
-                  {iobResult?.eventCount ?? 0}
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* ── IOB Stacking Curve ────────────────────────────────────────── */}
@@ -349,6 +346,22 @@ export default function DashboardPage() {
         {/* ── Pattern Highlights ─────────────────────────────────────── */}
         <div style={{ marginBottom: 20 }}>
           <PatternHighlights patterns={detectedPatterns} />
+        </div>
+
+        {/* ── Time in Range Donut ───────────────────────────────────── */}
+        <div style={{ marginBottom: 20 }}>
+          <TimeInRangeDonut readings={glucoseData.map((g) => ({ value: g.value }))} />
+        </div>
+
+        {/* ── Simulation Panel (placeholder) ─────────────────────────── */}
+        <div style={{ background: "#ffffff", borderRadius: 12, border: "1px dashed #dee2e6", padding: 32, textAlign: "center", marginBottom: 20 }}>
+          <p style={{ fontSize: 14, fontWeight: 600, color: "#94a3b8", margin: 0, fontFamily: "'DM Sans', system-ui, sans-serif" }}>Coming soon — timing simulation</p>
+          <p style={{ fontSize: 12, color: "#c4c9d2", margin: "4px 0 0", fontFamily: "'DM Sans', system-ui, sans-serif" }}>Compare before/after timing adjustments</p>
+        </div>
+
+        {/* ── Event Log Table ─────────────────────────────────────────── */}
+        <div style={{ marginBottom: 20 }}>
+          <EventLogTable entries={[]} />
         </div>
 
         {/* ── Emotional Distress Tracker ──────────────────────────────── */}
@@ -446,14 +459,22 @@ export default function DashboardPage() {
         )}
 
         {/* ── Footer ─────────────────────────────────────────────────── */}
-        <div style={{
-          display: "flex", justifyContent: "flex-end", alignItems: "center",
-          padding: "16px 0", borderTop: "1px solid #e9ecef", marginTop: 8,
-        }}>
-          <ExportReportButton />
+        {/* ── Footer ─────────────────────────────────────────────────── */}
+        <div style={{ borderTop: "1px solid #e9ecef", marginTop: 8, padding: "16px 0" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12, flexWrap: "wrap", gap: 8 }}>
+            <button style={{ padding: "8px 20px", borderRadius: 8, border: "2px solid #1a2a5e", background: "transparent", color: "#1a2a5e", fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+              Compare Days
+            </button>
+            <ExportReportButton />
+          </div>
+          <p style={{ fontSize: 11, color: "#94a3b8", textAlign: "center", margin: "8px 0 4px", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+            {DISCLAIMER}
+          </p>
+          <p style={{ fontSize: 10, color: "#c4c9d2", textAlign: "center", margin: 0, fontFamily: "'JetBrains Mono', monospace" }}>
+            V7 — Powered by IOB Hunter™
+          </p>
         </div>
 
-        {/* Spacer for mobile bottom nav */}
         <div style={{ height: 80 }} />
       </div>
     </div>
