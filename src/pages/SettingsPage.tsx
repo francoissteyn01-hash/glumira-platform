@@ -28,6 +28,7 @@ export default function SettingsPage() {
         </S>
         <NightscoutSetup />
         <S title="Glucose Units"><p className="text-xs text-gray-300 mb-2">Choose how glucose values are displayed across GluMira™</p><UnitToggle /></S>
+        <S title="Data"><a href="/import/handwritten" className="text-xs text-violet-400 hover:text-violet-300 underline">Import Handwritten Notes</a></S>
         <S title="Legal"><p className="text-xs text-gray-300 leading-relaxed">GluMira™ is an educational platform, not a registered medical device. Powered by IOB Hunter™</p></S>
       </div>
     </div>

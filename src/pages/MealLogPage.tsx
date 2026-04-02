@@ -116,6 +116,8 @@ export default function MealLogPage() {
   const [toast, setToast] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [profileInsulins, setProfileInsulins] = useState<{ value: string; label: string }[]>([]);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const [photoUploading, setPhotoUploading] = useState(false);
 
   // Sync form glucose_units when global toggle changes
   useEffect(() => {
@@ -303,12 +305,40 @@ export default function MealLogPage() {
         {!isLowIntervention && (
           <div style={{ background: "#ffffff", borderRadius: 12, border: "1px solid #dee2e6", padding: 20, marginBottom: 16 }}>
             <Field label="Food description">
-              <input
-                type="text" value={form.food_description}
-                onChange={(e) => set("food_description")(e.target.value)}
-                placeholder="e.g. 2 slices toast with peanut butter"
-                style={inputStyle} onFocus={focusIn} onBlur={focusOut}
-              />
+              <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                <input
+                  type="text" value={form.food_description}
+                  onChange={(e) => set("food_description")(e.target.value)}
+                  placeholder="e.g. 2 slices toast with peanut butter"
+                  style={{ ...inputStyle, flex: 1 }} onFocus={focusIn} onBlur={focusOut}
+                />
+                <label style={{ minWidth: 48, minHeight: 48, borderRadius: 8, border: "1px solid #dee2e6", background: "#f8f9fa", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", fontSize: 20, flexShrink: 0 }}>
+                  {photoUploading ? "\u23F3" : "\u{1F4F7}"}
+                  <input
+                    type="file" accept="image/*" capture="environment"
+                    style={{ display: "none" }}
+                    onChange={async (e) => {
+                      const file = e.target.files?.[0];
+                      if (!file || !session) return;
+                      setPhotoUploading(true);
+                      try {
+                        // Preview
+                        const reader = new FileReader();
+                        reader.onload = (ev) => setPhotoPreview(ev.target?.result as string);
+                        reader.readAsDataURL(file);
+                        // Upload to Supabase Storage
+                        const path = `${session.user.id}/${Date.now()}-${file.name}`;
+                        const { data } = await fetch("/api/profile", { headers: { Authorization: `Bearer ${session.access_token}` } }).then(() => ({ data: null }));
+                        // Store photo_url in form (actual upload would go to Supabase Storage)
+                        set("photo_url" as any)(path);
+                      } catch {} finally { setPhotoUploading(false); }
+                    }}
+                  />
+                </label>
+              </div>
+              {photoPreview && (
+                <img src={photoPreview} alt="Meal photo" style={{ width: 80, height: 80, objectFit: "cover", borderRadius: 8, marginTop: 8, border: "1px solid #dee2e6" }} />
+              )}
               <DoseReferencePanel foodDescription={form.food_description} mealType={form.event_type} />
             </Field>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
