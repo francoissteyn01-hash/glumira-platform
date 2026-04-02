@@ -1,4 +1,5 @@
 ﻿import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useAuth, supabase } from "@/hooks/useAuth";
 import UnitToggle from "@/components/UnitToggle";
 import NightscoutSetup from "@/components/NightscoutSetup";
@@ -28,6 +29,7 @@ export default function SettingsPage() {
         </S>
         <NightscoutSetup />
         <S title="Glucose Units"><p className="text-xs text-gray-300 mb-2">Choose how glucose values are displayed across GluMira™</p><UnitToggle /></S>
+        <S title="Caregivers"><p className="text-xs text-gray-300 mb-2">Allow parents, guardians, or clinicians to view or edit this profile.</p><Link to="/caregivers" className="text-xs text-brand-500 hover:text-brand-500/80 underline">Manage Caregivers</Link></S>
         <S title="Data"><a href="/import/handwritten" className="text-xs text-brand-500 hover:text-brand-500/80 underline">Import Handwritten Notes</a></S>
         <S title="Legal"><p className="text-xs text-gray-300 leading-relaxed">GluMira™ is an educational platform, not a registered medical device. Powered by IOB Hunter™</p></S>
       </div>

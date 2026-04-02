@@ -29,6 +29,7 @@ import { miraRouter }             from "./routes/mira.route";
 import { profileRouter }          from "./routes/profile.route";
 import { inviteRouter }           from "./routes/invite.route";
 import { reportRouter }           from "./routes/report.route";
+import { caregiverRouter }        from "./routes/caregiver.route";
 
 const app = express();
 const PORT = parseInt(process.env.PORT ?? "3001", 10);
@@ -63,6 +64,7 @@ app.use("/api/mira",          miraRouter);
 app.use("/api/profile",       profileRouter);
 app.use("/api/invite",        inviteRouter);
 app.use("/api/report",        reportRouter);
+app.use("/api/caregiver",     caregiverRouter);
 
 // ── 404 / Error ───────────────────────────────────────────────────────────────
 app.use((_req, res) => res.status(404).json({ error: "Not found" }));

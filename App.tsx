@@ -28,6 +28,7 @@ const InsulinLogPage    = lazy(() => import("@/pages/InsulinLogPage"));
 const ConditionLogPage     = lazy(() => import("@/pages/ConditionLogPage"));
 const OnboardingStoryPage     = lazy(() => import("@/pages/OnboardingStoryPage"));
 const HandwrittenImportPage   = lazy(() => import("@/pages/HandwrittenImportPage"));
+const CaregiverManagePage     = lazy(() => import("@/pages/CaregiverManagePage"));
 
 /* ─── Loading fallback ───────────────────────────────────────────────────── */
 function LoadingFallback() {
@@ -172,6 +173,7 @@ export default function App() {
               <Route path="/profile"           element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
               <Route path="/onboarding/story"     element={<ProtectedRoute><OnboardingStoryPage /></ProtectedRoute>} />
               <Route path="/import/handwritten"   element={<ProtectedRoute><HandwrittenImportPage /></ProtectedRoute>} />
+              <Route path="/caregivers"          element={<ProtectedRoute><CaregiverManagePage /></ProtectedRoute>} />
               <Route path="*"          element={<Navigate to="/" replace />} />
             </Routes>
           </Suspense>
