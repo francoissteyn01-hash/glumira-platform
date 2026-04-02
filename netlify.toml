@@ -6,6 +6,24 @@
   NODE_VERSION = "20"
 
 [[redirects]]
+  from   = "/api/*"
+  to     = "https://glumira-platform-production.up.railway.app/api/:splat"
+  status = 200
+  force  = true
+
+[[redirects]]
+  from   = "/trpc/*"
+  to     = "https://glumira-platform-production.up.railway.app/trpc/:splat"
+  status = 200
+  force  = true
+
+[[redirects]]
+  from   = "/health"
+  to     = "https://glumira-platform-production.up.railway.app/health"
+  status = 200
+  force  = true
+
+[[redirects]]
   from   = "/*"
   to     = "/index.html"
   status = 200
