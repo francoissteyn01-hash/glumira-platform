@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { usePatientName } from "@/hooks/usePatientName";
-import { apiFetch } from "@/lib/api";
+import { API, apiFetch } from "@/lib/api";
 import { cn } from "@/lib/utils";
 import { DISCLAIMER } from "@/lib/constants";
 
@@ -32,7 +32,7 @@ export default function MiraPage() {
   // Load profile context for badge
   useEffect(() => {
     if (!session) return;
-    fetch("/api/profile", { headers: { Authorization: `Bearer ${session.access_token}` } })
+    fetch(`${API}/api/profile`, { headers: { Authorization: `Bearer ${session.access_token}` } })
       .then((r) => r.json())
       .then((d) => {
         const p = d?.profile;

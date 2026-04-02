@@ -7,6 +7,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useAuth, supabase } from "@/hooks/useAuth";
 import { DISCLAIMER } from "@/lib/constants";
+import { API } from "@/lib/api";
 
 /* ─── Constants ───────────────────────────────────────────────────────────── */
 
@@ -277,7 +278,7 @@ export default function ProfilePage() {
   /* ─── Load profile ────────────────────────────────────────────────────── */
   useEffect(() => {
     if (!session) return;
-    fetch("/api/profile", {
+    fetch(`${API}/api/profile`, {
       headers: { Authorization: `Bearer ${session.access_token}`, "Content-Type": "application/json" },
     })
       .then((r) => r.json())
@@ -316,12 +317,14 @@ export default function ProfilePage() {
     setError(null);
     setSaved(false);
     try {
-      const res = await fetch("/api/profile", {
+      const res = await fetch(`${API}/api/profile`, {
         method: "PUT",
         headers: { Authorization: `Bearer ${session.access_token}`, "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-      const data = await res.json();
+      const text = await res.text();
+      let data: any;
+      try { data = JSON.parse(text); } catch { throw new Error("Server returned an unexpected response. Please try again."); }
       if (!res.ok) throw new Error(data.error ?? "Save failed");
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);

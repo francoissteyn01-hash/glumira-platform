@@ -6,6 +6,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "@/hooks/useAuth";
+import { API } from "@/lib/api";
 
 interface CaregiverLink {
   id: string;
@@ -40,7 +41,7 @@ export default function CaregiverManagePage() {
     if (!session || !user) return;
     setLoading(true);
     try {
-      const res = await fetch(`/api/caregiver/links/${user.id}`, { headers: headers() });
+      const res = await fetch(`${API}/api/caregiver/links/${user.id}`, { headers: headers() });
       const data = await res.json();
       if (res.ok) setLinks(data.links ?? []);
       else setError(data.error);
@@ -59,7 +60,7 @@ export default function CaregiverManagePage() {
     if (!email.trim()) return setError("Email is required");
     if (links.length >= MAX_CAREGIVERS) return setError("Maximum 4 caregivers reached");
 
-    const res = await fetch("/api/caregiver/invite", {
+    const res = await fetch(`${API}/api/caregiver/invite`, {
       method: "POST",
       headers: headers(),
       body: JSON.stringify({ childProfileId: user!.id, email: email.trim(), role }),
@@ -76,7 +77,7 @@ export default function CaregiverManagePage() {
 
   async function changeRole(id: string, newRole: "editor" | "viewer") {
     setError(null);
-    const res = await fetch(`/api/caregiver/${id}/role`, {
+    const res = await fetch(`${API}/api/caregiver/${id}/role`, {
       method: "PATCH",
       headers: headers(),
       body: JSON.stringify({ role: newRole }),
@@ -87,7 +88,7 @@ export default function CaregiverManagePage() {
 
   async function revoke(id: string) {
     setError(null);
-    const res = await fetch(`/api/caregiver/${id}`, {
+    const res = await fetch(`${API}/api/caregiver/${id}`, {
       method: "DELETE",
       headers: headers(),
     });

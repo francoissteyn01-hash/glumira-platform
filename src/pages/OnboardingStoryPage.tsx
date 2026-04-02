@@ -6,6 +6,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "@/hooks/useAuth";
+import { API } from "@/lib/api";
 import StoryEngine, { type ProfileType } from "@/components/StoryEngine";
 
 const VALID_PROFILES: ProfileType[] = [
@@ -20,7 +21,7 @@ export default function OnboardingStoryPage() {
   // Determine profile type from user profile
   useEffect(() => {
     if (!session) return;
-    fetch("/api/profile", {
+    fetch(`${API}/api/profile`, {
       headers: { Authorization: `Bearer ${session.access_token}`, "Content-Type": "application/json" },
     })
       .then((r) => r.json())
@@ -53,7 +54,7 @@ export default function OnboardingStoryPage() {
     }) => {
       if (!session || !profile) return;
       try {
-        await fetch("/api/profile", {
+        await fetch(`${API}/api/profile`, {
           method: "PUT",
           headers: { Authorization: `Bearer ${session.access_token}`, "Content-Type": "application/json" },
           body: JSON.stringify({ story_completed: true }),

@@ -5,6 +5,7 @@
 
 import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
+import { API } from "@/lib/api";
 
 interface Props {
   date?: string; // YYYY-MM-DD, defaults to today
@@ -19,7 +20,7 @@ export default function ExportReportButton({ date }: Props) {
     setDownloading(true);
     try {
       const reportDate = date || new Date().toISOString().slice(0, 10);
-      const res = await fetch(`/api/report?date=${reportDate}`, {
+      const res = await fetch(`${API}/api/report?date=${reportDate}`, {
         headers: { Authorization: `Bearer ${session.access_token}` },
       });
       if (!res.ok) {

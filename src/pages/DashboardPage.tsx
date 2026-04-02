@@ -6,6 +6,7 @@
 
 import { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
+import { API } from "@/lib/api";
 import { DISCLAIMER } from "@/lib/constants";
 import StackingCurve, { type StackingPoint } from "@/components/charts/StackingCurve";
 import GlucoseOverlay, { type GlucosePoint } from "@/components/charts/GlucoseOverlay";
@@ -178,7 +179,7 @@ export default function DashboardPage() {
     try {
       localStorage.setItem("ns_url", nsUrl);
       localStorage.setItem("ns_secret", nsSecret);
-      const res = await fetch("/api/nightscout/sync", {
+      const res = await fetch(`${API}/api/nightscout/sync`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${session.access_token}`,

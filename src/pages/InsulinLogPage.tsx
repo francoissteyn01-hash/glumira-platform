@@ -6,6 +6,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "@/hooks/useAuth";
+import { API } from "@/lib/api";
 
 /* ─── Constants ───────────────────────────────────────────────────────────── */
 
@@ -109,7 +110,7 @@ export default function InsulinLogPage() {
   /* ─── Load profile insulins ─────────────────────────────────────────── */
   useEffect(() => {
     if (!session) return;
-    fetch("/api/profile", {
+    fetch(`${API}/api/profile`, {
       headers: { Authorization: `Bearer ${session.access_token}`, "Content-Type": "application/json" },
     })
       .then((r) => r.json())

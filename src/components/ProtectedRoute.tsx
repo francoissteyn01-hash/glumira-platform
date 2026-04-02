@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth, supabase } from "@/hooks/useAuth";
+import { API } from "@/lib/api";
 
 export default function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user, session, loading } = useAuth();
@@ -9,7 +10,7 @@ export default function ProtectedRoute({ children }: { children: React.ReactNode
 
   useEffect(() => {
     if (!session) return;
-    fetch("/api/profile", {
+    fetch(`${API}/api/profile`, {
       headers: { Authorization: `Bearer ${session.access_token}`, "Content-Type": "application/json" },
     })
       .then((r) => r.json())

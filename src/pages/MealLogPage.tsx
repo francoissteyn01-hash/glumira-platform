@@ -6,6 +6,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "@/hooks/useAuth";
+import { API } from "@/lib/api";
 import { useGlucoseUnits } from "@/context/GlucoseUnitsContext";
 import DoseReferencePanel from "@/components/DoseReferencePanel";
 
@@ -127,7 +128,7 @@ export default function MealLogPage() {
   /* ─── Load user's insulin types from profile ────────────────────────── */
   useEffect(() => {
     if (!session) return;
-    fetch("/api/profile", {
+    fetch(`${API}/api/profile`, {
       headers: { Authorization: `Bearer ${session.access_token}`, "Content-Type": "application/json" },
     })
       .then((r) => r.json())
@@ -328,7 +329,7 @@ export default function MealLogPage() {
                         reader.readAsDataURL(file);
                         // Upload to Supabase Storage
                         const path = `${session.user.id}/${Date.now()}-${file.name}`;
-                        const { data } = await fetch("/api/profile", { headers: { Authorization: `Bearer ${session.access_token}` } }).then(() => ({ data: null }));
+                        const { data } = await fetch(`${API}/api/profile`, { headers: { Authorization: `Bearer ${session.access_token}` } }).then(() => ({ data: null }));
                         // Store photo_url in form (actual upload would go to Supabase Storage)
                         set("photo_url" as any)(path);
                       } catch {} finally { setPhotoUploading(false); }

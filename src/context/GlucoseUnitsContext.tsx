@@ -6,6 +6,7 @@
 
 import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from "react";
 import { useAuth } from "@/hooks/useAuth";
+import { API } from "@/lib/api";
 import type { GlucoseUnit } from "@/utils/glucose-units";
 
 interface GlucoseUnitsContextValue {
@@ -27,7 +28,7 @@ export function GlucoseUnitsProvider({ children }: { children: ReactNode }) {
   // Load from profile on mount
   useEffect(() => {
     if (!session) return;
-    fetch("/api/profile", {
+    fetch(`${API}/api/profile`, {
       headers: { Authorization: `Bearer ${session.access_token}`, "Content-Type": "application/json" },
     })
       .then((r) => r.json())
@@ -45,7 +46,7 @@ export function GlucoseUnitsProvider({ children }: { children: ReactNode }) {
     (u: GlucoseUnit) => {
       setUnitsLocal(u);
       if (!session) return;
-      fetch("/api/profile", {
+      fetch(`${API}/api/profile`, {
         method: "PUT",
         headers: { Authorization: `Bearer ${session.access_token}`, "Content-Type": "application/json" },
         body: JSON.stringify({ glucose_units: u }),

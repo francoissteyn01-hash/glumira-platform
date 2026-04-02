@@ -7,6 +7,7 @@
 
 import { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
+import { API } from "@/lib/api";
 
 interface PatientNameState {
   patientName: string;      // The name shown in the UI ("Anouk" for caregivers, first_name for patients)
@@ -43,7 +44,7 @@ export function usePatientName(): PatientNameState {
     }
 
     // Otherwise load from profile
-    fetch("/api/profile", {
+    fetch(`${API}/api/profile`, {
       headers: { Authorization: `Bearer ${session.access_token}` },
     })
       .then((r) => r.json())

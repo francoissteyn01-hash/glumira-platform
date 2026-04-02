@@ -5,6 +5,7 @@
 
 import { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
+import { API } from "@/lib/api";
 
 const inputStyle: React.CSSProperties = {
   width: "100%", minHeight: 44, padding: "10px 14px", borderRadius: 8,
@@ -23,7 +24,7 @@ export default function NightscoutSetup() {
 
   useEffect(() => {
     if (!session) return;
-    fetch("/api/profile", { headers: { Authorization: `Bearer ${session.access_token}` } })
+    fetch(`${API}/api/profile`, { headers: { Authorization: `Bearer ${session.access_token}` } })
       .then((r) => r.json())
       .then((d) => {
         if (d.profile) {
@@ -40,7 +41,7 @@ export default function NightscoutSetup() {
     if (!url) return;
     setStatus("testing");
     try {
-      const res = await fetch("/api/nightscout/sync", {
+      const res = await fetch(`${API}/api/nightscout/sync`, {
         method: "POST",
         headers: { Authorization: `Bearer ${session!.access_token}`, "Content-Type": "application/json" },
         body: JSON.stringify({ url, apiSecret: secret, days: 0 }),
@@ -54,7 +55,7 @@ export default function NightscoutSetup() {
   async function save() {
     if (!session) return;
     setSaving(true);
-    await fetch("/api/profile", {
+    await fetch(`${API}/api/profile`, {
       method: "PUT",
       headers: { Authorization: `Bearer ${session.access_token}`, "Content-Type": "application/json" },
       body: JSON.stringify({ nightscout_url: url, nightscout_api_secret: secret, nightscout_sync_enabled: syncEnabled }),
