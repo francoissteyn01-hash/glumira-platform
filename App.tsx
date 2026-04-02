@@ -19,6 +19,7 @@ const MiraPage      = lazy(() => import("@/pages/MiraPage"));
 const BadgesPage    = lazy(() => import("@/pages/BadgesPage"));
 const FAQPage       = lazy(() => import("@/pages/FAQPage"));
 const SettingsPage  = lazy(() => import("@/pages/SettingsPage"));
+const ProfilePage   = lazy(() => import("@/pages/ProfilePage"));
 
 /* ─── Loading fallback ───────────────────────────────────────────────────── */
 function LoadingFallback() {
@@ -145,6 +146,7 @@ export default function App() {
             <Route path="/badges"    element={<ProtectedRoute><BadgesPage /></ProtectedRoute>} />
             <Route path="/faq"       element={<ProtectedRoute><FAQPage /></ProtectedRoute>} />
             <Route path="/settings"  element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
+            <Route path="/profile"   element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
             <Route path="*"          element={<Navigate to="/" replace />} />
           </Routes>
         </Suspense>

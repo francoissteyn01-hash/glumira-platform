@@ -26,6 +26,7 @@ import { subscriptionRouter }     from "./routes/subscription";
 import { cronNightscoutSyncRouter as cronNightscoutRouter } from "./routes/cron-nightscout-sync.route";
 import { badgesRouter }           from "./routes/badges.route";
 import { miraRouter }             from "./routes/mira.route";
+import { profileRouter }          from "./routes/profile.route";
 
 const app = express();
 const PORT = parseInt(process.env.PORT ?? "3001", 10);
@@ -57,6 +58,7 @@ app.use("/api/subscription",  subscriptionRouter);
 app.use("/api/cron",          cronNightscoutRouter);
 app.use("/api/badges",        badgesRouter);
 app.use("/api/mira",          miraRouter);
+app.use("/api/profile",       profileRouter);
 
 // ── 404 / Error ───────────────────────────────────────────────────────────────
 app.use((_req, res) => res.status(404).json({ error: "Not found" }));

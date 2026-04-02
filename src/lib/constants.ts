@@ -7,6 +7,7 @@ export const NAV_LINKS = [
   { label: "Education", href: "/education" },
   { label: "Mira AI",   href: "/mira"      },
   { label: "Badges",    href: "/badges"    },
+  { label: "Profile",   href: "/profile"   },
   { label: "Settings",  href: "/settings"  },
   { label: "FAQ",       href: "/faq"       },
 ] as const;
