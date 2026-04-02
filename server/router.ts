@@ -6,6 +6,7 @@
 import { router, publicProcedure } from "./trpc";
 import { mealLogRouter } from "./routes/meal-log.router";
 import { insulinEventRouter } from "./routes/insulin-event.router";
+import { iobHunterRouter } from "./routes/iob-hunter.router";
 
 export const appRouter = router({
   health: publicProcedure.query(() => ({
@@ -15,6 +16,7 @@ export const appRouter = router({
   })),
   mealLog: mealLogRouter,
   insulinEvent: insulinEventRouter,
+  iobHunter: iobHunterRouter,
 });
 
 export type AppRouter = typeof appRouter;
