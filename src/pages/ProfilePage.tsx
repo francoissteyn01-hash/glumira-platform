@@ -45,6 +45,12 @@ const COMORBIDITIES = [
   "Eating disorders", "ADHD", "Autism Spectrum Disorder",
 ] as const;
 
+const SPECIAL_CONDITIONS = [
+  "Newly diagnosed", "Honeymoon phase", "Puberty", "Pregnancy",
+  "Illness-prone", "Steroid exposure", "Low hypo awareness",
+  "School schedule", "Shift work", "High sport variability",
+] as const;
+
 /* ─── Types ───────────────────────────────────────────────────────────────── */
 
 interface ProfileData {
@@ -62,6 +68,7 @@ interface ProfileData {
   allergens: string[];
   meals_per_day: number;
   comorbidities: string[];
+  special_conditions: string[];
   is_caregiver: boolean;
   patient_name: string;
   relationship: string;
@@ -73,7 +80,7 @@ const EMPTY_PROFILE: ProfileData = {
   first_name: "", last_name: "", date_of_birth: "", diabetes_type: "",
   diagnosis_date: "", country: "", insulin_types: [], delivery_method: "",
   icr: "", isf: "", dietary_approach: "", allergens: [], meals_per_day: 3,
-  comorbidities: [], is_caregiver: false, patient_name: "", relationship: "",
+  comorbidities: [], special_conditions: [], is_caregiver: false, patient_name: "", relationship: "",
 };
 
 /* ─── Helpers ─────────────────────────────────────────────────────────────── */
@@ -291,6 +298,7 @@ export default function ProfilePage() {
             allergens:        data.profile.allergens ?? [],
             meals_per_day:    data.profile.meals_per_day ?? 3,
             comorbidities:    data.profile.comorbidities ?? [],
+            special_conditions: data.profile.special_conditions ?? [],
             is_caregiver:     data.profile.is_caregiver ?? false,
             patient_name:     data.profile.patient_name ?? "",
             relationship:     data.profile.relationship ?? "",
@@ -326,7 +334,7 @@ export default function ProfilePage() {
 
   /* ─── Helpers ─────────────────────────────────────────────────────────── */
   const set = (key: keyof ProfileData) => (val: any) => setForm((f) => ({ ...f, [key]: val }));
-  const toggleArray = (key: "insulin_types" | "allergens" | "comorbidities") => (val: string) => {
+  const toggleArray = (key: "insulin_types" | "allergens" | "comorbidities" | "special_conditions") => (val: string) => {
     setForm((f) => ({
       ...f,
       [key]: (f[key] as string[]).includes(val)
@@ -462,7 +470,15 @@ export default function ProfilePage() {
             <CheckboxGrid options={COMORBIDITIES} selected={form.comorbidities} onToggle={toggleArray("comorbidities")} />
           </Card>
 
-          {/* ── Section 5: Caregiver Mode ───────────────────────────────── */}
+          {/* ── Section 5: Special Condition Flags ──────────────────────── */}
+          <Card title="Special Condition Flags">
+            <p style={{ fontSize: 13, color: "#52667a", marginBottom: 12, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+              Flag any current conditions that may affect insulin sensitivity or timing.
+            </p>
+            <CheckboxGrid options={SPECIAL_CONDITIONS} selected={form.special_conditions} onToggle={toggleArray("special_conditions")} />
+          </Card>
+
+          {/* ── Section 6: Caregiver Mode ───────────────────────────────── */}
           <Card title="Caregiver Mode">
             <label style={{
               display: "flex", alignItems: "center", gap: 12, minHeight: 48,
