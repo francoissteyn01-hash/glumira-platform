@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(json.dumps\\({k:d.get\\(k\\) for k in [''''scripts'''',''''engines'''']}, indent=2\\)\\)\")"
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(json.dumps\\({k:d.get\\(k\\) for k in [''''scripts'''',''''engines'''']}, indent=2\\)\\)\")",
+      "Bash(git -C \"g:/My Drive/04_CLAUDE/08_GluMira-V7_Mira-Content-Research\" status --short)",
+      "Bash(powershell.exe -ExecutionPolicy Bypass -File \"C:/Users/franc/Desktop/00_GLUMIRA/rename_master.ps1\")"
     ]
   }
 }

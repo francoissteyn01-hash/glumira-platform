@@ -1,0 +1,1522 @@
+=== FULL FILE INVENTORY ===
+Generated: 2026-04-01
+
+========================================
+SOURCE 1: G:/My Drive/04_CLAUDE
+========================================
+G:/My Drive/04_CLAUDE/02_GluMira-V7_Tag-Lines/.gitkeep
+G:/My Drive/04_CLAUDE/02_GluMira-V7_Tag-Lines/Tag lines.txt
+G:/My Drive/04_CLAUDE/03_GluMira-V7_Downgrade-Policy/03_GluMira-Downgrade-Policy-V7.md
+G:/My Drive/04_CLAUDE/03_GluMira-V7_Downgrade-Policy/Downgrade Policy_260330_193456.txt
+G:/My Drive/04_CLAUDE/04_GluMira-V7_Build-Blocks/03_GluMira-Downgrade-Policy-V7.md
+G:/My Drive/04_CLAUDE/04_GluMira-V7_Build-Blocks/04_GluMira-Build-Blocks-Master-V7.md
+G:/My Drive/04_CLAUDE/04_GluMira-V7_Build-Blocks/Build Blocks.code-workspace
+G:/My Drive/04_CLAUDE/04_GluMira-V7_Build-Blocks/GLUMIRA BUILD BLOCKS_260330_193637.txt
+G:/My Drive/04_CLAUDE/05_GluMira-V7_Marketing-Strategy/.gitkeep
+G:/My Drive/04_CLAUDE/05_GluMira-V7_Marketing-Strategy/05_GluMira-Marketing-Strategy-V7.md
+G:/My Drive/04_CLAUDE/05_GluMira-V7_Marketing-Strategy/MARKETING STRATEGY_260330_194051 (1).txt
+G:/My Drive/04_CLAUDE/05_GluMira-V7_Marketing-Strategy/MARKETING STRATEGY_260330_194051.txt
+G:/My Drive/04_CLAUDE/06_GluMira-V7_Social-Media-Plan/.gitkeep
+G:/My Drive/04_CLAUDE/06_GluMira-V7_Social-Media-Plan/SOCIAL MEDIA PLAN_260330_195459.txt
+G:/My Drive/04_CLAUDE/07_GluMira-V7_Mira-Education-0-12/.gitkeep
+G:/My Drive/04_CLAUDE/07_GluMira-V7_Mira-Education-0-12/EDUCATION _260330_195653.txt
+G:/My Drive/04_CLAUDE/08_GluMira-V7_Mira-Content-Research/.claude/settings.local.json
+G:/My Drive/04_CLAUDE/08_GluMira-V7_Mira-Content-Research/07_GluMira-Mira-Education-0to12-V7.md
+G:/My Drive/04_CLAUDE/08_GluMira-V7_Mira-Content-Research/08_GluMira-Mira-Content-Research-V7.md
+G:/My Drive/04_CLAUDE/08_GluMira-V7_Mira-Content-Research/08_GluMira-V7_Mira-Content-Research.code-workspace
+G:/My Drive/04_CLAUDE/08_GluMira-V7_Mira-Content-Research/CONTENT RESEARCH _260330_195943.txt
+G:/My Drive/04_CLAUDE/09_GluMira-V7_Image-Registry/.gitkeep
+G:/My Drive/04_CLAUDE/09_GluMira-V7_Image-Registry/Image registry_260330_200243.txt
+G:/My Drive/04_CLAUDE/Code based files for manus/04.1_P001-Clinical-Flags_v1.0.md
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase.zip
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/.env.example
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/client/src/App.tsx
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/client/src/components/AppLayout.tsx
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/client/src/components/OnboardingFlow.tsx
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/client/src/components/index.ts
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/client/src/hooks/index.ts
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/client/src/hooks/useAuth.ts
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/client/src/hooks/useGlucoseExport.ts
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/client/src/hooks/useTelemetry.ts
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/client/src/main.tsx
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/client/src/pages/AuthCallbackPage.tsx
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/client/src/pages/ClinicianPage.tsx
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/client/src/pages/DashboardPage.tsx
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/client/src/pages/DosesPage.tsx
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/client/src/pages/GlucosePage.tsx
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/client/src/pages/LandingPage.tsx
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/client/src/pages/LoginPage.tsx
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/client/src/pages/MealsPage.tsx
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/client/src/pages/PatientsPage.tsx
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/client/src/pages/PricingPage.tsx
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/client/src/pages/RegisterPage.tsx
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/client/src/pages/ResetPasswordPage.tsx
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/client/src/pages/SchoolCarePlanPage.tsx
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/client/src/pages/SettingsPage.tsx
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/client/src/pages/StackingPage.tsx
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/client/src/pages/TrendsPage.tsx
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/drizzle/schema.ts
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/glumira-auth.html
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/glumira-dashboard.html
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/glumira-iob-calculator.html
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/glumira-landing.html
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/glumira-schema.sql
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/glumira-trpc-types.ts
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/server/analytics/analytics-summary.ts
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/server/analytics/glucose-trend.ts
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/server/analytics/iob-engine.ts
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/server/analytics/pediatric-dose.test.ts
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/server/analytics/pediatric-dose.ts
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/server/db/20260329_beta_tables_addendum.sql
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/server/index-final.ts
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/server/index.ts
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/server/lib/utils.ts
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/server/middleware/auth.ts
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/server/middleware/subscription.ts
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/server/routes/analytics.route.ts
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/server/routes/analytics.ts
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/server/routes/auth.route.ts
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/server/routes/beta-feedback.route.ts
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/server/routes/cron-nightscout-sync.route.ts
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/server/routes/doses.ts
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/server/routes/glucose-trend.route.ts
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/server/routes/iob.route.ts
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/server/routes/meals.ts
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/server/routes/nightscout.ts
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/server/routes/notifications.ts
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/server/routes/patient.route.ts
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/server/routes/remaining.routes.ts
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/server/routes/settings.ts
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/server/routes/telemetry.route.ts
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/server/trpc.ts
+G:/My Drive/04_CLAUDE/Code based files for manus/glumira-v7-codebase/vite.config.ts
+G:/My Drive/04_CLAUDE/Complete _260330_200537.txt
+G:/My Drive/04_CLAUDE/FULL_FILE_INVENTORY.txt
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/00_MANIFEST.md
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/01_DB_Schema_Changelog/20260329_beta_tables_addendum.sql
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/01_DB_Schema_Changelog/glumira-schema.sql
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/02_Server_Files/index-final.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/02_Server_Files/index.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/02_Server_Files/server-lib-utils.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/02_Server_Files/trpc.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/03_Server_Routes/analytics.route.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/03_Server_Routes/analytics.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/03_Server_Routes/beta-feedback.route.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/03_Server_Routes/cron-nightscout-sync.route.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/03_Server_Routes/doses.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/03_Server_Routes/glucose-trend.route.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/03_Server_Routes/meals.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/03_Server_Routes/nightscout.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/03_Server_Routes/notifications.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/03_Server_Routes/remaining.routes.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/03_Server_Routes/settings.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/04_Server_Analytics/analytics-summary.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/04_Server_Analytics/glucose-trend.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/05_Server_Middleware/auth.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/05_Server_Middleware/subscription.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/06_Client_Source/App.tsx
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/06_Client_Source/components-index.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/06_Client_Source/index.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/06_Client_Source/main.tsx
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/06_Client_Source/useAuth.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/06_Client_Source/useGlucoseExport.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/06_Client_Source/useTelemetry.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/07_Config_Env/.env.example
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/07_Config_Env/vite.config.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/08_Drizzle/schema.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/09_HTML_Pages/glumira-auth.html
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/09_HTML_Pages/glumira-brand-guidelines.html
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/09_HTML_Pages/glumira-dashboard.html
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/09_HTML_Pages/glumira-iob-calculator.html
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/09_HTML_Pages/glumira-landing.html
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/10_Types/glumira-trpc-types.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch.zip
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch/glumira-foundation-batch/00_MANIFEST.md
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch/glumira-foundation-batch/01_DB_Schema_Changelog/20260329_beta_tables_addendum.sql
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch/glumira-foundation-batch/01_DB_Schema_Changelog/glumira-schema.sql
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch/glumira-foundation-batch/02_Server_Files/index-final.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch/glumira-foundation-batch/02_Server_Files/index.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch/glumira-foundation-batch/02_Server_Files/server-lib-utils.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch/glumira-foundation-batch/02_Server_Files/trpc.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch/glumira-foundation-batch/03_Server_Routes/analytics.route.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch/glumira-foundation-batch/03_Server_Routes/analytics.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch/glumira-foundation-batch/03_Server_Routes/beta-feedback.route.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch/glumira-foundation-batch/03_Server_Routes/cron-nightscout-sync.route.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch/glumira-foundation-batch/03_Server_Routes/doses.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch/glumira-foundation-batch/03_Server_Routes/glucose-trend.route.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch/glumira-foundation-batch/03_Server_Routes/meals.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch/glumira-foundation-batch/03_Server_Routes/nightscout.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch/glumira-foundation-batch/03_Server_Routes/notifications.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch/glumira-foundation-batch/03_Server_Routes/remaining.routes.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch/glumira-foundation-batch/03_Server_Routes/settings.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch/glumira-foundation-batch/04_Server_Analytics/analytics-summary.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch/glumira-foundation-batch/04_Server_Analytics/glucose-trend.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch/glumira-foundation-batch/05_Server_Middleware/auth.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch/glumira-foundation-batch/05_Server_Middleware/subscription.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch/glumira-foundation-batch/06_Client_Source/App.tsx
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch/glumira-foundation-batch/06_Client_Source/components-index.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch/glumira-foundation-batch/06_Client_Source/index.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch/glumira-foundation-batch/06_Client_Source/main.tsx
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch/glumira-foundation-batch/06_Client_Source/useAuth.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch/glumira-foundation-batch/06_Client_Source/useGlucoseExport.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch/glumira-foundation-batch/06_Client_Source/useTelemetry.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch/glumira-foundation-batch/07_Config_Env/.env.example
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch/glumira-foundation-batch/07_Config_Env/vite.config.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch/glumira-foundation-batch/08_Drizzle/schema.ts
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch/glumira-foundation-batch/09_HTML_Pages/glumira-auth.html
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch/glumira-foundation-batch/09_HTML_Pages/glumira-brand-guidelines.html
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch/glumira-foundation-batch/09_HTML_Pages/glumira-dashboard.html
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch/glumira-foundation-batch/09_HTML_Pages/glumira-iob-calculator.html
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch/glumira-foundation-batch/09_HTML_Pages/glumira-landing.html
+G:/My Drive/04_CLAUDE/Foundation-Batch-2026-03-29/glumira-foundation-batch/glumira-foundation-batch/10_Types/glumira-trpc-types.ts
+G:/My Drive/04_CLAUDE/GROUP2-Auth-Patients/00_MANIFEST.md
+G:/My Drive/04_CLAUDE/GROUP2-Auth-Patients/01_Auth_Middleware/.env.example
+G:/My Drive/04_CLAUDE/GROUP2-Auth-Patients/01_Auth_Middleware/auth.ts
+G:/My Drive/04_CLAUDE/GROUP2-Auth-Patients/02_Auth_Client/useAuth.ts
+G:/My Drive/04_CLAUDE/GROUP2-Auth-Patients/03_Subscription_Logic/Subscription_Tier_Logic.pdf
+G:/My Drive/04_CLAUDE/GROUP2-Auth-Patients/03_Subscription_Logic/subscription.ts
+G:/My Drive/04_CLAUDE/GROUP2-Auth-Patients/03_Subscription_Logic/trpc.ts
+G:/My Drive/04_CLAUDE/GROUP2-Auth-Patients/04_Patient_Schema/chat_06_Patient_Banner_Correction.txt
+G:/My Drive/04_CLAUDE/GROUP2-Auth-Patients/04_Patient_Schema/drizzle-schema.ts
+G:/My Drive/04_CLAUDE/GROUP2-Auth-Patients/04_Patient_Schema/glumira-schema.sql
+G:/My Drive/04_CLAUDE/GROUP2-Auth-Patients/04_Patient_Schema/glumira-trpc-types.ts
+G:/My Drive/04_CLAUDE/GROUP2-Auth-Patients/05_Auth_HTML/glumira-auth.html
+G:/My Drive/04_CLAUDE/GROUP2-Auth-Patients/06_Auth_Tests/auth.logout.test.ts
+G:/My Drive/04_CLAUDE/GROUP2-Auth-Patients/06_Auth_Tests/auth.spec.ts
+G:/My Drive/04_CLAUDE/GROUP2-Auth-Patients/07_Settings_Route/settings.ts
+G:/My Drive/04_CLAUDE/GROUP3-IOB-Engine/00_MANIFEST.md
+G:/My Drive/04_CLAUDE/GROUP3-IOB-Engine/01_IOB_Spec_Docs/IOB_Hunter_Core_Engine_Logic.pdf
+G:/My Drive/04_CLAUDE/GROUP3-IOB-Engine/01_IOB_Spec_Docs/P001-IOB-Impact-Report.md
+G:/My Drive/04_CLAUDE/GROUP3-IOB-Engine/01_IOB_Spec_Docs/glumira-trpc-types.ts
+G:/My Drive/04_CLAUDE/GROUP3-IOB-Engine/02_IOB_Calculator/glumira-iob-calculator.html
+G:/My Drive/04_CLAUDE/GROUP3-IOB-Engine/03_Insulin_Profiles/P001-Insulin-Profile.xlsx
+G:/My Drive/04_CLAUDE/GROUP3-IOB-Engine/03_Insulin_Profiles/P002-Insulin-Profile.xlsx
+G:/My Drive/04_CLAUDE/GROUP3-IOB-Engine/03_Insulin_Profiles/drizzle-schema.ts
+G:/My Drive/04_CLAUDE/GROUP3-IOB-Engine/03_Insulin_Profiles/glumira-schema.sql
+G:/My Drive/04_CLAUDE/GROUP3-IOB-Engine/04_IOB_Components/AnimGlucoseCurveStabilising.tsx
+G:/My Drive/04_CLAUDE/GROUP3-IOB-Engine/04_IOB_Components/AnimIobTeenView.tsx
+G:/My Drive/04_CLAUDE/GROUP3-IOB-Engine/04_IOB_Components/IobHunterExplainer.tsx
+G:/My Drive/04_CLAUDE/GROUP3-IOB-Engine/05_IOB_Tests/iob.test.ts
+G:/My Drive/04_CLAUDE/GROUP4-Modules-Final/00_MANIFEST.md
+G:/My Drive/04_CLAUDE/GROUP4-Modules-Final/01_Pregnancy/PM01-Pregnancy-Spec.txt
+G:/My Drive/04_CLAUDE/GROUP4-Modules-Final/01_Pregnancy/Pregnancy-Module-Backend-Logic.txt
+G:/My Drive/04_CLAUDE/GROUP4-Modules-Final/01_Pregnancy/PregnancyPage.tsx
+G:/My Drive/04_CLAUDE/GROUP4-Modules-Final/01_Pregnancy/pregnancy-glucose.test.ts
+G:/My Drive/04_CLAUDE/GROUP4-Modules-Final/01_Pregnancy/pregnancy-glucose.ts
+G:/My Drive/04_CLAUDE/GROUP4-Modules-Final/02_Paediatric/pediatric-dose.test.ts
+G:/My Drive/04_CLAUDE/GROUP4-Modules-Final/02_Paediatric/pediatric-dose.ts
+G:/My Drive/04_CLAUDE/GROUP4-Modules-Final/03_School_Care_Plan/School-Care-Plan-Backend-Logic.txt
+G:/My Drive/04_CLAUDE/GROUP4-Modules-Final/03_School_Care_Plan/SchoolCarePlanForm.tsx
+G:/My Drive/04_CLAUDE/GROUP4-Modules-Final/03_School_Care_Plan/SchoolCarePlanPage.tsx
+G:/My Drive/04_CLAUDE/GROUP4-Modules-Final/03_School_Care_Plan/school-care-plan-route.ts
+G:/My Drive/04_CLAUDE/GROUP4-Modules-Final/03_School_Care_Plan/school-care-plan.test.ts
+G:/My Drive/04_CLAUDE/GROUP4-Modules-Final/03_School_Care_Plan/school-care-plan.ts
+G:/My Drive/04_CLAUDE/GROUP4-Modules-Final/03_School_Care_Plan/story-school.json
+G:/My Drive/04_CLAUDE/GROUP4-Modules-Final/04_Menstrual_Cycle/menstrual-cycle-impact.test.ts
+G:/My Drive/04_CLAUDE/GROUP4-Modules-Final/04_Menstrual_Cycle/menstrual-cycle-impact.ts
+G:/My Drive/04_CLAUDE/GROUP4-Modules-Final/04_Menstrual_Cycle/useMenstrualCycleImpact.ts
+G:/My Drive/04_CLAUDE/GROUP4-Modules/00_MANIFEST.md
+G:/My Drive/04_CLAUDE/GROUP4-Modules/01_Pregnancy/PM01-Pregnancy-Spec.txt
+G:/My Drive/04_CLAUDE/GROUP4-Modules/01_Pregnancy/Pregnancy-Module-Backend-Logic.txt
+G:/My Drive/04_CLAUDE/GROUP4-Modules/01_Pregnancy/PregnancyPage.tsx
+G:/My Drive/04_CLAUDE/GROUP4-Modules/01_Pregnancy/PregnancyPage_v1.0.tsx.txt
+G:/My Drive/04_CLAUDE/GROUP4-Modules/01_Pregnancy/pregnancy-glucose.test.ts
+G:/My Drive/04_CLAUDE/GROUP4-Modules/01_Pregnancy/pregnancy-glucose.ts
+G:/My Drive/04_CLAUDE/GROUP4-Modules/02_Paediatric/pediatric-dose.test.ts
+G:/My Drive/04_CLAUDE/GROUP4-Modules/02_Paediatric/pediatric-dose.ts
+G:/My Drive/04_CLAUDE/GROUP4-Modules/03_School_Care_Plan/AnimCarePlanSchool.tsx
+G:/My Drive/04_CLAUDE/GROUP4-Modules/03_School_Care_Plan/AnimChildSchoolSafe.tsx
+G:/My Drive/04_CLAUDE/GROUP4-Modules/03_School_Care_Plan/AnimSchoolShield.tsx
+G:/My Drive/04_CLAUDE/GROUP4-Modules/03_School_Care_Plan/School-Care-Plan-Backend-Logic.txt
+G:/My Drive/04_CLAUDE/GROUP4-Modules/03_School_Care_Plan/SchoolCarePlanForm.tsx
+G:/My Drive/04_CLAUDE/GROUP4-Modules/03_School_Care_Plan/SchoolCarePlanPage.tsx
+G:/My Drive/04_CLAUDE/GROUP4-Modules/03_School_Care_Plan/school-care-plan-route.ts
+G:/My Drive/04_CLAUDE/GROUP4-Modules/03_School_Care_Plan/school-care-plan.test.ts
+G:/My Drive/04_CLAUDE/GROUP4-Modules/03_School_Care_Plan/school-care-plan.ts
+G:/My Drive/04_CLAUDE/GROUP4-Modules/03_School_Care_Plan/story-school.json
+G:/My Drive/04_CLAUDE/GROUP4-Modules/04_Menstrual_Cycle/menstrual-cycle-impact.test.ts
+G:/My Drive/04_CLAUDE/GROUP4-Modules/04_Menstrual_Cycle/menstrual-cycle-impact.ts
+G:/My Drive/04_CLAUDE/GROUP4-Modules/04_Menstrual_Cycle/useMenstrualCycleImpact.ts
+G:/My Drive/04_CLAUDE/GROUP4-Modules/05_Module_Schema/Module-Scripts.txt
+G:/My Drive/04_CLAUDE/GROUP4-Modules/05_Module_Schema/drizzle-schema.ts
+G:/My Drive/04_CLAUDE/GROUP4-Modules/05_Module_Schema/glumira-schema.sql
+G:/My Drive/04_CLAUDE/GROUP5-UI-Pages/00_MANIFEST.md
+G:/My Drive/04_CLAUDE/GROUP5-UI-Pages/01_Dashboard/chat_09_Phase2_Dashboard_Build.txt
+G:/My Drive/04_CLAUDE/GROUP5-UI-Pages/01_Dashboard/clinician.spec.ts
+G:/My Drive/04_CLAUDE/GROUP5-UI-Pages/01_Dashboard/dashboard.spec.ts
+G:/My Drive/04_CLAUDE/GROUP5-UI-Pages/01_Dashboard/dashboard_01_Phase2_Clinician_Dashboard.txt
+G:/My Drive/04_CLAUDE/GROUP5-UI-Pages/01_Dashboard/glumira-dashboard.html
+G:/My Drive/04_CLAUDE/GROUP5-UI-Pages/02_Settings/remaining-routes.ts
+G:/My Drive/04_CLAUDE/GROUP5-UI-Pages/02_Settings/settings.ts
+G:/My Drive/04_CLAUDE/GROUP5-UI-Pages/03_Landing/glumira-landing.html
+G:/My Drive/04_CLAUDE/GROUP5-UI-Pages/04_Brand_Guidelines/glumira-brand-guidelines.html
+G:/My Drive/04_CLAUDE/GROUP5-UI-Pages/05_Page_Specs/glumira-auth.html
+G:/My Drive/04_CLAUDE/GROUP5-UI-Pages/06_Components/App.tsx
+G:/My Drive/04_CLAUDE/GROUP5-UI-Pages/06_Components/components-index.ts
+G:/My Drive/04_CLAUDE/GROUP5-UI-Pages/06_Components/hooks-index.ts
+G:/My Drive/04_CLAUDE/GROUP5-UI-Pages/06_Components/main.tsx
+G:/My Drive/04_CLAUDE/GROUP6-Integrations/00_MANIFEST.md
+G:/My Drive/04_CLAUDE/GROUP6-Integrations/01_Nightscout/nightscout.ts
+G:/My Drive/04_CLAUDE/GROUP6-Integrations/02_Dexcom_Libre/chat_14_Dexcom_Integration_Module.txt
+G:/My Drive/04_CLAUDE/GROUP6-Integrations/03_Stripe/.env.example
+G:/My Drive/04_CLAUDE/GROUP6-Integrations/03_Stripe/subscription-middleware.ts
+G:/My Drive/04_CLAUDE/GROUP6-Integrations/04_Cron_Sync/cron-nightscout-sync.route.ts
+G:/My Drive/04_CLAUDE/GROUP6-Integrations/05_Notifications/notifications.ts
+G:/My Drive/04_CLAUDE/GROUP7-Beta-Launch/00_MANIFEST.md
+G:/My Drive/04_CLAUDE/GROUP7-Beta-Launch/01_Onboarding_Flow/chat_01_StoryEngine_Onboarding_Build.txt
+G:/My Drive/04_CLAUDE/GROUP7-Beta-Launch/01_Onboarding_Flow/chat_12_Interactive_Onboarding_System.txt
+G:/My Drive/04_CLAUDE/GROUP7-Beta-Launch/02_Beta_Participant_Docs/20260329_beta_tables_addendum.sql
+G:/My Drive/04_CLAUDE/GROUP7-Beta-Launch/02_Beta_Participant_Docs/P001-Beta-Question-Cards_v2.0.md
+G:/My Drive/04_CLAUDE/GROUP7-Beta-Launch/03_Analytics_Requirements/analytics-summary.ts
+G:/My Drive/04_CLAUDE/GROUP7-Beta-Launch/03_Analytics_Requirements/analytics.route.ts
+G:/My Drive/04_CLAUDE/GROUP7-Beta-Launch/03_Analytics_Requirements/analytics.ts
+G:/My Drive/04_CLAUDE/GROUP7-Beta-Launch/03_Analytics_Requirements/glucose-trend.route.ts
+G:/My Drive/04_CLAUDE/GROUP7-Beta-Launch/03_Analytics_Requirements/glucose-trend.ts
+G:/My Drive/04_CLAUDE/GROUP7-Beta-Launch/03_Analytics_Requirements/useTelemetry.ts
+G:/My Drive/04_CLAUDE/GROUP7-Beta-Launch/04_Beta_Feedback/beta-feedback.route.ts
+G:/My Drive/04_CLAUDE/GROUP7-Beta-Launch/05_Story_Engine/landing_02_Story_Engine_V6.txt
+G:/My Drive/04_CLAUDE/GROUP8-Client/00_MANIFEST.md
+G:/My Drive/04_CLAUDE/GROUP8-Client/index.html
+G:/My Drive/04_CLAUDE/GROUP8-Client/public/.gitkeep
+G:/My Drive/04_CLAUDE/GROUP8-Client/public/__manus__/debug-collector.js
+G:/My Drive/04_CLAUDE/GROUP8-Client/public/_redirects
+G:/My Drive/04_CLAUDE/GROUP8-Client/public/glumira-data-wave.png
+G:/My Drive/04_CLAUDE/GROUP8-Client/public/glumira-hero-bg.png
+G:/My Drive/04_CLAUDE/GROUP8-Client/public/glumira-hero-owl.png
+G:/My Drive/04_CLAUDE/GROUP8-Client/public/glumira-locked-canvas-ref.png
+G:/My Drive/04_CLAUDE/GROUP8-Client/public/glumira-mission-bg.png
+G:/My Drive/04_CLAUDE/GROUP8-Client/public/glumira-owl-clean.png
+G:/My Drive/04_CLAUDE/GROUP8-Client/public/glumira-teal-line.png
+G:/My Drive/04_CLAUDE/GROUP8-Client/public/hero_owl_v1.png
+G:/My Drive/04_CLAUDE/GROUP8-Client/public/manifest.json
+G:/My Drive/04_CLAUDE/GROUP8-Client/public/sw.js
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/App.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/_core/hooks/useAuth.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(admin)/admin/feedback/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(admin)/admin/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(admin)/admin/participants/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(admin)/admin/users/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(admin)/layout.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(auth)/login/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(auth)/register/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/a1c-estimate/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/admin/audit/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/admin/stats/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/admin/users/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/alcohol-impact/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/alerts/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/altitude-impact/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/bolus-calculator/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/cgm-gaps/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/clinician/notes/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/clinician/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/clinician/patients/[id]/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/clinician/patients/[id]/report/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/clinician/patients/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/dashboard/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/data-export/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/dose-titration/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/doses/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/exercise-impact/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/fasting-protocol/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/glucose-prediction/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/glucose-trend/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/glucose/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/hypo-risk/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/icr-optimizer/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/insulin-stacking/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/isf-analysis/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/layout.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/meal-log/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/meal-timing/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/meals/[regime]/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/meals/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/medication-checker/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/menstrual-cycle/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/notifications/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/pattern-recognition/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/profile/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/reports/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/school-care-plan/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/settings/nightscout/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/settings/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/sick-day/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/sleep-quality/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/stacking/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/stress-response/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/time-blocks/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/travel-zones/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/trends/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/variability/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/(dashboard)/weekly-summary/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/admin/audit/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/admin/feedback/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/admin/participants/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/admin/stats/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/admin/users/[id]/role/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/admin/users/[id]/status/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/admin/users/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/alerts/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/analytics/a1c-estimate/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/analytics/cgm-gap-analysis/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/analytics/circadian-sensitivity/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/analytics/data-export/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/analytics/exercise-impact/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/analytics/hydration-impact/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/analytics/hypo-risk/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/analytics/icr-optimizer/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/analytics/insulin-stacking/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/analytics/isf-analysis/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/analytics/meal-timing/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/analytics/medication-interaction/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/analytics/patterns/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/analytics/progress-report/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/analytics/regime-comparison/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/analytics/sick-day-rules/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/analytics/sleep-quality/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/analytics/stress-response/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/analytics/summary/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/analytics/time-blocks/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/analytics/travel-zones/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/analytics/variability/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/analytics/weekly-summary/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/bernstein/ask/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/beta/feedback/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/clinical/alcohol-impact/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/clinical/altitude-impact/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/clinical/fasting-protocol/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/clinical/menstrual-cycle-impact/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/clinician/notes/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/clinician/patients/[id]/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/clinician/patients/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/cron/key-rotation/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/cron/nightscout-sync/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/doses/basal-titration/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/doses/bolus-calculator/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/doses/history/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/doses/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/glucose/export/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/glucose/prediction/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/glucose/trend/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/health/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/iob/current/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/iob/history/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/meals/carb-lookup/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/meals/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/notifications/push/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/notifications/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/profile/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/readings/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/reports/patient/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/settings/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/api/stacking/analyse/route.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/offline/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/app/pricing/page.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/AIChatBox.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/AdminStatsPanel.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/AnalyticsSummaryCard.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/BasalTitrationCard.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/BolusCalculatorForm.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/DashboardLayout.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/DashboardLayoutSkeleton.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/DesignTokens.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/DoseHistoryChart.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ErrorBoundary.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ExportButton.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/GlucoseAlertBadge.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/GlucoseTrendChart.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/HypoRiskCard.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/IOBChart.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/IobDecayChart.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/IobStackingChart.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ManusDialog.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/Map.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/MealLogForm.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/MealTimingInsights.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/NotificationsPanel.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/PatternRecognitionCard.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ProgressReportCard.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/RegimeComparisonTable.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/SchoolCarePlanForm.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/TimeInRangeChart.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/WeeklySummaryCard.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/beta/BetaFeedbackModal.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/beta/BetaFeedbackWidget.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/beta/OnboardingGate.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/charts/InsulinkStackingChart.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/charts/IobTimelineChart.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/charts/NightscoutCGMChart.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/clinician/BernsteinQAPanel.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/clinician/ClinicianDashboard.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/clinician/ClinicianNotesPanel.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/gamification/BadgeSystem.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/gamification/GamificationOverlay.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/gamification/MilestoneModal.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/gamification/MilestoneToast.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/gamification/ProfileMascot.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/gamification/mascot-animations.css
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/layout/Sidebar.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/StoryEngine.stories.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/StoryEngine.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/StoryProgressBar.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/StorySubtitleBar.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimAllergyProtocol.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimCarePlanParent.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimCarePlanSchool.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimCgmConnect.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimChildBadgeUnlock.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimChildCta.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimChildGlucoseExplained.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimChildHeroIntro.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimChildSchoolSafe.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimClinicalReport.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimClinicianCta.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimClinicianDashboard.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimCohortPatterns.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimDashboardOverview.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimDataSchema.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimEmergencyProtocol.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimExportPanel.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimGlucoseCurveStabilising.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimIobClinical.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimIobCurveDecay.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimIobParentView.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimIobTeenView.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimOrgCta.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimOrgDashboard.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimParentCta.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimParentNetwork.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimParentNightWorry.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimPatientProfileClinical.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimPatternClinical.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimPatternDetection.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimPatternDetectionDark.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimPatternParent.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimPopulationDiversity.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimProfileBuilding.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimReportGenerating.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimReportTeen.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimResearcherCta.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimResearcherDataOverview.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimSchoolShield.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimTeenCta.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimTeenCustomise.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimTeenDashboardDark.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/AnimationStub.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/animations/index.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/index.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/storyLoader.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/types.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/onboarding/story-engine/voiceConfig.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/IobBadge.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/IobHunterExplainer.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/NotificationBell.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/accordion.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/alert-dialog.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/alert.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/aspect-ratio.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/avatar.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/badge.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/breadcrumb.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/button-group.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/button.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/calendar.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/card.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/carousel.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/chart.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/checkbox.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/collapsible.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/command.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/context-menu.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/dialog.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/drawer.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/dropdown-menu.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/empty.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/field.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/form.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/hover-card.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/input-group.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/input-otp.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/input.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/item.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/kbd.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/label.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/menubar.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/navigation-menu.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/pagination.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/popover.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/progress.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/radio-group.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/resizable.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/scroll-area.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/select.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/separator.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/sheet.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/sidebar.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/skeleton.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/slider.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/sonner.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/spinner.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/switch.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/table.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/tabs.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/textarea.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/toggle-group.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/toggle.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/components/ui/tooltip.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/const.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/contexts/ThemeContext.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useA1cEstimate.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useAdminStats.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useAdminUsers.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useAlcoholImpact.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useAlertEngine.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useAltitudeImpact.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useAnalyticsSummary.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useAuditLog.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useBasalTitration.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useBolusCalculator.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useCGMGapAnalysis.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useCarbCounter.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useCircadianSensitivity.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useClinicianNotes.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useClinicianSummary.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useComposition.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useDataExport.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useDoseAdjustmentAdvisor.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useDoseHistory.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useDoses.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useExerciseImpact.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useFastingProtocol.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useGlucoseAlerts.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useGlucoseExport.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useGlucosePrediction.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useGlucoseReport.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useGlucoseTrend.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useHydrationImpact.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useHypoRisk.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useIcrOptimizer.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useIobCurrent.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useIobHistory.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useIsfAnalysis.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useMealLog.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useMealTiming.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useMedicationInteraction.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useMenstrualCycleImpact.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useMobile.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useNightscoutData.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useNightscoutSync.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useNotifications.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/usePatientProfile.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/usePatientProgress.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/usePatternRecognition.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/usePersistFn.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useProgressReport.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useReadings.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useRealtimeDoses.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useRealtimeGlucose.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useRegimeComparison.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useSettings.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useSickDayRules.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useSleepQuality.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useStressResponse.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useTTS.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useTelemetry.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useTravelZones.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useVariability.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/hooks/useWeeklySummary.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/index.css
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/lib/gamification/GamificationContext.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/lib/gamification/milestoneMessages.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/lib/gamification/rewardEngine.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/lib/gamification/types.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/lib/trpc.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/lib/utils.ts
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/main.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/pages/ADHDPage.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/pages/ComponentShowcase.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/pages/Dashboard.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/pages/GlucosePage.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/pages/Home.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/pages/IOBPage.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/pages/InsulinPage.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/pages/MealsPage.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/pages/NotFound.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/pages/PregnancyPage.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/pages/ProfilePage.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/pages/RewardsPage.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/pages/SchoolCarePlanPage.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/pages/ThyroidPage.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/pages/onboarding/OnboardingStoryPage.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/pages/onboarding/first-win/FirstWinClinicianSamplePage.tsx
+G:/My Drive/04_CLAUDE/GROUP8-Client/src/pages/onboarding/first-win/FirstWinPage.tsx
+G:/My Drive/04_CLAUDE/MISSING-ROUTES/Code based files for manus.zip
+G:/My Drive/04_CLAUDE/MISSING-ROUTES/GROUP2-Auth-Patients.zip
+G:/My Drive/04_CLAUDE/MISSING-ROUTES/GROUP3-IOB-Engine.zip
+G:/My Drive/04_CLAUDE/MISSING-ROUTES/GROUP4-Modules-Final.zip
+G:/My Drive/04_CLAUDE/MISSING-ROUTES/GROUP4-Modules.zip
+G:/My Drive/04_CLAUDE/MISSING-ROUTES/GROUP4A-Modules-Core.zip
+G:/My Drive/04_CLAUDE/MISSING-ROUTES/GROUP5-UI-Pages.zip
+G:/My Drive/04_CLAUDE/MISSING-ROUTES/GROUP5B-Client-Pages.zip
+G:/My Drive/04_CLAUDE/MISSING-ROUTES/GROUP6-Integrations.zip
+G:/My Drive/04_CLAUDE/MISSING-ROUTES/GROUP6A-Analytics-Engine.zip
+G:/My Drive/04_CLAUDE/MISSING-ROUTES/GROUP7-Beta-Launch.zip
+G:/My Drive/04_CLAUDE/MISSING-ROUTES/GROUP8-Config-Database.zip
+G:/My Drive/04_CLAUDE/MISSING-ROUTES/MISSING-ROUTES.zip
+G:/My Drive/04_CLAUDE/MISSING-ROUTES/drizzle/schema.ts
+G:/My Drive/04_CLAUDE/MISSING-ROUTES/server/routes/auth.route.ts
+G:/My Drive/04_CLAUDE/MISSING-ROUTES/server/routes/iob.route.ts
+G:/My Drive/04_CLAUDE/MISSING-ROUTES/server/routes/patient.route.ts
+G:/My Drive/04_CLAUDE/PDF FILES/01.1_—_IOB_Hunter_Core_Engine_Logic.pdf
+G:/My Drive/04_CLAUDE/PDF FILES/01.3_—_ISF_ICR_Logic_Framework.pdf
+G:/My Drive/04_CLAUDE/PDF FILES/03.4_Phase2-Master-Execution-Plan_v1.0.md.pdf
+G:/My Drive/04_CLAUDE/PDF FILES/GLUMIRA-V7-000_Global_Filing_Rules.pdf
+G:/My Drive/04_CLAUDE/PDF FILES/GluMira-V7_Master_Document.pdf
+G:/My Drive/04_CLAUDE/PDF FILES/GluMira_3-Stage_Product_Strategy.pdf
+G:/My Drive/04_CLAUDE/PDF FILES/GluMira_Design_System.pdf
+G:/My Drive/04_CLAUDE/PDF FILES/GluMira™_V7_Drive_Auditor_—_Configuration_v2.0.pdf
+G:/My Drive/04_CLAUDE/PDF FILES/GluMira™_V7_—_Design_Tokens.pdf
+G:/My Drive/04_CLAUDE/PDF FILES/GluMira™_V7_—_Logo_Specification.pdf
+G:/My Drive/04_CLAUDE/PDF FILES/GluMira™_V7_—_UI_Design_System.pdf
+G:/My Drive/04_CLAUDE/PDF FILES/Phase_2_Migration_Plan.pdf
+G:/My Drive/04_CLAUDE/PDF FILES/Subscription_Tier_Logic.pdf
+G:/My Drive/04_CLAUDE/Visual Design Philosophy.txt
+G:/My Drive/04_CLAUDE/ZIP FILES/glumira-platform-main.zip
+G:/My Drive/04_CLAUDE/ZIP FILES/glumira-v7-codebase.zip
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/.env.dexcom-share
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/.github/dependabot.yml
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/.gitignore
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/.gitkeep
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/.manus/db/db-query-1774474844326.json
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/.npmrc
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/.prettierignore
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/.prettierrc
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/Archive_Master.md
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/DEPLOYMENT.md
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/DESIGN_SYSTEM.md
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/index.html
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/public/.gitkeep
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/public/__manus__/debug-collector.js
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/public/_redirects
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/public/glumira-data-wave.png
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/public/glumira-hero-bg.png
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/public/glumira-hero-owl.png
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/public/glumira-locked-canvas-ref.png
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/public/glumira-mission-bg.png
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/public/glumira-owl-clean.png
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/public/glumira-teal-line.png
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/public/hero_owl_v1.png
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/public/manifest.json
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/public/sw.js
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/App.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/_core/hooks/useAuth.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(admin)/admin/feedback/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(admin)/admin/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(admin)/admin/participants/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(admin)/admin/users/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(admin)/layout.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(auth)/login/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(auth)/register/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/a1c-estimate/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/admin/audit/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/admin/stats/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/admin/users/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/alcohol-impact/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/alerts/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/altitude-impact/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/bolus-calculator/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/cgm-gaps/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/clinician/notes/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/clinician/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/clinician/patients/[id]/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/clinician/patients/[id]/report/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/clinician/patients/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/dashboard/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/data-export/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/dose-titration/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/doses/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/exercise-impact/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/fasting-protocol/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/glucose-prediction/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/glucose-trend/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/glucose/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/hypo-risk/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/icr-optimizer/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/insulin-stacking/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/isf-analysis/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/layout.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/meal-log/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/meal-timing/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/meals/[regime]/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/meals/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/medication-checker/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/menstrual-cycle/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/notifications/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/pattern-recognition/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/profile/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/reports/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/school-care-plan/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/settings/nightscout/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/settings/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/sick-day/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/sleep-quality/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/stacking/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/stress-response/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/time-blocks/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/travel-zones/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/trends/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/variability/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/(dashboard)/weekly-summary/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/admin/audit/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/admin/feedback/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/admin/participants/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/admin/stats/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/admin/users/[id]/role/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/admin/users/[id]/status/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/admin/users/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/alerts/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/analytics/a1c-estimate/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/analytics/cgm-gap-analysis/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/analytics/circadian-sensitivity/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/analytics/data-export/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/analytics/exercise-impact/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/analytics/hydration-impact/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/analytics/hypo-risk/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/analytics/icr-optimizer/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/analytics/insulin-stacking/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/analytics/isf-analysis/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/analytics/meal-timing/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/analytics/medication-interaction/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/analytics/patterns/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/analytics/progress-report/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/analytics/regime-comparison/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/analytics/sick-day-rules/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/analytics/sleep-quality/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/analytics/stress-response/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/analytics/summary/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/analytics/time-blocks/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/analytics/travel-zones/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/analytics/variability/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/analytics/weekly-summary/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/bernstein/ask/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/beta/feedback/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/clinical/alcohol-impact/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/clinical/altitude-impact/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/clinical/fasting-protocol/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/clinical/menstrual-cycle-impact/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/clinician/notes/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/clinician/patients/[id]/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/clinician/patients/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/cron/key-rotation/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/cron/nightscout-sync/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/doses/basal-titration/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/doses/bolus-calculator/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/doses/history/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/doses/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/glucose/export/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/glucose/prediction/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/glucose/trend/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/health/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/iob/current/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/iob/history/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/meals/carb-lookup/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/meals/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/notifications/push/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/notifications/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/profile/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/readings/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/reports/patient/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/settings/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/api/stacking/analyse/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/offline/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/app/pricing/page.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/AIChatBox.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/AdminStatsPanel.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/AnalyticsSummaryCard.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/BasalTitrationCard.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/BolusCalculatorForm.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/DashboardLayout.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/DashboardLayoutSkeleton.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/DesignTokens.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/DoseHistoryChart.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ErrorBoundary.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ExportButton.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/GlucoseAlertBadge.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/GlucoseTrendChart.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/HypoRiskCard.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/IOBChart.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/IobDecayChart.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/IobStackingChart.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ManusDialog.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/Map.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/MealLogForm.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/MealTimingInsights.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/NotificationsPanel.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/PatternRecognitionCard.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ProgressReportCard.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/RegimeComparisonTable.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/SchoolCarePlanForm.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/TimeInRangeChart.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/WeeklySummaryCard.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/beta/BetaFeedbackModal.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/beta/BetaFeedbackWidget.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/beta/OnboardingGate.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/charts/InsulinkStackingChart.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/charts/IobTimelineChart.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/charts/NightscoutCGMChart.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/clinician/BernsteinQAPanel.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/clinician/ClinicianDashboard.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/clinician/ClinicianNotesPanel.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/gamification/BadgeSystem.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/gamification/GamificationOverlay.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/gamification/MilestoneModal.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/gamification/MilestoneToast.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/gamification/ProfileMascot.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/gamification/mascot-animations.css
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/layout/Sidebar.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/StoryEngine.stories.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/StoryEngine.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/StoryProgressBar.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/StorySubtitleBar.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimAllergyProtocol.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimCarePlanParent.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimCarePlanSchool.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimCgmConnect.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimChildBadgeUnlock.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimChildCta.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimChildGlucoseExplained.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimChildHeroIntro.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimChildSchoolSafe.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimClinicalReport.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimClinicianCta.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimClinicianDashboard.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimCohortPatterns.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimDashboardOverview.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimDataSchema.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimEmergencyProtocol.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimExportPanel.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimGlucoseCurveStabilising.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimIobClinical.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimIobCurveDecay.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimIobParentView.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimIobTeenView.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimOrgCta.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimOrgDashboard.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimParentCta.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimParentNetwork.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimParentNightWorry.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimPatientProfileClinical.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimPatternClinical.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimPatternDetection.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimPatternDetectionDark.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimPatternParent.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimPopulationDiversity.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimProfileBuilding.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimReportGenerating.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimReportTeen.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimResearcherCta.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimResearcherDataOverview.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimSchoolShield.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimTeenCta.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimTeenCustomise.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimTeenDashboardDark.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/AnimationStub.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/animations/index.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/index.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/storyLoader.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/types.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/onboarding/story-engine/voiceConfig.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/IobBadge.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/IobHunterExplainer.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/NotificationBell.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/accordion.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/alert-dialog.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/alert.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/aspect-ratio.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/avatar.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/badge.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/breadcrumb.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/button-group.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/button.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/calendar.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/card.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/carousel.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/chart.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/checkbox.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/collapsible.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/command.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/context-menu.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/dialog.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/drawer.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/dropdown-menu.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/empty.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/field.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/form.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/hover-card.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/input-group.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/input-otp.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/input.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/item.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/kbd.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/label.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/menubar.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/navigation-menu.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/pagination.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/popover.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/progress.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/radio-group.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/resizable.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/scroll-area.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/select.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/separator.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/sheet.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/sidebar.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/skeleton.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/slider.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/sonner.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/spinner.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/switch.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/table.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/tabs.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/textarea.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/toggle-group.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/toggle.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/components/ui/tooltip.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/const.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/contexts/ThemeContext.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useA1cEstimate.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useAdminStats.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useAdminUsers.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useAlcoholImpact.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useAlertEngine.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useAltitudeImpact.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useAnalyticsSummary.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useAuditLog.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useBasalTitration.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useBolusCalculator.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useCGMGapAnalysis.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useCarbCounter.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useCircadianSensitivity.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useClinicianNotes.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useClinicianSummary.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useComposition.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useDataExport.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useDoseAdjustmentAdvisor.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useDoseHistory.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useDoses.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useExerciseImpact.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useFastingProtocol.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useGlucoseAlerts.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useGlucoseExport.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useGlucosePrediction.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useGlucoseReport.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useGlucoseTrend.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useHydrationImpact.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useHypoRisk.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useIcrOptimizer.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useIobCurrent.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useIobHistory.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useIsfAnalysis.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useMealLog.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useMealTiming.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useMedicationInteraction.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useMenstrualCycleImpact.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useMobile.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useNightscoutData.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useNightscoutSync.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useNotifications.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/usePatientProfile.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/usePatientProgress.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/usePatternRecognition.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/usePersistFn.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useProgressReport.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useReadings.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useRealtimeDoses.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useRealtimeGlucose.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useRegimeComparison.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useSettings.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useSickDayRules.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useSleepQuality.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useStressResponse.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useTTS.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useTelemetry.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useTravelZones.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useVariability.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/hooks/useWeeklySummary.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/index.css
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/lib/gamification/GamificationContext.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/lib/gamification/milestoneMessages.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/lib/gamification/rewardEngine.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/lib/gamification/types.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/lib/trpc.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/lib/utils.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/main.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/pages/ADHDPage.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/pages/ComponentShowcase.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/pages/Dashboard.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/pages/GlucosePage.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/pages/Home.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/pages/IOBPage.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/pages/InsulinPage.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/pages/MealsPage.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/pages/NotFound.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/pages/PregnancyPage.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/pages/ProfilePage.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/pages/RewardsPage.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/pages/SchoolCarePlanPage.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/pages/ThyroidPage.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/pages/onboarding/OnboardingStoryPage.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/pages/onboarding/first-win/FirstWinClinicianSamplePage.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/client/src/pages/onboarding/first-win/FirstWinPage.tsx
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/components.json
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/content/scripts/story-child.json
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/content/scripts/story-clinician.json
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/content/scripts/story-parent.json
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/content/scripts/story-patient.json
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/content/scripts/story-researcher.json
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/content/scripts/story-school.json
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/content/scripts/story-teen.json
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/docs/GluMira_Beta_Launch_Checklist.md
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/docs/gamification-design.md
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/drizzle.config.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/drizzle/0000_youthful_mentallo.sql
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/drizzle/0001_overjoyed_raider.sql
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/drizzle/0002_handy_franklin_storm.sql
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/drizzle/meta/0000_snapshot.json
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/drizzle/meta/0001_snapshot.json
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/drizzle/meta/0002_snapshot.json
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/drizzle/meta/_journal.json
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/drizzle/migrations/.gitkeep
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/drizzle/relations.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/drizzle/schema.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/glumira-v7.txt
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/glumira_v7.txt
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/package.json
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/patches/wouter@3.7.1.patch
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/playwright.config.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/pnpm-lock.yaml
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/scripts/generate-types.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/scripts/validate-env.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/_core/context.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/_core/cookies.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/_core/dataApi.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/_core/env.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/_core/imageGeneration.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/_core/index.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/_core/llm.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/_core/map.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/_core/notification.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/_core/oauth.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/_core/sdk.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/_core/systemRouter.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/_core/trpc.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/_core/types/cookie.d.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/_core/types/manusTypes.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/_core/vite.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/_core/voiceTranscription.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/ai/ai-chat-route.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/ai/ai-chat-route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/ai/bernstein-qa-engine.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/ai/bernstein-qa-engine.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/ai/bernstein-qa.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/ai/bernstein-qa.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/ai/clinician-assistant.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/ai/clinician-assistant.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/ai/clinician-notes-generator.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/ai/clinician-notes-generator.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/ai/rag-context-engine.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/ai/rag-context-engine.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/alerts/glucose-alert-engine.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/alerts/glucose-alert-engine.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/a1c-estimator.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/a1c-estimator.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/analytics-summary.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/analytics-summary.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/cgm-gap-analysis.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/cgm-gap-analysis.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/circadian-sensitivity.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/circadian-sensitivity.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/data-export.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/data-export.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/data-quality.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/data-quality.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/exercise-impact.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/exercise-impact.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/glucose-export.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/glucose-export.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/glucose-prediction.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/glucose-prediction.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/glucose-trend-extended.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/glucose-trend.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/glucose-trend.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/glucose-variability.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/glucose-variability.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/hydration-impact.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/hydration-impact.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/hypo-risk.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/hypo-risk.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/insulin-stacking.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/insulin-stacking.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/isf-analysis.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/isf-analysis.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/medication-interaction.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/medication-interaction.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/patient-progress-report.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/patient-progress-report.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/pattern-recognition.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/pattern-recognition.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/regime-comparison.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/regime-comparison.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/sick-day-rules.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/sick-day-rules.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/sleep-quality.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/sleep-quality.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/stress-response.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/stress-response.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/time-block-analysis.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/time-block-analysis.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/travel-zones.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/travel-zones.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/weekly-summary.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/analytics/weekly-summary.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/auth.logout.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/beta/beta-analytics-dashboard.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/beta/beta-analytics-dashboard.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/beta/beta-onboarding.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/beta/beta-onboarding.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/beta/onboarding-route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/caregiver/caregiver-consent.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/caregiver/caregiver-consent.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/a1c-estimator.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/a1c-estimator.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/alcohol-impact.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/alcohol-impact.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/altitude-impact.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/altitude-impact.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/basal-rate-profiler.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/basal-rate-profiler.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/bolus-advisor.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/bolus-advisor.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/burnout-screener.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/burnout-screener.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/carb-counting-trainer.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/carb-counting-trainer.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/complication-risk-score.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/complication-risk-score.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/fasting-protocol.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/fasting-protocol.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/foot-care-assessment.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/foot-care-assessment.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/glucose-forecast.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/glucose-forecast.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/glucose-variability-index.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/glucose-variability-index.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/glycemic-load-calculator.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/glycemic-load-calculator.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/hypo-risk-predictor.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/hypo-risk-predictor.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/icr-calculator.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/icr-calculator.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/injection-site-tracker.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/injection-site-tracker.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/isf-calculator.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/isf-calculator.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/medication-interaction.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/medication-interaction.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/menstrual-cycle-impact.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/menstrual-cycle-impact.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/pediatric-dose.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/pediatric-dose.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/pregnancy-glucose.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/pregnancy-glucose.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/pump-settings-optimizer.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/pump-settings-optimizer.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/sick-day-protocol.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinical/sick-day-protocol.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinician/clinician-notes.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/clinician/clinician-notes.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/db.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/doses/basal-titration.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/doses/basal-titration.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/doses/bolus-calculator.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/doses/bolus-calculator.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/doses/carb-ratio-optimizer.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/doses/carb-ratio-optimizer.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/doses/dose-adjustment-advisor.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/doses/dose-adjustment-advisor.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/doses/dose-log-extended.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/doses/dose-log.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/doses/dose-log.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/education/quiz-engine.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/education/quiz-engine.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/gdpr/gdpr-erase.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/gdpr/gdpr-erase.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/gdpr/gdpr.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/gdpr/key-rotation.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/gdpr/key-rotation.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/integration/api-routes.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/integrations/dexcom-share-bridge.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/integrations/dexcom-share-bridge.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/integrations/dexcom-share-route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/integrations/nightscout-sync-route.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/integrations/nightscout-sync-route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/integrations/nightscout.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/integrations/nightscout.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/integrations/unified-data-pipeline.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/integrations/unified-data-pipeline.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/iob.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/iob.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/iob/iob-history.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/iob/iob-stacking.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/iob/iob-stacking.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/meal-regimes.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/meal-regimes.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/meals.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/meals/carb-counter.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/meals/carb-counter.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/meals/meal-timing.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/meals/meal-timing.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/monitoring/datadog-monitors.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/monitoring/datadog-monitors.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/notifications/notifications.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/notifications/notifications.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/onboarding/story-engine.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/patient.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/pdf/patient-report.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/pdf/patient-report.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/pdf/pdf-export.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/pdf/pdf-export.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/reports/clinician-summary.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/reports/clinician-summary.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/reports/glucose-report-v2.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/reports/glucose-report-v2.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/reports/glucose-report.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/reports/glucose-report.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/routers.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/school-care-plan-route.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/school-care-plan-route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/school-care-plan.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/school-care-plan.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/security/audit.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/security/audit.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/security/index.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/security/middleware.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/security/middleware.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/security/phi-crypto.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/security/phi-crypto.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/security/phi-migration.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/security/rate-limiter.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/security/rate-limiter.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/security/rls.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/security/security.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/security/webauthn-mfa.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/security/webauthn-mfa.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/storage.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/telemetry/telemetry-engine.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/telemetry/telemetry-engine.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/server/telemetry/telemetry-route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/shared/_core/errors.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/shared/const.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/shared/types.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/src/app/api/admin/stats/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/src/app/api/admin/users/[id]/role/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/src/app/api/admin/users/[id]/status/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/src/app/api/admin/users/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/src/app/api/glucose/trend/route.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/supabase/.temp/cli-latest
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/supabase/.temp/gotrue-version
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/supabase/.temp/pooler-url
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/supabase/.temp/postgres-version
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/supabase/.temp/project-ref
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/supabase/.temp/rest-version
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/supabase/.temp/storage-migration
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/supabase/.temp/storage-version
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/supabase/functions/gdpr-erase/index.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/supabase/functions/key-rotation/index.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/supabase/migrations/20260325000000_foundation_schema.sql
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/supabase/migrations/20260325100000_wave10_schema.sql
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/supabase/migrations/20260325200000_wave13_admin_schema.sql
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/supabase/migrations/20260325300000_wave17_clinician_notes.sql
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/supabase/migrations/20260326000000_gamification_schema.sql
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/supabase/migrations/20260326100000_wave_groupb_telemetry.sql
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/supabase/seed.sql
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/supabase/types.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/tests/e2e/auth.spec.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/tests/e2e/clinician.spec.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/tests/e2e/dashboard.spec.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/tests/phi-crypto.test.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/tests/vitest-setup.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/todo.md
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/tsconfig.json
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/vercel.json
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/vite.config.ts
+G:/My Drive/04_CLAUDE/glumira-platform-main/glumira-platform-main/vitest.config.ts
+G:/My Drive/04_CLAUDE/glumira-v7-codebase/.env.example
+G:/My Drive/04_CLAUDE/glumira-v7-codebase/client/src/App.tsx
+G:/My Drive/04_CLAUDE/glumira-v7-codebase/client/src/components/index.ts
+G:/My Drive/04_CLAUDE/glumira-v7-codebase/client/src/hooks/index.ts
+G:/My Drive/04_CLAUDE/glumira-v7-codebase/client/src/hooks/useAuth.ts
+G:/My Drive/04_CLAUDE/glumira-v7-codebase/client/src/hooks/useGlucoseExport.ts
+G:/My Drive/04_CLAUDE/glumira-v7-codebase/client/src/hooks/useTelemetry.ts
+G:/My Drive/04_CLAUDE/glumira-v7-codebase/client/src/main.tsx
+G:/My Drive/04_CLAUDE/glumira-v7-codebase/drizzle/schema.ts
+G:/My Drive/04_CLAUDE/glumira-v7-codebase/glumira-auth.html
+G:/My Drive/04_CLAUDE/glumira-v7-codebase/glumira-brand-guidelines.html
+G:/My Drive/04_CLAUDE/glumira-v7-codebase/glumira-dashboard.html
+G:/My Drive/04_CLAUDE/glumira-v7-codebase/glumira-iob-calculator.html
+G:/My Drive/04_CLAUDE/glumira-v7-codebase/glumira-landing.html
+G:/My Drive/04_CLAUDE/glumira-v7-codebase/glumira-schema.sql
+G:/My Drive/04_CLAUDE/glumira-v7-codebase/glumira-trpc-types.ts
+G:/My Drive/04_CLAUDE/glumira-v7-codebase/server/analytics/analytics-summary.ts
+G:/My Drive/04_CLAUDE/glumira-v7-codebase/server/analytics/glucose-trend.ts
+G:/My Drive/04_CLAUDE/glumira-v7-codebase/server/db/20260329_beta_tables_addendum.sql
+G:/My Drive/04_CLAUDE/glumira-v7-codebase/server/index-final.ts
+G:/My Drive/04_CLAUDE/glumira-v7-codebase/server/index.ts
+G:/My Drive/04_CLAUDE/glumira-v7-codebase/server/lib/utils.ts
+G:/My Drive/04_CLAUDE/glumira-v7-codebase/server/middleware/auth.ts
+G:/My Drive/04_CLAUDE/glumira-v7-codebase/server/middleware/subscription.ts
+G:/My Drive/04_CLAUDE/glumira-v7-codebase/server/routes/analytics.route.ts
+G:/My Drive/04_CLAUDE/glumira-v7-codebase/server/routes/analytics.ts
+G:/My Drive/04_CLAUDE/glumira-v7-codebase/server/routes/beta-feedback.route.ts
+G:/My Drive/04_CLAUDE/glumira-v7-codebase/server/routes/cron-nightscout-sync.route.ts
+G:/My Drive/04_CLAUDE/glumira-v7-codebase/server/routes/doses.ts
+G:/My Drive/04_CLAUDE/glumira-v7-codebase/server/routes/glucose-trend.route.ts
+G:/My Drive/04_CLAUDE/glumira-v7-codebase/server/routes/meals.ts
+G:/My Drive/04_CLAUDE/glumira-v7-codebase/server/routes/nightscout.ts
+G:/My Drive/04_CLAUDE/glumira-v7-codebase/server/routes/notifications.ts
+G:/My Drive/04_CLAUDE/glumira-v7-codebase/server/routes/remaining.routes.ts
+G:/My Drive/04_CLAUDE/glumira-v7-codebase/server/routes/settings.ts
+G:/My Drive/04_CLAUDE/glumira-v7-codebase/server/trpc.ts
+G:/My Drive/04_CLAUDE/glumira-v7-codebase/vite.config.ts
+G:/My Drive/04_CLAUDE/netlify.toml
+
+========================================
+SOURCE 2: C:/Users/franc/Desktop/glumira-v7
+========================================
+C:/Users/franc/Desktop/glumira-v7/.env.example
+C:/Users/franc/Desktop/glumira-v7/.gitignore
+C:/Users/franc/Desktop/glumira-v7/20260329_badges_mira_schema.sql
+C:/Users/franc/Desktop/glumira-v7/20260329_beta_tables_addendum.sql
+C:/Users/franc/Desktop/glumira-v7/App.tsx
+C:/Users/franc/Desktop/glumira-v7/client/src/App.tsx
+C:/Users/franc/Desktop/glumira-v7/client/src/components/MiraOwlBadge.tsx
+C:/Users/franc/Desktop/glumira-v7/client/src/components/SchoolCarePlanForm.tsx
+C:/Users/franc/Desktop/glumira-v7/client/src/components/index.ts
+C:/Users/franc/Desktop/glumira-v7/client/src/hooks/index.ts
+C:/Users/franc/Desktop/glumira-v7/client/src/hooks/useAuth.ts
+C:/Users/franc/Desktop/glumira-v7/client/src/hooks/useGlucoseExport.ts
+C:/Users/franc/Desktop/glumira-v7/client/src/hooks/useMenstrualCycleImpact.ts
+C:/Users/franc/Desktop/glumira-v7/client/src/hooks/useTelemetry.ts
+C:/Users/franc/Desktop/glumira-v7/client/src/lib/api.ts
+C:/Users/franc/Desktop/glumira-v7/client/src/lib/constants.ts
+C:/Users/franc/Desktop/glumira-v7/client/src/lib/menstrual-cycle-impact.test.ts
+C:/Users/franc/Desktop/glumira-v7/client/src/lib/menstrual-cycle-impact.ts
+C:/Users/franc/Desktop/glumira-v7/client/src/lib/pediatric-dose.test.ts
+C:/Users/franc/Desktop/glumira-v7/client/src/lib/pediatric-dose.ts
+C:/Users/franc/Desktop/glumira-v7/client/src/lib/pregnancy-glucose.test.ts
+C:/Users/franc/Desktop/glumira-v7/client/src/lib/pregnancy-glucose.ts
+C:/Users/franc/Desktop/glumira-v7/client/src/lib/school-care-plan.test.ts
+C:/Users/franc/Desktop/glumira-v7/client/src/lib/school-care-plan.ts
+C:/Users/franc/Desktop/glumira-v7/client/src/lib/utils.ts
+C:/Users/franc/Desktop/glumira-v7/client/src/main.tsx
+C:/Users/franc/Desktop/glumira-v7/client/src/pages/BadgesPage.tsx
+C:/Users/franc/Desktop/glumira-v7/client/src/pages/DashboardPage.tsx
+C:/Users/franc/Desktop/glumira-v7/client/src/pages/EducationPage.tsx
+C:/Users/franc/Desktop/glumira-v7/client/src/pages/FAQPage.tsx
+C:/Users/franc/Desktop/glumira-v7/client/src/pages/MenstrualCycleModule.tsx
+C:/Users/franc/Desktop/glumira-v7/client/src/pages/MiraPage.tsx
+C:/Users/franc/Desktop/glumira-v7/client/src/pages/PaediatricModule.tsx
+C:/Users/franc/Desktop/glumira-v7/client/src/pages/PregnancyModule.tsx
+C:/Users/franc/Desktop/glumira-v7/client/src/pages/PregnancyPage.tsx
+C:/Users/franc/Desktop/glumira-v7/client/src/pages/SchoolCarePlanModule.tsx
+C:/Users/franc/Desktop/glumira-v7/client/src/pages/SchoolCarePlanPage.tsx
+C:/Users/franc/Desktop/glumira-v7/docs/modules/PM01-Pregnancy-Spec.txt
+C:/Users/franc/Desktop/glumira-v7/docs/modules/Pregnancy-Module-Backend-Logic.txt
+C:/Users/franc/Desktop/glumira-v7/docs/modules/School-Care-Plan-Backend-Logic.txt
+C:/Users/franc/Desktop/glumira-v7/drizzle/schema.ts
+C:/Users/franc/Desktop/glumira-v7/glumira-auth.html
+C:/Users/franc/Desktop/glumira-v7/glumira-brand-guidelines.html
+C:/Users/franc/Desktop/glumira-v7/glumira-dashboard.html
+C:/Users/franc/Desktop/glumira-v7/glumira-iob-calculator.html
+C:/Users/franc/Desktop/glumira-v7/glumira-landing.html
+C:/Users/franc/Desktop/glumira-v7/glumira-patch.ps1
+C:/Users/franc/Desktop/glumira-v7/glumira-schema.sql
+C:/Users/franc/Desktop/glumira-v7/glumira-trpc-types.ts
+C:/Users/franc/Desktop/glumira-v7/index.css
+C:/Users/franc/Desktop/glumira-v7/index.html
+C:/Users/franc/Desktop/glumira-v7/main.tsx
+C:/Users/franc/Desktop/glumira-v7/netlify.toml
+C:/Users/franc/Desktop/glumira-v7/package-lock.json
+C:/Users/franc/Desktop/glumira-v7/package.json
+C:/Users/franc/Desktop/glumira-v7/postcss.config.js
+C:/Users/franc/Desktop/glumira-v7/public/glumira-hero-bg-dark.png
+C:/Users/franc/Desktop/glumira-v7/public/mira-owl-hero.png
+C:/Users/franc/Desktop/glumira-v7/public/mira-owl-identity.png
+C:/Users/franc/Desktop/glumira-v7/public/story-school.json
+C:/Users/franc/Desktop/glumira-v7/railway.json
+C:/Users/franc/Desktop/glumira-v7/server/analytics/analytics-summary.ts
+C:/Users/franc/Desktop/glumira-v7/server/analytics/analytics.ts
+C:/Users/franc/Desktop/glumira-v7/server/analytics/bolus-calculator.ts
+C:/Users/franc/Desktop/glumira-v7/server/analytics/glucose-export.ts
+C:/Users/franc/Desktop/glumira-v7/server/analytics/glucose-prediction.ts
+C:/Users/franc/Desktop/glumira-v7/server/analytics/glucose-trend.ts
+C:/Users/franc/Desktop/glumira-v7/server/analytics/glucose-variability.ts
+C:/Users/franc/Desktop/glumira-v7/server/analytics/hypo-risk.ts
+C:/Users/franc/Desktop/glumira-v7/server/analytics/meal-timing.ts
+C:/Users/franc/Desktop/glumira-v7/server/analytics/patient-progress-report.ts
+C:/Users/franc/Desktop/glumira-v7/server/analytics/regime-comparison.ts
+C:/Users/franc/Desktop/glumira-v7/server/analytics/sick-day-rules.ts
+C:/Users/franc/Desktop/glumira-v7/server/analytics/weekly-summary.ts
+C:/Users/franc/Desktop/glumira-v7/server/db/20260329_beta_tables_addendum.sql
+C:/Users/franc/Desktop/glumira-v7/server/db/index.ts
+C:/Users/franc/Desktop/glumira-v7/server/db/schema.ts
+C:/Users/franc/Desktop/glumira-v7/server/index-final.ts
+C:/Users/franc/Desktop/glumira-v7/server/index.ts
+C:/Users/franc/Desktop/glumira-v7/server/lib/glucose-trend.ts
+C:/Users/franc/Desktop/glumira-v7/server/lib/utils.ts
+C:/Users/franc/Desktop/glumira-v7/server/meals/carb-counter.ts
+C:/Users/franc/Desktop/glumira-v7/server/middleware/auth.ts
+C:/Users/franc/Desktop/glumira-v7/server/middleware/subscription.ts
+C:/Users/franc/Desktop/glumira-v7/server/router.ts
+C:/Users/franc/Desktop/glumira-v7/server/routes/analytics.route.ts
+C:/Users/franc/Desktop/glumira-v7/server/routes/analytics.ts
+C:/Users/franc/Desktop/glumira-v7/server/routes/auth.ts
+C:/Users/franc/Desktop/glumira-v7/server/routes/badges.route.ts
+C:/Users/franc/Desktop/glumira-v7/server/routes/beta-feedback.route.ts
+C:/Users/franc/Desktop/glumira-v7/server/routes/cron-nightscout-sync.route.ts
+C:/Users/franc/Desktop/glumira-v7/server/routes/doses.ts
+C:/Users/franc/Desktop/glumira-v7/server/routes/glucose-prediction.route.ts
+C:/Users/franc/Desktop/glumira-v7/server/routes/glucose-trend.route.ts
+C:/Users/franc/Desktop/glumira-v7/server/routes/meals.ts
+C:/Users/franc/Desktop/glumira-v7/server/routes/mira.route.ts
+C:/Users/franc/Desktop/glumira-v7/server/routes/nightscout.ts
+C:/Users/franc/Desktop/glumira-v7/server/routes/notifications.ts
+C:/Users/franc/Desktop/glumira-v7/server/routes/remaining.routes.ts
+C:/Users/franc/Desktop/glumira-v7/server/routes/school-care-plan-route.ts
+C:/Users/franc/Desktop/glumira-v7/server/routes/settings.ts
+C:/Users/franc/Desktop/glumira-v7/server/routes/subscription.ts
+C:/Users/franc/Desktop/glumira-v7/server/routes/telemetry.ts
+C:/Users/franc/Desktop/glumira-v7/server/trpc.ts
+C:/Users/franc/Desktop/glumira-v7/src/components/MiraOwl.tsx
+C:/Users/franc/Desktop/glumira-v7/src/components/ProtectedRoute.tsx
+C:/Users/franc/Desktop/glumira-v7/src/hooks/useAuth.ts
+C:/Users/franc/Desktop/glumira-v7/src/lib/api.ts
+C:/Users/franc/Desktop/glumira-v7/src/lib/constants.ts
+C:/Users/franc/Desktop/glumira-v7/src/lib/utils.ts
+C:/Users/franc/Desktop/glumira-v7/src/pages/AuthPage.tsx
+C:/Users/franc/Desktop/glumira-v7/src/pages/BadgesPage.tsx
+C:/Users/franc/Desktop/glumira-v7/src/pages/DashboardPage.tsx
+C:/Users/franc/Desktop/glumira-v7/src/pages/EducationPage.tsx
+C:/Users/franc/Desktop/glumira-v7/src/pages/FAQPage.tsx
+C:/Users/franc/Desktop/glumira-v7/src/pages/LandingPage.tsx
+C:/Users/franc/Desktop/glumira-v7/src/pages/MiraPage.tsx
+C:/Users/franc/Desktop/glumira-v7/src/pages/SettingsPage.tsx
+C:/Users/franc/Desktop/glumira-v7/tailwind.config.js
+C:/Users/franc/Desktop/glumira-v7/tsconfig.json
+C:/Users/franc/Desktop/glumira-v7/tsconfig.server.json
+C:/Users/franc/Desktop/glumira-v7/vercel.json
+C:/Users/franc/Desktop/glumira-v7/vite.config.ts
