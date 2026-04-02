@@ -18,6 +18,8 @@ import { useGlucoseUnits } from "@/context/GlucoseUnitsContext";
 import { formatGlucose as fmtGlucose, getUnitLabel } from "@/utils/glucose-units";
 import EmotionalDistressTracker from "@/components/EmotionalDistressTracker";
 import ExportReportButton from "@/components/ExportReportButton";
+import PatternHighlights from "@/components/widgets/PatternHighlights";
+import DailySummary from "@/components/widgets/DailySummary";
 
 /* ─── Types ───────────────────────────────────────────────────────────────── */
 
@@ -67,6 +69,7 @@ export default function DashboardPage() {
 
   // Condition events for timeline markers
   const [conditionEvents, setConditionEvents] = useState<{ event_time: string; event_type: string; intensity: string | null }[]>([]);
+  const [detectedPatterns, setDetectedPatterns] = useState<any[]>([]);
 
   // Glucose / Nightscout state
   const [readings, setReadings] = useState<GlucoseReading[]>([]);
@@ -148,6 +151,15 @@ export default function DashboardPage() {
       .then((res) => {
         const data = res?.result?.data?.json;
         if (Array.isArray(data)) setConditionEvents(data);
+      })
+      .catch(() => {});
+
+    // Pattern analysis
+    fetch(`/trpc/patterns.analyse?input=${encodeURIComponent(JSON.stringify({ json: { from: `${today}T00:00:00`, to: `${today}T23:59:59` } }))}`, { headers })
+      .then((r) => r.json())
+      .then((res) => {
+        const data = res?.result?.data?.json;
+        if (Array.isArray(data)) setDetectedPatterns(data);
       })
       .catch(() => {});
   }, [session]);
@@ -328,6 +340,16 @@ export default function DashboardPage() {
             <InsulinActivityCurve curves={activityCurves} />
           </div>
         )}
+
+        {/* ── Daily Summary ───────────────────────────────────────────── */}
+        <div style={{ marginBottom: 20 }}>
+          <DailySummary patterns={detectedPatterns} />
+        </div>
+
+        {/* ── Pattern Highlights ─────────────────────────────────────── */}
+        <div style={{ marginBottom: 20 }}>
+          <PatternHighlights patterns={detectedPatterns} />
+        </div>
 
         {/* ── Emotional Distress Tracker ──────────────────────────────── */}
         <div style={{ marginBottom: 20 }}>

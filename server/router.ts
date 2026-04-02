@@ -9,6 +9,7 @@ import { insulinEventRouter } from "./routes/insulin-event.router";
 import { iobHunterRouter } from "./routes/iob-hunter.router";
 import { conditionEventRouter } from "./routes/condition-event.router";
 import { emotionalDistressRouter } from "./routes/emotional-distress.router";
+import { patternRouter } from "./routes/pattern.router";
 
 export const appRouter = router({
   health: publicProcedure.query(() => ({
@@ -21,6 +22,7 @@ export const appRouter = router({
   iobHunter: iobHunterRouter,
   conditionEvent: conditionEventRouter,
   emotionalDistress: emotionalDistressRouter,
+  patterns: patternRouter,
 });
 
 export type AppRouter = typeof appRouter;
