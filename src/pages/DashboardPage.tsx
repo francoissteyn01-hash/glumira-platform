@@ -26,6 +26,7 @@ import TimeInRangeDonut from "@/components/widgets/TimeInRangeDonut";
 import EventLogTable from "@/components/widgets/EventLogTable";
 import PresentationToggle from "@/components/PresentationMode";
 import ShareButton from "@/components/ShareButton";
+import { usePatientName } from "@/hooks/usePatientName";
 
 /* ─── Types ───────────────────────────────────────────────────────────────── */
 
@@ -66,6 +67,7 @@ function timeAgo(iso: string): string {
 /* ═══════════════════════════════════════════════════════════════════════════ */
 export default function DashboardPage() {
   const { user, session } = useAuth();
+  const { patientName, isCaregiver } = usePatientName();
 
   // IOB Hunter state
   const [stackingData, setStackingData] = useState<StackingPoint[]>([]);
@@ -223,10 +225,12 @@ export default function DashboardPage() {
               fontFamily: "'Playfair Display', serif", fontSize: "clamp(24px, 6vw, 32px)",
               fontWeight: 700, color: "#1a2a5e", margin: "0 0 4px",
             }}>
-              Dashboard
+              {isCaregiver && patientName ? `${patientName}\u2019s Dashboard` : "Dashboard"}
             </h1>
             <p style={{ fontSize: 14, color: "#52667a", margin: 0, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
-              Welcome back{user?.email ? `, ${user.email.split("@")[0]}` : ""}
+              {isCaregiver && patientName
+                ? `Managing for ${patientName}`
+                : `Welcome back${user?.email ? `, ${user.email.split("@")[0]}` : ""}`}
             </p>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>

@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
+import { usePatientName } from "@/hooks/usePatientName";
 import { apiFetch } from "@/lib/api";
 import { cn } from "@/lib/utils";
 import { DISCLAIMER } from "@/lib/constants";
@@ -15,7 +16,11 @@ const SUGGESTED_PROMPTS = [
 
 export default function MiraPage() {
   const { session } = useAuth();
-  const [messages, setMessages] = useState<Message[]>([{ role: "assistant", content: "Hi! I'm Mira, your GluMira\u2122 education assistant \u{1F44B}\n\nI can help you understand diabetes management concepts.\n\n\u26A0\uFE0F I'm an educational tool — always check with your healthcare team before making changes.", timestamp: new Date() }]);
+  const { patientName, isCaregiver } = usePatientName();
+  const greeting = isCaregiver && patientName
+    ? `Hi! I'm Mira, ${patientName}\u2019s GluMira\u2122 education assistant \u{1F44B}\n\nI can help you understand ${patientName}\u2019s diabetes management.\n\n\u26A0\uFE0F I'm an educational tool \u2014 always check with your healthcare team before making changes.`
+    : "Hi! I'm Mira, your GluMira\u2122 education assistant \u{1F44B}\n\nI can help you understand diabetes management concepts.\n\n\u26A0\uFE0F I'm an educational tool \u2014 always check with your healthcare team before making changes.";
+  const [messages, setMessages] = useState<Message[]>([{ role: "assistant", content: greeting, timestamp: new Date() }]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [bernstein, setBernstein] = useState(false);

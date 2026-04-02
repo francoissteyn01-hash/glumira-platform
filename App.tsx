@@ -88,8 +88,18 @@ function LightNavBar() {
 /* ─── Dark navbar (authenticated pages) ──────────────────────────────────── */
 function DarkNavBar() {
   const { signOut } = useAuth();
+  const { patientName, isCaregiver } = usePatientName();
+
+  // For caregivers, replace "Dashboard" → "Anouk's Dashboard", "Profile" → "Anouk's Profile"
+  function navLabel(label: string): string {
+    if (!isCaregiver || !patientName) return label;
+    if (label === "Dashboard") return `${patientName}'s Dashboard`;
+    if (label === "Profile") return `${patientName}'s Profile`;
+    return label;
+  }
+
   return (
-    <nav className="border-b border-gray-800 bg-gray-900 px-4 py-3 sticky top-0 z-50">
+    <nav className="border-b border-gray-800 bg-gray-900 px-4 py-3 sticky top-0 z-50" data-nav>
       <div className="max-w-5xl mx-auto flex items-center justify-between">
         <span className="flex items-center gap-2">
           <div style={{ width: 24, height: 24 }} />
@@ -106,7 +116,7 @@ function DarkNavBar() {
                 }`
               }
             >
-              {link.label}
+              {navLabel(link.label)}
             </NavLink>
           ))}
           <button onClick={signOut} className="ml-2 px-3 py-1.5 text-xs text-gray-400 hover:text-white transition-colors">
