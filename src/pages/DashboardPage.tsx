@@ -153,7 +153,6 @@ export default function DashboardPage() {
       .catch(() => {});
 
     // Condition events for timeline markers
-    const today = new Date().toISOString().slice(0, 10);
     fetch(`/trpc/conditionEvent.list?input=${encodeURIComponent(JSON.stringify({ json: { from: `${today}T00:00:00`, to: `${today}T23:59:59`, limit: 50 } }))}`, { headers })
       .then((r) => r.json())
       .then((res) => {

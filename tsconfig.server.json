@@ -12,5 +12,5 @@
     "rootDir":           "."
   },
   "include": ["server/**/*", "drizzle/schema.ts", "glumira-trpc-types.ts"],
-  "exclude": ["node_modules", "dist", "src", "App.tsx", "main.tsx"]
+  "exclude": ["node_modules", "dist", "src", "App.tsx", "main.tsx", "**/__tests__/**", "**/*.test.ts"]
 }
