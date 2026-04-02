@@ -4,6 +4,7 @@
  * GluMira™ is an educational platform, not a medical device.
  */
 import { router, publicProcedure } from "./trpc";
+import { mealLogRouter } from "./routes/meal-log.router";
 
 export const appRouter = router({
   health: publicProcedure.query(() => ({
@@ -11,6 +12,7 @@ export const appRouter = router({
     version: "7.0.0",
     service: "GluMira™ tRPC",
   })),
+  mealLog: mealLogRouter,
 });
 
 export type AppRouter = typeof appRouter;
