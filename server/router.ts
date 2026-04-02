@@ -5,6 +5,7 @@
  */
 import { router, publicProcedure } from "./trpc";
 import { mealLogRouter } from "./routes/meal-log.router";
+import { insulinEventRouter } from "./routes/insulin-event.router";
 
 export const appRouter = router({
   health: publicProcedure.query(() => ({
@@ -13,6 +14,7 @@ export const appRouter = router({
     service: "GluMira™ tRPC",
   })),
   mealLog: mealLogRouter,
+  insulinEvent: insulinEventRouter,
 });
 
 export type AppRouter = typeof appRouter;

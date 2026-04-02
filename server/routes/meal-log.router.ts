@@ -52,6 +52,26 @@ export const mealLogRouter = router({
       .single();
 
     if (error) throw new Error(error.message);
+
+    // Auto-create linked insulin_event for meal_bolus / correction entries
+    if (
+      (input.event_type === "meal_bolus" || input.event_type === "correction") &&
+      input.insulin_type &&
+      input.units != null &&
+      input.units > 0
+    ) {
+      await ctx.supabase.from("insulin_events").insert({
+        user_id: ctx.user.id,
+        event_time: input.meal_time,
+        event_type: input.event_type,
+        insulin_type: input.insulin_type,
+        dose_units: input.units,
+        food_linked_id: data.id,
+        is_correction: input.event_type === "correction",
+        notes: null,
+      });
+    }
+
     return data;
   }),
 

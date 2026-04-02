@@ -5,6 +5,7 @@ export const DISCLAIMER  = "GluMira™ is an educational platform and does not c
 export const NAV_LINKS = [
   { label: "Dashboard", href: "/dashboard" },
   { label: "Log",       href: "/log"       },
+  { label: "Insulin",   href: "/insulin"   },
   { label: "Education", href: "/education" },
   { label: "Mira AI",   href: "/mira"      },
   { label: "Badges",    href: "/badges"    },
