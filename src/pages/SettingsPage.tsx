@@ -17,18 +17,18 @@ export default function SettingsPage() {
         <h1 className="text-2xl font-bold text-white">Settings</h1>
         <S title="Account"><p className="text-xs text-gray-300">Email</p><p className="text-sm text-white">{user?.email??"—"}</p></S>
         <S title="Change Password">
-          <input type="password" value={pwNew} onChange={e=>setPwNew(e.target.value)} placeholder="New password (min 8 chars)" className="w-full rounded-lg bg-gray-800 border border-gray-700 px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-violet-500"/>
+          <input type="password" value={pwNew} onChange={e=>setPwNew(e.target.value)} placeholder="New password (min 8 chars)" className="w-full rounded-lg bg-gray-800 border border-gray-700 px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-500"/>
           {pwMsg&&<p className={`text-xs ${pwMsg.includes("updated")?"text-green-400":"text-red-400"}`}>{pwMsg}</p>}
-          <button onClick={changePw} disabled={pwNew.length<8} className="rounded-lg bg-violet-600 hover:bg-violet-700 disabled:opacity-40 text-white px-4 py-2 text-sm font-medium transition-colors">Update password</button>
+          <button onClick={changePw} disabled={pwNew.length<8} className="rounded-lg bg-brand-600 hover:bg-brand-700 disabled:opacity-40 text-white px-4 py-2 text-sm font-medium transition-colors">Update password</button>
         </S>
         <S title="Nightscout">
-          <input value={nsUrl} onChange={e=>setNsUrl(e.target.value)} placeholder="https://yoursite.herokuapp.com" className="w-full rounded-lg bg-gray-800 border border-gray-700 px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-violet-500"/>
-          <input type="password" value={nsSecret} onChange={e=>setNs(e.target.value)} placeholder="API Secret (optional)" className="w-full rounded-lg bg-gray-800 border border-gray-700 px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-violet-500"/>
-          <button onClick={saveNS} className="rounded-lg bg-violet-600 hover:bg-violet-700 text-white px-4 py-2 text-sm font-medium transition-colors">{saved?"✓ Saved":"Save Nightscout settings"}</button>
+          <input value={nsUrl} onChange={e=>setNsUrl(e.target.value)} placeholder="https://yoursite.herokuapp.com" className="w-full rounded-lg bg-gray-800 border border-gray-700 px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-500"/>
+          <input type="password" value={nsSecret} onChange={e=>setNs(e.target.value)} placeholder="API Secret (optional)" className="w-full rounded-lg bg-gray-800 border border-gray-700 px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-500"/>
+          <button onClick={saveNS} className="rounded-lg bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 text-sm font-medium transition-colors">{saved?"✓ Saved":"Save Nightscout settings"}</button>
         </S>
         <NightscoutSetup />
         <S title="Glucose Units"><p className="text-xs text-gray-300 mb-2">Choose how glucose values are displayed across GluMira™</p><UnitToggle /></S>
-        <S title="Data"><a href="/import/handwritten" className="text-xs text-violet-400 hover:text-violet-300 underline">Import Handwritten Notes</a></S>
+        <S title="Data"><a href="/import/handwritten" className="text-xs text-brand-500 hover:text-brand-500/80 underline">Import Handwritten Notes</a></S>
         <S title="Legal"><p className="text-xs text-gray-300 leading-relaxed">GluMira™ is an educational platform, not a registered medical device. Powered by IOB Hunter™</p></S>
       </div>
     </div>

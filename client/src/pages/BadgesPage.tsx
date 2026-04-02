@@ -21,7 +21,7 @@ const TIER_COLOURS: Record<BadgeTier, string> = {
   bronze:   "border-amber-600  bg-amber-50  dark:bg-amber-900/20  text-amber-700  dark:text-amber-400",
   silver:   "border-gray-400   bg-gray-50   dark:bg-[#f0f4f8]      text-[#718096]   dark:text-[#4a5568]",
   gold:     "border-yellow-400 bg-yellow-50 dark:bg-yellow-900/20 text-yellow-700 dark:text-yellow-300",
-  platinum: "border-violet-400 bg-violet-50 dark:bg-violet-900/20 text-violet-700 dark:text-violet-300",
+  platinum: "border-brand-500 bg-brand-50 dark:bg-brand-600/20 text-brand-600 dark:text-brand-500",
 };
 
 export default function BadgesPage() {

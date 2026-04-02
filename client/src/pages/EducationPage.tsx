@@ -28,7 +28,7 @@ export default function EducationPage() {
             <button
               key={mod.id}
               onClick={() => setActiveId(activeId === mod.id ? null : mod.id)}
-              className="text-left rounded-xl border border-gray-200 dark:border-[#e2e8f0] bg-white dark:bg-white p-5 hover:border-violet-400 dark:hover:border-violet-500 transition-colors"
+              className="text-left rounded-xl border border-gray-200 dark:border-[#e2e8f0] bg-white dark:bg-white p-5 hover:border-brand-500 dark:hover:border-brand-500 transition-colors"
             >
               <div className="flex items-center justify-between">
                 <p className="font-semibold text-gray-900 dark:text-[#1a2a5e]">{mod.title}</p>

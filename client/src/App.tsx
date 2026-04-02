@@ -35,7 +35,7 @@ function NavBar() {
               className={({ isActive }) =>
                 `px-3 py-1.5 rounded-lg text-sm font-medium transition-colors whitespace-nowrap ${
                   isActive
-                    ? "bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300"
+                    ? "bg-brand-100 dark:bg-brand-600/30 text-brand-600 dark:text-brand-500"
                     : "text-[#718096] dark:text-[#718096] hover:text-gray-900 dark:hover:text-[#1a2a5e]"
                 }`
               }

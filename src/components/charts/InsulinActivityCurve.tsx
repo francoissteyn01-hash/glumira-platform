@@ -3,7 +3,7 @@
  * Individual bell curves per dose.
  * Basal: teal (#2ab5c1), wide and flat.
  * Bolus: orange (#f59e0b), tall and narrow.
- * Overlap zones: purple (#7c3aed).
+ * Overlap zones: navy (#1a2a5e).
  */
 
 import {
@@ -30,7 +30,7 @@ interface Props {
 
 const BASAL_COLOUR = "#2ab5c1";
 const BOLUS_COLOUR = "#f59e0b";
-const OVERLAP_COLOUR = "#7c3aed";
+const OVERLAP_COLOUR = "#1a2a5e";
 
 function formatTime(iso: string): string {
   return new Date(iso).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });

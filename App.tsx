@@ -103,7 +103,7 @@ function DarkNavBar() {
       <div className="max-w-5xl mx-auto flex items-center justify-between">
         <span className="flex items-center gap-2">
           <div style={{ width: 24, height: 24 }} />
-          <span className="font-bold text-violet-400 text-lg tracking-tight">GluMira™</span>
+          <span className="font-bold text-brand-500 text-lg tracking-tight">GluMira™</span>
         </span>
         <div className="flex items-center gap-1 overflow-x-auto">
           {NAV_LINKS.map((link) => (
@@ -112,7 +112,7 @@ function DarkNavBar() {
               to={link.href}
               className={({ isActive }) =>
                 `px-3 py-1.5 rounded-lg text-xs font-medium transition-colors whitespace-nowrap ${
-                  isActive ? "bg-violet-900/50 text-violet-300" : "text-gray-300 hover:text-white"
+                  isActive ? "bg-brand-600/50 text-brand-500" : "text-gray-300 hover:text-white"
                 }`
               }
             >

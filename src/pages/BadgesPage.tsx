@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import type { BadgeTier } from "@/lib/constants";
 
 interface Badge { id:string; slug:string; name:string; description:string; tier:BadgeTier; iconEmoji:string; earnedAt:string|null; }
-const TIER: Record<BadgeTier,string> = { bronze:"border-amber-600 bg-amber-950/30 text-amber-400", silver:"border-gray-500 bg-gray-800 text-gray-300", gold:"border-yellow-400 bg-yellow-950/30 text-yellow-300", platinum:"border-violet-400 bg-violet-950/30 text-violet-300" };
+const TIER: Record<BadgeTier,string> = { bronze:"border-amber-600 bg-amber-950/30 text-amber-400", silver:"border-gray-500 bg-gray-800 text-gray-300", gold:"border-yellow-400 bg-yellow-950/30 text-yellow-300", platinum:"border-brand-500 bg-brand-600/30 text-brand-500" };
 
 export default function BadgesPage() {
   const [badges, setBadges]   = useState<Badge[]>([]);

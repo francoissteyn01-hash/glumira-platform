@@ -95,7 +95,7 @@ export default function MiraPage() {
       <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4 max-w-2xl mx-auto w-full">
         {messages.map((m, i) => (
           <div key={i} className={cn("flex", m.role === "user" ? "justify-end" : "justify-start")}>
-            <div className={cn("max-w-[80%] rounded-2xl px-4 py-3 text-sm whitespace-pre-wrap", m.role === "user" ? "bg-violet-600 text-white rounded-br-sm" : "bg-gray-800 border border-gray-700 text-gray-200 rounded-bl-sm")}>
+            <div className={cn("max-w-[80%] rounded-2xl px-4 py-3 text-sm whitespace-pre-wrap", m.role === "user" ? "bg-brand-600 text-white rounded-br-sm" : "bg-gray-800 border border-gray-700 text-gray-200 rounded-bl-sm")}>
               {m.content}
             </div>
           </div>
@@ -132,8 +132,8 @@ export default function MiraPage() {
       {/* Input */}
       <div className="border-t border-gray-800 bg-gray-900 px-4 py-3 max-w-2xl mx-auto w-full">
         <div className="flex gap-2">
-          <input value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && send()} placeholder="Ask Mira a question\u2026" className="flex-1 rounded-xl border border-gray-700 bg-gray-950 px-4 py-2.5 text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-violet-500" />
-          <button onClick={() => send()} disabled={loading || !input.trim()} className="rounded-xl bg-violet-600 hover:bg-violet-700 disabled:opacity-40 text-white px-4 py-2.5 text-sm font-medium transition-colors">Send</button>
+          <input value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && send()} placeholder="Ask Mira a question\u2026" className="flex-1 rounded-xl border border-gray-700 bg-gray-950 px-4 py-2.5 text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-500" />
+          <button onClick={() => send()} disabled={loading || !input.trim()} className="rounded-xl bg-brand-600 hover:bg-brand-700 disabled:opacity-40 text-white px-4 py-2.5 text-sm font-medium transition-colors">Send</button>
         </div>
       </div>
     </div>
