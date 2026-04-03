@@ -58,13 +58,18 @@ interface ProfileData {
   first_name: string;
   last_name: string;
   date_of_birth: string;
+  sex: string;
   diabetes_type: string;
   diagnosis_date: string;
   country: string;
+  language: string;
+  glucose_units: string;
   insulin_types: string[];
   delivery_method: string;
+  basal_frequency: string;
   icr: string;
   isf: string;
+  correction_target: string;
   dietary_approach: string;
   allergens: string[];
   meals_per_day: number;
@@ -78,19 +83,26 @@ interface ProfileData {
 }
 
 const EMPTY_PROFILE: ProfileData = {
-  first_name: "", last_name: "", date_of_birth: "", diabetes_type: "",
-  diagnosis_date: "", country: "", insulin_types: [], delivery_method: "",
-  icr: "", isf: "", dietary_approach: "", allergens: [], meals_per_day: 3,
+  first_name: "", last_name: "", date_of_birth: "", sex: "", diabetes_type: "",
+  diagnosis_date: "", country: "", language: "", glucose_units: "mmol",
+  insulin_types: [], delivery_method: "", basal_frequency: "",
+  icr: "", isf: "", correction_target: "",
+  dietary_approach: "", allergens: [], meals_per_day: 3,
   comorbidities: [], special_conditions: [], is_caregiver: false, patient_name: "", relationship: "",
 };
+
+const SEX_OPTIONS = ["Male", "Female", "Other", "Prefer not to say"] as const;
+const LANGUAGE_OPTIONS = ["English", "Afrikaans", "French", "German", "Spanish", "Portuguese", "Arabic", "Other"] as const;
+const GLUCOSE_UNIT_OPTIONS = ["mmol", "mg/dL"] as const;
+const BASAL_FREQUENCY_OPTIONS = ["Once daily", "Twice daily", "Pump (continuous)"] as const;
 
 /* ─── Helpers ─────────────────────────────────────────────────────────────── */
 
 function completionPercent(p: ProfileData): number {
+  // Only REQUIRED fields count — optional fields never block access
   const checks = [
     !!p.first_name, !!p.last_name, !!p.date_of_birth, !!p.diabetes_type,
-    !!p.country, !!p.dietary_approach, p.insulin_types.length > 0,
-    !!p.delivery_method, p.comorbidities.length > 0,
+    !!p.country, p.insulin_types.length > 0, !!p.delivery_method,
   ];
   return Math.round((checks.filter(Boolean).length / checks.length) * 100);
 }
@@ -288,13 +300,18 @@ export default function ProfilePage() {
             first_name:       data.profile.first_name ?? "",
             last_name:        data.profile.last_name ?? "",
             date_of_birth:    data.profile.date_of_birth ?? "",
+            sex:              data.profile.sex ?? "",
             diabetes_type:    data.profile.diabetes_type ?? "",
             diagnosis_date:   data.profile.diagnosis_date ?? "",
             country:          data.profile.country ?? "",
+            language:         data.profile.language ?? "",
+            glucose_units:    data.profile.glucose_units ?? "mmol",
             insulin_types:    data.profile.insulin_types ?? [],
             delivery_method:  data.profile.delivery_method ?? "",
+            basal_frequency:  data.profile.basal_frequency ?? "",
             icr:              data.profile.icr ?? "",
             isf:              data.profile.isf ?? "",
+            correction_target: data.profile.correction_target ?? "",
             dietary_approach: data.profile.dietary_approach ?? "",
             allergens:        data.profile.allergens ?? [],
             meals_per_day:    data.profile.meals_per_day ?? 3,
@@ -398,6 +415,9 @@ export default function ProfilePage() {
             <Field label="Date of birth">
               <TextInput value={form.date_of_birth} onChange={set("date_of_birth")} type="date" />
             </Field>
+            <Field label="Sex">
+              <SelectInput value={form.sex} onChange={set("sex")} options={SEX_OPTIONS} placeholder="Select sex" />
+            </Field>
             {under18 && (
               <div style={{
                 borderRadius: 8, background: "rgba(42,181,193,0.08)", border: "1px solid #2ab5c1",
@@ -416,6 +436,12 @@ export default function ProfilePage() {
             <Field label="Country">
               <TextInput value={form.country} onChange={set("country")} placeholder="e.g. South Africa" />
             </Field>
+            <Field label="Language">
+              <SelectInput value={form.language} onChange={set("language")} options={LANGUAGE_OPTIONS} placeholder="Select language" />
+            </Field>
+            <Field label="Glucose units">
+              <SelectInput value={form.glucose_units} onChange={set("glucose_units")} options={GLUCOSE_UNIT_OPTIONS} placeholder="Select units" />
+            </Field>
           </Card>
 
           {/* ── Section 2: Insulin & Management ─────────────────────────── */}
@@ -426,12 +452,18 @@ export default function ProfilePage() {
             <Field label="Delivery method">
               <SelectInput value={form.delivery_method} onChange={set("delivery_method")} options={DELIVERY_METHODS} placeholder="Select delivery method" />
             </Field>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+            <Field label="Basal frequency">
+              <SelectInput value={form.basal_frequency} onChange={set("basal_frequency")} options={BASAL_FREQUENCY_OPTIONS} placeholder="Select basal frequency" />
+            </Field>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12 }}>
               <Field label="ICR (optional)">
                 <TextInput value={form.icr} onChange={set("icr")} placeholder="e.g. 10" type="number" />
               </Field>
               <Field label="ISF (optional)">
                 <TextInput value={form.isf} onChange={set("isf")} placeholder="e.g. 2.5" type="number" />
+              </Field>
+              <Field label="Correction target">
+                <TextInput value={form.correction_target} onChange={set("correction_target")} placeholder="e.g. 5.5" type="number" />
               </Field>
             </div>
           </Card>

@@ -1,0 +1,38 @@
+===============================================
+GluMira V7 — Environment Variable Checklist
+Generated 2026-04-03
+===============================================
+
+RAILWAY (server) — set in Railway dashboard > Variables
+-------------------------------------------------------
+PORT                       = auto-set by Railway (usually 3001)
+DATABASE_URL               = Supabase Postgres connection string
+SUPABASE_URL               = https://jxkdtvwlzhdgzhkbilbf.supabase.co
+SUPABASE_SERVICE_ROLE_KEY  = (from Supabase > Settings > API > service_role key)
+ANTHROPIC_API_KEY          = (Anthropic API key for Mira AI)
+CLIENT_URL                 = https://glumira.ai
+CRON_SECRET                = (random string for securing cron endpoints)
+
+NETLIFY (client build) — set in Netlify > Site > Environment variables
+----------------------------------------------------------------------
+VITE_SUPABASE_URL          = https://jxkdtvwlzhdgzhkbilbf.supabase.co
+VITE_SUPABASE_ANON_KEY     = (from Supabase > Settings > API > anon key)
+VITE_API_URL               = (leave EMPTY — Netlify proxy handles /api/* routing)
+
+LOCAL DEV (.env file at C:\glumira-v7\.env)
+-------------------------------------------
+PORT=3001
+DATABASE_URL=postgresql://...
+SUPABASE_URL=https://jxkdtvwlzhdgzhkbilbf.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=...
+ANTHROPIC_API_KEY=...
+CLIENT_URL=http://localhost:5173
+CRON_SECRET=dev-secret
+VITE_SUPABASE_URL=https://jxkdtvwlzhdgzhkbilbf.supabase.co
+VITE_SUPABASE_ANON_KEY=...
+
+NOTES:
+- VITE_API_URL should be EMPTY in both Netlify and local dev (Vite proxy / Netlify proxy handles it)
+- If set, it would bypass the proxy and make direct cross-origin calls (CORS issues)
+- All VITE_ prefixed vars are embedded in the client build at build time
+- SUPABASE_SERVICE_ROLE_KEY must NEVER appear in client code or VITE_ vars
