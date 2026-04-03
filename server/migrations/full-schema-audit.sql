@@ -49,6 +49,7 @@ ALTER TABLE patient_self_profiles ADD COLUMN IF NOT EXISTS nightscout_sync_enabl
 ALTER TABLE patient_self_profiles ADD COLUMN IF NOT EXISTS sex VARCHAR(30);
 ALTER TABLE patient_self_profiles ADD COLUMN IF NOT EXISTS language VARCHAR(50);
 ALTER TABLE patient_self_profiles ADD COLUMN IF NOT EXISTS basal_frequency VARCHAR(50);
+ALTER TABLE patient_self_profiles ADD COLUMN IF NOT EXISTS basal_times JSONB DEFAULT '[]';
 ALTER TABLE patient_self_profiles ADD COLUMN IF NOT EXISTS correction_target DECIMAL(5,2);
 
 -- ── RLS policies (safe to re-run with DROP IF EXISTS) ──────────────────────

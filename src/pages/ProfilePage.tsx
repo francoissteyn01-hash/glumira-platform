@@ -67,6 +67,7 @@ interface ProfileData {
   insulin_types: string[];
   delivery_method: string;
   basal_frequency: string;
+  basal_times: string[];
   icr: string;
   isf: string;
   correction_target: string;
@@ -85,7 +86,7 @@ interface ProfileData {
 const EMPTY_PROFILE: ProfileData = {
   first_name: "", last_name: "", date_of_birth: "", sex: "", diabetes_type: "",
   diagnosis_date: "", country: "", language: "", glucose_units: "mmol",
-  insulin_types: [], delivery_method: "", basal_frequency: "",
+  insulin_types: [], delivery_method: "", basal_frequency: "", basal_times: [],
   icr: "", isf: "", correction_target: "",
   dietary_approach: "", allergens: [], meals_per_day: 3,
   comorbidities: [], special_conditions: [], is_caregiver: false, patient_name: "", relationship: "",
@@ -309,6 +310,7 @@ export default function ProfilePage() {
             insulin_types:    data.profile.insulin_types ?? [],
             delivery_method:  data.profile.delivery_method ?? "",
             basal_frequency:  data.profile.basal_frequency ?? "",
+            basal_times:      data.profile.basal_times ?? [],
             icr:              data.profile.icr ?? "",
             isf:              data.profile.isf ?? "",
             correction_target: data.profile.correction_target ?? "",
@@ -455,6 +457,54 @@ export default function ProfilePage() {
             <Field label="Basal frequency">
               <SelectInput value={form.basal_frequency} onChange={set("basal_frequency")} options={BASAL_FREQUENCY_OPTIONS} placeholder="Select basal frequency" />
             </Field>
+            {form.basal_frequency && form.basal_frequency !== "Pump (continuous)" && (
+              <Field label="Planned basal injection times (up to 4)">
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center" }}>
+                  {form.basal_times.map((t, i) => (
+                    <div key={i} style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                      <input
+                        type="time" value={t}
+                        onChange={(e) => {
+                          const updated = [...form.basal_times];
+                          updated[i] = e.target.value;
+                          set("basal_times")(updated);
+                        }}
+                        style={{ ...inputStyle, width: 130 }}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => set("basal_times")(form.basal_times.filter((_, j) => j !== i))}
+                        style={{
+                          width: 32, height: 32, borderRadius: 6, border: "1px solid #dee2e6",
+                          background: "#fff", color: "#991b1b", fontSize: 16, cursor: "pointer",
+                          display: "flex", alignItems: "center", justifyContent: "center",
+                        }}
+                        aria-label="Remove time slot"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  ))}
+                  {form.basal_times.length < 4 && (
+                    <button
+                      type="button"
+                      onClick={() => set("basal_times")([...form.basal_times, "08:00"])}
+                      style={{
+                        minHeight: 48, padding: "10px 16px", borderRadius: 8, cursor: "pointer",
+                        border: "1px dashed #2ab5c1", background: "rgba(42,181,193,0.06)",
+                        color: "#2ab5c1", fontSize: 13, fontWeight: 600,
+                        fontFamily: "'DM Sans', system-ui, sans-serif",
+                      }}
+                    >
+                      + Add time
+                    </button>
+                  )}
+                </div>
+                <p style={{ fontSize: 11, color: "#94a3b8", marginTop: 6, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+                  {form.basal_times.length} of 4 slots used
+                </p>
+              </Field>
+            )}
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12 }}>
               <Field label="ICR (optional)">
                 <TextInput value={form.icr} onChange={set("icr")} placeholder="e.g. 10" type="number" />

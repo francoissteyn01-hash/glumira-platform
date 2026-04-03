@@ -78,6 +78,7 @@ profileRouter.put("/", async (req: Request, res: Response) => {
       insulin_types:    body.insulin_types ?? [],
       delivery_method:  toNullIfEmpty(body.delivery_method),
       basal_frequency:  toNullIfEmpty(body.basal_frequency),
+      basal_times:      body.basal_times ?? [],
       icr:              toNumberOrNull(body.icr),
       isf:              toNumberOrNull(body.isf),
       correction_target: toNumberOrNull(body.correction_target),
