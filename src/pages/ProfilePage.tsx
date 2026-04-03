@@ -55,7 +55,16 @@ const SPECIAL_CONDITIONS = [
 
 /* ─── Types ───────────────────────────────────────────────────────────────── */
 
+const PROFILE_TYPES = [
+  { value: "caregiver",          label: "Parent / Caregiver",      icon: "\u{1F6E1}", desc: "Managing diabetes for a child or dependent" },
+  { value: "adult_patient",      label: "Adult with T1D",          icon: "\u{1F9D1}", desc: "Self-managing Type 1 Diabetes" },
+  { value: "paediatric_patient", label: "Young Person (10\u201317)", icon: "\u2728",    desc: "Learning to manage your own diabetes" },
+  { value: "newly_diagnosed",    label: "Newly Diagnosed Family",  icon: "\u2764\uFE0F", desc: "Just starting the diabetes journey" },
+  { value: "clinician",          label: "Clinician / HCP",         icon: "\u{1FA7A}", desc: "Healthcare professional using GluMira\u2122" },
+] as const;
+
 interface ProfileData {
+  profile_type: string;
   first_name: string;
   last_name: string;
   date_of_birth: string;
@@ -85,7 +94,7 @@ interface ProfileData {
 }
 
 const EMPTY_PROFILE: ProfileData = {
-  first_name: "", last_name: "", date_of_birth: "", sex: "", diabetes_type: "",
+  profile_type: "", first_name: "", last_name: "", date_of_birth: "", sex: "", diabetes_type: "",
   diagnosis_date: "", country: "", language: "", glucose_units: "mmol",
   insulin_types: [], delivery_method: "", basal_frequency: "", basal_times: [],
   icr: "", isf: "", correction_target: "",
@@ -300,6 +309,7 @@ export default function ProfilePage() {
       .then((data) => {
         if (data.profile) {
           setForm({
+            profile_type:     data.profile.profile_type ?? "",
             first_name:       data.profile.first_name ?? "",
             last_name:        data.profile.last_name ?? "",
             date_of_birth:    data.profile.date_of_birth ?? "",
@@ -405,6 +415,39 @@ export default function ProfilePage() {
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+
+          {/* ── Section 0: Profile Type ─────────────────────────────────── */}
+          <Card title="Who are you?" defaultOpen={true}>
+            <p style={{ fontSize: 13, color: "#52667a", marginBottom: 12, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+              This helps GluMira™ personalise your experience and onboarding story.
+            </p>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 10 }}>
+              {PROFILE_TYPES.map((pt) => {
+                const selected = form.profile_type === pt.value;
+                return (
+                  <button
+                    key={pt.value} type="button"
+                    onClick={() => set("profile_type")(pt.value)}
+                    style={{
+                      display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 4,
+                      padding: "16px 14px", borderRadius: 10, cursor: "pointer", textAlign: "left",
+                      border: `1.5px solid ${selected ? "#2ab5c1" : "#e2e8f0"}`,
+                      background: selected ? "rgba(42,181,193,0.05)" : "#ffffff",
+                      transition: "all 0.15s",
+                    }}
+                  >
+                    <span style={{ fontSize: 24 }}>{pt.icon}</span>
+                    <span style={{ fontSize: 14, fontWeight: 600, color: "#1a2a5e", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+                      {selected ? "\u2713 " : ""}{pt.label}
+                    </span>
+                    <span style={{ fontSize: 12, color: "#94a3b8", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+                      {pt.desc}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </Card>
 
           {/* ── Section 1: Personal ──────────────────────────────────────── */}
           <Card title="Personal Information" defaultOpen={true}>

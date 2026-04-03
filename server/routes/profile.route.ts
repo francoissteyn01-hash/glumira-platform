@@ -66,6 +66,7 @@ profileRouter.put("/", async (req: Request, res: Response) => {
     // (prevents profile form from wiping nightscout config set elsewhere)
     const row: Record<string, unknown> = {
       user_id:          userId,
+      profile_type:     toNullIfEmpty(body.profile_type),
       first_name:       body.first_name ?? null,
       last_name:        body.last_name ?? null,
       date_of_birth:    toNullIfEmpty(body.date_of_birth),
