@@ -8,6 +8,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { API } from "@/lib/api";
 import { useGlucoseUnits } from "@/context/GlucoseUnitsContext";
+import { useKeyboardSave } from "@/hooks/useKeyboardSave";
 import DoseReferencePanel from "@/components/DoseReferencePanel";
 
 /* ─── Constants ───────────────────────────────────────────────────────────── */
@@ -209,6 +210,8 @@ export default function MealLogPage() {
       setSaving(false);
     }
   }, [session, form]);
+
+  useKeyboardSave(save);
 
   /* ─── Render ────────────────────────────────────────────────────────── */
   return (

@@ -7,6 +7,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { API } from "@/lib/api";
+import { useKeyboardSave } from "@/hooks/useKeyboardSave";
 
 /* ─── Constants ───────────────────────────────────────────────────────────── */
 
@@ -188,6 +189,8 @@ export default function InsulinLogPage() {
       setSaving(false);
     }
   }, [session, form]);
+
+  useKeyboardSave(save);
 
   /* ─── Meal label helper ─────────────────────────────────────────────── */
   function mealLabel(m: MealEntry): string {

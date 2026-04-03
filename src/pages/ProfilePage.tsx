@@ -8,6 +8,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useAuth, supabase } from "@/hooks/useAuth";
 import { DISCLAIMER } from "@/lib/constants";
 import { API } from "@/lib/api";
+import { useKeyboardSave } from "@/hooks/useKeyboardSave";
 
 /* ─── Constants ───────────────────────────────────────────────────────────── */
 
@@ -287,6 +288,7 @@ export default function ProfilePage() {
 
   const pct = completionPercent(form);
   const under18 = isUnder18(form.date_of_birth);
+  useKeyboardSave(save);
 
   /* ─── Load profile ────────────────────────────────────────────────────── */
   useEffect(() => {

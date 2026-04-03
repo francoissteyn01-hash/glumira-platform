@@ -1,8 +1,9 @@
-﻿import { useState } from "react";
+﻿import { useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { useAuth, supabase } from "@/hooks/useAuth";
 import UnitToggle from "@/components/UnitToggle";
 import NightscoutSetup from "@/components/NightscoutSetup";
+import { useKeyboardSave } from "@/hooks/useKeyboardSave";
 export default function SettingsPage() {
   const { user }            = useAuth();
   const [nsUrl, setNsUrl]   = useState(()=>localStorage.getItem("ns_url")??"");
@@ -10,7 +11,8 @@ export default function SettingsPage() {
   const [saved, setSaved]   = useState(false);
   const [pwNew, setPwNew]   = useState("");
   const [pwMsg, setPwMsg]   = useState<string|null>(null);
-  function saveNS(){ localStorage.setItem("ns_url",nsUrl); localStorage.setItem("ns_secret",nsSecret); setSaved(true); setTimeout(()=>setSaved(false),2000); }
+  const saveNS = useCallback(() => { localStorage.setItem("ns_url",nsUrl); localStorage.setItem("ns_secret",nsSecret); setSaved(true); setTimeout(()=>setSaved(false),2000); }, [nsUrl, nsSecret]);
+  useKeyboardSave(saveNS);
   async function changePw(){ setPwMsg(null); const{error}=await supabase.auth.updateUser({password:pwNew}); if(error)setPwMsg(error.message); else{setPwMsg("Password updated.");setPwNew("");} }
   return (
     <div className="min-h-screen bg-gray-950">

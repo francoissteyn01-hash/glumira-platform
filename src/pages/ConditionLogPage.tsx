@@ -6,6 +6,7 @@
 
 import { useState, useCallback } from "react";
 import { useAuth } from "@/hooks/useAuth";
+import { useKeyboardSave } from "@/hooks/useKeyboardSave";
 
 /* ─── Constants ───────────────────────────────────────────────────────────── */
 
@@ -96,6 +97,8 @@ export default function ConditionLogPage() {
       setSaving(false);
     }
   }, [session, eventType, intensity, durationMin, notes]);
+
+  useKeyboardSave(save);
 
   return (
     <div style={{ minHeight: "100vh", background: "#f8f9fa" }}>
