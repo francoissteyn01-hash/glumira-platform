@@ -94,7 +94,7 @@ const EMPTY_PROFILE: ProfileData = {
 const SEX_OPTIONS = ["Male", "Female", "Other", "Prefer not to say"] as const;
 const LANGUAGE_OPTIONS = ["English", "Afrikaans", "French", "German", "Spanish", "Portuguese", "Arabic", "Other"] as const;
 const GLUCOSE_UNIT_OPTIONS = ["mmol", "mg/dL"] as const;
-const BASAL_FREQUENCY_OPTIONS = ["Once daily", "Twice daily", "Pump (continuous)"] as const;
+const BASAL_FREQUENCY_OPTIONS = ["Once daily", "Twice daily", "Pump (continuous)", "Other (split doses)"] as const;
 
 /* ─── Helpers ─────────────────────────────────────────────────────────────── */
 
