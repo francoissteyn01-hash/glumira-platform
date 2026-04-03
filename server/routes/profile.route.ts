@@ -62,7 +62,9 @@ profileRouter.put("/", async (req: Request, res: Response) => {
       body.dietary_approach
     );
 
-    const row = {
+    // Build row — only include nightscout fields if explicitly sent
+    // (prevents profile form from wiping nightscout config set elsewhere)
+    const row: Record<string, unknown> = {
       user_id:          userId,
       first_name:       body.first_name ?? null,
       last_name:        body.last_name ?? null,
@@ -84,15 +86,17 @@ profileRouter.put("/", async (req: Request, res: Response) => {
       meals_per_day:    toNumberOrNull(body.meals_per_day) ?? 3,
       comorbidities:    body.comorbidities ?? [],
       special_conditions: body.special_conditions ?? [],
-      nightscout_url:         body.nightscout_url ?? null,
-      nightscout_api_secret:  body.nightscout_api_secret ?? null,
-      nightscout_sync_enabled: body.nightscout_sync_enabled ?? false,
       is_caregiver:     body.is_caregiver ?? false,
       patient_name:     body.patient_name ?? null,
       relationship:     body.relationship ?? null,
       under_18_flag:    under18Flag,
       profile_complete: profileComplete,
     };
+
+    // Only overwrite nightscout fields if explicitly provided in request
+    if ("nightscout_url" in body)          row.nightscout_url = body.nightscout_url ?? null;
+    if ("nightscout_api_secret" in body)   row.nightscout_api_secret = body.nightscout_api_secret ?? null;
+    if ("nightscout_sync_enabled" in body) row.nightscout_sync_enabled = body.nightscout_sync_enabled ?? false;
 
     const { data, error } = await supabase
       .from("patient_self_profiles")
