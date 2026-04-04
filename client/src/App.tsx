@@ -1,4 +1,4 @@
-﻿/**
+/**
  * GluMira™ V7 — client/src/App.tsx
  * Client-side routing — all pages wired
  */
@@ -8,16 +8,41 @@ import { Suspense, lazy } from "react";
 import { NAV_LINKS } from "./lib/constants";
 
 // Lazy-load pages for code splitting
-const DashboardPage  = lazy(() => import("./pages/DashboardPage"));
-const EducationPage  = lazy(() => import("./pages/EducationPage"));
-const MiraPage       = lazy(() => import("./pages/MiraPage"));
-const BadgesPage     = lazy(() => import("./pages/BadgesPage"));
+const DashboardPage        = lazy(() => import("./pages/DashboardPage"));
+const EducationPage        = lazy(() => import("./pages/EducationPage"));
+const MiraPage             = lazy(() => import("./pages/MiraPage"));
+const BadgesPage           = lazy(() => import("./pages/BadgesPage"));
 const FAQPage              = lazy(() => import("./pages/FAQPage"));
+const OnboardingStoryPage  = lazy(() => import("./pages/OnboardingStoryPage"));
+
+/* GROUP4 Modules */
 const PregnancyModule      = lazy(() => import("./pages/PregnancyModule"));
 const PaediatricModule     = lazy(() => import("./pages/PaediatricModule"));
 const SchoolCarePlanModule = lazy(() => import("./pages/SchoolCarePlanModule"));
 const MenstrualCycleModule = lazy(() => import("./pages/MenstrualCycleModule"));
-const OnboardingStoryPage  = lazy(() => import("./pages/OnboardingStoryPage"));
+
+/* Specialist & Dietary Modules */
+const ADHDModule           = lazy(() => import("./pages/ADHDModule"));
+const ThyroidModule        = lazy(() => import("./pages/ThyroidModule"));
+const RamadanModule        = lazy(() => import("./pages/RamadanModule"));
+const KosherModule         = lazy(() => import("./pages/KosherModule"));
+const HalalModule          = lazy(() => import("./pages/HalalModule"));
+const BernsteinModule      = lazy(() => import("./pages/BernsteinModule"));
+const SickDayModule        = lazy(() => import("./pages/SickDayModule"));
+
+const MODULE_LINKS = [
+  { label: "Pregnancy",        href: "/modules/pregnancy"  },
+  { label: "Paediatric",       href: "/modules/paediatric" },
+  { label: "School Care Plan", href: "/modules/school-care" },
+  { label: "Menstrual Cycle",  href: "/modules/menstrual"  },
+  { label: "ADHD",             href: "/modules/adhd"       },
+  { label: "Thyroid",          href: "/modules/thyroid"     },
+  { label: "Ramadan",          href: "/modules/ramadan"    },
+  { label: "Kosher",           href: "/modules/kosher"     },
+  { label: "Halal",            href: "/modules/halal"      },
+  { label: "Bernstein",        href: "/modules/bernstein"  },
+  { label: "Sick Day",         href: "/modules/sick-day"   },
+] as const;
 
 function LoadingFallback() {
   return (
@@ -46,20 +71,25 @@ function NavBar() {
               }
             >
               {link.label}
-        {/* Modules dropdown */}
-        <div className="relative group">
-          <button className="px-3 py-1.5 rounded-lg text-xs font-medium text-[#1a2a5e] hover:bg-[#f0f4f8] transition-colors whitespace-nowrap">
-            Modules ▾
-          </button>
-          <div className="absolute top-full left-0 mt-1 bg-white border border-[#e2e8f0] rounded-xl shadow-lg p-2 hidden group-hover:flex flex-col gap-1 min-w-[190px] z-50">
-            <NavLink to="/modules/pregnancy"   className="px-3 py-2 text-xs text-[#1a2a5e] hover:bg-[#f0f4f8] rounded-lg">🤱 Pregnancy</NavLink>
-            <NavLink to="/modules/paediatric"  className="px-3 py-2 text-xs text-[#1a2a5e] hover:bg-[#f0f4f8] rounded-lg">👶 Paediatric</NavLink>
-            <NavLink to="/modules/school-care" className="px-3 py-2 text-xs text-[#1a2a5e] hover:bg-[#f0f4f8] rounded-lg">🏫 School Care Plan</NavLink>
-            <NavLink to="/modules/menstrual"   className="px-3 py-2 text-xs text-[#1a2a5e] hover:bg-[#f0f4f8] rounded-lg">🌿 Menstrual Cycle</NavLink>
-          </div>
-        </div>
             </NavLink>
           ))}
+          {/* Modules dropdown */}
+          <div className="relative group">
+            <button className="px-3 py-1.5 rounded-lg text-xs font-medium text-[#1a2a5e] hover:bg-[#f0f4f8] transition-colors whitespace-nowrap">
+              Modules ▾
+            </button>
+            <div className="absolute top-full right-0 mt-1 bg-white border border-[#e2e8f0] rounded-xl shadow-lg p-2 hidden group-hover:flex flex-col gap-1 min-w-[190px] z-50">
+              {MODULE_LINKS.map((mod) => (
+                <NavLink
+                  key={mod.href}
+                  to={mod.href}
+                  className="px-3 py-2 text-xs text-[#1a2a5e] hover:bg-[#f0f4f8] rounded-lg"
+                >
+                  {mod.label}
+                </NavLink>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </nav>
@@ -80,11 +110,20 @@ export default function App() {
             <Route path="/badges"      element={<BadgesPage />} />
             <Route path="/faq"         element={<FAQPage />} />
             <Route path="/settings"           element={<div className="p-8 text-[#718096]">Settings — coming soon</div>} />
+            <Route path="/onboarding/story"    element={<OnboardingStoryPage />} />
+            {/* GROUP4 Modules */}
             <Route path="/modules/pregnancy"   element={<PregnancyModule />} />
             <Route path="/modules/paediatric"  element={<PaediatricModule />} />
             <Route path="/modules/school-care" element={<SchoolCarePlanModule />} />
             <Route path="/modules/menstrual"   element={<MenstrualCycleModule />} />
-            <Route path="/onboarding/story"    element={<OnboardingStoryPage />} />
+            {/* Specialist & Dietary Modules */}
+            <Route path="/modules/adhd"        element={<ADHDModule />} />
+            <Route path="/modules/thyroid"     element={<ThyroidModule />} />
+            <Route path="/modules/ramadan"     element={<RamadanModule />} />
+            <Route path="/modules/kosher"      element={<KosherModule />} />
+            <Route path="/modules/halal"       element={<HalalModule />} />
+            <Route path="/modules/bernstein"   element={<BernsteinModule />} />
+            <Route path="/modules/sick-day"    element={<SickDayModule />} />
             <Route path="*"                    element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </Suspense>

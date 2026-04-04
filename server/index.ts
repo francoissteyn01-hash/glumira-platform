@@ -34,6 +34,9 @@ import adhdRouter                  from "./routes/adhd.route";
 import thyroidRouter               from "./routes/thyroid.route";
 import mealPlanRouter              from "./routes/meal-plan.route";
 import educationRouter             from "./routes/education.route";
+import { glucoseExportRouter, bernsteinRouter, doseHistoryRouter, carbLookupRouter } from "./routes/remaining.routes";
+import { schoolCarePlanRouter }    from "./routes/school-care-plan-route";
+import { glucosePredictionRouter } from "./routes/glucose-prediction.route";
 
 const app = express();
 const PORT = parseInt(process.env.PORT ?? "3001", 10);
@@ -87,6 +90,12 @@ app.use(adhdRouter);
 app.use(thyroidRouter);
 app.use(mealPlanRouter);
 app.use(educationRouter);
+app.use("/api/glucose",          glucoseExportRouter);
+app.use("/api/bernstein",        bernsteinRouter);
+app.use("/api/doses",            doseHistoryRouter);
+app.use("/api/meals",            carbLookupRouter);
+app.use("/api/school-care-plan", schoolCarePlanRouter);
+app.use("/api/glucose-prediction", glucosePredictionRouter);
 
 // ── 404 / Error ───────────────────────────────────────────────────────────────
 app.use((_req, res) => res.status(404).json({ error: "Not found" }));

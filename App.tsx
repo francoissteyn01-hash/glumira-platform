@@ -6,7 +6,7 @@
 
 import { BrowserRouter, Routes, Route, Navigate, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { Suspense, lazy } from "react";
-import { NAV_LINKS } from "@/lib/constants";
+import { NAV_LINKS, MODULE_LINKS } from "@/lib/constants";
 import { useAuth } from "@/hooks/useAuth";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { GlucoseUnitsProvider } from "@/context/GlucoseUnitsContext";
@@ -138,6 +138,27 @@ function DarkNavBar() {
               {navLabel(link.label)}
             </NavLink>
           ))}
+          {/* Modules dropdown */}
+          <div className="relative group">
+            <button className="px-3 py-1.5 rounded-lg text-xs font-medium text-gray-300 hover:text-white transition-colors whitespace-nowrap">
+              Modules ▾
+            </button>
+            <div className="absolute top-full right-0 mt-1 bg-gray-900 border border-gray-700 rounded-xl shadow-lg p-2 hidden group-hover:flex flex-col gap-0.5 min-w-[180px] z-50">
+              {MODULE_LINKS.map((mod) => (
+                <NavLink
+                  key={mod.href}
+                  to={mod.href}
+                  className={({ isActive }) =>
+                    `px-3 py-2 text-xs rounded-lg transition-colors whitespace-nowrap ${
+                      isActive ? "bg-brand-600/50 text-brand-500" : "text-gray-300 hover:text-white hover:bg-gray-800"
+                    }`
+                  }
+                >
+                  {mod.label}
+                </NavLink>
+              ))}
+            </div>
+          </div>
           <button onClick={signOut} aria-label="Sign out of GluMira" className="ml-2 px-3 py-1.5 text-xs text-gray-400 hover:text-white transition-colors">
             Sign out
           </button>
@@ -196,7 +217,8 @@ export default function App() {
               <Route path="/onboarding"             element={<ProtectedRoute><OnboardingWizard /></ProtectedRoute>} />
               <Route path="/onboarding/story"     element={<ProtectedRoute><OnboardingStoryPage /></ProtectedRoute>} />
               <Route path="/import/handwritten"   element={<ProtectedRoute><HandwrittenImportPage /></ProtectedRoute>} />
-              <Route path="/caregivers"          element={<ProtectedRoute><CaregiverManagePage /></ProtectedRoute>} />
+              <Route path="/caregivers"              element={<ProtectedRoute><CaregiverManagePage /></ProtectedRoute>} />
+              <Route path="/settings/caregivers"    element={<ProtectedRoute><CaregiverManagePage /></ProtectedRoute>} />
               {/* GROUP4 Modules */}
               <Route path="/modules/pregnancy"       element={<ProtectedRoute><PregnancyModule /></ProtectedRoute>} />
               <Route path="/modules/paediatric"      element={<ProtectedRoute><PaediatricModule /></ProtectedRoute>} />
