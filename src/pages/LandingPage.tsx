@@ -27,24 +27,31 @@ const T = {
 
 /* ─── Responsive CSS ─────────────────────────────────────────────────────── */
 const responsiveCSS = `
+  /* Mobile-first: Mira as full-width banner, bleeding edge-to-edge */
   .glm-hero {
     flex-direction: column !important;
-    padding: 24px 20px 20px !important;
+    padding: 0 !important;
     min-height: 100vh !important;
     max-height: none !important;
     text-align: center;
   }
   .glm-hero-text {
     max-width: 100% !important;
-    padding-right: 0 !important;
+    padding: 24px 24px 32px !important;
     order: 2;
   }
   .glm-hero-image {
     order: 1;
-    margin-bottom: 24px;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    overflow: hidden;
+    flex-shrink: 0;
   }
   .glm-hero-image img {
-    max-width: 280px !important;
+    width: 130% !important;
+    max-width: none !important;
+    margin-left: -15%;
+    display: block;
   }
   .glm-cta-row {
     justify-content: center;
@@ -63,15 +70,20 @@ const responsiveCSS = `
     }
     .glm-hero-text {
       max-width: 520px !important;
+      padding: 0 !important;
       padding-right: 32px !important;
       order: 1;
     }
     .glm-hero-image {
       order: 2;
-      margin-bottom: 0;
+      width: auto;
+      margin-left: 0;
+      overflow: visible;
     }
     .glm-hero-image img {
+      width: auto !important;
       max-width: 100% !important;
+      margin-left: 0;
     }
     .glm-cta-row {
       justify-content: flex-start;
