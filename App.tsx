@@ -53,6 +53,7 @@ const SafeModePage            = lazy(() => import("@/pages/SafeModePage"));
 const DemoDashboardPage       = lazy(() => import("@/pages/DemoDashboardPage"));
 const CreateProfilePage       = lazy(() => import("@/pages/CreateProfilePage"));
 const DevPanel                = lazy(() => import("@/pages/DevPanel"));
+const RegisterPage            = lazy(() => import("@/pages/RegisterPage"));
 
 /* ─── Loading fallback ───────────────────────────────────────────────────── */
 function LoadingFallback() {
@@ -251,6 +252,7 @@ export default function App() {
               <Route path="/safe-mode/profile/:id" element={<DemoDashboardPage />} />
               <Route path="/safe-mode/create"      element={<CreateProfilePage />} />
               <Route path="/dev"                   element={<DevPanel />} />
+              <Route path="/register"              element={<RegisterPage />} />
               <Route path="*"          element={<Navigate to="/" replace />} />
             </Routes>
           </Suspense>

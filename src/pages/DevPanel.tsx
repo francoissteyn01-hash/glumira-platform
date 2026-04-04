@@ -1,312 +1,139 @@
 import { useState } from "react";
 
-const NAVY = "#1a2a5e";
-const NAVY_DEEP = "#0D1B3E";
-const TEAL = "#2ab5c1";
-const AMBER = "#f59e0b";
+const T = "#2ab5c1";
+const A = "#f59e0b";
+const N = "#1a2a5e";
+const D = "#0D1B3E";
 
-const SECTIONS = [
-  {
-    label: "CORE",
-    routes: [
-      { path: "/", name: "Landing Page" },
-      { path: "/auth", name: "Auth" },
-      { path: "/dashboard", name: "Dashboard" },
-      { path: "/settings", name: "Settings" },
-      { path: "/settings/caregivers", name: "Caregiver Management" },
-      { path: "/faq", name: "FAQ" },
-    ],
-  },
-  {
-    label: "EDUCATION & AI",
-    routes: [
-      { path: "/education", name: "Education Hub" },
-      { path: "/education/topic/1", name: "Education Topic (sample)" },
-      { path: "/mira", name: "Mira AI Chat" },
-      { path: "/badges", name: "Badge System" },
-    ],
-  },
-  {
-    label: "ONBOARDING",
-    routes: [
-      { path: "/onboarding/story", name: "Story Engine" },
-      { path: "/meals/plan", name: "Meal Plan" },
-    ],
-  },
-  {
-    label: "CLINICAL MODULES",
-    routes: [
-      { path: "/modules/pregnancy", name: "Pregnancy" },
-      { path: "/modules/paediatric", name: "Paediatric" },
-      { path: "/modules/school-care", name: "School Care Plan" },
-      { path: "/modules/menstrual", name: "Menstrual Cycle" },
-      { path: "/modules/adhd", name: "ADHD" },
-      { path: "/modules/thyroid", name: "Thyroid" },
-    ],
-  },
-  {
-    label: "DIETARY MODULES",
-    routes: [
-      { path: "/modules/ramadan", name: "Ramadan" },
-      { path: "/modules/kosher", name: "Kosher" },
-      { path: "/modules/halal", name: "Halal" },
-      { path: "/modules/bernstein", name: "Bernstein Protocol" },
-      { path: "/modules/sick-day", name: "Sick Day Management" },
-    ],
-  },
-  {
-    label: "SAFE MODE",
-    routes: [
-      { path: "/safe-mode", name: "Safe Mode Hub" },
-      { path: "/safe-mode/profile/demo-parent-toddler", name: "Demo: Sarah & Lily" },
-      { path: "/safe-mode/profile/demo-teen", name: "Demo: Aisha (Teen)" },
-      { path: "/safe-mode/profile/demo-clinician", name: "Demo: Dr Naidoo" },
-      { path: "/safe-mode/create", name: "Create Custom Profile" },
-    ],
-  },
-  {
-    label: "API ENDPOINTS",
-    routes: [
-      { path: "/api/auth", name: "Auth API", api: true },
-      { path: "/api/iob", name: "IOB Calculator API", api: true },
-      { path: "/api/patient", name: "Patient API", api: true },
-      { path: "/api/caregiver", name: "Caregiver API", api: true },
-      { path: "/api/mira", name: "Mira AI API", api: true },
-      { path: "/api/education", name: "Education API", api: true },
-      { path: "/api/meal-plan", name: "Meal Plan API", api: true },
-      { path: "/api/adhd", name: "ADHD API", api: true },
-      { path: "/api/thyroid", name: "Thyroid API", api: true },
-      { path: "/api/badges", name: "Badges API", api: true },
-      { path: "/api/analytics", name: "Analytics API", api: true },
-      { path: "/api/settings", name: "Settings API", api: true },
-      { path: "/api/subscription", name: "Subscription API", api: true },
-      { path: "/api/feedback", name: "Feedback API", api: true },
-      { path: "/api/school-care-plan", name: "School Care Plan API", api: true },
-      { path: "/api/glucose-prediction", name: "Glucose Prediction API", api: true },
-    ],
-  },
-  {
-    label: "INFRASTRUCTURE",
-    routes: [
-      { path: "https://glumira-platform-production.up.railway.app", name: "Railway Backend", ext: true },
-      { path: "https://supabase.com/dashboard/project/lsmxsqgckcxsbayfdtxs", name: "Supabase Dashboard", ext: true },
-      { path: "https://github.com/francoissteyn01-hash/glumira-platform", name: "GitHub Repo", ext: true },
-      { path: "https://app.netlify.com", name: "Netlify Deploys", ext: true },
-    ],
-  },
+const R: [string, [string, string, number?][]][] = [
+  ["CORE", [
+    ["/", "Landing"], ["/auth", "Auth"], ["/dashboard", "Dashboard"],
+    ["/settings", "Settings"], ["/settings/caregivers", "Caregivers"],
+    ["/faq", "FAQ"],
+  ]],
+  ["EDUCATION", [
+    ["/education", "Education Hub"], ["/education/topic/1", "Topic (sample)"],
+    ["/mira", "Mira AI"], ["/badges", "Badges"],
+  ]],
+  ["ONBOARDING", [
+    ["/onboarding/story", "Story Engine"], ["/meals/plan", "Meal Plan"],
+  ]],
+  ["CLINICAL", [
+    ["/modules/pregnancy", "Pregnancy"], ["/modules/paediatric", "Paediatric"],
+    ["/modules/school-care", "School Care"], ["/modules/menstrual", "Menstrual"],
+    ["/modules/adhd", "ADHD"], ["/modules/thyroid", "Thyroid"],
+  ]],
+  ["DIETARY", [
+    ["/modules/ramadan", "Ramadan"], ["/modules/kosher", "Kosher"],
+    ["/modules/halal", "Halal"], ["/modules/bernstein", "Bernstein"],
+    ["/modules/sick-day", "Sick Day"],
+  ]],
+  ["API", [
+    ["/api/auth", "Auth", 1], ["/api/iob", "IOB Calc", 1],
+    ["/api/patient", "Patient", 1], ["/api/caregiver", "Caregiver", 1],
+    ["/api/mira", "Mira", 1], ["/api/education", "Education", 1],
+    ["/api/meal-plan", "Meal Plan", 1], ["/api/badges", "Badges", 1],
+    ["/api/analytics", "Analytics", 1], ["/api/settings", "Settings", 1],
+    ["/api/subscription", "Subscription", 1],
+  ]],
+  ["INFRA", [
+    ["https://glumira-platform-production.up.railway.app", "Railway", 2],
+    ["https://supabase.com/dashboard/project/lsmxsqgckcxsbayfdtxs", "Supabase", 2],
+    ["https://github.com/francoissteyn01-hash/glumira-platform", "GitHub", 2],
+    ["https://app.netlify.com", "Netlify", 2],
+  ]],
 ];
 
-const TIER_MAP: Record<string, string[]> = {
-  "Free": ["Landing Page", "Auth", "Dashboard", "Education Hub", "Mira AI Chat", "Badge System", "FAQ", "Settings", "Story Engine"],
-  "Pro": ["Meal Plan", "Pregnancy", "Paediatric", "School Care Plan", "Menstrual Cycle", "Ramadan", "Kosher", "Halal", "Bernstein Protocol", "Sick Day Management"],
-  "AI": ["ADHD", "Thyroid"],
-  "Clinical": ["Caregiver Management"],
-};
-
 export default function DevPanel() {
-  const [filter, setFilter] = useState("");
+  const [q, setQ] = useState("");
+  const [profile, setProfile] = useState("Emily");
 
-  const filtered = SECTIONS.map((s) => ({
-    ...s,
-    routes: s.routes.filter(
-      (r) =>
-        r.name.toLowerCase().includes(filter.toLowerCase()) ||
-        r.path.toLowerCase().includes(filter.toLowerCase())
-    ),
-  })).filter((s) => s.routes.length > 0);
+  const match = (s: string) => !q || s.toLowerCase().includes(q.toLowerCase());
 
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=DM+Sans:wght@400;500;600&display=swap');
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        .dev-page {
-          min-height: 100vh;
-          background: ${NAVY_DEEP};
-          color: #c8d6e5;
-          font-family: 'DM Sans', sans-serif;
-          padding: 20px;
-        }
-
-        .dev-header {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 12px 0 20px;
-          border-bottom: 1px solid rgba(42,181,193,0.15);
-          margin-bottom: 24px;
-          flex-wrap: wrap;
-          gap: 12px;
-        }
-
-        .dev-title {
-          font-family: 'JetBrains Mono', monospace;
-          font-size: 14px;
-          font-weight: 600;
-          color: ${TEAL};
-          letter-spacing: 1px;
-        }
-        .dev-title span {
-          color: ${AMBER};
-        }
-
-        .dev-search {
-          background: rgba(255,255,255,0.05);
-          border: 1px solid rgba(42,181,193,0.2);
-          border-radius: 6px;
-          padding: 8px 14px;
-          color: #e2e8f0;
-          font-family: 'JetBrains Mono', monospace;
-          font-size: 13px;
-          outline: none;
-          width: 260px;
-          max-width: 100%;
-          transition: border-color 0.2s;
-        }
-        .dev-search:focus {
-          border-color: ${TEAL};
-        }
-        .dev-search::placeholder {
-          color: #4a5568;
-        }
-
-        .dev-section {
-          margin-bottom: 28px;
-        }
-        .dev-section-label {
-          font-family: 'JetBrains Mono', monospace;
-          font-size: 10px;
-          font-weight: 600;
-          letter-spacing: 2px;
-          color: #4a5568;
-          margin-bottom: 10px;
-          padding-left: 2px;
-        }
-
-        .dev-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-          gap: 6px;
-        }
-
-        .dev-link {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 10px 14px;
-          background: rgba(255,255,255,0.03);
-          border: 1px solid rgba(255,255,255,0.04);
-          border-radius: 6px;
-          text-decoration: none;
-          color: #c8d6e5;
-          font-size: 13px;
-          font-weight: 500;
-          transition: all 0.15s;
-          cursor: pointer;
-        }
-        .dev-link:hover {
-          background: rgba(42,181,193,0.08);
-          border-color: rgba(42,181,193,0.25);
-          color: white;
-        }
-        .dev-link .path {
-          font-family: 'JetBrains Mono', monospace;
-          font-size: 10px;
-          color: #4a5568;
-          margin-top: 2px;
-        }
-        .dev-link .tag {
-          font-family: 'JetBrains Mono', monospace;
-          font-size: 9px;
-          padding: 2px 6px;
-          border-radius: 3px;
-          flex-shrink: 0;
-          margin-left: 8px;
-        }
-        .tag-api {
-          background: rgba(245,158,11,0.15);
-          color: ${AMBER};
-        }
-        .tag-ext {
-          background: rgba(42,181,193,0.12);
-          color: ${TEAL};
-        }
-
-        .dev-stats {
-          display: flex;
-          gap: 24px;
-          padding: 14px 0;
-          border-top: 1px solid rgba(42,181,193,0.1);
-          margin-top: 8px;
-          flex-wrap: wrap;
-        }
-        .dev-stat {
-          font-family: 'JetBrains Mono', monospace;
-          font-size: 11px;
-          color: #4a5568;
-        }
-        .dev-stat strong {
-          color: ${TEAL};
-          font-size: 18px;
-          display: block;
-          margin-bottom: 2px;
-        }
-
-        @media (max-width: 600px) {
-          .dev-grid {
-            grid-template-columns: 1fr;
-          }
-          .dev-search {
-            width: 100%;
-          }
-        }
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=DM+Sans:wght@400;500&display=swap');
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:${D}}
+        .dp{min-height:100vh;background:${D};color:#9aa5b4;font-family:'DM Sans',sans-serif;padding:12px 16px;max-width:480px;margin:0 auto}
+        .dp-top{position:sticky;top:0;z-index:10;background:${D};padding:8px 0 12px;border-bottom:1px solid rgba(42,181,193,0.1)}
+        .dp-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+        .dp-logo{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;color:${T};letter-spacing:1px}
+        .dp-logo b{color:${A}}
+        .dp-switch{display:flex;align-items:center;gap:6px;font-size:11px;font-family:'JetBrains Mono',monospace}
+        .dp-switch span{color:#4a5568}
+        .dp-switch button{background:rgba(42,181,193,0.1);border:1px solid rgba(42,181,193,0.2);color:${T};font-size:10px;padding:3px 8px;border-radius:4px;cursor:pointer;font-family:'JetBrains Mono',monospace}
+        .dp-switch button:hover{background:rgba(42,181,193,0.2)}
+        .dp-name{color:#e2e8f0;font-weight:500}
+        .dp-q{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:5px;padding:7px 10px;color:#e2e8f0;font-family:'JetBrains Mono',monospace;font-size:12px;outline:none}
+        .dp-q:focus{border-color:${T}}
+        .dp-q::placeholder{color:#3a4555}
+        .dp-sec{margin-top:14px}
+        .dp-h{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:500;letter-spacing:1.5px;color:#3a4555;margin-bottom:4px}
+        .dp-r{display:flex;align-items:center;justify-content:space-between;padding:7px 8px;border-radius:4px;text-decoration:none;color:#9aa5b4;font-size:13px;transition:background 0.1s}
+        .dp-r:hover{background:rgba(42,181,193,0.06);color:#e2e8f0}
+        .dp-r .p{font-family:'JetBrains Mono',monospace;font-size:10px;color:#3a4555;flex-shrink:0;margin-left:8px;max-width:45%;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .dp-tag{font-family:'JetBrains Mono',monospace;font-size:8px;padding:1px 5px;border-radius:2px;margin-left:6px;flex-shrink:0}
+        .t-api{background:rgba(245,158,11,0.12);color:${A}}
+        .t-ext{background:rgba(42,181,193,0.1);color:${T}}
+        .dp-ft{margin-top:20px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.04);display:flex;gap:16px;flex-wrap:wrap}
+        .dp-ft div{font-family:'JetBrains Mono',monospace;font-size:10px;color:#3a4555}
+        .dp-ft div b{color:${T};font-size:14px;display:block}
       `}</style>
 
-      <div className="dev-page">
-        <div className="dev-header">
-          <div className="dev-title">
-            GLUMIRA<span>&trade;</span> V7 &mdash; DEV PANEL
+      <div className="dp">
+        <div className="dp-top">
+          <div className="dp-bar">
+            <div className="dp-logo">GLUMIRA<b>&trade;</b> DEV</div>
+            <div className="dp-switch">
+              <span>viewing</span>
+              <span className="dp-name">{profile}</span>
+              <button onClick={() => setProfile(p => p === "Emily" ? "Anouk" : "Emily")}>
+                &hArr; {profile === "Emily" ? "Anouk" : "Emily"}
+              </button>
+            </div>
           </div>
           <input
-            className="dev-search"
-            type="text"
-            placeholder="filter routes..."
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
+            className="dp-q"
+            placeholder="filter..."
+            value={q}
+            onChange={e => setQ(e.target.value)}
           />
         </div>
 
-        {filtered.map((section) => (
-          <div className="dev-section" key={section.label}>
-            <div className="dev-section-label">{section.label}</div>
-            <div className="dev-grid">
-              {section.routes.map((r: any) => (
+        {R.map(([label, routes]) => {
+          const f = routes.filter(r => match(r[0]) || match(r[1]));
+          if (!f.length) return null;
+          return (
+            <div className="dp-sec" key={label}>
+              <div className="dp-h">{label}</div>
+              {f.map(r => (
                 <a
-                  key={r.path}
-                  className="dev-link"
-                  href={r.path}
-                  target={r.ext ? "_blank" : undefined}
-                  rel={r.ext ? "noopener noreferrer" : undefined}
+                  key={r[0]}
+                  className="dp-r"
+                  href={r[0]}
+                  target={r[2] === 2 ? "_blank" : undefined}
+                  rel={r[2] === 2 ? "noopener noreferrer" : undefined}
                 >
-                  <div>
-                    <div>{r.name}</div>
-                    <div className="path">{r.path}</div>
-                  </div>
-                  {r.api && <span className="tag tag-api">API</span>}
-                  {r.ext && <span className="tag tag-ext">EXT</span>}
+                  <span>{r[1]}</span>
+                  <span style={{ display: "flex", alignItems: "center" }}>
+                    <span className="p">{r[0]}</span>
+                    {r[2] === 1 && <span className="dp-tag t-api">API</span>}
+                    {r[2] === 2 && <span className="dp-tag t-ext">EXT</span>}
+                  </span>
                 </a>
               ))}
             </div>
-          </div>
-        ))}
+          );
+        })}
 
-        <div className="dev-stats">
-          <div className="dev-stat"><strong>6</strong>core pages</div>
-          <div className="dev-stat"><strong>11</strong>modules</div>
-          <div className="dev-stat"><strong>16</strong>API routes</div>
-          <div className="dev-stat"><strong>4</strong>infra links</div>
-          <div className="dev-stat"><strong>23</strong>tables</div>
+        <div className="dp-ft">
+          <div><b>6</b>core</div>
+          <div><b>11</b>modules</div>
+          <div><b>11</b>APIs</div>
+          <div><b>4</b>infra</div>
+          <div><b>23</b>tables</div>
         </div>
       </div>
     </>
