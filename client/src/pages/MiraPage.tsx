@@ -84,6 +84,68 @@ export default function MiraPage() {
     }
   }
 
+  function startFeedback() {
+    setFeedbackMode(true);
+    setFeedbackStep(0);
+    setFeedbackData({});
+    setMessages((prev) => [
+      ...prev,
+      {
+        role: "assistant",
+        content: "I'd love to hear your feedback! Let's go through a few quick questions.\n\n" + FEEDBACK_QUESTIONS[0],
+        timestamp: new Date(),
+      },
+    ]);
+  }
+
+  async function handleFeedbackAnswer(answer: string) {
+    const keys = ["most_useful", "most_confusing", "feature_request", "rating", "other_thoughts"];
+    const key = keys[feedbackStep];
+    const newData = { ...feedbackData, [key]: answer };
+    setFeedbackData(newData);
+
+    setMessages((prev) => [
+      ...prev,
+      { role: "user", content: answer, timestamp: new Date() },
+    ]);
+
+    if (feedbackStep < FEEDBACK_QUESTIONS.length - 1) {
+      const nextStep = feedbackStep + 1;
+      setFeedbackStep(nextStep);
+      setMessages((prev) => [
+        ...prev,
+        { role: "assistant", content: FEEDBACK_QUESTIONS[nextStep], timestamp: new Date() },
+      ]);
+    } else {
+      // Submit feedback
+      setFeedbackMode(false);
+      try {
+        const ratingNum = parseInt(newData.rating ?? "0", 10);
+        await apiFetch("/api/feedback", {
+          method: "POST",
+          body: JSON.stringify({
+            session_id: `safe-${Date.now()}`,
+            demo_profile_id: params.get("profile") ?? undefined,
+            most_useful: newData.most_useful,
+            most_confusing: newData.most_confusing,
+            feature_request: newData.feature_request,
+            rating: ratingNum >= 1 && ratingNum <= 5 ? ratingNum : undefined,
+            other_thoughts: newData.other_thoughts,
+          }),
+        });
+        setMessages((prev) => [
+          ...prev,
+          { role: "assistant", content: "Thank you for your feedback! It helps us improve GluMira™ for everyone. 💙", timestamp: new Date() },
+        ]);
+      } catch {
+        setMessages((prev) => [
+          ...prev,
+          { role: "assistant", content: "Thanks for sharing! (I couldn't save it right now, but we appreciate your thoughts.)", timestamp: new Date() },
+        ]);
+      }
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-[#f8f9fa] flex flex-col">
 
