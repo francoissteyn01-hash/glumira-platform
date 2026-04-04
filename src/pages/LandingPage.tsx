@@ -42,15 +42,14 @@ const responsiveCSS = `
   }
   .glm-hero-image {
     order: 1;
-    width: 100vw;
-    margin-left: calc(-50vw + 50%);
-    overflow: hidden;
+    width: 100%;
+    display: flex;
+    justify-content: center;
     flex-shrink: 0;
   }
   .glm-hero-image img {
-    width: 130% !important;
+    width: 100% !important;
     max-width: none !important;
-    margin-left: -15%;
     display: block;
   }
   .glm-cta-row {
