@@ -121,11 +121,11 @@ export default function LandingPage() {
         <h1
           style={{
             fontFamily: T.heading,
-            fontSize: "clamp(42px, 12vw, 72px)",
+            fontSize: "clamp(52px, 16vw, 88px)",
             fontWeight: 700,
             color: T.white,
             lineHeight: 1.0,
-            margin: "0 0 4px",
+            margin: "0 0 6px",
             letterSpacing: "-0.03em",
             width: "100%",
           }}
@@ -136,46 +136,47 @@ export default function LandingPage() {
         {/* Engine badge */}
         <p
           style={{
-            fontSize: 10,
+            fontSize: "clamp(11px, 2.2vw, 14px)",
             fontWeight: 500,
             letterSpacing: "0.14em",
             textTransform: "uppercase",
             color: "rgba(255,255,255,0.45)",
-            marginBottom: 32,
+            marginBottom: 44,
           }}
         >
           Powered by IOB Hunter™
         </p>
 
-        {/* Tagline — two lines, "made visible" in amber glow */}
-        <p
-          style={{
-            fontFamily: T.heading,
-            fontSize: "clamp(16px, 3vw, 20px)",
-            fontWeight: 700,
-            color: T.white,
-            margin: 0,
-            lineHeight: 2.4,
-            letterSpacing: "0.01em",
-          }}
-        >
-          The science of insulin,
-        </p>
-        <p
-          style={{
-            fontFamily: T.heading,
-            fontSize: "clamp(20px, 4vw, 28px)",
-            fontWeight: 700,
-            fontStyle: "italic",
-            color: T.amber,
-            margin: "0 0 36px",
-            lineHeight: 2.4,
-            letterSpacing: "0.01em",
-            textShadow: "0 0 24px rgba(245,158,11,0.3)",
-          }}
-        >
-          made visible
-        </p>
+        {/* Tagline — two lines, tight, 3/4 size of GluMira heading */}
+        <div style={{ marginBottom: 40 }}>
+          <p
+            style={{
+              fontFamily: T.heading,
+              fontSize: "clamp(22px, 5.5vw, 36px)",
+              fontWeight: 700,
+              color: T.white,
+              margin: 0,
+              lineHeight: 1.25,
+              letterSpacing: "-0.01em",
+            }}
+          >
+            The science of insulin,
+          </p>
+          <p
+            style={{
+              fontFamily: T.heading,
+              fontSize: "clamp(22px, 5.5vw, 36px)",
+              fontWeight: 700,
+              color: T.amber,
+              margin: 0,
+              lineHeight: 1.25,
+              letterSpacing: "-0.01em",
+              textShadow: "0 0 24px rgba(245,158,11,0.3)",
+            }}
+          >
+            made visible
+          </p>
+        </div>
 
         {/* CTA buttons — understated, refined */}
         <div className="glm-cta-row" style={{ display: "flex", gap: 14, flexWrap: "wrap", marginBottom: 32 }}>
