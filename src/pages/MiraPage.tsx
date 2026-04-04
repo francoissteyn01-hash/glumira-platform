@@ -14,6 +14,40 @@ const SUGGESTED_PROMPTS = [
   "What is the quiet tail of insulin?",
 ];
 
+/* ── Feedback flow for safe/demo mode ──────────────────────────────────────── */
+
+const FEEDBACK_QUESTIONS = [
+  "What did you find most useful about GluMira so far?",
+  "What was confusing or could be improved?",
+  "What feature would you want us to build next?",
+  "On a scale of 1–5, how would you rate your experience? (just type the number)",
+  "Anything else you'd like to share?",
+];
+
+function isSafeMode(): boolean {
+  try { return sessionStorage.getItem("glumira_safe_mode") === "1"; } catch { return false; }
+}
+
+async function submitFeedback(answers: string[]) {
+  const [mostUseful, mostConfusing, featureRequest, ratingStr, otherThoughts] = answers;
+  const rating = parseInt(ratingStr, 10);
+  try {
+    await fetch("/api/feedback", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        session_id: sessionStorage.getItem("glumira_session_id") ?? undefined,
+        demo_profile_id: sessionStorage.getItem("glumira_demo_profile") ?? undefined,
+        most_useful: mostUseful || undefined,
+        most_confusing: mostConfusing || undefined,
+        feature_request: featureRequest || undefined,
+        rating: rating >= 1 && rating <= 5 ? rating : undefined,
+        other_thoughts: otherThoughts || undefined,
+      }),
+    });
+  } catch {}
+}
+
 export default function MiraPage() {
   const { session } = useAuth();
   const { patientName, isCaregiver } = usePatientName();
@@ -25,6 +59,8 @@ export default function MiraPage() {
   const [loading, setLoading] = useState(false);
   const [bernstein, setBernstein] = useState(false);
   const [profileBadge, setProfileBadge] = useState("");
+  const [feedbackStep, setFeedbackStep] = useState(-1); // -1 = not started
+  const [feedbackAnswers, setFeedbackAnswers] = useState<string[]>([]);
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: "smooth" }); }, [messages]);
@@ -46,11 +82,47 @@ export default function MiraPage() {
       .catch(() => {});
   }, [session]);
 
+  function startFeedback() {
+    setFeedbackStep(0);
+    setFeedbackAnswers([]);
+    setMessages((p) => [...p, {
+      role: "assistant",
+      content: `I'd love to hear your thoughts! Let me ask you a few quick questions.\n\n${FEEDBACK_QUESTIONS[0]}`,
+      timestamp: new Date(),
+    }]);
+  }
+
   async function send(text?: string) {
     const msg = (text ?? input).trim();
     if (!msg || loading) return;
     setMessages((p) => [...p, { role: "user", content: msg, timestamp: new Date() }]);
     setInput("");
+
+    // Handle feedback flow
+    if (feedbackStep >= 0 && feedbackStep < FEEDBACK_QUESTIONS.length) {
+      const newAnswers = [...feedbackAnswers, msg];
+      setFeedbackAnswers(newAnswers);
+      const nextStep = feedbackStep + 1;
+
+      if (nextStep < FEEDBACK_QUESTIONS.length) {
+        setFeedbackStep(nextStep);
+        setMessages((p) => [...p, {
+          role: "assistant",
+          content: FEEDBACK_QUESTIONS[nextStep],
+          timestamp: new Date(),
+        }]);
+      } else {
+        setFeedbackStep(-1);
+        await submitFeedback(newAnswers);
+        setMessages((p) => [...p, {
+          role: "assistant",
+          content: "Thank you so much for your feedback! It directly shapes what we build next. You can continue chatting or explore more of GluMira.",
+          timestamp: new Date(),
+        }]);
+      }
+      return;
+    }
+
     setLoading(true);
     try {
       const res = await apiFetch<{ reply: string }>("/api/mira/chat", {
@@ -123,7 +195,20 @@ export default function MiraPage() {
                 {p}
               </button>
             ))}
+            {isSafeMode() && feedbackStep < 0 && (
+              <button onClick={startFeedback} className="text-xs bg-amber-900/30 border border-amber-700/50 text-amber-400 rounded-lg px-3 py-1.5 hover:bg-amber-900/50 transition-colors">
+                Give Feedback
+              </button>
+            )}
           </div>
+        </div>
+      )}
+      {/* Persistent feedback chip when in safe mode and past initial prompts */}
+      {isSafeMode() && messages.length > 2 && feedbackStep < 0 && (
+        <div className="px-4 pb-1 max-w-2xl mx-auto w-full">
+          <button onClick={startFeedback} className="text-xs bg-amber-900/30 border border-amber-700/50 text-amber-400 rounded-lg px-3 py-1.5 hover:bg-amber-900/50 transition-colors">
+            Give Feedback
+          </button>
         </div>
       )}
 

@@ -181,7 +181,7 @@ export default function LandingPage() {
         {/* CTA buttons — understated, refined */}
         <div className="glm-cta-row" style={{ display: "flex", gap: 14, flexWrap: "wrap", marginBottom: 32 }}>
           <button
-            onClick={() => navigate("/auth")}
+            onClick={() => navigate("/safe-mode")}
             style={{
               padding: "11px 28px",
               borderRadius: 8,

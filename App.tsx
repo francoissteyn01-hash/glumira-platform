@@ -48,6 +48,11 @@ const SickDayModule           = lazy(() => import("@/pages/SickDayModule"));
 const MealPlanPage            = lazy(() => import("@/pages/MealPlanPage"));
 const EducationTopicPage      = lazy(() => import("@/pages/EducationTopicPage"));
 
+/* ─── Safe Mode ────────────────────────────────────────────────────────────── */
+const SafeModePage            = lazy(() => import("@/pages/SafeModePage"));
+const DemoDashboardPage       = lazy(() => import("@/pages/DemoDashboardPage"));
+const CreateProfilePage       = lazy(() => import("@/pages/CreateProfilePage"));
+
 /* ─── Loading fallback ───────────────────────────────────────────────────── */
 function LoadingFallback() {
   return (
@@ -173,9 +178,10 @@ function NavBar() {
   const { user } = useAuth();
   const location = useLocation();
 
-  // No navbar on auth page or landing page (they have their own branding/CTAs)
+  // No navbar on auth page, landing page, or safe-mode pages
   if (location.pathname === "/auth") return null;
   if (location.pathname === "/" && !user) return null;
+  if (location.pathname.startsWith("/safe-mode")) return null;
 
   // Dark navbar on authenticated pages
   if (!user) return <LightNavBar />;
@@ -238,6 +244,10 @@ export default function App() {
               <Route path="/modules/bernstein"  element={<ProtectedRoute><BernsteinModule /></ProtectedRoute>} />
               <Route path="/modules/sick-day"   element={<ProtectedRoute><SickDayModule /></ProtectedRoute>} />
               <Route path="/meals/plan"         element={<ProtectedRoute><MealPlanPage /></ProtectedRoute>} />
+              {/* Safe Mode — no auth required */}
+              <Route path="/safe-mode"             element={<SafeModePage />} />
+              <Route path="/safe-mode/profile/:id" element={<DemoDashboardPage />} />
+              <Route path="/safe-mode/create"      element={<CreateProfilePage />} />
               <Route path="*"          element={<Navigate to="/" replace />} />
             </Routes>
           </Suspense>

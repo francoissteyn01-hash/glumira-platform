@@ -37,6 +37,7 @@ import educationRouter             from "./routes/education.route";
 import { glucoseExportRouter, bernsteinRouter, doseHistoryRouter, carbLookupRouter } from "./routes/remaining.routes";
 import { schoolCarePlanRouter }    from "./routes/school-care-plan-route";
 import { glucosePredictionRouter } from "./routes/glucose-prediction.route";
+import { feedbackRouter }          from "./routes/feedback.route";
 
 const app = express();
 const PORT = parseInt(process.env.PORT ?? "3001", 10);
@@ -96,6 +97,7 @@ app.use("/api/doses",            doseHistoryRouter);
 app.use("/api/meals",            carbLookupRouter);
 app.use("/api/school-care-plan", schoolCarePlanRouter);
 app.use("/api/glucose-prediction", glucosePredictionRouter);
+app.use("/api/feedback",           feedbackRouter);
 
 // ── 404 / Error ───────────────────────────────────────────────────────────────
 app.use((_req, res) => res.status(404).json({ error: "Not found" }));
