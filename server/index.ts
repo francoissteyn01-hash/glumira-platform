@@ -33,6 +33,7 @@ import { caregiverRouter }        from "./routes/caregiver.route";
 import adhdRouter                  from "./routes/adhd.route";
 import thyroidRouter               from "./routes/thyroid.route";
 import mealPlanRouter              from "./routes/meal-plan.route";
+import educationRouter             from "./routes/education.route";
 
 const app = express();
 const PORT = parseInt(process.env.PORT ?? "3001", 10);
@@ -85,6 +86,7 @@ app.use("/api/caregiver",     caregiverRouter);
 app.use(adhdRouter);
 app.use(thyroidRouter);
 app.use(mealPlanRouter);
+app.use(educationRouter);
 
 // ── 404 / Error ───────────────────────────────────────────────────────────────
 app.use((_req, res) => res.status(404).json({ error: "Not found" }));

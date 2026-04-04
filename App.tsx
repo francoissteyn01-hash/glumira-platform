@@ -45,6 +45,7 @@ const HalalModule             = lazy(() => import("@/pages/HalalModule"));
 const BernsteinModule         = lazy(() => import("@/pages/BernsteinModule"));
 const SickDayModule           = lazy(() => import("@/pages/SickDayModule"));
 const MealPlanPage            = lazy(() => import("@/pages/MealPlanPage"));
+const EducationTopicPage      = lazy(() => import("@/pages/EducationTopicPage"));
 
 /* ─── Loading fallback ───────────────────────────────────────────────────── */
 function LoadingFallback() {
@@ -182,6 +183,7 @@ export default function App() {
               <Route path="/auth"      element={<AuthPage />} />
               <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
               <Route path="/education" element={<ProtectedRoute><EducationPage /></ProtectedRoute>} />
+              <Route path="/education/:id" element={<ProtectedRoute><EducationTopicPage /></ProtectedRoute>} />
               <Route path="/mira"      element={<ProtectedRoute><MiraPage /></ProtectedRoute>} />
               <Route path="/badges"    element={<ProtectedRoute><BadgesPage /></ProtectedRoute>} />
               <Route path="/faq"       element={<ProtectedRoute><FAQPage /></ProtectedRoute>} />
