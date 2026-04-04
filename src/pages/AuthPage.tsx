@@ -1252,18 +1252,33 @@ export default function AuthPage() {
           50% { opacity: 0.25; }
         }
 
-        /* Mobile-first: single column, left panel hidden */
-        .glm-auth-grid {
+        /* Mobile-first: Mira banner on top, form below */
+        .glm-auth-wrapper {
           display: flex;
           flex-direction: column;
           min-height: 100vh;
+        }
+        .glm-auth-banner {
+          width: 100%;
+          background: linear-gradient(155deg, #0d1b3e 0%, #1a2a5e 100%);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+          flex-shrink: 0;
+        }
+        .glm-auth-banner img {
+          width: 100%;
+          display: block;
+          mix-blend-mode: lighten;
+          filter: drop-shadow(0 0 40px rgba(42,181,193,0.15));
         }
         .glm-auth-left {
           display: none;
         }
         .glm-auth-right {
           flex: 1;
-          padding: 32px 20px;
+          padding: 28px 20px;
         }
         .glm-role-grid {
           grid-template-columns: 1fr !important;
@@ -1272,7 +1287,7 @@ export default function AuthPage() {
           grid-template-columns: 1fr !important;
         }
 
-        /* Tablet (600px+): show left panel as banner, wider form */
+        /* Tablet (600px+) */
         @media (min-width: 600px) {
           .glm-auth-right {
             padding: 40px 32px;
@@ -1285,12 +1300,14 @@ export default function AuthPage() {
           }
         }
 
-        /* Desktop (900px+): side-by-side grid */
+        /* Desktop (900px+): side-by-side, hide mobile banner */
         @media (min-width: 900px) {
-          .glm-auth-grid {
+          .glm-auth-wrapper {
             display: grid;
             grid-template-columns: 1fr 480px;
-            flex-direction: unset;
+          }
+          .glm-auth-banner {
+            display: none;
           }
           .glm-auth-left {
             display: flex;
@@ -1304,12 +1321,17 @@ export default function AuthPage() {
         }
       `}</style>
       <div
-        className="glm-auth-grid"
+        className="glm-auth-wrapper"
         style={{
           fontFamily: T.fontBody,
           WebkitFontSmoothing: "antialiased",
         }}
       >
+        {/* Mobile banner — Mira on top */}
+        <div className="glm-auth-banner">
+          <img src="/images/mira-hero.png" alt="Mira — GluMira™ AI Companion" />
+        </div>
+        {/* Desktop left panel */}
         <div className="glm-auth-left">
           <LeftPanel />
         </div>

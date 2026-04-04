@@ -140,10 +140,11 @@ function NavBar() {
   const { user } = useAuth();
   const location = useLocation();
 
-  // No navbar on auth page (it has its own branding)
+  // No navbar on auth page or landing page (they have their own branding/CTAs)
   if (location.pathname === "/auth") return null;
+  if (location.pathname === "/" && !user) return null;
 
-  // Light navbar on landing page, dark on authenticated pages
+  // Dark navbar on authenticated pages
   if (!user) return <LightNavBar />;
   return <DarkNavBar />;
 }
