@@ -15,7 +15,7 @@ import { usePatientName } from "@/hooks/usePatientName";
 
 /* ─── Lazy pages ─────────────────────────────────────────────────────────── */
 const LandingPage   = lazy(() => import("@/pages/LandingPage"));
-const AuthPage      = lazy(() => import("@/pages/AuthPage"));
+const AuthPage      = lazy(() => import("@/pages/RegisterPage"));
 const DashboardPage = lazy(() => import("@/pages/DashboardPage"));
 const EducationPage = lazy(() => import("@/pages/EducationPage"));
 const MiraPage      = lazy(() => import("@/pages/MiraPage"));
