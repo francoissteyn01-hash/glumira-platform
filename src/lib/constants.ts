@@ -3,16 +3,28 @@ export const APP_VERSION = "7.0.0";
 export const DISCLAIMER  = "GluMira™ is an educational platform and does not constitute medical advice. Always consult your healthcare team before making changes to your diabetes management.";
 
 export const NAV_LINKS = [
-  { label: "Dashboard", href: "/dashboard" },
-  { label: "Log",       href: "/log"       },
-  { label: "Insulin",    href: "/insulin"    },
-  { label: "Conditions", href: "/conditions" },
+  { label: "Dashboard",  href: "/dashboard"  },
   { label: "Education",  href: "/education"  },
-  { label: "Mira AI",   href: "/mira"      },
-  { label: "Badges",    href: "/badges"    },
-  { label: "Profile",   href: "/profile"   },
-  { label: "Settings",  href: "/settings"  },
-  { label: "FAQ",       href: "/faq"       },
+  { label: "Mira AI",    href: "/mira"       },
+  { label: "Meal Plan",  href: "/meals/plan" },
+  { label: "Badges",     href: "/badges"     },
+  { label: "Profile",    href: "/profile"    },
+  { label: "Settings",   href: "/settings"   },
+  { label: "FAQ",        href: "/faq"        },
+] as const;
+
+export const MODULE_LINKS = [
+  { label: "Pregnancy",        href: "/modules/pregnancy"  },
+  { label: "Paediatric",       href: "/modules/paediatric" },
+  { label: "School Care Plan", href: "/modules/school-care" },
+  { label: "Menstrual Cycle",  href: "/modules/menstrual"  },
+  { label: "ADHD",             href: "/modules/adhd"       },
+  { label: "Thyroid",          href: "/modules/thyroid"     },
+  { label: "Ramadan",          href: "/modules/ramadan"    },
+  { label: "Kosher",           href: "/modules/kosher"     },
+  { label: "Halal",            href: "/modules/halal"      },
+  { label: "Bernstein",        href: "/modules/bernstein"  },
+  { label: "Sick Day",         href: "/modules/sick-day"   },
 ] as const;
 
 export const BADGE_TIERS = ["bronze", "silver", "gold", "platinum"] as const;

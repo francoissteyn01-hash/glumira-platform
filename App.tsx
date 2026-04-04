@@ -196,10 +196,15 @@ export default function App() {
               <Route path="/import/handwritten"   element={<ProtectedRoute><HandwrittenImportPage /></ProtectedRoute>} />
               <Route path="/caregivers"          element={<ProtectedRoute><CaregiverManagePage /></ProtectedRoute>} />
               {/* GROUP4 Modules */}
-              <Route path="/pregnancy"         element={<ProtectedRoute><PregnancyModule /></ProtectedRoute>} />
-              <Route path="/paediatric"        element={<ProtectedRoute><PaediatricModule /></ProtectedRoute>} />
-              <Route path="/school-care-plan"  element={<ProtectedRoute><SchoolCarePlanModule /></ProtectedRoute>} />
-              <Route path="/menstrual-cycle"   element={<ProtectedRoute><MenstrualCycleModule /></ProtectedRoute>} />
+              <Route path="/modules/pregnancy"       element={<ProtectedRoute><PregnancyModule /></ProtectedRoute>} />
+              <Route path="/modules/paediatric"      element={<ProtectedRoute><PaediatricModule /></ProtectedRoute>} />
+              <Route path="/modules/school-care"     element={<ProtectedRoute><SchoolCarePlanModule /></ProtectedRoute>} />
+              <Route path="/modules/menstrual"       element={<ProtectedRoute><MenstrualCycleModule /></ProtectedRoute>} />
+              {/* Legacy route redirects */}
+              <Route path="/pregnancy" element={<Navigate to="/modules/pregnancy" replace />} />
+              <Route path="/paediatric" element={<Navigate to="/modules/paediatric" replace />} />
+              <Route path="/school-care-plan" element={<Navigate to="/modules/school-care" replace />} />
+              <Route path="/menstrual-cycle" element={<Navigate to="/modules/menstrual" replace />} />
               {/* Specialist & Dietary Modules */}
               <Route path="/modules/adhd"       element={<ProtectedRoute><ADHDModule /></ProtectedRoute>} />
               <Route path="/modules/thyroid"    element={<ProtectedRoute><ThyroidModule /></ProtectedRoute>} />
