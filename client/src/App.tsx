@@ -129,6 +129,10 @@ export default function App() {
             <Route path="/modules/halal"       element={<HalalModule />} />
             <Route path="/modules/bernstein"   element={<BernsteinModule />} />
             <Route path="/modules/sick-day"    element={<SickDayModule />} />
+            {/* Safe Mode */}
+            <Route path="/safe-mode"               element={<SafeModePage />} />
+            <Route path="/safe-mode/profile/:id"   element={<DemoDashboard />} />
+            <Route path="/safe-mode/create"        element={<CreateProfilePage />} />
             <Route path="*"                    element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </Suspense>
