@@ -185,6 +185,7 @@ function LeftPanel() {
         justifyContent: "center",
         position: "relative",
         overflow: "hidden",
+        height: "100%",
       }}
     >
       {/* Radial glow overlays */}
@@ -461,7 +462,6 @@ function RightPanel() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        padding: "48px 56px",
         minHeight: "100vh",
         overflowY: "auto",
       }}
@@ -688,7 +688,7 @@ function RightPanel() {
                 </span>
 
                 {/* Role grid */}
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, marginBottom: 24 }}>
+                <div className="glm-role-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, marginBottom: 24 }}>
                   {roles.map((r) => {
                     const selected = role === r.id;
                     return (
@@ -817,7 +817,7 @@ function RightPanel() {
                   <div style={{ flex: 1, height: 1, background: T.border }} />
                 </div>
 
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 16 }}>
+                <div className="glm-name-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 16 }}>
                   <div>
                     <label style={labelStyle}>First name</label>
                     <input
@@ -1251,33 +1251,72 @@ export default function AuthPage() {
           0%, 100% { opacity: 1; }
           50% { opacity: 0.25; }
         }
+
+        /* Mobile-first: single column, left panel hidden */
+        .glm-auth-grid {
+          display: flex;
+          flex-direction: column;
+          min-height: 100vh;
+        }
+        .glm-auth-left {
+          display: none;
+        }
+        .glm-auth-right {
+          flex: 1;
+          padding: 32px 20px;
+        }
+        .glm-role-grid {
+          grid-template-columns: 1fr !important;
+        }
+        .glm-name-grid {
+          grid-template-columns: 1fr !important;
+        }
+
+        /* Tablet (600px+): show left panel as banner, wider form */
+        @media (min-width: 600px) {
+          .glm-auth-right {
+            padding: 40px 32px;
+          }
+          .glm-role-grid {
+            grid-template-columns: 1fr 1fr !important;
+          }
+          .glm-name-grid {
+            grid-template-columns: 1fr 1fr !important;
+          }
+        }
+
+        /* Desktop (900px+): side-by-side grid */
+        @media (min-width: 900px) {
+          .glm-auth-grid {
+            display: grid;
+            grid-template-columns: 1fr 480px;
+            flex-direction: unset;
+          }
+          .glm-auth-left {
+            display: flex;
+          }
+          .glm-auth-right {
+            padding: 48px 56px;
+          }
+          .glm-role-grid {
+            grid-template-columns: 1fr 1fr 1fr !important;
+          }
+        }
       `}</style>
       <div
+        className="glm-auth-grid"
         style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 480px",
-          minHeight: "100vh",
           fontFamily: T.fontBody,
           WebkitFontSmoothing: "antialiased",
         }}
       >
-        <LeftPanel />
-        <RightPanel />
+        <div className="glm-auth-left">
+          <LeftPanel />
+        </div>
+        <div className="glm-auth-right">
+          <RightPanel />
+        </div>
       </div>
-      {/* Mobile: hide left panel */}
-      <style>{`
-        @media (max-width: 900px) {
-          div[style*="grid-template-columns: 1fr 480px"] {
-            grid-template-columns: 1fr !important;
-          }
-          div[style*="grid-template-columns: 1fr 480px"] > div:first-child {
-            display: none !important;
-          }
-          div[style*="grid-template-columns: 1fr 480px"] > div:last-child {
-            padding: 40px 24px !important;
-          }
-        }
-      `}</style>
     </>
   );
 }

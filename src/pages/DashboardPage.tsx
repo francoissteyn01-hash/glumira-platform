@@ -395,7 +395,7 @@ export default function DashboardPage() {
           <p style={{ margin: "0 0 12px", fontSize: 15, fontWeight: 700, color: "#1a2a5e", fontFamily: "'Playfair Display', serif" }}>
             Nightscout Connection
           </p>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 12 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 12, marginBottom: 12 }}>
             <input
               value={nsUrl}
               onChange={(e) => setNsUrl(e.target.value)}

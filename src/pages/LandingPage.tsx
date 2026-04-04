@@ -1,12 +1,11 @@
-﻿/**
+/**
  * GluMira™ V7 — LandingPage.tsx
- * Dark Clinical Depth hero with brand background and Mira hero image,
- * all above the fold on 1366×768.
+ * Mobile-first dark Clinical Depth hero with brand background and Mira hero image.
+ * Stacks vertically on mobile, side-by-side on desktop (768px+).
  */
 
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
 
 /* ─── Fonts ──────────────────────────────────────────────────────────────── */
 const FONT_HREF =
@@ -25,6 +24,63 @@ const T = {
   body: "'DM Sans', -apple-system, sans-serif",
   mono: "'JetBrains Mono', monospace",
 };
+
+/* ─── Responsive CSS ─────────────────────────────────────────────────────── */
+const responsiveCSS = `
+  .glm-hero {
+    flex-direction: column !important;
+    padding: 24px 20px 20px !important;
+    min-height: 100vh !important;
+    max-height: none !important;
+    text-align: center;
+  }
+  .glm-hero-text {
+    max-width: 100% !important;
+    padding-right: 0 !important;
+    order: 2;
+  }
+  .glm-hero-image {
+    order: 1;
+    margin-bottom: 24px;
+  }
+  .glm-hero-image img {
+    max-width: 280px !important;
+  }
+  .glm-cta-row {
+    justify-content: center;
+  }
+  .glm-stats-row {
+    justify-content: center;
+  }
+
+  @media (min-width: 768px) {
+    .glm-hero {
+      flex-direction: row !important;
+      padding: 20px 40px 16px !important;
+      min-height: calc(100vh - 56px) !important;
+      max-height: 100vh !important;
+      text-align: left;
+    }
+    .glm-hero-text {
+      max-width: 520px !important;
+      padding-right: 32px !important;
+      order: 1;
+    }
+    .glm-hero-image {
+      order: 2;
+      margin-bottom: 0;
+    }
+    .glm-hero-image img {
+      max-width: 100% !important;
+    }
+    .glm-cta-row {
+      justify-content: flex-start;
+    }
+    .glm-stats-row {
+      justify-content: flex-start;
+    }
+  }
+`;
 
 /* ═══════════════════════════════════════════════════════════════════════════ */
 export default function LandingPage() {
@@ -50,23 +106,22 @@ export default function LandingPage() {
         flexDirection: "column",
       }}
     >
-      {/* ═══ HERO — ABOVE THE FOLD ══════════════════════════════════════════ */}
+      <style>{responsiveCSS}</style>
+
+      {/* ═══ HERO ══════════════════════════════════════════════════════════ */}
       <section
+        className="glm-hero"
         style={{
           flex: 1,
           display: "flex",
-          flexDirection: "row",
           alignItems: "center",
           justifyContent: "center",
-          padding: "20px 40px 16px",
-          minHeight: "calc(100vh - 56px)",
-          maxHeight: "100vh",
           background: `linear-gradient(135deg, ${T.navyDeep} 0%, ${T.navyDeep} 40%, ${T.navy} 70%, ${T.navy} 100%)`,
           position: "relative",
           overflow: "hidden",
         }}
       >
-        {/* Background overlay (solid) */}
+        {/* Background overlay */}
         <div
           style={{
             position: "absolute",
@@ -77,7 +132,7 @@ export default function LandingPage() {
           }}
         />
 
-        {/* Radial glow overlays */}
+        {/* Radial glow */}
         <div
           style={{
             position: "absolute",
@@ -88,17 +143,15 @@ export default function LandingPage() {
           }}
         />
 
-        {/* ── LEFT: Text content ── */}
+        {/* ── Text content ── */}
         <div
+          className="glm-hero-text"
           style={{
             position: "relative",
             zIndex: 2,
             flex: "1 1 50%",
-            maxWidth: 520,
-            paddingRight: 32,
           }}
         >
-          {/* Powered by badge */}
           <p
             style={{
               fontSize: 11,
@@ -112,11 +165,10 @@ export default function LandingPage() {
             Powered by IOB Hunter™
           </p>
 
-          {/* GluMira™ wordmark */}
           <h1
             style={{
               fontFamily: T.heading,
-              fontSize: "clamp(32px, 4vw, 48px)",
+              fontSize: "clamp(28px, 6vw, 48px)",
               fontWeight: 700,
               color: T.white,
               lineHeight: 1.1,
@@ -127,11 +179,10 @@ export default function LandingPage() {
             GluMira<sup style={{ fontSize: "0.4em", verticalAlign: "super", color: T.teal }}>™</sup>
           </h1>
 
-          {/* Tagline */}
           <p
             style={{
               fontFamily: T.heading,
-              fontSize: "clamp(16px, 2vw, 22px)",
+              fontSize: "clamp(16px, 3vw, 22px)",
               fontWeight: 700,
               fontStyle: "italic",
               color: T.teal,
@@ -141,22 +192,20 @@ export default function LandingPage() {
             The science of insulin, made visible
           </p>
 
-          {/* Description */}
           <p
             style={{
-              fontSize: 15,
+              fontSize: "clamp(14px, 2.5vw, 15px)",
               fontWeight: 300,
               color: "rgba(255,255,255,0.78)",
               lineHeight: 1.65,
               maxWidth: 420,
-              margin: "0 0 20px",
+              margin: "0 auto 20px",
             }}
           >
             For caregivers sitting awake at 2am, watching glucose numbers, asking why.
             We answer that question with science, not guesswork.
           </p>
 
-          {/* Motto */}
           <p
             style={{
               fontSize: 11,
@@ -171,7 +220,7 @@ export default function LandingPage() {
           </p>
 
           {/* CTA buttons */}
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+          <div className="glm-cta-row" style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
             <button
               onClick={() => navigate("/auth")}
               style={{
@@ -203,7 +252,7 @@ export default function LandingPage() {
               style={{
                 padding: "11px 28px",
                 borderRadius: 8,
-                border: `1.5px solid rgba(255,255,255,0.3)`,
+                border: "1.5px solid rgba(255,255,255,0.3)",
                 background: "rgba(255,255,255,0.05)",
                 color: T.white,
                 fontSize: 14,
@@ -227,6 +276,7 @@ export default function LandingPage() {
 
           {/* Stat pills */}
           <div
+            className="glm-stats-row"
             style={{
               display: "flex",
               gap: 10,
@@ -256,8 +306,9 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* ── RIGHT: Hero image ── */}
+        {/* ── Hero image ── */}
         <div
+          className="glm-hero-image"
           style={{
             position: "relative",
             zIndex: 2,
@@ -279,10 +330,9 @@ export default function LandingPage() {
             }}
           />
         </div>
-
       </section>
 
-      {/* ═══ BELOW THE FOLD — MINIMAL FOOTER ═══════════════════════════════ */}
+      {/* ═══ FOOTER ════════════════════════════════════════════════════════ */}
       <section
         style={{
           background: T.navyDeep,
@@ -291,7 +341,6 @@ export default function LandingPage() {
           textAlign: "center",
         }}
       >
-        {/* Origin + Disclaimer */}
         <p
           style={{
             fontSize: 11,
@@ -301,7 +350,7 @@ export default function LandingPage() {
             lineHeight: 1.5,
           }}
         >
-          . Designed for the world. — GluMira™ is an educational platform, not a medical device.
+          Designed for the world. — GluMira™ is an educational platform, not a medical device.
         </p>
         <p
           style={{
