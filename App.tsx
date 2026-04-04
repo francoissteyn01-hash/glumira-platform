@@ -36,6 +36,16 @@ const PaediatricModule        = lazy(() => import("@/pages/PaediatricModule"));
 const SchoolCarePlanModule    = lazy(() => import("@/pages/SchoolCarePlanModule"));
 const MenstrualCycleModule    = lazy(() => import("@/pages/MenstrualCycleModule"));
 
+/* ─── Specialist & Dietary Modules ─────────────────────────────────────── */
+const ADHDModule              = lazy(() => import("@/pages/ADHDModule"));
+const ThyroidModule           = lazy(() => import("@/pages/ThyroidModule"));
+const RamadanModule           = lazy(() => import("@/pages/RamadanModule"));
+const KosherModule            = lazy(() => import("@/pages/KosherModule"));
+const HalalModule             = lazy(() => import("@/pages/HalalModule"));
+const BernsteinModule         = lazy(() => import("@/pages/BernsteinModule"));
+const SickDayModule           = lazy(() => import("@/pages/SickDayModule"));
+const MealPlanPage            = lazy(() => import("@/pages/MealPlanPage"));
+
 /* ─── Loading fallback ───────────────────────────────────────────────────── */
 function LoadingFallback() {
   return (
@@ -188,6 +198,15 @@ export default function App() {
               <Route path="/paediatric"        element={<ProtectedRoute><PaediatricModule /></ProtectedRoute>} />
               <Route path="/school-care-plan"  element={<ProtectedRoute><SchoolCarePlanModule /></ProtectedRoute>} />
               <Route path="/menstrual-cycle"   element={<ProtectedRoute><MenstrualCycleModule /></ProtectedRoute>} />
+              {/* Specialist & Dietary Modules */}
+              <Route path="/modules/adhd"       element={<ProtectedRoute><ADHDModule /></ProtectedRoute>} />
+              <Route path="/modules/thyroid"    element={<ProtectedRoute><ThyroidModule /></ProtectedRoute>} />
+              <Route path="/modules/ramadan"    element={<ProtectedRoute><RamadanModule /></ProtectedRoute>} />
+              <Route path="/modules/kosher"     element={<ProtectedRoute><KosherModule /></ProtectedRoute>} />
+              <Route path="/modules/halal"      element={<ProtectedRoute><HalalModule /></ProtectedRoute>} />
+              <Route path="/modules/bernstein"  element={<ProtectedRoute><BernsteinModule /></ProtectedRoute>} />
+              <Route path="/modules/sick-day"   element={<ProtectedRoute><SickDayModule /></ProtectedRoute>} />
+              <Route path="/meals/plan"         element={<ProtectedRoute><MealPlanPage /></ProtectedRoute>} />
               <Route path="*"          element={<Navigate to="/" replace />} />
             </Routes>
           </Suspense>

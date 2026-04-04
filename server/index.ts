@@ -30,6 +30,9 @@ import { profileRouter }          from "./routes/profile.route";
 import { inviteRouter }           from "./routes/invite.route";
 import { reportRouter }           from "./routes/report.route";
 import { caregiverRouter }        from "./routes/caregiver.route";
+import adhdRouter                  from "./routes/adhd.route";
+import thyroidRouter               from "./routes/thyroid.route";
+import mealPlanRouter              from "./routes/meal-plan.route";
 
 const app = express();
 const PORT = parseInt(process.env.PORT ?? "3001", 10);
@@ -79,6 +82,9 @@ app.use("/api/profile",       profileRouter);
 app.use("/api/invite",        inviteRouter);
 app.use("/api/report",        reportRouter);
 app.use("/api/caregiver",     caregiverRouter);
+app.use(adhdRouter);
+app.use(thyroidRouter);
+app.use(mealPlanRouter);
 
 // ── 404 / Error ───────────────────────────────────────────────────────────────
 app.use((_req, res) => res.status(404).json({ error: "Not found" }));

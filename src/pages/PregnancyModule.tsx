@@ -25,6 +25,10 @@ export default function PregnancyModule() {
   });
   const [result, setResult] = useState<PregnancyGlucoseResult | null>(null);
   const [unit, setUnit] = useState<"mmol" | "mg">("mmol");
+  const [openTrimesterMeal, setOpenTrimesterMeal] = useState<number | null>(null);
+  const [showPreeclampsia, setShowPreeclampsia] = useState(false);
+  const [showPostpartum, setShowPostpartum] = useState(false);
+  const [showBreastfeedingCalc, setShowBreastfeedingCalc] = useState(false);
 
   const handleAssess = () => {
     const readings: PregnancyGlucoseInput["recentReadings"] = [];
@@ -221,6 +225,175 @@ export default function PregnancyModule() {
             )}
           </div>
         )}
+
+        {/* Trimester Meal Plans */}
+        <div style={{ ...cardStyle, marginTop: 20 }}>
+          <h3 style={cardTitle}>Trimester Meal Plans</h3>
+          {[
+            {
+              id: 1,
+              title: "T1 — Weeks 1-12: First Trimester Nutrition",
+              content: (
+                <div style={{ fontSize: 13, color: "#4a5568", lineHeight: 1.8 }}>
+                  <p><strong>Nausea-Safe Foods:</strong> Focus on bland, easy-to-digest foods during this period of heightened nausea. Ginger tea is a natural anti-nausea remedy — sip throughout the day.</p>
+                  <ul style={{ paddingLeft: 20, margin: "8px 0" }}>
+                    <li><strong>Small, frequent meals</strong> — aim for 5-6 mini meals instead of 3 large ones to stabilise blood glucose and reduce nausea</li>
+                    <li><strong>Anti-hypo snacks:</strong> Keep plain crackers, dry toast, and rice cakes on hand — quick carbs for low episodes (~15g each)</li>
+                    <li><strong>Ginger tea:</strong> 1-2 cups/day helps with nausea; virtually zero carbs</li>
+                    <li><strong>Plain crackers:</strong> ~5g carbs per cracker — good rescue snack and nausea settler</li>
+                    <li><strong>Hydration:</strong> Small sips of water throughout the day; dehydration worsens nausea and affects BG readings</li>
+                  </ul>
+                </div>
+              ),
+            },
+            {
+              id: 2,
+              title: "T2 — Weeks 13-26: Second Trimester Nutrition",
+              content: (
+                <div style={{ fontSize: 13, color: "#4a5568", lineHeight: 1.8 }}>
+                  <p><strong>Increased Calorie Needs:</strong> You need approximately <strong>+300 kcal/day</strong> above pre-pregnancy intake during this trimester.</p>
+                  <ul style={{ paddingLeft: 20, margin: "8px 0" }}>
+                    <li><strong>Iron-rich foods:</strong> Spinach (1 cup cooked = ~6mg iron, ~7g carbs), lentils (1 cup = ~6.6mg iron, ~40g carbs), red meat (lean beef = ~2.5mg iron per 100g, 0g carbs)</li>
+                    <li><strong>Gestational diabetes monitoring:</strong> Insulin resistance naturally increases in T2 — monitor post-meal spikes closely. May need to increase bolus ratios by 10-20%</li>
+                    <li><strong>Protein targets:</strong> Aim for 25g+ protein per meal to support fetal growth and slow glucose absorption</li>
+                    <li><strong>Calcium:</strong> 1000mg/day — dairy, fortified plant milks, sardines</li>
+                  </ul>
+                </div>
+              ),
+            },
+            {
+              id: 3,
+              title: "T3 — Weeks 27-40: Third Trimester Nutrition",
+              content: (
+                <div style={{ fontSize: 13, color: "#4a5568", lineHeight: 1.8 }}>
+                  <p><strong>Preparation Meals:</strong> Focus on nutrient-dense, easy-to-prepare meals as energy dips. Batch cook and freeze where possible.</p>
+                  <ul style={{ paddingLeft: 20, margin: "8px 0" }}>
+                    <li><strong>Insulin resistance peaks</strong> in T3 — total daily dose may increase 50-100% compared to pre-pregnancy</li>
+                    <li><strong>Smaller, more frequent meals</strong> as stomach capacity decreases — aim for 6 small meals</li>
+                    <li><strong>Omega-3 rich foods:</strong> Salmon, walnuts, chia seeds for brain development</li>
+                  </ul>
+                  <div style={{ marginTop: 12, padding: 12, background: "#fff7ed", borderRadius: 8, border: "1px solid #fed7aa" }}>
+                    <strong style={{ color: "#ea580c" }}>Labour Bag Insulin Kit Checklist:</strong>
+                    <ul style={{ paddingLeft: 20, margin: "8px 0" }}>
+                      <li>Rapid-acting insulin (e.g., NovoRapid/Humalog) + spare pen/vial</li>
+                      <li>Glucose tablets (at least 10 tablets / 40g fast carbs)</li>
+                      <li>Glucagon emergency kit (check expiry date)</li>
+                      <li>Blood glucose meter + spare test strips + lancets</li>
+                      <li>Continuous glucose monitor (CGM) sensors if used</li>
+                      <li>Juice boxes (3-4) for rapid hypo treatment</li>
+                      <li>Written insulin dose plan from your diabetes team</li>
+                    </ul>
+                  </div>
+                </div>
+              ),
+            },
+          ].map(item => (
+            <div key={item.id} style={{ marginBottom: 8 }}>
+              <button
+                onClick={() => setOpenTrimesterMeal(openTrimesterMeal === item.id ? null : item.id)}
+                style={{ width: "100%", textAlign: "left", padding: "12px 16px", background: openTrimesterMeal === item.id ? "#e0f7f9" : "#f8f9fa", border: "1px solid #e2e8f0", borderRadius: 8, cursor: "pointer", fontSize: 14, fontWeight: 600, color: "#1a2a5e", display: "flex", justifyContent: "space-between", alignItems: "center" }}
+              >
+                {item.title}
+                <span style={{ fontSize: 18, transform: openTrimesterMeal === item.id ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s" }}>&#9662;</span>
+              </button>
+              {openTrimesterMeal === item.id && (
+                <div style={{ padding: "12px 16px", border: "1px solid #e2e8f0", borderTop: "none", borderRadius: "0 0 8px 8px" }}>
+                  {item.content}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Pre-eclampsia Nutrition */}
+        <div style={{ ...cardStyle, marginTop: 16 }}>
+          <button
+            onClick={() => setShowPreeclampsia(!showPreeclampsia)}
+            style={{ width: "100%", textAlign: "left", padding: 0, background: "none", border: "none", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center" }}
+          >
+            <h3 style={{ ...cardTitle, margin: 0 }}>Pre-eclampsia Nutrition</h3>
+            <span style={{ fontSize: 18, color: "#1a2a5e", transform: showPreeclampsia ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s" }}>&#9662;</span>
+          </button>
+          {showPreeclampsia && (
+            <div style={{ fontSize: 13, color: "#4a5568", lineHeight: 1.8, marginTop: 12 }}>
+              <p>Pre-eclampsia risk increases with diabetes. Nutritional strategies to help reduce risk:</p>
+              <ul style={{ paddingLeft: 20, margin: "8px 0" }}>
+                <li><strong>Calcium-rich foods:</strong> Aim for 1200-1500mg/day — low-fat yoghurt (~200mg per serving, ~12g carbs), cheese (~200mg per 30g, ~1g carbs), fortified almond milk (~300mg per cup, ~1g carbs), broccoli, kale</li>
+                <li><strong>Reduce sodium:</strong> Target &lt;2300mg/day. Avoid processed foods, canned soups, deli meats. Use herbs and spices for flavouring instead of salt</li>
+                <li><strong>Monitor protein intake:</strong> Adequate protein (75-100g/day) supports healthy blood pressure. Include lean meats, eggs, legumes, and tofu at each meal</li>
+                <li><strong>Potassium-rich foods:</strong> Bananas (~27g carbs each — bolus accordingly), sweet potatoes, avocados help counterbalance sodium</li>
+                <li><strong>Magnesium:</strong> Dark leafy greens, pumpkin seeds, dark chocolate (70%+) — supports healthy blood pressure</li>
+              </ul>
+              <div style={{ padding: 10, background: "#fef2f2", borderRadius: 8, border: "1px solid #fca5a5", marginTop: 8 }}>
+                <strong style={{ color: "#dc2626" }}>Warning signs to report immediately:</strong> severe headache, visual disturbances, sudden swelling (face/hands), upper abdominal pain, protein in urine
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Post-partum */}
+        <div style={{ ...cardStyle, marginTop: 16 }}>
+          <button
+            onClick={() => setShowPostpartum(!showPostpartum)}
+            style={{ width: "100%", textAlign: "left", padding: 0, background: "none", border: "none", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center" }}
+          >
+            <h3 style={{ ...cardTitle, margin: 0 }}>Post-partum Insulin & Nutrition</h3>
+            <span style={{ fontSize: 18, color: "#1a2a5e", transform: showPostpartum ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s" }}>&#9662;</span>
+          </button>
+          {showPostpartum && (
+            <div style={{ fontSize: 13, color: "#4a5568", lineHeight: 1.8, marginTop: 12 }}>
+              <div style={{ padding: 12, background: "#fff7ed", borderRadius: 8, border: "1px solid #fed7aa", marginBottom: 12 }}>
+                <strong style={{ color: "#ea580c" }}>Critical:</strong> Insulin needs drop <strong>50-60% immediately after delivery</strong>. Many women return to pre-pregnancy doses or even less in the first 24-48 hours. Monitor BG every 1-2 hours post-delivery.
+              </div>
+              <ul style={{ paddingLeft: 20, margin: "8px 0" }}>
+                <li><strong>Immediate post-delivery:</strong> Reduce basal insulin by 50% right after placenta delivery. The placental hormones causing insulin resistance are gone within hours</li>
+                <li><strong>First 1-2 weeks:</strong> Insulin sensitivity fluctuates significantly — test frequently (8-10 times/day or use CGM)</li>
+                <li><strong>Breastfeeding adds ~500 kcal/day</strong> to your energy needs — do not skip meals or restrict calories while breastfeeding</li>
+                <li><strong>Sleep deprivation</strong> increases insulin resistance and cortisol — accept help, nap when baby naps</li>
+                <li><strong>Meal prep in advance:</strong> Stock freezer with balanced meals before delivery — you will not have energy to cook</li>
+                <li><strong>Hydration:</strong> Breastfeeding requires extra fluids — aim for 2.5-3L water/day</li>
+              </ul>
+            </div>
+          )}
+        </div>
+
+        {/* Breastfeeding Carb Calculator */}
+        <div style={{ ...cardStyle, marginTop: 16 }}>
+          <button
+            onClick={() => setShowBreastfeedingCalc(!showBreastfeedingCalc)}
+            style={{ width: "100%", textAlign: "left", padding: 0, background: "none", border: "none", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center" }}
+          >
+            <h3 style={{ ...cardTitle, margin: 0 }}>Breastfeeding Carb Calculator</h3>
+            <span style={{ fontSize: 18, color: "#1a2a5e", transform: showBreastfeedingCalc ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s" }}>&#9662;</span>
+          </button>
+          {showBreastfeedingCalc && (
+            <div style={{ fontSize: 13, color: "#4a5568", lineHeight: 1.8, marginTop: 12 }}>
+              <p>Breastfeeding significantly affects carbohydrate needs and insulin dosing for T1D mothers:</p>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginTop: 12 }}>
+                <div style={{ ...statBox, background: "#e8f4fd" }}>
+                  <div style={statLabel}>Extra Carbs Needed</div>
+                  <div style={{ fontSize: 22, fontWeight: 700, color: "#1a2a5e", fontFamily: "'JetBrains Mono', monospace" }}>+50-60g/day</div>
+                  <div style={{ fontSize: 11, color: "#718096", marginTop: 4 }}>Spread across meals and snacks</div>
+                </div>
+                <div style={{ ...statBox, background: "#f0fdf4" }}>
+                  <div style={statLabel}>Bolus Reduction</div>
+                  <div style={{ fontSize: 22, fontWeight: 700, color: "#16a34a", fontFamily: "'JetBrains Mono', monospace" }}>~20% less</div>
+                  <div style={{ fontSize: 11, color: "#718096", marginTop: 4 }}>Reduce bolus doses by approximately 20%</div>
+                </div>
+              </div>
+              <ul style={{ paddingLeft: 20, margin: "12px 0" }}>
+                <li><strong>Before each feed:</strong> Have a 15-20g carb snack to prevent hypos during breastfeeding (e.g., apple, small banana, oat bar)</li>
+                <li><strong>Night feeds:</strong> Highest hypo risk — keep glucose tabs and a snack at your bedside</li>
+                <li><strong>Each breastfeeding session</strong> uses ~20g of glucose from your body — factor this into bolus calculations</li>
+                <li><strong>If BG drops below 4.0 mmol/L (72 mg/dL) while feeding:</strong> treat the hypo first, then continue feeding once stable</li>
+                <li><strong>Gradually increase bolus</strong> back to normal as you wean — insulin needs rise as breastfeeding decreases</li>
+              </ul>
+              <div style={{ padding: 12, background: "#e8f4fd", borderRadius: 8, border: "1px solid #93c5fd" }}>
+                <strong>Quick Reference:</strong> If your pre-pregnancy bolus ratio was 1:10, try 1:12 while breastfeeding (i.e., 1 unit per 12g carbs instead of 10g)
+              </div>
+            </div>
+          )}
+        </div>
 
         <footer style={{ textAlign: "center", fontSize: 11, color: "#718096", marginTop: 32, paddingTop: 16, borderTop: "1px solid #e2e8f0" }}>
           <p>{result?.disclaimer ?? "GluMira™ is an educational platform. Not a medical device."}</p>

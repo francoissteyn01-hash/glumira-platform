@@ -22,6 +22,9 @@ export default function MenstrualCycleModule() {
     mood: "neutral" as CycleDay["mood"],
   });
   const [result, setResult] = useState<CycleImpactResult | null>(null);
+  const [openPhaseNutrition, setOpenPhaseNutrition] = useState<number | null>(null);
+  const [showCravings, setShowCravings] = useState(false);
+  const [showContraception, setShowContraception] = useState(false);
 
   const phases = getCyclePhases();
   const currentPhase = getCyclePhase(currentDay, cycleLength);
@@ -242,6 +245,180 @@ export default function MenstrualCycleModule() {
             )}
           </div>
         )}
+
+        {/* Phase-Specific Nutrition */}
+        <div style={{ ...cardStyle, marginTop: 20 }}>
+          <h3 style={cardTitle}>Phase-Specific Nutrition</h3>
+          {[
+            {
+              id: 1,
+              title: "Follicular Phase (Day 1-13)",
+              content: (
+                <div style={{ fontSize: 13, color: "#4a5568", lineHeight: 1.8 }}>
+                  <p>Insulin sensitivity is generally <strong>improving</strong> during this phase. Energy levels increase as oestrogen rises.</p>
+                  <ul style={{ paddingLeft: 20, margin: "8px 0" }}>
+                    <li><strong>Iron recovery foods:</strong> Replenish iron lost during menstruation — red meat (100g = ~2.5mg iron, 0g carbs), spinach (1 cup cooked = ~6mg iron, ~7g carbs), lentils (1 cup = ~6.6mg iron, ~40g carbs), fortified cereals</li>
+                    <li><strong>Moderate carbs:</strong> Insulin sensitivity is returning to baseline — standard carb ratios should work well. Good time to re-calibrate your ICR if needed</li>
+                    <li><strong>Energy increasing:</strong> As oestrogen rises, energy and motivation increase. Good time for more active exercise — but watch for post-exercise hypos as sensitivity is higher</li>
+                    <li><strong>Vitamin C:</strong> Pair iron-rich foods with vitamin C (citrus, capsicum, tomatoes) to boost iron absorption</li>
+                    <li><strong>Hydration:</strong> Replenish fluids lost during menstruation — aim for 2L+ per day</li>
+                  </ul>
+                </div>
+              ),
+            },
+            {
+              id: 2,
+              title: "Ovulation (Day ~14)",
+              content: (
+                <div style={{ fontSize: 13, color: "#4a5568", lineHeight: 1.8 }}>
+                  <div style={{ padding: 12, background: "#f0fdf4", borderRadius: 8, border: "1px solid #bbf7d0", marginBottom: 12 }}>
+                    <strong style={{ color: "#16a34a" }}>Peak insulin sensitivity</strong> — you may need <strong>less insulin</strong> around ovulation. Watch for unexpected hypos.
+                  </div>
+                  <ul style={{ paddingLeft: 20, margin: "8px 0" }}>
+                    <li><strong>Lighter meals:</strong> Some women experience reduced appetite at ovulation. Listen to your body — smaller meals with adequate protein are fine</li>
+                    <li><strong>Insulin adjustment:</strong> Consider reducing bolus by 10-15% if you notice a pattern of lows around ovulation. Track this over 2-3 cycles to confirm</li>
+                    <li><strong>Exercise caution:</strong> Peak sensitivity + exercise = higher hypo risk. Reduce pre-exercise bolus or add 15g carbs before activity</li>
+                    <li><strong>This phase is brief</strong> (1-2 days) — be ready for insulin resistance to begin climbing as you enter the luteal phase</li>
+                  </ul>
+                </div>
+              ),
+            },
+            {
+              id: 3,
+              title: "Luteal Phase (Day 15-28)",
+              content: (
+                <div style={{ fontSize: 13, color: "#4a5568", lineHeight: 1.8 }}>
+                  <div style={{ padding: 12, background: "#fff7ed", borderRadius: 8, border: "1px solid #fed7aa", marginBottom: 12 }}>
+                    <strong style={{ color: "#ea580c" }}>Insulin resistance increases 15-20%</strong> during the luteal phase due to rising progesterone. You may need to adjust basal and bolus doses upward.
+                  </div>
+                  <ul style={{ paddingLeft: 20, margin: "8px 0" }}>
+                    <li><strong>Magnesium-rich foods:</strong> Help with PMS symptoms AND insulin sensitivity — dark chocolate 70%+ (~13g carbs per 30g), almonds (~3g carbs per 30g), bananas (~27g carbs), cashews, pumpkin seeds</li>
+                    <li><strong>Craving management:</strong> Progesterone drives carb and sugar cravings. Plan for them rather than fighting them — pre-counted treat portions prevent binge-and-spike cycles</li>
+                    <li><strong>Complex carbs:</strong> Choose whole grains, sweet potato, oats over refined carbs — slower glucose release during a period of higher resistance</li>
+                    <li><strong>Increase basal:</strong> Consider +10-15% basal from ~Day 21 onwards. Some pump users set a "luteal" profile</li>
+                    <li><strong>Fibre:</strong> Increase fibre intake (vegetables, legumes, whole grains) to slow glucose absorption and help with bloating</li>
+                    <li><strong>Reduce caffeine:</strong> Caffeine can worsen PMS symptoms and increase BG variability</li>
+                  </ul>
+                </div>
+              ),
+            },
+            {
+              id: 4,
+              title: "Menstruation (Day 1-5)",
+              content: (
+                <div style={{ fontSize: 13, color: "#4a5568", lineHeight: 1.8 }}>
+                  <p>Progesterone drops sharply, and insulin sensitivity begins to improve. Focus on comfort and replenishment.</p>
+                  <ul style={{ paddingLeft: 20, margin: "8px 0" }}>
+                    <li><strong>Anti-inflammatory foods:</strong> Salmon (omega-3, 0g carbs), turmeric (add to soups/smoothies, ~2g carbs per tsp), ginger tea (0g carbs), berries (antioxidants, ~12g carbs per cup)</li>
+                    <li><strong>Iron replenishment:</strong> Iron stores drop during menstruation. Prioritise iron-rich meals — steak, dark leafy greens, eggs, fortified cereals. Pair with vitamin C for absorption</li>
+                    <li><strong>Comfort food swaps:</strong> Instead of high-carb comfort foods, try: soup (broth-based = ~10g carbs), baked sweet potato (~26g carbs) with butter, warm oatmeal (~27g per 1/2 cup dry) with cinnamon</li>
+                    <li><strong>Insulin adjustment:</strong> Reduce basal back to standard rates as progesterone drops — usually by Day 2-3 of menstruation. Watch for hypos as sensitivity returns</li>
+                    <li><strong>Heat + rest:</strong> Heating pads for cramps do not affect BG. Rest when needed — sleep deprivation from pain increases insulin resistance</li>
+                  </ul>
+                </div>
+              ),
+            },
+          ].map(item => (
+            <div key={item.id} style={{ marginBottom: 8 }}>
+              <button
+                onClick={() => setOpenPhaseNutrition(openPhaseNutrition === item.id ? null : item.id)}
+                style={{ width: "100%", textAlign: "left", padding: "12px 16px", background: openPhaseNutrition === item.id ? "#fae8ff" : "#f8f9fa", border: "1px solid #e2e8f0", borderRadius: 8, cursor: "pointer", fontSize: 14, fontWeight: 600, color: "#1a2a5e", display: "flex", justifyContent: "space-between", alignItems: "center" }}
+              >
+                {item.title}
+                <span style={{ fontSize: 18, transform: openPhaseNutrition === item.id ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s" }}>&#9662;</span>
+              </button>
+              {openPhaseNutrition === item.id && (
+                <div style={{ padding: "12px 16px", border: "1px solid #e2e8f0", borderTop: "none", borderRadius: "0 0 8px 8px" }}>
+                  {item.content}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Craving Management */}
+        <div style={{ ...cardStyle, marginTop: 16 }}>
+          <button
+            onClick={() => setShowCravings(!showCravings)}
+            style={{ width: "100%", textAlign: "left", padding: 0, background: "none", border: "none", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center" }}
+          >
+            <h3 style={{ ...cardTitle, margin: 0 }}>Craving Management for T1D</h3>
+            <span style={{ fontSize: 18, color: "#1a2a5e", transform: showCravings ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s" }}>&#9662;</span>
+          </button>
+          {showCravings && (
+            <div style={{ fontSize: 13, color: "#4a5568", lineHeight: 1.8, marginTop: 12 }}>
+              <p>Hormonal cravings are real and fighting them entirely leads to binge cycles. Instead, plan T1D-safe alternatives:</p>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12, margin: "12px 0" }}>
+                <div style={{ ...statBox, background: "#fae8ff" }}>
+                  <div style={statLabel}>Dark Chocolate 70%+</div>
+                  <div style={{ fontSize: 18, fontWeight: 700, color: "#1a2a5e", fontFamily: "'JetBrains Mono', monospace" }}>~13g carbs</div>
+                  <div style={{ fontSize: 11, color: "#718096", marginTop: 4 }}>per 30g serving</div>
+                </div>
+                <div style={{ ...statBox, background: "#e0f7f9" }}>
+                  <div style={statLabel}>Frozen Yoghurt</div>
+                  <div style={{ fontSize: 18, fontWeight: 700, color: "#1a2a5e", fontFamily: "'JetBrains Mono', monospace" }}>~17g carbs</div>
+                  <div style={{ fontSize: 11, color: "#718096", marginTop: 4 }}>per 1/2 cup serving</div>
+                </div>
+                <div style={{ ...statBox, background: "#f0fdf4" }}>
+                  <div style={statLabel}>Cheese (30g)</div>
+                  <div style={{ fontSize: 18, fontWeight: 700, color: "#1a2a5e", fontFamily: "'JetBrains Mono', monospace" }}>~0.5g carbs</div>
+                  <div style={{ fontSize: 11, color: "#718096", marginTop: 4 }}>Virtually zero-carb comfort</div>
+                </div>
+              </div>
+              <ul style={{ paddingLeft: 20, margin: "8px 0" }}>
+                <li><strong>Pre-portion treats:</strong> Divide chocolate bars or snacks into single servings with carb counts written on each bag</li>
+                <li><strong>Protein pairing:</strong> Eating protein with a craving food slows glucose spike — e.g., chocolate + almonds, yoghurt + berries</li>
+                <li><strong>Sugar-free options:</strong> Sugar-free jelly (~1g carbs), diet hot chocolate (~3g carbs), sugar-free ice lollies (~2g carbs)</li>
+                <li><strong>Salty cravings:</strong> Cheese (~0.5g carbs per 30g), olives (~0.5g carbs per 5), pickles (~1g carbs), salted nuts (~4g carbs per 30g)</li>
+                <li><strong>Plan, don't restrict:</strong> Allow yourself a pre-counted treat daily during the luteal phase. Bolus accurately and enjoy it guilt-free</li>
+              </ul>
+            </div>
+          )}
+        </div>
+
+        {/* Hormonal Contraception Impact */}
+        <div style={{ ...cardStyle, marginTop: 16 }}>
+          <button
+            onClick={() => setShowContraception(!showContraception)}
+            style={{ width: "100%", textAlign: "left", padding: 0, background: "none", border: "none", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center" }}
+          >
+            <h3 style={{ ...cardTitle, margin: 0 }}>Hormonal Contraception & Insulin Impact</h3>
+            <span style={{ fontSize: 18, color: "#1a2a5e", transform: showContraception ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s" }}>&#9662;</span>
+          </button>
+          {showContraception && (
+            <div style={{ fontSize: 13, color: "#4a5568", lineHeight: 1.8, marginTop: 12 }}>
+              <p>Hormonal contraception can affect insulin sensitivity. Understanding these effects helps with dose adjustments:</p>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, margin: "12px 0" }}>
+                <div style={{ padding: 16, background: "#fef2f2", borderRadius: 12, border: "1px solid #fca5a5" }}>
+                  <div style={{ fontSize: 14, fontWeight: 600, color: "#dc2626", marginBottom: 8 }}>Combined Pill (Oestrogen + Progesterone)</div>
+                  <ul style={{ paddingLeft: 16, margin: 0 }}>
+                    <li>May increase insulin resistance by <strong>5-10%</strong></li>
+                    <li>Effect is consistent throughout the month (no cyclical variation)</li>
+                    <li>May need to increase TDD by 5-10% when starting</li>
+                    <li>Pill-free week may cause a temporary dip in BG — watch for hypos</li>
+                    <li>Higher oestrogen formulations have a greater impact</li>
+                  </ul>
+                </div>
+                <div style={{ padding: 16, background: "#f0fdf4", borderRadius: 12, border: "1px solid #bbf7d0" }}>
+                  <div style={{ fontSize: 14, fontWeight: 600, color: "#16a34a", marginBottom: 8 }}>Progesterone-Only (Mini Pill / Implant / IUS)</div>
+                  <ul style={{ paddingLeft: 16, margin: 0 }}>
+                    <li>Generally has <strong>less impact</strong> on insulin resistance</li>
+                    <li>Some women report minimal to no change in insulin needs</li>
+                    <li>Mirena IUS (local progesterone) has very little systemic effect on BG</li>
+                    <li>Implant (Nexplanon) effects vary — monitor for first 3 months</li>
+                    <li>May reduce or eliminate cyclical BG patterns (fewer highs/lows)</li>
+                  </ul>
+                </div>
+              </div>
+              <ul style={{ paddingLeft: 20, margin: "8px 0" }}>
+                <li><strong>When starting any new contraception:</strong> Monitor BG closely for the first 2-3 months. Log patterns and discuss insulin adjustments with your diabetes team</li>
+                <li><strong>Copper IUD (non-hormonal):</strong> No effect on insulin or BG — but may increase menstrual bleeding (more iron loss)</li>
+                <li><strong>Depo-Provera injection:</strong> Can cause weight gain and increased insulin resistance in some women — monitor closely</li>
+                <li><strong>Switching methods:</strong> Allow 4-6 weeks for insulin needs to stabilise after changing contraception</li>
+              </ul>
+            </div>
+          )}
+        </div>
 
         <footer style={{ textAlign: "center", fontSize: 11, color: "#718096", marginTop: 32, paddingTop: 16, borderTop: "1px solid #e2e8f0" }}>
           <p>GluMira™ is an educational platform. Not a medical device. Always consult your diabetes care team.</p>
