@@ -180,10 +180,9 @@ function LeftPanel() {
     <div
       style={{
         background: `linear-gradient(155deg, ${T.navyDeep} 0%, ${T.navyDeep} 45%, ${T.navyMid} 75%, ${T.navy} 100%)`,
-        padding: 48,
         display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
+        alignItems: "center",
+        justifyContent: "center",
         position: "relative",
         overflow: "hidden",
       }}
@@ -198,101 +197,20 @@ function LeftPanel() {
           pointerEvents: "none",
         }}
       />
-      {/* Grid pattern overlay */}
-      <div
+
+      {/* Hero image — 70% of panel, centered, cropped to fill */}
+      <img
+        src="/images/mira-hero.png"
+        alt="Mira — GluMira™ AI Companion"
         style={{
-          position: "absolute",
-          inset: 0,
-          opacity: 0.025,
-          pointerEvents: "none",
-          backgroundImage: `repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(42,181,193,0.5) 60px),
-                            repeating-linear-gradient(60deg, transparent, transparent 59px, rgba(42,181,193,0.5) 60px),
-                            repeating-linear-gradient(120deg, transparent, transparent 59px, rgba(42,181,193,0.5) 60px)`,
-        }}
-      />
-
-      {/* Brand */}
-      <div style={{ position: "relative", zIndex: 2, display: "flex", alignItems: "center", gap: 10 }}>
-        <div style={{ width: 32, height: 32 }} />
-        <span style={{ fontWeight: 500, fontSize: 20, color: T.white, letterSpacing: "-0.01em" }}>
-          GluMira<sup style={{ fontSize: 10, verticalAlign: "super", color: T.teal }}>™</sup>
-        </span>
-      </div>
-
-      {/* Content */}
-      <div style={{ position: "relative", zIndex: 2 }}>
-        <p
-          style={{
-            fontSize: 11,
-            fontWeight: 500,
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
-            color: T.teal,
-            marginBottom: 20,
-          }}
-        >
-          Powered by IOB Hunter™
-        </p>
-        <h2
-          style={{
-            fontFamily: T.fontDisp,
-            fontSize: "clamp(32px, 4vw, 44px)",
-            fontWeight: 700,
-            color: T.white,
-            lineHeight: 1.12,
-            marginBottom: 20,
-          }}
-        >
-          The science of insulin,
-          <br />
-          <em style={{ fontStyle: "italic", color: T.teal }}>made visible</em>
-        </h2>
-        <p
-          style={{
-            fontSize: 16,
-            fontWeight: 300,
-            color: "rgba(255,255,255,0.82)",
-            lineHeight: 1.7,
-            maxWidth: 400,
-            marginBottom: 40,
-          }}
-        >
-          For caregivers sitting awake at 2am, watching glucose numbers, asking why. We answer that question with
-          science, not guesswork.
-        </p>
-
-        {/* Stats */}
-        <div style={{ display: "flex", gap: 32, flexWrap: "wrap" }}>
-          {[
-            { num: "9", lbl: "Insulin types modelled" },
-            { num: "4", lbl: "Specialist modules" },
-            { num: "3mo", lbl: "Free, no card" },
-          ].map((s) => (
-            <div key={s.lbl} style={{ display: "flex", flexDirection: "column", gap: 3 }}>
-              <span style={{ fontFamily: T.fontMono, fontSize: 22, fontWeight: 600, color: T.white }}>
-                {s.num}
-              </span>
-              <span style={{ fontSize: 11, color: "rgba(255,255,255,0.6)", fontWeight: 300 }}>{s.lbl}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Footer */}
-      <div
-        style={{
+          width: "70%",
+          height: "70%",
+          objectFit: "cover",
+          objectPosition: "center",
           position: "relative",
           zIndex: 2,
-          fontSize: 11,
-          color: "rgba(255,255,255,0.55)",
-          fontWeight: 300,
-          lineHeight: 1.5,
         }}
-      >
-        GluMira™ is an educational platform, not a medical device.
-        <br />
-        Always discuss clinical decisions with your care team.
-      </div>
+      />
     </div>
   );
 }
