@@ -1,10 +1,10 @@
 ﻿/**
  * GluMira™ V7 — LandingPage.tsx
- * Dark Clinical Depth hero with brand background, insulin graph,
- * countdown to go-live, all above the fold on 1366×768.
+ * Dark Clinical Depth hero with brand background and Mira hero image,
+ * all above the fold on 1366×768.
  */
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 
@@ -26,27 +26,9 @@ const T = {
   mono: "'JetBrains Mono', monospace",
 };
 
-/* ─── Countdown target ───────────────────────────────────────────────────── */
-const LAUNCH_DATE = new Date("2026-04-30T00:00:00Z").getTime();
-
-function useCountdown() {
-  const [now, setNow] = useState(Date.now());
-  useEffect(() => {
-    const id = setInterval(() => setNow(Date.now()), 1000);
-    return () => clearInterval(id);
-  }, []);
-  const diff = Math.max(0, LAUNCH_DATE - now);
-  const d = Math.floor(diff / 86400000);
-  const h = Math.floor((diff % 86400000) / 3600000);
-  const m = Math.floor((diff % 3600000) / 60000);
-  const s = Math.floor((diff % 60000) / 1000);
-  return { d, h, m, s };
-}
-
 /* ═══════════════════════════════════════════════════════════════════════════ */
 export default function LandingPage() {
   const navigate = useNavigate();
-  const countdown = useCountdown();
 
   useEffect(() => {
     if (!document.querySelector('link[href*="Playfair"]')) {
@@ -214,7 +196,7 @@ export default function LandingPage() {
                 e.currentTarget.style.boxShadow = "0 4px 20px rgba(42,181,193,0.3)";
               }}
             >
-              Get Started Free
+              Join the Beta — Free
             </button>
             <button
               onClick={() => navigate("/auth")}
@@ -239,7 +221,7 @@ export default function LandingPage() {
                 e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)";
               }}
             >
-              Sign In
+              Login
             </button>
           </div>
 
@@ -274,96 +256,24 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* ── RIGHT: placeholder ── */}
+        {/* ── RIGHT: Hero image ── */}
         <div
           style={{
             position: "relative",
             zIndex: 2,
-            flex: "0 0 auto",
-            width: 240,
-            height: 240,
-          }}
-        />
-
-        {/* ── COUNTDOWN — centered bottom ── */}
-        <div
-          style={{
-            position: "absolute",
-            bottom: 20,
-            left: "50%",
-            transform: "translateX(-50%)",
-            zIndex: 10,
+            flex: "1 1 50%",
             display: "flex",
-            flexDirection: "column",
             alignItems: "center",
-            gap: 6,
+            justifyContent: "center",
           }}
         >
-          <span
-            style={{
-              fontSize: 10,
-              fontWeight: 500,
-              letterSpacing: "0.14em",
-              textTransform: "uppercase",
-              color: "rgba(255,255,255,0.45)",
-            }}
-          >
-            Countdown to Go Live
-          </span>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 4,
-            }}
-          >
-            {[
-              { val: countdown.d, label: "d" },
-              { val: countdown.h, label: "h" },
-              { val: countdown.m, label: "m" },
-              { val: countdown.s, label: "s" },
-            ].map((unit, i) => (
-              <div key={unit.label} style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                <div
-                  style={{
-                    background: "rgba(42,181,193,0.12)",
-                    border: "1px solid rgba(42,181,193,0.2)",
-                    borderRadius: 6,
-                    padding: "5px 10px",
-                    minWidth: 40,
-                    textAlign: "center",
-                  }}
-                >
-                  <span
-                    style={{
-                      fontFamily: T.mono,
-                      fontSize: 16,
-                      fontWeight: 600,
-                      color: T.teal,
-                      letterSpacing: "0.04em",
-                    }}
-                  >
-                    {String(unit.val).padStart(2, "0")}
-                  </span>
-                  <span
-                    style={{
-                      fontSize: 9,
-                      fontWeight: 400,
-                      color: "rgba(255,255,255,0.4)",
-                      marginLeft: 2,
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    {unit.label}
-                  </span>
-                </div>
-                {i < 3 && (
-                  <span style={{ color: "rgba(42,181,193,0.3)", fontSize: 14, fontWeight: 300 }}>:</span>
-                )}
-              </div>
-            ))}
-          </div>
+          <img
+            src="/images/mira-hero.png"
+            alt="Mira — GluMira™ AI Companion"
+            style={{ maxWidth: "100%", height: "auto", objectFit: "contain" }}
+          />
         </div>
+
       </section>
 
       {/* ═══ BELOW THE FOLD — MINIMAL FOOTER ═══════════════════════════════ */}

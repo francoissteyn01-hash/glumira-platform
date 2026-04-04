@@ -12,7 +12,11 @@ const DashboardPage  = lazy(() => import("./pages/DashboardPage"));
 const EducationPage  = lazy(() => import("./pages/EducationPage"));
 const MiraPage       = lazy(() => import("./pages/MiraPage"));
 const BadgesPage     = lazy(() => import("./pages/BadgesPage"));
-const FAQPage        = lazy(() => import("./pages/FAQPage"));
+const FAQPage              = lazy(() => import("./pages/FAQPage"));
+const PregnancyModule      = lazy(() => import("./pages/PregnancyModule"));
+const PaediatricModule     = lazy(() => import("./pages/PaediatricModule"));
+const SchoolCarePlanModule = lazy(() => import("./pages/SchoolCarePlanModule"));
+const MenstrualCycleModule = lazy(() => import("./pages/MenstrualCycleModule"));
 
 function LoadingFallback() {
   return (
@@ -74,8 +78,12 @@ export default function App() {
             <Route path="/mira"        element={<MiraPage />} />
             <Route path="/badges"      element={<BadgesPage />} />
             <Route path="/faq"         element={<FAQPage />} />
-            <Route path="/settings"    element={<div className="p-8 text-[#718096]">Settings — coming soon</div>} />
-            <Route path="*"            element={<Navigate to="/dashboard" replace />} />
+            <Route path="/settings"           element={<div className="p-8 text-[#718096]">Settings — coming soon</div>} />
+            <Route path="/modules/pregnancy"   element={<PregnancyModule />} />
+            <Route path="/modules/paediatric"  element={<PaediatricModule />} />
+            <Route path="/modules/school-care" element={<SchoolCarePlanModule />} />
+            <Route path="/modules/menstrual"   element={<MenstrualCycleModule />} />
+            <Route path="*"                    element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </Suspense>
       </div>

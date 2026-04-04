@@ -108,8 +108,8 @@ export default function GlucoseOverlay({
             label={{ value: unitLabel(units), angle: -90, position: "insideLeft", style: { fontSize: 11, fill: "#52667a" }, offset: 20 }}
           />
           <Tooltip
-            labelFormatter={formatTime}
-            formatter={(value: number) => [`${value} ${unitLabel(units)}`, "Glucose"]}
+            labelFormatter={(label: any) => formatTime(String(label))}
+            formatter={(value: any) => [`${value} ${unitLabel(units)}`, "Glucose"]}
             contentStyle={{
               background: "#ffffff", border: "1px solid #dee2e6", borderRadius: 8,
               fontSize: 12, fontFamily: "'DM Sans', system-ui, sans-serif",

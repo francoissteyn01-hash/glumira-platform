@@ -28,10 +28,10 @@ export const EDUCATION_MODULES = [
 ] as const;
 
 export const FAQ_ITEMS = [
-  { q: "Is GluMira a medical device?",       a: "No. GluMira™ is an educational platform. It does not provide medical advice or replace your healthcare team." },
-  { q: "Does GluMira connect to my CGM?",    a: "GluMira can read data from Nightscout. Direct CGM integration is on the roadmap." },
+  { q: "Is GluMira™ a medical device?",      a: "No. GluMira™ is an educational platform. It does not provide medical advice or replace your healthcare team." },
+  { q: "Does GluMira™ connect to my CGM?",   a: "GluMira™ can read data from Nightscout. Direct CGM integration is on the roadmap." },
   { q: "Is my data secure?",                 a: "Yes. All data is encrypted in transit and at rest using Supabase with row-level security." },
-  { q: "What is Mira?",                      a: "Mira is GluMira's AI education assistant powered by Claude. She answers questions about diabetes management." },
+  { q: "What is Mira?",                      a: "Mira is GluMira™'s AI education assistant powered by Claude. She answers questions about diabetes management." },
   { q: "How do I earn badges?",              a: "Badges are awarded for completing education modules, logging consistently, and hitting personal milestones." },
   { q: "Can I share access with my caregiver?", a: "Yes. Caregiver sharing is available on Pro and Clinic plans." },
 ] as const;

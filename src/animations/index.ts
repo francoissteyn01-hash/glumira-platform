@@ -6,7 +6,7 @@
 import PlaceholderAnimation from "./PlaceholderAnimation";
 
 const VISUAL_NOTES: Record<string, string> = {
-  owl_sentinel_reveal: "The GluMira owl appears, watching over your data",
+  owl_sentinel_reveal: "The GluMira\u2122 owl appears, watching over your data",
   insulin_curve_building: "An insulin activity curve draws itself across the screen",
   stacking_overlap_reveal: "Multiple doses stack and overlap zones illuminate",
   density_map_terrain: "A terrain-style density map shows insulin pressure across 24 hours",

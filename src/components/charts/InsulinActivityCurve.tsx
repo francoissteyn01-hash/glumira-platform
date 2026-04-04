@@ -113,8 +113,8 @@ export default function InsulinActivityCurve({ curves }: Props) {
             tickFormatter={(v: number) => `${v.toFixed(1)}`}
           />
           <Tooltip
-            labelFormatter={formatTime}
-            formatter={(value: number, name: string) => [`${value.toFixed(2)} U`, name]}
+            labelFormatter={(label: any) => formatTime(String(label))}
+            formatter={(value: any, name: any) => [`${Number(value).toFixed(2)} U`, name]}
             contentStyle={{
               background: "#ffffff", border: "1px solid #dee2e6", borderRadius: 8,
               fontSize: 12, fontFamily: "'DM Sans', system-ui, sans-serif",

@@ -297,7 +297,6 @@ export default function ProfilePage() {
 
   const pct = completionPercent(form);
   const under18 = isUnder18(form.date_of_birth);
-  useKeyboardSave(save);
 
   /* ─── Load profile ────────────────────────────────────────────────────── */
   useEffect(() => {
@@ -365,6 +364,8 @@ export default function ProfilePage() {
       setSaving(false);
     }
   }, [session, form]);
+
+  useKeyboardSave(save);
 
   /* ─── Helpers ─────────────────────────────────────────────────────────── */
   const set = (key: keyof ProfileData) => (val: any) => setForm((f) => ({ ...f, [key]: val }));

@@ -1,6 +1,6 @@
 /**
  * GluMira™ V7 — MiraOwl.tsx
- * Canonical "The Sentinel" / Mira owl SVG.
+ * Canonical Mira owl SVG.
  *
  * Brand spec:
  *   Navy body (#1a2a5e / #0d1b3e)
@@ -27,7 +27,7 @@ export default function MiraOwl({ size = 80, className }: MiraOwlProps) {
       style={{ width: size, height: size }}
       className={className}
       role="img"
-      aria-label="Mira the Sentinel — GluMira owl mascot"
+      aria-label="Mira — GluMira™ owl mascot"
     />
   );
 }

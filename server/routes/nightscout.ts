@@ -1,10 +1,13 @@
 /**
  * GluMira™ V7 — server/routes/nightscout.ts
- * Adapts: 04.2.15_useNightscoutSync, 04.2.16_useNightscoutData
+ * Wired to Drizzle ORM — glucoseReadings table
  */
 
 import { Router, type Request, type Response } from "express";
 import { requireAuth, getUserId } from "../middleware/auth";
+import { db } from "../db";
+import { glucoseReadings } from "../db/schema";
+import { eq, gt, asc, and } from "drizzle-orm";
 
 export const nightscoutRouter = Router();
 nightscoutRouter.use(requireAuth);
@@ -12,37 +15,52 @@ nightscoutRouter.use(requireAuth);
 // POST /api/nightscout/sync
 nightscoutRouter.post("/sync", async (req: Request, res: Response) => {
   try {
-    const { url, apiSecret, days = 1 } = req.body;
+    const { url, apiSecret, days = 1, patientId } = req.body;
     if (!url) return res.status(400).json({ error: "url required" });
+    if (!patientId) return res.status(400).json({ error: "patientId required" });
 
-    // Nightscout API: fetch SGV entries
     const hours = days * 24;
     const since = new Date(Date.now() - hours * 3_600_000).toISOString();
     const headers: Record<string, string> = { "Content-Type": "application/json" };
     if (apiSecret) headers["api-secret"] = apiSecret;
 
-    const nsRes = await fetch(`${url}/api/v1/entries/sgv.json?count=1000&find[dateString][$gte]=${since}`, { headers });
+    const nsRes = await fetch(
+      `${url}/api/v1/entries/sgv.json?count=1000&find[dateString][$gte]=${since}`,
+      { headers, signal: AbortSignal.timeout(15000) }
+    );
     if (!nsRes.ok) {
       return res.status(400).json({ error: `Nightscout returned ${nsRes.status}` });
     }
     const entries = (await nsRes.json()) as Array<{ sgv: number; dateString: string; direction?: string }>;
 
-    const readings = entries.map((e) => ({
-      glucose: parseFloat((e.sgv / 18.0182).toFixed(1)), // mg/dL → mmol/L
-      time: e.dateString,
-      trend: e.direction ?? "NONE",
-      source: "nightscout",
-    }));
+    let imported = 0;
+    let errors = 0;
 
-    // TODO: upsert to glucose_readings table via Drizzle
+    for (const e of entries) {
+      const mmol = parseFloat((e.sgv / 18.0182).toFixed(1));
+      const recordedAt = new Date(e.dateString);
+
+      try {
+        await db.insert(glucoseReadings).values({
+          patientId,
+          valueMmol: String(mmol),
+          valueMgdl: String(e.sgv),
+          trendArrow: e.direction ?? "NONE",
+          source: "nightscout",
+          recordedAt,
+        }).onConflictDoNothing();
+        imported++;
+      } catch {
+        errors++;
+      }
+    }
 
     res.json({
       status: "success",
-      readingsImported: readings.length,
-      dosesImported: 0,
+      readingsImported: imported,
+      readingsSkipped: entries.length - imported,
+      errors,
       lastSyncAt: new Date().toISOString(),
-      errors: [],
-      readings,
     });
   } catch (err) {
     console.error("[nightscout/sync]", err);
@@ -50,20 +68,21 @@ nightscoutRouter.post("/sync", async (req: Request, res: Response) => {
   }
 });
 
-// GET /api/nightscout/sync?patientId=&hours= (useNightscoutData hook)
+// GET /api/nightscout/sync?patientId=&hours=24
 nightscoutRouter.get("/sync", async (req: Request, res: Response) => {
   try {
     const { patientId, hours = "24" } = req.query as Record<string, string>;
     if (!patientId) return res.status(400).json({ error: "patientId required" });
 
-    // TODO: fetch from glucose_readings table via Drizzle
-    // const readings = await db.select().from(glucoseReadings)
-    //   .where(eq(glucoseReadings.patientId, patientId))
-    //   .where(gt(glucoseReadings.recordedAt, new Date(Date.now() - parseInt(hours)*3600000)))
-    //   .orderBy(asc(glucoseReadings.recordedAt));
+    const since = new Date(Date.now() - parseInt(hours, 10) * 3_600_000);
 
-    res.json({ readings: [], patientId, hours: parseInt(hours, 10) });
+    const readings = await db.select().from(glucoseReadings)
+      .where(and(eq(glucoseReadings.patientId, patientId), gt(glucoseReadings.recordedAt, since)))
+      .orderBy(asc(glucoseReadings.recordedAt));
+
+    res.json({ readings, patientId, hours: parseInt(hours, 10) });
   } catch (err) {
+    console.error("[nightscout/get]", err);
     res.status(500).json({ error: "Failed to fetch readings" });
   }
 });

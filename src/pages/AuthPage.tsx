@@ -1027,7 +1027,7 @@ function RightPanel() {
                     type="text"
                     value={regClinic}
                     onChange={(e) => setRegClinic(e.target.value)}
-                    placeholder="Windhoek Central Hospital"
+                    placeholder="e.g. City General Hospital"
                     style={inputStyle}
                     onFocus={focusInput}
                     onBlur={blurInput}

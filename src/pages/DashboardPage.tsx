@@ -42,10 +42,17 @@ const ARROWS: Record<string, string> = {
 
 /* ─── Helpers ─────────────────────────────────────────────────────────────── */
 
-function todayRange() {
+type DateRangeLabel = "Today" | "3D" | "7D" | "14D" | "30D";
+
+const RANGE_DAYS: Record<DateRangeLabel, number> = {
+  Today: 1, "3D": 3, "7D": 7, "14D": 14, "30D": 30,
+};
+
+function getDateRange(label: DateRangeLabel) {
   const now = new Date();
-  const start = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const end = new Date(start.getTime() + 24 * 60 * 60_000);
+  const end = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+  const days = RANGE_DAYS[label];
+  const start = new Date(end.getTime() - days * 24 * 60 * 60_000);
   return { from: start.toISOString(), to: end.toISOString() };
 }
 
@@ -69,6 +76,9 @@ function timeAgo(iso: string): string {
 export default function DashboardPage() {
   const { user, session } = useAuth();
   const { patientName, isCaregiver } = usePatientName();
+
+  // Date range
+  const [dateRange, setDateRange] = useState<DateRangeLabel>("Today");
 
   // IOB Hunter state
   const [stackingData, setStackingData] = useState<StackingPoint[]>([]);
@@ -94,7 +104,7 @@ export default function DashboardPage() {
   useEffect(() => {
     if (!session) return;
     const headers = { Authorization: `Bearer ${session.access_token}` };
-    const { from, to } = todayRange();
+    const { from, to } = getDateRange(dateRange);
 
     // Stacking curve
     fetch(`/trpc/iobHunter.getStackingCurve?input=${encodeURIComponent(JSON.stringify({ json: { from, to } }))}`, { headers })
@@ -170,7 +180,7 @@ export default function DashboardPage() {
         if (Array.isArray(data)) setDetectedPatterns(data);
       })
       .catch(() => {});
-  }, [session]);
+  }, [session, dateRange]);
 
   /* ─── Nightscout sync ───────────────────────────────────────────────── */
   async function syncNS() {
@@ -243,7 +253,7 @@ export default function DashboardPage() {
         {/* Date range selector */}
         <div style={{ display: "flex", gap: 6, marginBottom: 16, flexWrap: "wrap" }}>
           {(["Today", "3D", "7D", "14D", "30D"] as const).map((label) => (
-            <button key={label} style={{ padding: "6px 14px", borderRadius: 6, border: "1px solid #dee2e6", background: label === "Today" ? "#1a2a5e" : "#ffffff", color: label === "Today" ? "#ffffff" : "#52667a", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+            <button key={label} onClick={() => setDateRange(label)} style={{ padding: "6px 14px", borderRadius: 6, border: "1px solid #dee2e6", background: dateRange === label ? "#1a2a5e" : "#ffffff", color: dateRange === label ? "#ffffff" : "#52667a", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
               {label}
             </button>
           ))}

@@ -30,6 +30,12 @@ const OnboardingStoryPage     = lazy(() => import("@/pages/OnboardingStoryPage")
 const HandwrittenImportPage   = lazy(() => import("@/pages/HandwrittenImportPage"));
 const CaregiverManagePage     = lazy(() => import("@/pages/CaregiverManagePage"));
 
+/* ─── GROUP4 Modules ────────────────────────────────────────────────────── */
+const PregnancyModule         = lazy(() => import("@/pages/PregnancyModule"));
+const PaediatricModule        = lazy(() => import("@/pages/PaediatricModule"));
+const SchoolCarePlanModule    = lazy(() => import("@/pages/SchoolCarePlanModule"));
+const MenstrualCycleModule    = lazy(() => import("@/pages/MenstrualCycleModule"));
+
 /* ─── Loading fallback ───────────────────────────────────────────────────── */
 function LoadingFallback() {
   return (
@@ -176,6 +182,11 @@ export default function App() {
               <Route path="/onboarding/story"     element={<ProtectedRoute><OnboardingStoryPage /></ProtectedRoute>} />
               <Route path="/import/handwritten"   element={<ProtectedRoute><HandwrittenImportPage /></ProtectedRoute>} />
               <Route path="/caregivers"          element={<ProtectedRoute><CaregiverManagePage /></ProtectedRoute>} />
+              {/* GROUP4 Modules */}
+              <Route path="/pregnancy"         element={<ProtectedRoute><PregnancyModule /></ProtectedRoute>} />
+              <Route path="/paediatric"        element={<ProtectedRoute><PaediatricModule /></ProtectedRoute>} />
+              <Route path="/school-care-plan"  element={<ProtectedRoute><SchoolCarePlanModule /></ProtectedRoute>} />
+              <Route path="/menstrual-cycle"   element={<ProtectedRoute><MenstrualCycleModule /></ProtectedRoute>} />
               <Route path="*"          element={<Navigate to="/" replace />} />
             </Routes>
           </Suspense>
