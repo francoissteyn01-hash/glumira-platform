@@ -30,6 +30,11 @@ const HalalModule          = lazy(() => import("./pages/HalalModule"));
 const BernsteinModule      = lazy(() => import("./pages/BernsteinModule"));
 const SickDayModule        = lazy(() => import("./pages/SickDayModule"));
 
+/* Safe Mode */
+const SafeModePage         = lazy(() => import("./pages/SafeModePage"));
+const DemoDashboard        = lazy(() => import("./components/DemoDashboard"));
+const CreateProfilePage    = lazy(() => import("./pages/CreateProfilePage"));
+
 const MODULE_LINKS = [
   { label: "Pregnancy",        href: "/modules/pregnancy"  },
   { label: "Paediatric",       href: "/modules/paediatric" },

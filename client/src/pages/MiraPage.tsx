@@ -201,18 +201,49 @@ export default function MiraPage() {
         <p className="text-xs text-[#718096] text-center">{DISCLAIMER}</p>
       </div>
 
+      {/* Feedback chip (safe mode only) */}
+      {isSafeMode && !feedbackMode && (
+        <div className="px-4 py-1 max-w-2xl mx-auto w-full flex justify-center">
+          <button
+            onClick={startFeedback}
+            className="rounded-full border border-[#2ab5c1] bg-[#2ab5c1]/10 text-[#1a2a5e] px-4 py-1.5 text-xs font-medium hover:bg-[#2ab5c1]/20 transition-colors"
+          >
+            Give Feedback
+          </button>
+        </div>
+      )}
+
       {/* Input */}
       <div className="border-t border-gray-200 dark:border-[#e2e8f0] bg-white dark:bg-white px-4 py-3 max-w-2xl mx-auto w-full">
         <div className="flex gap-2">
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && sendMessage()}
-            placeholder="Ask Mira a question…"
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                if (feedbackMode) {
+                  e.preventDefault();
+                  if (input.trim()) {
+                    handleFeedbackAnswer(input.trim());
+                    setInput("");
+                  }
+                } else {
+                  sendMessage();
+                }
+              }
+            }}
+            placeholder={feedbackMode ? "Type your answer…" : "Ask Mira a question…"}
             className="flex-1 rounded-xl border border-gray-200 dark:border-[#e2e8f0] bg-gray-50 dark:bg-[#f8f9fa] px-4 py-2.5 text-sm text-gray-900 dark:text-[#1a2a5e] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#2ab5c1]"
           />
           <button
-            onClick={sendMessage}
+            onClick={() => {
+              if (feedbackMode && input.trim()) {
+                handleFeedbackAnswer(input.trim());
+                setInput("");
+              } else {
+                sendMessage();
+              }
+            }}
             disabled={loading || !input.trim()}
             className="rounded-xl bg-[#2ab5c1] hover:bg-[#229aaa] disabled:opacity-40 text-[#1a2a5e] px-4 py-2.5 text-sm font-medium transition-colors"
           >
