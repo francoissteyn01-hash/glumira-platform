@@ -270,7 +270,13 @@ export default function LandingPage() {
           <img
             src="/images/mira-hero.png"
             alt="Mira — GluMira™ AI Companion"
-            style={{ maxWidth: "100%", height: "auto", objectFit: "contain" }}
+            style={{
+              maxWidth: "100%",
+              height: "auto",
+              objectFit: "contain",
+              mixBlendMode: "lighten",
+              filter: "drop-shadow(0 0 40px rgba(42,181,193,0.15))",
+            }}
           />
         </div>
 

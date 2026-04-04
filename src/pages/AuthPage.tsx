@@ -198,17 +198,17 @@ function LeftPanel() {
         }}
       />
 
-      {/* Hero image — 70% of panel, centered, cropped to fill */}
+      {/* Hero image — 70% of panel, centered, whole image visible */}
       <img
         src="/images/mira-hero.png"
         alt="Mira — GluMira™ AI Companion"
         style={{
           width: "70%",
-          height: "70%",
-          objectFit: "cover",
-          objectPosition: "center",
+          objectFit: "contain",
           position: "relative",
           zIndex: 2,
+          mixBlendMode: "lighten",
+          filter: "drop-shadow(0 0 40px rgba(42,181,193,0.15))",
         }}
       />
     </div>
