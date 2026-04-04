@@ -461,14 +461,13 @@ function RightPanel() {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "center",
-        minHeight: "100vh",
+        justifyContent: "flex-start",
         overflowY: "auto",
       }}
     >
       <div style={{ width: "100%", maxWidth: 360 }}>
         {/* Tab nav */}
-        <div style={{ display: "flex", gap: 0, borderBottom: `1px solid ${T.border}`, marginBottom: 36 }}>
+        <div style={{ display: "flex", gap: 0, borderBottom: `1px solid ${T.border}`, marginBottom: 20 }}>
           <button style={tabBtnStyle("signin")} onClick={() => switchTab("signin")}>
             Sign in
           </button>
@@ -1252,33 +1251,56 @@ export default function AuthPage() {
           50% { opacity: 0.25; }
         }
 
-        /* Mobile-first: Mira banner on top, form below */
+        /* Mobile-first: Mira banner + branding on top, compact form below */
         .glm-auth-wrapper {
           display: flex;
           flex-direction: column;
           min-height: 100vh;
         }
-        .glm-auth-banner {
+        .glm-auth-header {
           width: 100%;
           background: linear-gradient(155deg, #0d1b3e 0%, #1a2a5e 100%);
           display: flex;
+          flex-direction: column;
           align-items: center;
-          justify-content: center;
-          overflow: hidden;
           flex-shrink: 0;
+          padding-bottom: 24px;
         }
-        .glm-auth-banner img {
+        .glm-auth-header img {
           width: 100%;
           display: block;
           mix-blend-mode: lighten;
           filter: drop-shadow(0 0 40px rgba(42,181,193,0.15));
+        }
+        .glm-auth-header h1 {
+          font-family: 'Playfair Display', Georgia, serif;
+          font-size: clamp(32px, 10vw, 48px);
+          font-weight: 700;
+          color: #ffffff;
+          margin: 0;
+          letter-spacing: -0.03em;
+          text-align: center;
+        }
+        .glm-auth-header h1 span {
+          font-size: 0.35em;
+          vertical-align: super;
+          color: #ffffff;
+        }
+        .glm-auth-header p {
+          font-size: 10px;
+          font-weight: 500;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          color: rgba(255,255,255,0.45);
+          margin: 4px 0 0;
+          text-align: center;
         }
         .glm-auth-left {
           display: none;
         }
         .glm-auth-right {
           flex: 1;
-          padding: 28px 20px;
+          padding: 20px 24px;
         }
         .glm-role-grid {
           grid-template-columns: 1fr !important;
@@ -1290,7 +1312,7 @@ export default function AuthPage() {
         /* Tablet (600px+) */
         @media (min-width: 600px) {
           .glm-auth-right {
-            padding: 40px 32px;
+            padding: 32px 32px;
           }
           .glm-role-grid {
             grid-template-columns: 1fr 1fr !important;
@@ -1300,13 +1322,13 @@ export default function AuthPage() {
           }
         }
 
-        /* Desktop (900px+): side-by-side, hide mobile banner */
+        /* Desktop (900px+): side-by-side, hide mobile header */
         @media (min-width: 900px) {
           .glm-auth-wrapper {
             display: grid;
             grid-template-columns: 1fr 480px;
           }
-          .glm-auth-banner {
+          .glm-auth-header {
             display: none;
           }
           .glm-auth-left {
@@ -1327,9 +1349,11 @@ export default function AuthPage() {
           WebkitFontSmoothing: "antialiased",
         }}
       >
-        {/* Mobile banner — Mira on top */}
-        <div className="glm-auth-banner">
+        {/* Mobile header — Mira + brand on dark background */}
+        <div className="glm-auth-header">
           <img src="/images/mira-hero.png" alt="Mira — GluMira™ AI Companion" />
+          <h1>GluMira<span>™</span></h1>
+          <p>Powered by IOB Hunter™</p>
         </div>
         {/* Desktop left panel */}
         <div className="glm-auth-left">
