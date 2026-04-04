@@ -4,6 +4,16 @@
  */
 
 import PlaceholderAnimation from "./PlaceholderAnimation";
+import OwlReveal from "./owl_reveal";
+import InsulinCurve from "./insulin_curve";
+import StackingOverlap from "./stacking_overlap";
+import DensityMap from "./density_map";
+import QuietTail from "./quiet_tail";
+import ReportPreview from "./report_preview";
+import DashboardPreview from "./dashboard_preview";
+import PatternDetection from "./pattern_detection";
+import SafetyShield from "./safety_shield";
+import Celebration from "./celebration";
 
 const VISUAL_NOTES: Record<string, string> = {
   owl_sentinel_reveal: "The GluMira\u2122 owl appears, watching over your data",
@@ -27,4 +37,16 @@ export function getAnimationProps(visualId: string, visualNote?: string) {
   };
 }
 
-export { PlaceholderAnimation };
+export {
+  PlaceholderAnimation,
+  OwlReveal,
+  InsulinCurve,
+  StackingOverlap,
+  DensityMap,
+  QuietTail,
+  ReportPreview,
+  DashboardPreview,
+  PatternDetection,
+  SafetyShield,
+  Celebration,
+};
