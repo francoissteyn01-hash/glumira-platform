@@ -212,6 +212,7 @@ export default function App() {
             <Routes>
               <Route path="/"          element={<HomeRoute />} />
               <Route path="/auth"      element={<AuthPage />} />
+              <Route path="/auth/callback" element={<Navigate to="/dashboard" replace />} />
               <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
               <Route path="/education" element={<ProtectedRoute><EducationPage /></ProtectedRoute>} />
               <Route path="/education/:id" element={<ProtectedRoute><EducationTopicPage /></ProtectedRoute>} />
