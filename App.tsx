@@ -26,6 +26,7 @@ const ProfilePage   = lazy(() => import("@/pages/ProfilePage"));
 const MealLogPage    = lazy(() => import("@/pages/MealLogPage"));
 const InsulinLogPage    = lazy(() => import("@/pages/InsulinLogPage"));
 const ConditionLogPage     = lazy(() => import("@/pages/ConditionLogPage"));
+const OnboardingWizard        = lazy(() => import("@/pages/OnboardingWizard"));
 const OnboardingStoryPage     = lazy(() => import("@/pages/OnboardingStoryPage"));
 const HandwrittenImportPage   = lazy(() => import("@/pages/HandwrittenImportPage"));
 const CaregiverManagePage     = lazy(() => import("@/pages/CaregiverManagePage"));
@@ -192,6 +193,7 @@ export default function App() {
               <Route path="/insulin"    element={<ProtectedRoute><InsulinLogPage /></ProtectedRoute>} />
               <Route path="/conditions" element={<ProtectedRoute><ConditionLogPage /></ProtectedRoute>} />
               <Route path="/profile"           element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+              <Route path="/onboarding"             element={<ProtectedRoute><OnboardingWizard /></ProtectedRoute>} />
               <Route path="/onboarding/story"     element={<ProtectedRoute><OnboardingStoryPage /></ProtectedRoute>} />
               <Route path="/import/handwritten"   element={<ProtectedRoute><HandwrittenImportPage /></ProtectedRoute>} />
               <Route path="/caregivers"          element={<ProtectedRoute><CaregiverManagePage /></ProtectedRoute>} />

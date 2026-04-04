@@ -272,9 +272,12 @@ function RightPanel() {
     setLoading(true);
     setMsg(null);
     try {
-      const { error } = await supabase.auth.signInWithPassword({ email: siEmail.trim(), password: siPassword });
+      const { data, error } = await supabase.auth.signInWithPassword({ email: siEmail.trim(), password: siPassword });
       if (error) throw error;
-      window.location.href = "/dashboard";
+      // First-time users (no last_sign_in before this session) go to onboarding wizard
+      const lastSignIn = data.user?.last_sign_in_at;
+      const isFirstLogin = !lastSignIn || (new Date().getTime() - new Date(lastSignIn).getTime() < 10000);
+      window.location.href = isFirstLogin ? "/onboarding" : "/dashboard";
     } catch (e: any) {
       const message = e.message ?? "Incorrect email or password.";
       // Surface helpful message if Supabase is misconfigured
@@ -362,7 +365,8 @@ function RightPanel() {
         },
       });
       if (error) throw error;
-      setMsg({ type: "success", text: `Welcome ${cgName.trim()}! Check your email to confirm your account. You're registered as ${cgRelationship} for ${cgPatientName.trim()}.` });
+      // New caregiver users should be redirected to /onboarding after email confirmation
+      setMsg({ type: "success", text: `Welcome ${cgName.trim()}! Check your email to confirm your account. You're registered as ${cgRelationship} for ${cgPatientName.trim()}. After signing in you'll complete a quick onboarding.` });
     } catch (e: any) {
       setMsg({ type: "error", text: e.message ?? "Registration failed." });
     } finally {
@@ -1075,10 +1079,14 @@ function RightPanel() {
                   Check your email to verify your account, then start your 3-month free trial.
                 </p>
                 {renderAlert("success", "Account created. Verification email sent.")}
+                {/* After email confirmation, new users are redirected to /onboarding for profile setup */}
                 <button onClick={() => switchTab("signin")} style={btnSubmitBase}>
                   Go to sign in
                 </button>
-                <div style={{ marginTop: 16, fontSize: 12, color: T.bodyText }}>
+                <p style={{ marginTop: 12, fontSize: 12, color: T.teal, fontWeight: 500, textAlign: "center" }}>
+                  After signing in you'll complete a quick onboarding to personalise your experience.
+                </p>
+                <div style={{ marginTop: 12, fontSize: 12, color: T.bodyText }}>
                   Discuss all clinical insights with your care team.
                 </div>
               </div>
