@@ -141,14 +141,14 @@ export default function LandingPage() {
             letterSpacing: "0.14em",
             textTransform: "uppercase",
             color: "rgba(255,255,255,0.45)",
-            marginBottom: 44,
+            marginBottom: 0,
           }}
         >
           Powered by IOB Hunter™
         </p>
 
-        {/* Tagline — two lines, tight, 3/4 size of GluMira heading */}
-        <div style={{ marginTop: 40, marginBottom: 40 }}>
+        {/* Tagline — centered in the space, equal padding top and bottom */}
+        <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "44px 0" }}>
           <p
             style={{
               fontFamily: T.heading,
