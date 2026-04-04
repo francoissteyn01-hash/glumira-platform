@@ -4,6 +4,7 @@
  */
 
 import { useState, useRef, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { apiFetch } from "../lib/api";
 import { cn } from "../lib/utils";
 import { DISCLAIMER } from "../lib/constants";
@@ -14,7 +15,18 @@ interface Message {
   timestamp: Date;
 }
 
+const FEEDBACK_QUESTIONS = [
+  "What did you find most useful?",
+  "What was confusing?",
+  "What feature would you want next?",
+  "Rate GluMira™ from 1-5 (just type the number):",
+  "Anything else you'd like to share?",
+] as const;
+
 export default function MiraPage() {
+  const [params] = useSearchParams();
+  const isSafeMode = params.get("safe") === "1" || !!localStorage.getItem("glumira-safe-mode");
+
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
@@ -25,6 +37,9 @@ export default function MiraPage() {
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [feedbackMode, setFeedbackMode] = useState(false);
+  const [feedbackStep, setFeedbackStep] = useState(0);
+  const [feedbackData, setFeedbackData] = useState<Record<string, string>>({});
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
