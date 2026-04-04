@@ -117,74 +117,90 @@ export default function LandingPage() {
 
       {/* ═══ CONTENT ═════════════════════════════════════════════════════ */}
       <div className="glm-content">
+        {/* Name — big, bold, full width */}
+        <h1
+          style={{
+            fontFamily: T.heading,
+            fontSize: "clamp(42px, 12vw, 72px)",
+            fontWeight: 700,
+            color: T.white,
+            lineHeight: 1.0,
+            margin: "0 0 4px",
+            letterSpacing: "-0.03em",
+            width: "100%",
+          }}
+        >
+          GluMira<span style={{ fontSize: "0.35em", verticalAlign: "super", color: T.white }}>™</span>
+        </h1>
+
         {/* Engine badge */}
         <p
           style={{
-            fontSize: 11,
+            fontSize: 10,
             fontWeight: 500,
-            letterSpacing: "0.12em",
+            letterSpacing: "0.14em",
             textTransform: "uppercase",
-            color: T.teal,
-            marginBottom: 16,
+            color: "rgba(255,255,255,0.45)",
+            marginBottom: 32,
           }}
         >
           Powered by IOB Hunter™
         </p>
 
-        {/* Name */}
-        <h1
-          style={{
-            fontFamily: T.heading,
-            fontSize: "clamp(36px, 8vw, 56px)",
-            fontWeight: 700,
-            color: T.white,
-            lineHeight: 1.05,
-            margin: "0 0 10px",
-            letterSpacing: "-0.02em",
-          }}
-        >
-          GluMira<sup style={{ fontSize: "0.35em", verticalAlign: "super", color: T.teal }}>™</sup>
-        </h1>
-
-        {/* Tagline */}
+        {/* Tagline — two lines, "made visible" in amber glow */}
         <p
           style={{
             fontFamily: T.heading,
-            fontSize: "clamp(17px, 3.5vw, 24px)",
+            fontSize: "clamp(16px, 3vw, 20px)",
             fontWeight: 700,
-            fontStyle: "italic",
-            color: T.teal,
-            margin: "0 0 24px",
-            lineHeight: 1.3,
+            color: T.white,
+            margin: 0,
+            lineHeight: 2.4,
+            letterSpacing: "0.01em",
           }}
         >
-          The science of insulin, made visible
+          The science of insulin,
+        </p>
+        <p
+          style={{
+            fontFamily: T.heading,
+            fontSize: "clamp(20px, 4vw, 28px)",
+            fontWeight: 700,
+            fontStyle: "italic",
+            color: T.amber,
+            margin: "0 0 36px",
+            lineHeight: 2.4,
+            letterSpacing: "0.01em",
+            textShadow: "0 0 24px rgba(245,158,11,0.3)",
+          }}
+        >
+          made visible
         </p>
 
-        {/* CTA buttons */}
-        <div className="glm-cta-row" style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 28 }}>
+        {/* CTA buttons — understated, refined */}
+        <div className="glm-cta-row" style={{ display: "flex", gap: 14, flexWrap: "wrap", marginBottom: 32 }}>
           <button
             onClick={() => navigate("/auth")}
             style={{
-              padding: "13px 32px",
+              padding: "11px 28px",
               borderRadius: 8,
-              border: "none",
-              background: T.teal,
-              color: T.white,
-              fontSize: 15,
-              fontWeight: 600,
+              border: "1px solid rgba(42,181,193,0.4)",
+              background: "rgba(42,181,193,0.12)",
+              color: T.teal,
+              fontSize: 13,
+              fontWeight: 500,
               fontFamily: T.body,
               cursor: "pointer",
-              boxShadow: "0 4px 20px rgba(42,181,193,0.3)",
-              transition: "transform 0.2s, box-shadow 0.2s",
+              letterSpacing: "0.02em",
+              transition: "background 0.25s, border-color 0.25s",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "translateY(-2px)";
-              e.currentTarget.style.boxShadow = "0 6px 28px rgba(42,181,193,0.45)";
+              e.currentTarget.style.background = "rgba(42,181,193,0.22)";
+              e.currentTarget.style.borderColor = "rgba(42,181,193,0.6)";
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.boxShadow = "0 4px 20px rgba(42,181,193,0.3)";
+              e.currentTarget.style.background = "rgba(42,181,193,0.12)";
+              e.currentTarget.style.borderColor = "rgba(42,181,193,0.4)";
             }}
           >
             Join the Beta — Free
@@ -192,24 +208,25 @@ export default function LandingPage() {
           <button
             onClick={() => navigate("/auth")}
             style={{
-              padding: "13px 32px",
+              padding: "11px 28px",
               borderRadius: 8,
-              border: "1.5px solid rgba(255,255,255,0.3)",
-              background: "rgba(255,255,255,0.05)",
-              color: T.white,
-              fontSize: 15,
-              fontWeight: 500,
+              border: "1px solid rgba(255,255,255,0.15)",
+              background: "transparent",
+              color: "rgba(255,255,255,0.6)",
+              fontSize: 13,
+              fontWeight: 400,
               fontFamily: T.body,
               cursor: "pointer",
-              transition: "background 0.2s, border-color 0.2s",
+              letterSpacing: "0.02em",
+              transition: "color 0.25s, border-color 0.25s",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = "rgba(255,255,255,0.12)";
-              e.currentTarget.style.borderColor = "rgba(255,255,255,0.5)";
+              e.currentTarget.style.color = "rgba(255,255,255,0.85)";
+              e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)";
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.background = "rgba(255,255,255,0.05)";
-              e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)";
+              e.currentTarget.style.color = "rgba(255,255,255,0.6)";
+              e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)";
             }}
           >
             Login
