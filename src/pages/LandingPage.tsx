@@ -148,7 +148,7 @@ export default function LandingPage() {
         </p>
 
         {/* Tagline — two lines, tight, 3/4 size of GluMira heading */}
-        <div style={{ marginBottom: 40 }}>
+        <div style={{ marginTop: 40, marginBottom: 40 }}>
           <p
             style={{
               fontFamily: T.heading,
