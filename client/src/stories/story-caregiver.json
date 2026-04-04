@@ -1,0 +1,48 @@
+{
+  "profile_type": "caregiver",
+  "voice_style": "warm_reassuring",
+  "total_duration_ms": 45000,
+  "scenes": [
+    {
+      "id": "cg_01_owl_welcome",
+      "visual_id": "owl_sentinel_reveal",
+      "visual_note": "Mira owl appears warmly, soft teal glow radiates outward",
+      "subtitle_text": "Welcome. You're not doing this alone anymore.",
+      "voice_text": "Welcome to GluMira. You've already taken the hardest step — showing up for someone you love. Let's walk through this together.",
+      "duration_ms": 9000
+    },
+    {
+      "id": "cg_02_insulin_curve",
+      "visual_id": "insulin_curve_building",
+      "visual_note": "An insulin activity curve draws itself gently across the screen",
+      "subtitle_text": "Understanding insulin timing helps you support with confidence.",
+      "voice_text": "GluMira shows you when insulin is most active — so you can feel prepared, not panicked, when supporting a dose decision.",
+      "duration_ms": 9000
+    },
+    {
+      "id": "cg_03_stacking",
+      "visual_id": "stacking_overlap_reveal",
+      "visual_note": "Multiple dose curves stack; overlap zones glow amber",
+      "subtitle_text": "We watch for overlap so you don't have to worry.",
+      "voice_text": "When doses overlap, GluMira highlights the risk so you can act early — or simply know that everything is safe.",
+      "duration_ms": 9000
+    },
+    {
+      "id": "cg_04_report",
+      "visual_id": "report_preview_slide",
+      "visual_note": "A clean two-page PDF report slides into view",
+      "subtitle_text": "Share clear reports with the care team in one tap.",
+      "voice_text": "Generate a clinician-ready report anytime. No spreadsheets, no guesswork — just clear data the care team can act on.",
+      "duration_ms": 9000
+    },
+    {
+      "id": "cg_05_complete",
+      "visual_id": "profile_complete_celebration",
+      "visual_note": "Soft confetti and a teal completion badge appear",
+      "subtitle_text": "You're ready. Let's get started.",
+      "voice_text": "That's everything you need to know for now. GluMira is here whenever you need it — day or night.",
+      "duration_ms": 9000,
+      "cta": { "label": "Go to Dashboard", "href": "/dashboard" }
+    }
+  ]
+}

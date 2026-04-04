@@ -1,0 +1,56 @@
+{
+  "profile_type": "newly_diagnosed",
+  "voice_style": "warm_reassuring",
+  "total_duration_ms": 55000,
+  "scenes": [
+    {
+      "id": "nd_01_owl_welcome",
+      "visual_id": "owl_sentinel_reveal",
+      "visual_note": "Mira owl appears slowly, gentle warm glow, unhurried entrance",
+      "subtitle_text": "Take a breath. We'll go at your pace.",
+      "voice_text": "If you've just been diagnosed, everything might feel overwhelming right now. That's completely normal. GluMira is here to help — one step at a time.",
+      "duration_ms": 11000
+    },
+    {
+      "id": "nd_02_insulin_basics",
+      "visual_id": "insulin_curve_building",
+      "visual_note": "A single gentle insulin curve draws itself very slowly",
+      "subtitle_text": "Insulin works on a timeline. GluMira shows you when.",
+      "voice_text": "Insulin doesn't work instantly — it rises, peaks, and fades. This curve shows you exactly when it's doing its job, so you're never guessing.",
+      "duration_ms": 11000
+    },
+    {
+      "id": "nd_03_quiet_tail",
+      "visual_id": "quiet_tail_highlight",
+      "visual_note": "The quiet tail of long-acting insulin pulses gently with soft blue light",
+      "subtitle_text": "Even long-acting insulin has a rhythm you can learn.",
+      "voice_text": "Long-acting insulin works quietly in the background. GluMira tracks its gentle tail so you can see the full picture — not just the peaks.",
+      "duration_ms": 11000
+    },
+    {
+      "id": "nd_04_safety",
+      "visual_id": "safety_shield",
+      "visual_note": "A protective shield envelops the data, soft amber edges pulse",
+      "subtitle_text": "Safety alerts are always on. You're not alone in this.",
+      "voice_text": "GluMira watches for overlap, stacking risks, and unusual patterns. If something needs your attention, you'll know — gently, clearly.",
+      "duration_ms": 11000
+    },
+    {
+      "id": "nd_05_report",
+      "visual_id": "report_preview_slide",
+      "visual_note": "A clean report slides in, highlighting key metrics",
+      "subtitle_text": "Bring confidence to your next clinic visit.",
+      "voice_text": "Before your next appointment, generate a clear report your care team can understand instantly. No prep needed — just tap and share.",
+      "duration_ms": 5500
+    },
+    {
+      "id": "nd_06_complete",
+      "visual_id": "profile_complete_celebration",
+      "visual_note": "Warm confetti, soft teal badge, gentle completion",
+      "subtitle_text": "You've got this. And we've got you.",
+      "voice_text": "That's everything for now. Remember — every expert was once a beginner. GluMira will be right here, whenever you need it.",
+      "duration_ms": 5500,
+      "cta": { "label": "Start Exploring", "href": "/dashboard" }
+    }
+  ]
+}

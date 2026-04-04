@@ -17,6 +17,7 @@ const PregnancyModule      = lazy(() => import("./pages/PregnancyModule"));
 const PaediatricModule     = lazy(() => import("./pages/PaediatricModule"));
 const SchoolCarePlanModule = lazy(() => import("./pages/SchoolCarePlanModule"));
 const MenstrualCycleModule = lazy(() => import("./pages/MenstrualCycleModule"));
+const OnboardingStoryPage  = lazy(() => import("./pages/OnboardingStoryPage"));
 
 function LoadingFallback() {
   return (
@@ -83,6 +84,7 @@ export default function App() {
             <Route path="/modules/paediatric"  element={<PaediatricModule />} />
             <Route path="/modules/school-care" element={<SchoolCarePlanModule />} />
             <Route path="/modules/menstrual"   element={<MenstrualCycleModule />} />
+            <Route path="/onboarding/story"    element={<OnboardingStoryPage />} />
             <Route path="*"                    element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </Suspense>

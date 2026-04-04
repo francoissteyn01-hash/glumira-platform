@@ -1,0 +1,48 @@
+{
+  "profile_type": "adult_patient",
+  "voice_style": "calm_peer",
+  "total_duration_ms": 35000,
+  "scenes": [
+    {
+      "id": "ap_01_owl_welcome",
+      "visual_id": "owl_sentinel_reveal",
+      "visual_note": "Mira owl appears, confident posture, teal accent glow",
+      "subtitle_text": "Your insulin data, finally making sense.",
+      "voice_text": "GluMira turns your insulin data into something you can actually understand — no maths degree required.",
+      "duration_ms": 7000
+    },
+    {
+      "id": "ap_02_density",
+      "visual_id": "density_map_terrain",
+      "visual_note": "A terrain-style density map shows insulin pressure across 24 hours",
+      "subtitle_text": "See your insulin landscape across the full day.",
+      "voice_text": "This density map shows where insulin is doing the most work throughout your day. Peaks, valleys — all visible at a glance.",
+      "duration_ms": 7000
+    },
+    {
+      "id": "ap_03_patterns",
+      "visual_id": "pattern_detection_demo",
+      "visual_note": "Patterns are highlighted with amber accents in the data",
+      "subtitle_text": "GluMira spots patterns you might miss.",
+      "voice_text": "Recurring highs after lunch? A late-night dip pattern? GluMira catches these trends and surfaces them for you.",
+      "duration_ms": 7000
+    },
+    {
+      "id": "ap_04_dashboard",
+      "visual_id": "dashboard_walkthrough",
+      "visual_note": "Dashboard widgets light up one by one in sequence",
+      "subtitle_text": "Everything you need, one screen.",
+      "voice_text": "Your dashboard brings together glucose, insulin, meals, and insights — all in one clean view.",
+      "duration_ms": 7000
+    },
+    {
+      "id": "ap_05_complete",
+      "visual_id": "profile_complete_celebration",
+      "visual_note": "Celebration badge with subtle confetti",
+      "subtitle_text": "You're all set. Let's go.",
+      "voice_text": "That's the quick tour. Dive in — your dashboard is ready.",
+      "duration_ms": 7000,
+      "cta": { "label": "Open Dashboard", "href": "/dashboard" }
+    }
+  ]
+}

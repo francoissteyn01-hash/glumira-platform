@@ -1,0 +1,52 @@
+{
+  "profile_type": "clinician",
+  "voice_style": "professional_measured",
+  "total_duration_ms": 25000,
+  "scenes": [
+    {
+      "id": "cl_01_owl_intro",
+      "visual_id": "owl_sentinel_reveal",
+      "visual_note": "Mira owl appears in professional clinical context, clean lines",
+      "subtitle_text": "GluMira: insulin-on-board analytics for your practice.",
+      "voice_text": "GluMira provides real-time insulin-on-board modelling, stacking risk detection, and patient-ready reporting for diabetes care teams.",
+      "duration_ms": 5000
+    },
+    {
+      "id": "cl_02_stacking",
+      "visual_id": "stacking_overlap_reveal",
+      "visual_note": "Stacking overlap zones highlighted with clinical precision",
+      "subtitle_text": "Automatic dose stacking and overlap detection.",
+      "voice_text": "The stacking engine flags dose overlaps before they become a clinical event — giving you and your patient advance warning.",
+      "duration_ms": 5000
+    },
+    {
+      "id": "cl_03_density",
+      "visual_id": "density_map_terrain",
+      "visual_note": "24-hour density map with clinical annotation markers",
+      "subtitle_text": "Full 24-hour insulin landscape at a glance.",
+      "voice_text": "The density view maps total insulin pressure across twenty-four hours — ideal for identifying basal-bolus imbalances during reviews.",
+      "duration_ms": 5000
+    },
+    {
+      "id": "cl_04_report",
+      "visual_id": "report_preview_slide",
+      "visual_note": "Two-page clinical report with structured data sections",
+      "subtitle_text": "One-tap PDF reports, structured for clinical review.",
+      "voice_text": "Patients can generate a structured PDF report before each appointment. Time-in-range, dose history, and pattern summaries — all pre-formatted.",
+      "duration_ms": 5000
+    },
+    {
+      "id": "cl_05_complete",
+      "visual_id": "profile_complete_celebration",
+      "visual_note": "Professional completion with subtle teal accent",
+      "subtitle_text": "Choose how you'd like to proceed.",
+      "voice_text": "That's the clinical overview. You can explore the dashboard or review the full documentation.",
+      "duration_ms": 5000,
+      "cta_options": [
+        { "label": "Open Dashboard", "href": "/dashboard" },
+        { "label": "View Documentation", "href": "/education" },
+        { "label": "Invite a Patient", "href": "/settings" }
+      ]
+    }
+  ]
+}

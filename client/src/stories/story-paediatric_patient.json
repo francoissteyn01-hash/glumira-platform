@@ -1,0 +1,48 @@
+{
+  "profile_type": "paediatric_patient",
+  "voice_style": "friendly_upbeat",
+  "total_duration_ms": 30000,
+  "scenes": [
+    {
+      "id": "pp_01_owl_hello",
+      "visual_id": "owl_sentinel_reveal",
+      "visual_note": "Mira owl bounces in cheerfully with a friendly wave",
+      "subtitle_text": "Hey there! Meet Mira, your diabetes sidekick.",
+      "voice_text": "Hi! I'm Mira — your friendly owl who helps you understand your insulin and stay on top of things. Let me show you around!",
+      "duration_ms": 6000
+    },
+    {
+      "id": "pp_02_insulin_curve",
+      "visual_id": "insulin_curve_building",
+      "visual_note": "A colourful insulin curve draws itself like a roller coaster track",
+      "subtitle_text": "This line shows when your insulin is working hardest.",
+      "voice_text": "See this curve? It shows when your insulin is doing the most work — like a little energy wave through your day!",
+      "duration_ms": 6000
+    },
+    {
+      "id": "pp_03_safety",
+      "visual_id": "safety_shield",
+      "visual_note": "A glowing shield forms around the data, amber highlights on edges",
+      "subtitle_text": "Mira watches out for you, even when you're busy.",
+      "voice_text": "Mira keeps an eye on things and lets you or your grown-up know if something needs attention. Like a safety shield!",
+      "duration_ms": 6000
+    },
+    {
+      "id": "pp_04_dashboard",
+      "visual_id": "dashboard_walkthrough",
+      "visual_note": "Dashboard tiles light up in a playful sequence",
+      "subtitle_text": "Your own dashboard — everything in one place.",
+      "voice_text": "Your dashboard shows your glucose, meals, and how you're doing. It's like your own mission control!",
+      "duration_ms": 6000
+    },
+    {
+      "id": "pp_05_complete",
+      "visual_id": "profile_complete_celebration",
+      "visual_note": "Bright confetti burst with a star badge",
+      "subtitle_text": "You're a star! Let's get started.",
+      "voice_text": "Awesome — you're all set! Let's jump in and explore your dashboard together.",
+      "duration_ms": 6000,
+      "cta": { "label": "Let's Go!", "href": "/dashboard" }
+    }
+  ]
+}
