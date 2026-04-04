@@ -52,6 +52,7 @@ const EducationTopicPage      = lazy(() => import("@/pages/EducationTopicPage"))
 const SafeModePage            = lazy(() => import("@/pages/SafeModePage"));
 const DemoDashboardPage       = lazy(() => import("@/pages/DemoDashboardPage"));
 const CreateProfilePage       = lazy(() => import("@/pages/CreateProfilePage"));
+const DevPanel                = lazy(() => import("@/pages/DevPanel"));
 
 /* ─── Loading fallback ───────────────────────────────────────────────────── */
 function LoadingFallback() {
@@ -182,6 +183,7 @@ function NavBar() {
   if (location.pathname === "/auth") return null;
   if (location.pathname === "/" && !user) return null;
   if (location.pathname.startsWith("/safe-mode")) return null;
+  if (location.pathname === "/dev") return null;
 
   // Dark navbar on authenticated pages
   if (!user) return <LightNavBar />;
@@ -248,6 +250,7 @@ export default function App() {
               <Route path="/safe-mode"             element={<SafeModePage />} />
               <Route path="/safe-mode/profile/:id" element={<DemoDashboardPage />} />
               <Route path="/safe-mode/create"      element={<CreateProfilePage />} />
+              <Route path="/dev"                   element={<DevPanel />} />
               <Route path="*"          element={<Navigate to="/" replace />} />
             </Routes>
           </Suspense>
