@@ -208,7 +208,7 @@ function DesktopSidebar({ collapsed, setCollapsed }: { collapsed: boolean; setCo
         {!collapsed && <div style={sectionLabelStyle}>Tools</div>}
         {navItem("/meals/plan", "Meal Plan", ICONS.meal)}
         {navItem("/badges", "Badges", ICONS.badges)}
-        {navItem("/onboarding/story", "Tutorial", ICONS.tutorial)}
+        {navItem("/tutorial", "Tutorial", ICONS.tutorial)}
 
         {/* Account */}
         {!collapsed && <div style={sectionLabelStyle}>Account</div>}
@@ -357,7 +357,7 @@ function MobileBottomBar() {
               {DIETARY_MODULES.map((m) => moreItem(m.path, m.label, ICONS.modules))}
               <div style={sectionLabelStyle}>Tools</div>
               {moreItem("/badges", "Badges", ICONS.badges)}
-              {moreItem("/onboarding/story", "Tutorial", ICONS.tutorial)}
+              {moreItem("/tutorial", "Tutorial", ICONS.tutorial)}
               <div style={sectionLabelStyle}>Account</div>
               {moreItem("/settings", "Settings", ICONS.settings)}
               {moreItem("/faq", "FAQ", ICONS.faq)}

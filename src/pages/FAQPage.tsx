@@ -1,11 +1,17 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { FAQ_ITEMS } from "@/lib/constants";
 export default function FAQPage() {
   const [open, setOpen] = useState<number|null>(null);
   return (
     <div className="min-h-screen bg-gray-950">
       <div className="max-w-2xl mx-auto px-4 py-8 space-y-6">
-        <div><h1 className="text-2xl font-bold text-white">Frequently Asked Questions</h1><p className="text-sm text-gray-300 mt-1">Can't find an answer? Ask Mira AI.</p></div>
+        <div>
+          <h1 className="text-2xl font-bold text-white">Frequently Asked Questions</h1>
+          <p className="text-sm text-gray-300 mt-1">
+            New to GluMira™? Start with the <Link to="/tutorial" className="text-[#2ab5c1] underline hover:text-[#229aaa]">Tutorial</Link>. Can't find an answer? Ask Mira AI.
+          </p>
+        </div>
         <div className="space-y-2">
           {FAQ_ITEMS.map((item,i)=>(
             <div key={i} className="rounded-xl border border-gray-800 bg-gray-900 overflow-hidden">

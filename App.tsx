@@ -53,6 +53,7 @@ const DemoDashboardPage       = lazy(() => import("@/pages/DemoDashboardPage"));
 const CreateProfilePage       = lazy(() => import("@/pages/CreateProfilePage"));
 const DevPanel                = lazy(() => import("@/pages/DevPanel"));
 const RegisterPage            = lazy(() => import("@/pages/RegisterPage"));
+const TutorialPage            = lazy(() => import("@/pages/TutorialPage"));
 
 /* ─── Loading fallback ───────────────────────────────────────────────────── */
 function LoadingFallback() {
@@ -64,7 +65,7 @@ function LoadingFallback() {
 }
 
 /* ─── Paths with no sidebar chrome ───────────────────────────────────────── */
-const CHROMELESS = ["/", "/auth", "/auth/callback", "/dev"];
+const CHROMELESS = ["/", "/auth", "/auth/callback", "/dev", "/tutorial"];
 function isChromeless(pathname: string): boolean {
   if (CHROMELESS.includes(pathname)) return true;
   if (pathname.startsWith("/safe-mode")) return true;
@@ -168,6 +169,7 @@ export default function App() {
               <Route path="/safe-mode/create"      element={<CreateProfilePage />} />
               <Route path="/dev"                   element={<DevPanel />} />
               <Route path="/register"              element={<RegisterPage />} />
+              <Route path="/tutorial"              element={<TutorialPage />} />
               <Route path="*"          element={<Navigate to="/" replace />} />
             </Routes>
           </Suspense>
