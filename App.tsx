@@ -4,14 +4,13 @@
  * Landing page at /, dark navbar for authenticated pages, light navbar for public pages.
  */
 
-import { BrowserRouter, Routes, Route, Navigate, NavLink, useLocation, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { Suspense, lazy } from "react";
-import { NAV_LINKS, MODULE_LINKS } from "@/lib/constants";
 import { useAuth } from "@/hooks/useAuth";
-import ProtectedRoute from "@/components/ProtectedRoute";
 import { GlucoseUnitsProvider } from "@/context/GlucoseUnitsContext";
 import { PresentationModeProvider } from "@/components/PresentationMode";
-import { usePatientName } from "@/hooks/usePatientName";
+import AppSidebar, { useSidebarOffset } from "@/components/AppSidebar";
+import { useSessionTimeout, SessionWarningModal } from "@/hooks/useSessionTimeout";
 
 /* ─── Lazy pages ─────────────────────────────────────────────────────────── */
 const LandingPage   = lazy(() => import("@/pages/LandingPage"));
@@ -64,131 +63,45 @@ function LoadingFallback() {
   );
 }
 
-/* ─── Light navbar (landing page — transparent over dark hero) ───────────── */
-function LightNavBar() {
-  const navigate = useNavigate();
-  return (
-    <nav
-      style={{
-        position: "absolute",
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 50,
-        background: "transparent",
-        padding: "14px 24px",
-      }}
-    >
-      <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <span
-          style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}
-          onClick={() => navigate("/")}
-        >
-          <div style={{ width: 28, height: 28 }} />
-          <span style={{ fontWeight: 700, fontSize: 17, color: "#ffffff", letterSpacing: "-0.01em" }}>
-            GluMira<sup style={{ fontSize: 8, verticalAlign: "super", color: "#2ab5c1" }}>™</sup>
-          </span>
-        </span>
-        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-          <button
-            onClick={() => navigate("/auth")}
-            style={{
-              padding: "8px 20px",
-              borderRadius: 8,
-              border: "none",
-              background: "#2ab5c1",
-              color: "#fff",
-              fontSize: 13,
-              fontWeight: 600,
-              cursor: "pointer",
-            }}
-          >
-            Sign in
-          </button>
-        </div>
-      </div>
-    </nav>
-  );
+/* ─── Paths with no sidebar chrome ───────────────────────────────────────── */
+const CHROMELESS = ["/", "/auth", "/auth/callback", "/dev"];
+function isChromeless(pathname: string): boolean {
+  if (CHROMELESS.includes(pathname)) return true;
+  if (pathname.startsWith("/safe-mode")) return true;
+  if (pathname === "/register") return true;
+  return false;
 }
 
-/* ─── Dark navbar (authenticated pages) ──────────────────────────────────── */
-function DarkNavBar() {
-  const { signOut } = useAuth();
-  const { patientName, isCaregiver } = usePatientName();
+/* ─── Shell: sidebar + content wrapper with session timeout ───────────────── */
+function AppShell({ children }: { children: React.ReactNode }) {
+  const location = useLocation();
+  const chromeless = isChromeless(location.pathname);
+  const sidebarOffset = useSidebarOffset();
+  const { showWarning, stayActive, logout } = useSessionTimeout(!chromeless);
 
-  // For caregivers, replace "Dashboard" → "Anouk's Dashboard", "Profile" → "Anouk's Profile"
-  function navLabel(label: string): string {
-    if (!isCaregiver || !patientName) return label;
-    if (label === "Dashboard") return `${patientName}'s Dashboard`;
-    if (label === "Profile") return `${patientName}'s Profile`;
-    return label;
+  if (chromeless) {
+    return <>{children}</>;
   }
 
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+
   return (
-    <nav aria-label="Main navigation" className="border-b border-gray-800 bg-gray-900 px-4 py-3 sticky top-0 z-50" data-nav>
-      <div className="max-w-5xl mx-auto flex items-center justify-between">
-        <span className="flex items-center gap-2">
-          <div style={{ width: 24, height: 24 }} />
-          <span className="font-bold text-brand-500 text-lg tracking-tight">GluMira™</span>
-        </span>
-        <div className="flex items-center gap-1 overflow-x-auto">
-          {NAV_LINKS.map((link) => (
-            <NavLink
-              key={link.href}
-              to={link.href}
-              className={({ isActive }) =>
-                `px-3 py-1.5 rounded-lg text-xs font-medium transition-colors whitespace-nowrap ${
-                  isActive ? "bg-brand-600/50 text-brand-500" : "text-gray-300 hover:text-white"
-                }`
-              }
-            >
-              {navLabel(link.label)}
-            </NavLink>
-          ))}
-          {/* Modules dropdown */}
-          <div className="relative group">
-            <button className="px-3 py-1.5 rounded-lg text-xs font-medium text-gray-300 hover:text-white transition-colors whitespace-nowrap">
-              Modules ▾
-            </button>
-            <div className="absolute top-full right-0 mt-1 bg-gray-900 border border-gray-700 rounded-xl shadow-lg p-2 hidden group-hover:flex flex-col gap-0.5 min-w-[180px] z-50">
-              {MODULE_LINKS.map((mod) => (
-                <NavLink
-                  key={mod.href}
-                  to={mod.href}
-                  className={({ isActive }) =>
-                    `px-3 py-2 text-xs rounded-lg transition-colors whitespace-nowrap ${
-                      isActive ? "bg-brand-600/50 text-brand-500" : "text-gray-300 hover:text-white hover:bg-gray-800"
-                    }`
-                  }
-                >
-                  {mod.label}
-                </NavLink>
-              ))}
-            </div>
-          </div>
-          <button onClick={signOut} aria-label="Sign out of GluMira" className="ml-2 px-3 py-1.5 text-xs text-gray-400 hover:text-white transition-colors">
-            Sign out
-          </button>
-        </div>
+    <>
+      <AppSidebar />
+      <div
+        style={{
+          marginLeft: sidebarOffset,
+          paddingBottom: isMobile ? 72 : 0,
+          minHeight: "100vh",
+          transition: "margin-left 0.2s ease",
+          background: "#f8f9fa",
+        }}
+      >
+        {children}
       </div>
-    </nav>
+      <SessionWarningModal open={showWarning} onStay={stayActive} onLogout={logout} />
+    </>
   );
-}
-
-/* ─── Smart navbar selector ──────────────────────────────────────────────── */
-function NavBar() {
-  const { user } = useAuth();
-  const location = useLocation();
-
-  // No navbar on auth page, landing page, or safe-mode pages
-  if (location.pathname === "/auth") return null;
-  if (location.pathname === "/" && !user) return null;
-  if (location.pathname.startsWith("/safe-mode")) return null;
-  if (location.pathname === "/dev") return null;
-
-  // Dark navbar on authenticated pages
-  if (!user) return <LightNavBar />;
-  return <DarkNavBar />;
 }
 
 /* ─── Smart home route ───────────────────────────────────────────────────── */
@@ -204,9 +117,9 @@ export default function App() {
     <BrowserRouter>
       <GlucoseUnitsProvider>
         <PresentationModeProvider>
-        <div className="min-h-screen bg-gray-950 text-gray-100">
+        <div className="min-h-screen" style={{ background: "#f8f9fa", color: "#1a2a5e" }}>
           <a href="#main-content" className="skip-link">Skip to content</a>
-          <NavBar />
+          <AppShell>
           <main id="main-content">
           <Suspense fallback={<LoadingFallback />}>
             <Routes>
@@ -259,6 +172,7 @@ export default function App() {
             </Routes>
           </Suspense>
           </main>
+          </AppShell>
         </div>
         </PresentationModeProvider>
       </GlucoseUnitsProvider>

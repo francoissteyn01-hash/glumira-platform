@@ -1,44 +1,181 @@
-﻿import { useState, useCallback } from "react";
+/**
+ * GluMira™ V7 — Settings Page
+ * Auto-save on every change. No Save buttons.
+ */
+
+import { useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { useAuth, supabase } from "@/hooks/useAuth";
 import UnitToggle from "@/components/UnitToggle";
 import NightscoutSetup from "@/components/NightscoutSetup";
-import { useKeyboardSave } from "@/hooks/useKeyboardSave";
+import { useAutoSave, SavedIndicator } from "@/hooks/useAutoSave";
+
+const NAVY = "#1a2a5e";
+const TEAL = "#2ab5c1";
+const BORDER = "#e2e8f0";
+const MUTED = "#718096";
+
 export default function SettingsPage() {
-  const { user }            = useAuth();
-  const [nsUrl, setNsUrl]   = useState(()=>localStorage.getItem("ns_url")??"");
-  const [nsSecret, setNs]   = useState(()=>localStorage.getItem("ns_secret")??"");
-  const [saved, setSaved]   = useState(false);
-  const [pwNew, setPwNew]   = useState("");
-  const [pwMsg, setPwMsg]   = useState<string|null>(null);
-  const saveNS = useCallback(() => { localStorage.setItem("ns_url",nsUrl); localStorage.setItem("ns_secret",nsSecret); setSaved(true); setTimeout(()=>setSaved(false),2000); }, [nsUrl, nsSecret]);
-  useKeyboardSave(saveNS);
-  async function changePw(){ setPwMsg(null); const{error}=await supabase.auth.updateUser({password:pwNew}); if(error)setPwMsg(error.message); else{setPwMsg("Password updated.");setPwNew("");} }
+  const { user } = useAuth();
+  const [nsUrl, setNsUrl] = useState(() => localStorage.getItem("ns_url") ?? "");
+  const [nsSecret, setNsSecret] = useState(() => localStorage.getItem("ns_secret") ?? "");
+  const [pwNew, setPwNew] = useState("");
+  const [pwMsg, setPwMsg] = useState<string | null>(null);
+
+  // Auto-save Nightscout settings
+  const saveNs = useCallback((vals: { url: string; secret: string }) => {
+    localStorage.setItem("ns_url", vals.url);
+    localStorage.setItem("ns_secret", vals.secret);
+  }, []);
+  const { status: nsStatus, save: triggerSaveNs } = useAutoSave(saveNs);
+
+  const onNsUrlChange = (v: string) => {
+    setNsUrl(v);
+    triggerSaveNs({ url: v, secret: nsSecret });
+  };
+  const onNsSecretChange = (v: string) => {
+    setNsSecret(v);
+    triggerSaveNs({ url: nsUrl, secret: v });
+  };
+
+  async function changePw() {
+    setPwMsg(null);
+    const { error } = await supabase.auth.updateUser({ password: pwNew });
+    if (error) setPwMsg(error.message);
+    else { setPwMsg("Password updated."); setPwNew(""); }
+  }
+
   return (
-    <div className="min-h-screen bg-gray-950">
-      <div className="max-w-2xl mx-auto px-4 py-8 space-y-8">
-        <h1 className="text-2xl font-bold text-white">Settings</h1>
-        <S title="Account"><p className="text-xs text-gray-300">Email</p><p className="text-sm text-white">{user?.email??"—"}</p></S>
-        <S title="Change Password">
-          <label htmlFor="pw-new" className="sr-only">New password</label>
-          <input id="pw-new" type="password" value={pwNew} onChange={e=>setPwNew(e.target.value)} placeholder="New password (min 8 chars)" className="w-full rounded-lg bg-gray-800 border border-gray-700 px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-500"/>
-          {pwMsg&&<p className={`text-xs ${pwMsg.includes("updated")?"text-green-400":"text-red-400"}`} role="status">{pwMsg}</p>}
-          <button onClick={changePw} disabled={pwNew.length<8} className="rounded-lg bg-brand-600 hover:bg-brand-700 disabled:opacity-40 text-white px-4 py-2 text-sm font-medium transition-colors">Update password</button>
-        </S>
-        <S title="Nightscout">
-          <label htmlFor="ns-url" className="sr-only">Nightscout URL</label>
-          <input id="ns-url" value={nsUrl} onChange={e=>setNsUrl(e.target.value)} placeholder="https://yoursite.herokuapp.com" className="w-full rounded-lg bg-gray-800 border border-gray-700 px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-500"/>
-          <label htmlFor="ns-secret" className="sr-only">Nightscout API Secret</label>
-          <input id="ns-secret" type="password" value={nsSecret} onChange={e=>setNs(e.target.value)} placeholder="API Secret (optional)" className="w-full rounded-lg bg-gray-800 border border-gray-700 px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-500"/>
-          <button onClick={saveNS} className="rounded-lg bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 text-sm font-medium transition-colors">{saved?"✓ Saved":"Save Nightscout settings"}</button>
-        </S>
+    <div style={{ minHeight: "100vh", background: "#f8f9fa", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+      <div style={{ maxWidth: 640, margin: "0 auto", padding: "32px 20px 60px" }}>
+        <h1 style={{ fontSize: 24, fontWeight: 700, color: NAVY, marginBottom: 24 }}>Settings</h1>
+
+        <Section title="Account">
+          <p style={{ fontSize: 11, color: MUTED, marginBottom: 4 }}>Email</p>
+          <p style={{ fontSize: 14, color: NAVY, margin: 0 }}>{user?.email ?? "\u2014"}</p>
+        </Section>
+
+        <Section title="Change Password">
+          <input
+            id="pw-new"
+            type="password"
+            value={pwNew}
+            onChange={(e) => setPwNew(e.target.value)}
+            placeholder="New password (min 8 chars)"
+            style={inputStyle}
+          />
+          {pwMsg && (
+            <p style={{ fontSize: 12, color: pwMsg.includes("updated") ? "#10b981" : "#ef4444", marginTop: 6 }} role="status">
+              {pwMsg}
+            </p>
+          )}
+          <button
+            onClick={changePw}
+            disabled={pwNew.length < 8}
+            style={{
+              marginTop: 10, padding: "9px 18px", borderRadius: 8, border: "none",
+              background: TEAL, color: "#fff", fontSize: 13, fontWeight: 600,
+              cursor: pwNew.length < 8 ? "default" : "pointer",
+              opacity: pwNew.length < 8 ? 0.4 : 1,
+              fontFamily: "inherit",
+            }}
+          >
+            Update password
+          </button>
+        </Section>
+
+        <Section title="Nightscout" indicator={<SavedIndicator status={nsStatus} />}>
+          <label style={labelStyle}>Nightscout URL</label>
+          <input
+            id="ns-url"
+            value={nsUrl}
+            onChange={(e) => onNsUrlChange(e.target.value)}
+            placeholder="https://yoursite.herokuapp.com"
+            style={inputStyle}
+          />
+          <label style={{ ...labelStyle, marginTop: 12 }}>API Secret</label>
+          <input
+            id="ns-secret"
+            type="password"
+            value={nsSecret}
+            onChange={(e) => onNsSecretChange(e.target.value)}
+            placeholder="API Secret (optional)"
+            style={inputStyle}
+          />
+        </Section>
+
         <NightscoutSetup />
-        <S title="Glucose Units"><p className="text-xs text-gray-300 mb-2">Choose how glucose values are displayed across GluMira™</p><UnitToggle /></S>
-        <S title="Caregivers"><p className="text-xs text-gray-300 mb-2">Allow parents, guardians, or clinicians to view or edit this profile.</p><Link to="/caregivers" className="text-xs text-brand-500 hover:text-brand-500/80 underline">Manage Caregivers</Link></S>
-        <S title="Data"><a href="/import/handwritten" className="text-xs text-brand-500 hover:text-brand-500/80 underline">Import Handwritten Notes</a></S>
-        <S title="Legal"><p className="text-xs text-gray-300 leading-relaxed">GluMira™ is an educational platform, not a registered medical device. Powered by IOB Hunter™</p></S>
+
+        <Section title="Glucose Units">
+          <p style={{ fontSize: 12, color: MUTED, marginBottom: 8 }}>
+            Choose how glucose values are displayed across GluMira&trade;
+          </p>
+          <UnitToggle />
+        </Section>
+
+        <Section title="Caregivers">
+          <p style={{ fontSize: 12, color: MUTED, marginBottom: 8 }}>
+            Allow parents, guardians, or clinicians to view or edit this profile.
+          </p>
+          <Link to="/settings/caregivers" style={{ fontSize: 13, color: TEAL, textDecoration: "underline" }}>
+            Manage Caregivers &rarr;
+          </Link>
+        </Section>
+
+        <Section title="Data">
+          <Link to="/import/handwritten" style={{ fontSize: 13, color: TEAL, textDecoration: "underline" }}>
+            Import Handwritten Notes &rarr;
+          </Link>
+        </Section>
+
+        <Section title="Legal">
+          <p style={{ fontSize: 12, color: MUTED, lineHeight: 1.6, margin: 0 }}>
+            GluMira&trade; is an educational platform, not a registered medical device. Powered by IOB Hunter&trade;
+          </p>
+        </Section>
       </div>
     </div>
   );
 }
-function S({title,children}:{title:string;children:React.ReactNode}){return(<div className="rounded-xl border border-gray-800 bg-gray-900 p-6 space-y-4"><h2 className="text-sm font-semibold text-white">{title}</h2>{children}</div>);}
+
+function Section({
+  title, children, indicator,
+}: { title: string; children: React.ReactNode; indicator?: React.ReactNode }) {
+  return (
+    <div style={{
+      background: "#ffffff",
+      border: `1px solid ${BORDER}`,
+      borderRadius: 12,
+      padding: "20px 22px",
+      marginBottom: 16,
+    }}>
+      <div style={{ display: "flex", alignItems: "center", marginBottom: 14 }}>
+        <h2 style={{ fontSize: 14, fontWeight: 600, color: NAVY, margin: 0 }}>{title}</h2>
+        {indicator}
+      </div>
+      {children}
+    </div>
+  );
+}
+
+const inputStyle: React.CSSProperties = {
+  width: "100%",
+  padding: "10px 12px",
+  borderRadius: 8,
+  border: `1px solid ${BORDER}`,
+  background: "#f8f9fa",
+  fontSize: 14,
+  color: NAVY,
+  outline: "none",
+  fontFamily: "'DM Sans', system-ui, sans-serif",
+};
+
+const labelStyle: React.CSSProperties = {
+  display: "block",
+  fontSize: 11,
+  fontWeight: 500,
+  color: MUTED,
+  marginBottom: 5,
+  textTransform: "uppercase",
+  letterSpacing: "0.05em",
+};
