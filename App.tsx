@@ -213,41 +213,42 @@ export default function App() {
               <Route path="/"          element={<HomeRoute />} />
               <Route path="/auth"      element={<AuthPage />} />
               <Route path="/auth/callback" element={<Navigate to="/dashboard" replace />} />
-              <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
-              <Route path="/education" element={<ProtectedRoute><EducationPage /></ProtectedRoute>} />
-              <Route path="/education/:id" element={<ProtectedRoute><EducationTopicPage /></ProtectedRoute>} />
-              <Route path="/mira"      element={<ProtectedRoute><MiraPage /></ProtectedRoute>} />
-              <Route path="/badges"    element={<ProtectedRoute><BadgesPage /></ProtectedRoute>} />
-              <Route path="/faq"       element={<ProtectedRoute><FAQPage /></ProtectedRoute>} />
-              <Route path="/settings"  element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
-              <Route path="/log"       element={<ProtectedRoute><MealLogPage /></ProtectedRoute>} />
-              <Route path="/insulin"    element={<ProtectedRoute><InsulinLogPage /></ProtectedRoute>} />
-              <Route path="/conditions" element={<ProtectedRoute><ConditionLogPage /></ProtectedRoute>} />
-              <Route path="/profile"           element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
-              <Route path="/onboarding"             element={<ProtectedRoute><OnboardingWizard /></ProtectedRoute>} />
-              <Route path="/onboarding/story"     element={<ProtectedRoute><OnboardingStoryPage /></ProtectedRoute>} />
-              <Route path="/import/handwritten"   element={<ProtectedRoute><HandwrittenImportPage /></ProtectedRoute>} />
-              <Route path="/caregivers"              element={<ProtectedRoute><CaregiverManagePage /></ProtectedRoute>} />
-              <Route path="/settings/caregivers"    element={<ProtectedRoute><CaregiverManagePage /></ProtectedRoute>} />
+              {/* Dev phase: all routes bypass auth */}
+              <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/education" element={<EducationPage />} />
+              <Route path="/education/:id" element={<EducationTopicPage />} />
+              <Route path="/mira"      element={<MiraPage />} />
+              <Route path="/badges"    element={<BadgesPage />} />
+              <Route path="/faq"       element={<FAQPage />} />
+              <Route path="/settings"  element={<SettingsPage />} />
+              <Route path="/log"       element={<MealLogPage />} />
+              <Route path="/insulin"    element={<InsulinLogPage />} />
+              <Route path="/conditions" element={<ConditionLogPage />} />
+              <Route path="/profile"           element={<ProfilePage />} />
+              <Route path="/onboarding"             element={<OnboardingWizard />} />
+              <Route path="/onboarding/story"     element={<OnboardingStoryPage />} />
+              <Route path="/import/handwritten"   element={<HandwrittenImportPage />} />
+              <Route path="/caregivers"              element={<CaregiverManagePage />} />
+              <Route path="/settings/caregivers"    element={<CaregiverManagePage />} />
               {/* GROUP4 Modules */}
-              <Route path="/modules/pregnancy"       element={<ProtectedRoute><PregnancyModule /></ProtectedRoute>} />
-              <Route path="/modules/paediatric"      element={<ProtectedRoute><PaediatricModule /></ProtectedRoute>} />
-              <Route path="/modules/school-care"     element={<ProtectedRoute><SchoolCarePlanModule /></ProtectedRoute>} />
-              <Route path="/modules/menstrual"       element={<ProtectedRoute><MenstrualCycleModule /></ProtectedRoute>} />
+              <Route path="/modules/pregnancy"       element={<PregnancyModule />} />
+              <Route path="/modules/paediatric"      element={<PaediatricModule />} />
+              <Route path="/modules/school-care"     element={<SchoolCarePlanModule />} />
+              <Route path="/modules/menstrual"       element={<MenstrualCycleModule />} />
               {/* Legacy route redirects */}
               <Route path="/pregnancy" element={<Navigate to="/modules/pregnancy" replace />} />
               <Route path="/paediatric" element={<Navigate to="/modules/paediatric" replace />} />
               <Route path="/school-care-plan" element={<Navigate to="/modules/school-care" replace />} />
               <Route path="/menstrual-cycle" element={<Navigate to="/modules/menstrual" replace />} />
               {/* Specialist & Dietary Modules */}
-              <Route path="/modules/adhd"       element={<ProtectedRoute><ADHDModule /></ProtectedRoute>} />
-              <Route path="/modules/thyroid"    element={<ProtectedRoute><ThyroidModule /></ProtectedRoute>} />
-              <Route path="/modules/ramadan"    element={<ProtectedRoute><RamadanModule /></ProtectedRoute>} />
-              <Route path="/modules/kosher"     element={<ProtectedRoute><KosherModule /></ProtectedRoute>} />
-              <Route path="/modules/halal"      element={<ProtectedRoute><HalalModule /></ProtectedRoute>} />
-              <Route path="/modules/bernstein"  element={<ProtectedRoute><BernsteinModule /></ProtectedRoute>} />
-              <Route path="/modules/sick-day"   element={<ProtectedRoute><SickDayModule /></ProtectedRoute>} />
-              <Route path="/meals/plan"         element={<ProtectedRoute><MealPlanPage /></ProtectedRoute>} />
+              <Route path="/modules/adhd"       element={<ADHDModule />} />
+              <Route path="/modules/thyroid"    element={<ThyroidModule />} />
+              <Route path="/modules/ramadan"    element={<RamadanModule />} />
+              <Route path="/modules/kosher"     element={<KosherModule />} />
+              <Route path="/modules/halal"      element={<HalalModule />} />
+              <Route path="/modules/bernstein"  element={<BernsteinModule />} />
+              <Route path="/modules/sick-day"   element={<SickDayModule />} />
+              <Route path="/meals/plan"         element={<MealPlanPage />} />
               {/* Safe Mode — no auth required */}
               <Route path="/safe-mode"             element={<SafeModePage />} />
               <Route path="/safe-mode/profile/:id" element={<DemoDashboardPage />} />
