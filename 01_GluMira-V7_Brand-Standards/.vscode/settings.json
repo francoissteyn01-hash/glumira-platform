@@ -1,0 +1,16 @@
+{
+    "sqltools.connections": [
+        {
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "db.lsmxsqgckcxsbayfdtxs.supabase.co",
+            "port": 5432,
+            "askForPassword": true,
+            "driver": "PostgreSQL",
+            "name": "glumira.ai",
+            "group": "https://supabase.com/dashboard/project/lsmxsqgckcxsbayfdtxs/settings/database",
+            "database": "postgres",
+            "username": "francois.steyn01@gmail.com"
+        }
+    ]
+}
