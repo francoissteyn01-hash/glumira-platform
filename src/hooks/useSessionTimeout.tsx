@@ -8,8 +8,8 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { supabase } from "./useAuth";
 
-const IDLE_MS = 15 * 60 * 1000;   // 15 min
-const WARN_MS = 13 * 60 * 1000;   // 13 min (2 min before logout)
+const IDLE_MS = 60 * 60 * 1000;   // 60 min
+const WARN_MS = 58 * 60 * 1000;   // 58 min (2 min before logout)
 
 const ACTIVITY_EVENTS: (keyof WindowEventMap)[] = [
   "mousedown", "keydown", "touchstart", "scroll", "mousemove",
@@ -50,15 +50,12 @@ export function useSessionTimeout(enabled: boolean = true) {
       window.addEventListener(ev, handleActivity, { passive: true })
     );
 
-    const handleBeforeUnload = () => {
-      // Best-effort signOut on tab close (may not complete in all browsers)
-      supabase.auth.signOut().catch(() => {});
-    };
-    window.addEventListener("beforeunload", handleBeforeUnload);
+    // NOTE: Do NOT sign out on beforeunload — that would log users out on
+    // every tab close, reload, or navigation. Supabase persists the session
+    // in localStorage under "glumira-auth" and auto-refreshes tokens.
 
     return () => {
       ACTIVITY_EVENTS.forEach((ev) => window.removeEventListener(ev, handleActivity));
-      window.removeEventListener("beforeunload", handleBeforeUnload);
       if (warnTimer.current) clearTimeout(warnTimer.current);
       if (logoutTimer.current) clearTimeout(logoutTimer.current);
     };

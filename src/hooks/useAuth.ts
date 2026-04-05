@@ -15,7 +15,16 @@ if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
 
 export const supabase: SupabaseClient = createClient(
   SUPABASE_URL || "https://placeholder.supabase.co",
-  SUPABASE_ANON_KEY || "placeholder-anon-key"
+  SUPABASE_ANON_KEY || "placeholder-anon-key",
+  {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: true,
+      storageKey: "glumira-auth",
+      flowType: "pkce",
+    },
+  }
 );
 
 interface AuthState { user: User | null; session: Session | null; loading: boolean; }
