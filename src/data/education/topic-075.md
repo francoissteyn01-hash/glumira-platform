@@ -19,7 +19,7 @@ The key word is **preparation**. Surgery with T1D should never be a last-minute 
 
 Surgery introduces several challenges to diabetes management simultaneously:
 
-**Fasting requirements.** Most surgical procedures require a period of fasting beforehand — typically no food for 6 hours and no clear fluids for 2 hours before anaesthesia (though this varies by hospital and procedure). Fasting while insulin is active in the body creates a risk of hypoglycaemia, similar to the dynamics described in The Anouk Scenario (Topic 073).
+**Fasting requirements.** Most surgical procedures require a period of fasting beforehand — typically no food for 6 hours and no clear fluids for 2 hours before anaesthesia (though this varies by hospital and procedure). Fasting while insulin is active in the body creates a risk of hypoglycaemia, similar to the dynamics described in The Gastroenteritis Crisis Protocol (Topic 073).
 
 **Stress response.** Surgery itself triggers a significant counter-regulatory hormone response — cortisol, adrenaline, glucagon, and growth hormone all rise. This drives blood glucose up, often dramatically, even without food intake. The physiological stress of surgery can increase insulin requirements substantially.
 

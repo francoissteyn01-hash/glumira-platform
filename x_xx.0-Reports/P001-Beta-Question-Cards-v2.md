@@ -1,17 +1,17 @@
 # GluMira™ Beta Testing — Question Cards
 **Powered by IOB Hunter™**
-**Participant: NAM-001 — Anouk Steyn**
+**Participant: NAM-001 — SUBJ-NAM-001**
 **Region: NAM (Namibia) | Status: Active | Enrolled: 20 March 2026**
 **Form Source: GluMira Beta — Participant Profile (forms.gle/chm8XLnR6WduGLtC6)**
 **Master Tracker: ANOUK_T1D_MASTER_TRACKER (Google Sheets)**
 
-> These cards map directly to the 6-section GluMira Beta Participant Profile form. Each question is shown with Anouk's confirmed answer (drawn from Drive records and the database), or marked `[ EDIT ]` where the answer is still missing. Edit any `[ EDIT ]` field and return — I will update the database and Drive records accordingly.
+> These cards map directly to the 6-section GluMira Beta Participant Profile form. Each question is shown with SUBJ-NAM-001's confirmed answer (drawn from Drive records and the database), or marked `[ EDIT ]` where the answer is still missing. Edit any `[ EDIT ]` field and return — I will update the database and Drive records accordingly.
 
 ---
 
 ## SECTION 1 — Consent
 
-| # | Question | Anouk's Answer | Status |
+| # | Question | SUBJ-NAM-001's Answer | Status |
 |---|---|---|---|
 | 1.1 | I agree that my data may be used for GluMira beta development purposes | **Yes, I consent** | ✔ Confirmed |
 
@@ -21,9 +21,9 @@
 
 ## SECTION 2 — Basic Profile
 
-| # | Question | Anouk's Answer | Status |
+| # | Question | SUBJ-NAM-001's Answer | Status |
 |---|---|---|---|
-| 2.1 | Your first name (or nickname for anonymity) | **Anouk** | ✔ Confirmed |
+| 2.1 | Your first name (or nickname for anonymity) | **SUBJ-NAM-001** | ✔ Confirmed |
 | 2.2 | Your country / region | **Namibia** | ✔ Confirmed |
 | 2.3 | If "Other" — please specify your country | *(not applicable)* | ✔ N/A |
 | 2.4 | Diabetes type | **Type 1 Diabetes (T1D)** | ✔ Confirmed |
@@ -35,7 +35,7 @@
 
 ## SECTION 3 — Food & Meal Habits
 
-| # | Question | Anouk's Answer | Status |
+| # | Question | SUBJ-NAM-001's Answer | Status |
 |---|---|---|---|
 | 3.1 | Which best describes your eating style? *(select all that apply)* | `[ EDIT ]` | ⚠ Missing |
 | 3.2 | Which of these do you eat regularly? *(select all that apply)* | `[ EDIT ]` | ⚠ Missing |
@@ -67,7 +67,7 @@ Pap / Maize meal / Ugali · Braai / Grilled meat · Potjiekos / Stews · Biltong
 
 *Form note: "Approximate values are fine. Skip any question you are unsure about."*
 
-| # | Question | Anouk's Answer | Status |
+| # | Question | SUBJ-NAM-001's Answer | Status |
 |---|---|---|---|
 | 4.1 | Your basal insulin name (e.g. Lantus, Tresiba, Levemir) | **Levemir** | ✔ Confirmed |
 | 4.2 | Your bolus insulin name (e.g. NovoRapid, Humalog, Apidra) | **Fiasp + Actrapid** | ✔ Confirmed |
@@ -104,7 +104,7 @@ Pap / Maize meal / Ugali · Braai / Grilled meat · Potjiekos / Stews · Biltong
 
 *Form note: "Optional. Helps us build the right modules for your needs."*
 
-| # | Question | Anouk's Answer | Status |
+| # | Question | SUBJ-NAM-001's Answer | Status |
 |---|---|---|---|
 | 5.1 | Do you have any of the following? *(select all that apply)* | `[ EDIT ]` | ⚠ Missing |
 
@@ -121,7 +121,7 @@ Thyroid condition (hypo or hyperthyroid) · ADHD · Celiac disease / gluten into
 
 *Form note: "Last section — just 4 questions. Your answers directly shape what GluMira builds next."*
 
-| # | Question | Anouk's Answer | Status |
+| # | Question | SUBJ-NAM-001's Answer | Status |
 |---|---|---|---|
 | 6.1 | What is your biggest daily challenge managing your diabetes? | `[ EDIT ]` | ⚠ Missing |
 | 6.2 | What would make GluMira most useful for you? | `[ EDIT ]` | ⚠ Missing |
@@ -176,8 +176,8 @@ Derived from master tracker data — not part of the form but critical for engin
 |---|---|---|---|
 | **Google Form** | forms.gle/chm8XLnR6WduGLtC6 | 19 Mar 2026 | 6-section intake form (no responses recorded yet) |
 | **Master Tracker** | ANOUK_T1D_MASTER_TRACKER (Sheets) | 1 Mar 2026 | Finger BG, Dexcom EGV, Insulin Log, Historical input |
-| **Patient Profile Chat** | 2026-03-19_Chat-Anouk-Patient-Profile_v1.0.txt | 19 Mar 2026 | Identity, insulin therapy, monitoring devices |
-| **Insulin Profile Chat** | 2026-03-19_Chat-Anouk-Insulin-Profile_v1.0.txt | 19 Mar 2026 | Pharmacology models, dosing structure |
+| **Patient Profile Chat** | 2026-03-19_Chat-SUBJ-NAM-001-Patient-Profile_v1.0.txt | 19 Mar 2026 | Identity, insulin therapy, monitoring devices |
+| **Insulin Profile Chat** | 2026-03-19_Chat-SUBJ-NAM-001-Insulin-Profile_v1.0.txt | 19 Mar 2026 | Pharmacology models, dosing structure |
 | **Beta Testing Module** | 02.5_MODULE-Beta-Testing_v1.0.txt | 19 Mar 2026 | Template structure, required fields |
 | **GluMira Database** | beta_testers + pediatric_profiles tables | 20 Mar 2026 | Full clinical profile, consent, CGM settings |
 

@@ -1,7 +1,7 @@
 /**
  * GluMira™ V7 — Sick Day Rules Module
  * Monitoring checklist, ketone protocol, fluid calculator,
- * insulin guidance, "The Anouk Scenario" vomiting protocol,
+ * insulin guidance, "The Gastroenteritis Crisis Protocol" vomiting protocol,
  * hospital red flags, and emergency contacts.
  */
 import { useState } from "react";
@@ -298,7 +298,7 @@ export default function SickDayModule() {
           })}
         </Section>
 
-        {/* ─── 5. The Anouk Scenario ──────────────── */}
+        {/* ─── 5. The Gastroenteritis Crisis Protocol ──────────────── */}
         <div style={anoukBox}>
           <button
             onClick={() => toggle("anouk")}
@@ -308,7 +308,7 @@ export default function SickDayModule() {
             }}
           >
             <h2 style={{ ...heading2, color: "#92400e", marginBottom: 0 }}>
-              Vomiting Protocol — "The Anouk Scenario"
+              Vomiting Protocol — "The Gastroenteritis Crisis Protocol"
             </h2>
             <span style={{ color: "#92400e", fontSize: 22, fontWeight: 700 }}>{open.anouk ? "−" : "+"}</span>
           </button>

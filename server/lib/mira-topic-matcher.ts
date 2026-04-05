@@ -326,7 +326,7 @@ const TOPIC_TITLES: Record<number, { title: string; group: string }> = {
   // Module H — Emergencies & Sick Days
   71: { title: "Severe hypoglycaemia — what it looks like and what to do", group: "H" },
   72: { title: "DKA warning signs", group: "H" },
-  73: { title: "Gastroenteritis and T1D — The Anouk Scenario", group: "H" },
+  73: { title: "Gastroenteritis and T1D — The Gastroenteritis Crisis Protocol", group: "H" },
   74: { title: "Fever, infection, and insulin resistance", group: "H" },
   75: { title: "Surgery and hospital stays", group: "H" },
   76: { title: "Travelling with Type 1 Diabetes", group: "H" },

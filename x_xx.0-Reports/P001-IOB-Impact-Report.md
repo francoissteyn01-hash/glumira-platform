@@ -1,8 +1,8 @@
 # IOB Curve Impact Report — Levemir Dose Correction
-## NAM-001 Anouk Steyn | GluMira™ Powered by IOB Hunter™
+## NAM-001 SUBJ-NAM-001 | GluMira™ Powered by IOB Hunter™
 
 **Classification:** Internal — Founder Eyes Only
-**Participant:** NAM-001 — Anouk Steyn (Swakopmund, Namibia)
+**Participant:** NAM-001 — SUBJ-NAM-001 ([REDACTED_LOCATION])
 **Report Date:** 20 March 2026
 **Report Version:** 1.0
 **Compiled by:** GluMira™ IOB Hunter™ Engine Analysis
@@ -14,17 +14,17 @@
 
 ## Executive Summary
 
-A critical data discrepancy was identified in the GluMira database for NAM-001 (Anouk Steyn): Levemir basal doses are stored as 120/80/100 (a ×10 encoding artefact), which the IOB Hunter™ engine decodes as **12 U / 8 U / 10 U** per injection. The actual doses recorded in the `ANOUK_T1D_MASTER_TRACKER` are **5.5–7.5 U per injection** — a median of approximately **6.75 / 6.75 / 4.75 U** across the three daily injections.
+A critical data discrepancy was identified in the GluMira database for NAM-001 (SUBJ-NAM-001): Levemir basal doses are stored as 120/80/100 (a ×10 encoding artefact), which the IOB Hunter™ engine decodes as **12 U / 8 U / 10 U** per injection. The actual doses recorded in the `ANOUK_T1D_MASTER_TRACKER` are **5.5–7.5 U per injection** — a median of approximately **6.75 / 6.75 / 4.75 U** across the three daily injections.
 
-This discrepancy, if uncorrected, causes the IOB Hunter™ engine to overestimate Anouk's basal Insulin on Board by a mean of **69%** and a peak of **81%** throughout the day. In absolute terms, the engine would model approximately **4.56 U more basal insulin** circulating at any given time than is actually present. Using Anouk's estimated Insulin Sensitivity Factor (ISF) of 4.1 mmol/L per unit [^1], this translates to a theoretical excess glucose-lowering effect of up to **30 mmol/L** — a value that, if used to guide bolus suppression or correction recommendations, would represent a clinically dangerous overestimate.
+This discrepancy, if uncorrected, causes the IOB Hunter™ engine to overestimate SUBJ-NAM-001's basal Insulin on Board by a mean of **69%** and a peak of **81%** throughout the day. In absolute terms, the engine would model approximately **4.56 U more basal insulin** circulating at any given time than is actually present. Using SUBJ-NAM-001's estimated Insulin Sensitivity Factor (ISF) of 4.1 mmol/L per unit [^1], this translates to a theoretical excess glucose-lowering effect of up to **30 mmol/L** — a value that, if used to guide bolus suppression or correction recommendations, would represent a clinically dangerous overestimate.
 
-The correction is straightforward: updating the three Levemir dose fields in the database to their actual values immediately resolves the discrepancy and brings the IOB curves into alignment with Anouk's real-world pharmacology.
+The correction is straightforward: updating the three Levemir dose fields in the database to their actual values immediately resolves the discrepancy and brings the IOB curves into alignment with SUBJ-NAM-001's real-world pharmacology.
 
 ---
 
 ## 1. Background — The Discrepancy
 
-The GluMira database stores Anouk's Levemir doses in the `pediatric_profiles` table as integer values. The values currently stored are:
+The GluMira database stores SUBJ-NAM-001's Levemir doses in the `pediatric_profiles` table as integer values. The values currently stored are:
 
 | Injection | Time | Database Value | Decoded (÷10) | Actual (Tracker) | Discrepancy |
 |---|---|---|---|---|---|
@@ -47,7 +47,7 @@ The IOB Hunter™ engine models Levemir using a **biexponential decay function**
 
 **Duration:** Dose-dependent, ranging from approximately 16–18 hours at 5–6 U to 20–22 hours at 10–12 U. This dose-dependency is a clinically important feature of detemir: higher doses produce proportionally longer action, unlike glargine which is relatively dose-independent in duration [^3].
 
-**Stacking:** Because Anouk injects Levemir three times daily (07:00, 14:00, 22:00), the IOB from each injection overlaps substantially with the preceding dose. At steady state (Day 2 onward), the cumulative IOB profile reflects contributions from all three injections simultaneously.
+**Stacking:** Because SUBJ-NAM-001 injects Levemir three times daily (07:00, 14:00, 22:00), the IOB from each injection overlaps substantially with the preceding dose. At steady state (Day 2 onward), the cumulative IOB profile reflects contributions from all three injections simultaneously.
 
 The biexponential model used:
 
@@ -83,7 +83,7 @@ The percentage overestimation curve (Chart 1, lower panel) shows that the databa
 
 ### 3.3 Overnight IOB — Highest Risk Window
 
-The overnight window (22:00–06:00) is the period of greatest clinical concern for Anouk, given her documented history of severe nocturnal hypoglycaemia (2.6–2.8 mmol/L at 02:00–03:00 on 15 February 2026). At 03:00 (the time of her worst recorded night low), the IOB values are:
+The overnight window (22:00–06:00) is the period of greatest clinical concern for SUBJ-NAM-001, given her documented history of severe nocturnal hypoglycaemia (2.6–2.8 mmol/L at 02:00–03:00 on 15 February 2026). At 03:00 (the time of her worst recorded night low), the IOB values are:
 
 | Scenario | IOB at 03:00 |
 |---|---|
@@ -91,7 +91,7 @@ The overnight window (22:00–06:00) is the period of greatest clinical concern 
 | Corrected (actual) | **5.60 U** |
 | Excess | **4.46 U** |
 
-Using the estimated ISF of 4.1 mmol/L/U, this excess represents a theoretical glucose-lowering overestimate of **18.3 mmol/L** at the overnight timepoint — the exact window when Anouk is most vulnerable to undetected hypoglycaemia.
+Using the estimated ISF of 4.1 mmol/L/U, this excess represents a theoretical glucose-lowering overestimate of **18.3 mmol/L** at the overnight timepoint — the exact window when SUBJ-NAM-001 is most vulnerable to undetected hypoglycaemia.
 
 ---
 
@@ -103,7 +103,7 @@ Using the estimated ISF of 4.1 mmol/L/U, this excess represents a theoretical gl
 
 The primary mechanism by which IOB overestimation causes harm in an educational insulin insight system is through **incorrect bolus suppression guidance**. When a caregiver or patient reviews the GluMira dashboard and sees a high IOB value, the natural response is to withhold or reduce a correction bolus. If the IOB displayed is 10.06 U when the true IOB is 5.60 U, the system is implicitly suggesting that nearly twice as much insulin is already active as is actually the case.
 
-For Anouk, whose bolus doses are already micro-dosed (Fiasp 0.3–1.5 U, Actrapid 0.5–2.0 U), an IOB overestimate of 4.46 U at bedtime would suggest that a correction bolus is entirely unnecessary even when her glucose is elevated — potentially allowing overnight hyperglycaemia to go untreated.
+For SUBJ-NAM-001, whose bolus doses are already micro-dosed (Fiasp 0.3–1.5 U, Actrapid 0.5–2.0 U), an IOB overestimate of 4.46 U at bedtime would suggest that a correction bolus is entirely unnecessary even when her glucose is elevated — potentially allowing overnight hyperglycaemia to go untreated.
 
 ### 4.2 Correction Dose Calculation Error
 
@@ -113,11 +113,11 @@ Conversely, if the IOB Hunter™ engine is used to calculate a suggested correct
 Correction = (Current BG − Target BG) / ISF − IOB
 ```
 
-An IOB overestimate of 4.56 U (mean) would cause the engine to **subtract 4.56 U too much** from every correction recommendation, systematically under-dosing corrections throughout the day. For a child with Anouk's ISF of 4.1 mmol/L/U, this means the engine would behave as though 18.7 mmol/L of glucose-lowering capacity is already accounted for when it is not.
+An IOB overestimate of 4.56 U (mean) would cause the engine to **subtract 4.56 U too much** from every correction recommendation, systematically under-dosing corrections throughout the day. For a child with SUBJ-NAM-001's ISF of 4.1 mmol/L/U, this means the engine would behave as though 18.7 mmol/L of glucose-lowering capacity is already accounted for when it is not.
 
 ### 4.3 Insulin Stacking Risk Assessment Error
 
-Levemir's dose-dependent duration means that the database doses (30 U/day) produce a longer-acting profile than the actual doses (18.25 U/day). The IOB engine using database values would model Levemir residual activity extending approximately **2–3 hours longer** per injection cycle than is actually present. This affects the stacking calculation when Anouk's Fiasp and Actrapid boluses are added — the engine would see a higher combined IOB floor and apply more aggressive bolus suppression than is warranted.
+Levemir's dose-dependent duration means that the database doses (30 U/day) produce a longer-acting profile than the actual doses (18.25 U/day). The IOB engine using database values would model Levemir residual activity extending approximately **2–3 hours longer** per injection cycle than is actually present. This affects the stacking calculation when SUBJ-NAM-001's Fiasp and Actrapid boluses are added — the engine would see a higher combined IOB floor and apply more aggressive bolus suppression than is warranted.
 
 ### 4.4 Impact by Time of Day
 
@@ -132,7 +132,7 @@ Levemir's dose-dependent duration means that the database doses (30 U/day) produ
 
 > **Note:** The "Excess BG Effect" column represents the theoretical glucose-lowering capacity of the excess IOB using ISF = 4.1 mmol/L/U. These values are not predictions of actual glucose change — they quantify the magnitude of the IOB error in clinically interpretable units. Real glucose responses depend on carbohydrate intake, activity, stress, and many other factors.
 
-The bedtime (22:00) window shows the largest absolute IOB excess (8.2 U) because this is immediately after Injection 3, where the dose discrepancy is greatest (10 U vs 4.75 U). This is also the injection that precedes Anouk's documented overnight hypo window.
+The bedtime (22:00) window shows the largest absolute IOB excess (8.2 U) because this is immediately after Injection 3, where the dose discrepancy is greatest (10 U vs 4.75 U). This is also the injection that precedes SUBJ-NAM-001's documented overnight hypo window.
 
 ---
 
@@ -151,7 +151,7 @@ SET
 WHERE participant_id = 'NAM-001';
 ```
 
-> **Recommended:** Confirm the actual current Levemir doses with Anouk's guardian (Francois Steyn) before applying this update, as the tracker data covers February–March 2026 and doses may have been titrated since.
+> **Recommended:** Confirm the actual current Levemir doses with SUBJ-NAM-001's guardian (SUBJ-GUARDIAN) before applying this update, as the tracker data covers February–March 2026 and doses may have been titrated since.
 
 ### 5.2 Encoding Convention Fix
 
@@ -168,21 +168,21 @@ Before the IOB Hunter™ engine is activated for any participant, the following 
 | IOB at trough (pre-injection) > 5 U | — | Warn: possible stacking |
 | Dose encoding: any value > 20 U for paediatric | — | Check for ×10 artefact |
 
-For Anouk (weight ~42 kg estimated for Tanner Stage 2, age 14): physiological basal range = 4.2–63 U/day. The database value of 30 U/day falls within range, which is why the encoding error was not caught by a simple range check — it requires cross-referencing against the actual tracker data.
+For SUBJ-NAM-001 (weight ~42 kg estimated for Tanner Stage 2, age 14): physiological basal range = 4.2–63 U/day. The database value of 30 U/day falls within range, which is why the encoding error was not caught by a simple range check — it requires cross-referencing against the actual tracker data.
 
 ### 5.4 Nightscout Integration as Ground Truth
 
-Once Anouk's Nightscout URL and API token are connected in the Participant Dashboard, the IOB Hunter™ engine should use **live CGM-derived IOB estimates** as the primary source rather than the static database doses. The database doses serve as the initial configuration; Nightscout data provides continuous real-world validation. Any discrepancy between the database IOB model and the CGM-observed glucose response should trigger an automatic recalibration prompt.
+Once SUBJ-NAM-001's Nightscout URL and API token are connected in the Participant Dashboard, the IOB Hunter™ engine should use **live CGM-derived IOB estimates** as the primary source rather than the static database doses. The database doses serve as the initial configuration; Nightscout data provides continuous real-world validation. Any discrepancy between the database IOB model and the CGM-observed glucose response should trigger an automatic recalibration prompt.
 
 ---
 
 ## 6. Summary of Findings
 
-The Levemir dose discrepancy in NAM-001's database record is a **critical data integrity issue** that must be resolved before the IOB Hunter™ engine produces any insulin insight output for Anouk. The key findings are:
+The Levemir dose discrepancy in NAM-001's database record is a **critical data integrity issue** that must be resolved before the IOB Hunter™ engine produces any insulin insight output for SUBJ-NAM-001. The key findings are:
 
 The database encodes Levemir doses at approximately **64% above actual values** (30 U/day vs 18.25 U/day), producing a steady-state IOB overestimation of **69% on average** and up to **81% at peak**. In absolute terms, the engine models **4.56 U more basal insulin** circulating at any given time than is actually present.
 
-The clinical consequence is systematic **bolus suppression** and **correction dose under-calculation** throughout the day, with the greatest risk concentrated in the **bedtime and overnight windows** — precisely the period when Anouk has documented severe hypoglycaemia events (2.6–2.8 mmol/L at 02:00–03:00).
+The clinical consequence is systematic **bolus suppression** and **correction dose under-calculation** throughout the day, with the greatest risk concentrated in the **bedtime and overnight windows** — precisely the period when SUBJ-NAM-001 has documented severe hypoglycaemia events (2.6–2.8 mmol/L at 02:00–03:00).
 
 The fix is a single database update, requiring confirmation of current doses with the guardian. A schema migration to `DECIMAL(5,2)` dose fields is recommended before further participant enrolment.
 

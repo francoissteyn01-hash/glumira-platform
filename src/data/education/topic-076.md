@@ -92,7 +92,7 @@ If your insulin is lost, damaged, or exposed to extreme temperatures:
 
 ### Gastroenteritis while travelling
 
-- This is the Anouk Scenario (Topic 073) in an unfamiliar setting. Follow the same principles: small frequent sips, monitor ketones relentlessly, do not stop insulin.
+- This is the SUBJ-NAM-001 Scenario (Topic 073) in an unfamiliar setting. Follow the same principles: small frequent sips, monitor ketones relentlessly, do not stop insulin.
 - Traveller's diarrhoea is common in many destinations. Carry oral rehydration sachets in your travel kit.
 - If vomiting persists for more than 2 hours with rising ketones, seek local medical attention immediately. Do not wait for it to pass.
 

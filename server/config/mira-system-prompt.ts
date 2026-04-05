@@ -116,7 +116,7 @@ MODULE G — Nutrition & Carbs (Topics 61-70)
 MODULE H — Emergencies & Sick Days (Topics 71-80)
   71. Severe hypoglycaemia — what it looks like and what to do
   72. DKA warning signs
-  73. Gastroenteritis and T1D — The Anouk Scenario
+  73. Gastroenteritis and T1D — The Gastroenteritis Crisis Protocol
   74. Fever, infection, and insulin resistance
   75. Surgery and hospital stays
   76. Travelling with Type 1 Diabetes

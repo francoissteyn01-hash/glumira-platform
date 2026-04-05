@@ -97,7 +97,7 @@ export const EDUCATION_TOPICS: EducationTopic[] = [
   // GROUP H: EMERGENCIES & SICK DAYS (71-80)
   { id: 71, group: "H", groupTitle: "Emergencies & Sick Days", groupDescription: "When Things Go Wrong", title: "Severe hypoglycaemia — what it looks like and what to do", ageRange: "all", audience: "all", status: "available" },
   { id: 72, group: "H", groupTitle: "Emergencies & Sick Days", groupDescription: "When Things Go Wrong", title: "DKA warning signs — the emergency you must never miss", ageRange: "all", audience: "all", status: "available" },
-  { id: 73, group: "H", groupTitle: "Emergencies & Sick Days", groupDescription: "When Things Go Wrong", title: "Gastroenteritis and T1D — the vomiting + insulin crisis (The Anouk Scenario)", ageRange: "all", audience: "all", status: "available" },
+  { id: 73, group: "H", groupTitle: "Emergencies & Sick Days", groupDescription: "When Things Go Wrong", title: "Gastroenteritis and T1D — the vomiting + insulin crisis (The Gastroenteritis Crisis Protocol)", ageRange: "all", audience: "all", status: "available" },
   { id: 74, group: "H", groupTitle: "Emergencies & Sick Days", groupDescription: "When Things Go Wrong", title: "Fever and infection — why glucose goes haywire when you're sick", ageRange: "all", audience: "all", status: "available" },
   { id: 75, group: "H", groupTitle: "Emergencies & Sick Days", groupDescription: "When Things Go Wrong", title: "Surgery preparation — fasting protocols with active insulin", ageRange: "all", audience: "all", status: "available" },
   { id: 76, group: "H", groupTitle: "Emergencies & Sick Days", groupDescription: "When Things Go Wrong", title: "Travel emergencies — what to do when you're far from home", ageRange: "all", audience: "all", status: "available" },

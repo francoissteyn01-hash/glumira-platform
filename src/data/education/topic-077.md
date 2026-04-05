@@ -74,7 +74,7 @@ Persistent hyperglycaemia that does not respond to correction may indicate that 
 Illness increases insulin demand. Even mild infections can tip the balance. Test ketones at the start of any illness and continue testing every 2–4 hours throughout (see Topic 074).
 
 ### 3. When vomiting or experiencing diarrhoea
-Gastrointestinal illness is one of the highest-risk situations for DKA. Test ketones immediately and frequently (see Topic 073 — The Anouk Scenario).
+Gastrointestinal illness is one of the highest-risk situations for DKA. Test ketones immediately and frequently (see Topic 073 — The Gastroenteritis Crisis Protocol).
 
 ### 4. When an insulin pump may have failed
 If you suspect a pump malfunction — unexpected high BG, a kinked or dislodged cannula, an occlusion alarm — test ketones immediately. Pump users have no long-acting insulin reserve; ketones can develop within 2–4 hours of interrupted insulin delivery.

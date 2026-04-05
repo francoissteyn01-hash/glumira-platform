@@ -1,6 +1,6 @@
 /**
  * GluMira™ V7 — usePatientName hook
- * For caregivers: returns the PATIENT name (e.g. "Anouk").
+ * For caregivers: returns the PATIENT name (their child / care recipient).
  * For non-caregivers: returns the user's own first name.
  * Used in nav, dashboard greetings, and Mira chat.
  */
@@ -10,7 +10,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { API } from "@/lib/api";
 
 interface PatientNameState {
-  patientName: string;      // The name shown in the UI ("Anouk" for caregivers, first_name for patients)
+  patientName: string;      // The name shown in the UI (patient_name for caregivers, first_name for patients)
   caregiverName: string;    // The caregiver's own name (empty for non-caregivers)
   isCaregiver: boolean;
   relationship: string;

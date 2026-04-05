@@ -1,4 +1,4 @@
-# Gastroenteritis and T1D — The Vomiting + Insulin Crisis (The Anouk Scenario)
+# Gastroenteritis and T1D — The Vomiting + Insulin Crisis (The Gastroenteritis Crisis Protocol)
 
 **Age Range:** All ages
 **Audience:** All — people with T1D, parents, caregivers
@@ -9,9 +9,9 @@
 
 ## Hello from Mira
 
-This topic holds a special place in the heart of GluMira. It is named **The Anouk Scenario** — after the child whose experience during a gastroenteritis episode revealed just how terrifyingly fast things can unravel when a child with Type 1 Diabetes cannot keep food down while insulin is actively working in their body.
+This topic holds a special place in the heart of GluMira. It is named **The Gastroenteritis Crisis Protocol** — after the child whose experience during a gastroenteritis episode revealed just how terrifyingly fast things can unravel when a child with Type 1 Diabetes cannot keep food down while insulin is actively working in their body.
 
-Anouk's story is the reason GluMira exists. It is the scenario that made her family realise that clear, accessible, step-by-step emergency guidance needed to be available to every family living with T1D — not buried in a clinical manual, but right there, in your hand, when you need it most.
+SUBJ-NAM-001's story is the reason GluMira exists. It is the scenario that made her family realise that clear, accessible, step-by-step emergency guidance needed to be available to every family living with T1D — not buried in a clinical manual, but right there, in your hand, when you need it most.
 
 Gastroenteritis — the common stomach bug that causes vomiting and diarrhoea — is unpleasant for anyone. For a person with Type 1 Diabetes, it can become a medical emergency within hours. Understanding why, and knowing exactly what to do, can prevent that.
 
@@ -49,7 +49,7 @@ In children, this cascade can progress from "a bit of a tummy bug" to a medical 
 
 ---
 
-## Step-by-step protocol — The Anouk Protocol
+## Step-by-step protocol — The Gastroenteritis Crisis Protocol
 
 This protocol is for guidance only. Always follow the sick-day plan agreed with your diabetes care team. Contact your team early — do not wait until things are out of control.
 
@@ -107,7 +107,7 @@ When vomiting and rising ketones happen together, you are looking at a situation
 
 The combination of **persistent vomiting + rising ketones = EMERGENCY**. Do not wait for the person to "look really sick." By the time they look really sick, DKA may already be advanced.
 
-In Anouk's case, it was the speed of deterioration that caught her family off guard. A child who seemed to have an ordinary stomach bug moved toward a dangerous metabolic crisis faster than anyone expected. That experience — and the determination that no other family should face it unprepared — is woven into every line of this topic.
+In SUBJ-NAM-001's case, it was the speed of deterioration that caught her family off guard. A child who seemed to have an ordinary stomach bug moved toward a dangerous metabolic crisis faster than anyone expected. That experience — and the determination that no other family should face it unprepared — is woven into every line of this topic.
 
 ---
 
@@ -134,4 +134,4 @@ Once the person can keep fluids down consistently:
 
 ## Disclaimer
 
-This content is for educational purposes only and does not constitute medical advice. It does not replace guidance from your diabetes care team, endocrinologist, or emergency medical services. The Anouk Protocol is an educational framework — always follow the personalised sick-day plan agreed with your healthcare provider. GluMira does not provide insulin dosing instructions. Clinical information in this topic is aligned with ISPAD Clinical Practice Consensus Guidelines, ADA Standards of Care, and NICE guidelines. In any emergency, call your local emergency services number or go to your nearest emergency department immediately.
+This content is for educational purposes only and does not constitute medical advice. It does not replace guidance from your diabetes care team, endocrinologist, or emergency medical services. The Gastroenteritis Crisis Protocol is an educational framework — always follow the personalised sick-day plan agreed with your healthcare provider. GluMira does not provide insulin dosing instructions. Clinical information in this topic is aligned with ISPAD Clinical Practice Consensus Guidelines, ADA Standards of Care, and NICE guidelines. In any emergency, call your local emergency services number or go to your nearest emergency department immediately.

@@ -48,7 +48,7 @@ When someone with T1D is sick, they often lose their appetite. This creates a di
 
 - **If they eat less, you might expect BG to be lower.** But counter-regulatory hormones are pushing it up.
 - **If insulin is reduced because they are eating less, ketones may start to rise** — because the body still needs insulin to prevent fat breakdown.
-- **If they vomit or have diarrhoea**, the situation becomes the Anouk Scenario (see Topic 073), where the risk of both hypos and DKA escalates rapidly.
+- **If they vomit or have diarrhoea**, the situation becomes the SUBJ-NAM-001 Scenario (see Topic 073), where the risk of both hypos and DKA escalates rapidly.
 
 The answer is not to stop insulin. The body needs basal insulin even when not eating — often more of it, not less, during illness. However, dosing adjustments require guidance from your diabetes care team. Contact them early in any illness, not when things have already deteriorated.
 
@@ -87,7 +87,7 @@ During illness, standard monitoring schedules are not enough. ISPAD, ADA, and NI
 - Pain and fever drive the stress response. Reduced eating due to a sore throat compounds the management challenge.
 
 ### Gastroenteritis
-- This is the highest-risk illness scenario for T1D. See Topic 073 (The Anouk Scenario) for detailed step-by-step guidance.
+- This is the highest-risk illness scenario for T1D. See Topic 073 (The Gastroenteritis Crisis Protocol) for detailed step-by-step guidance.
 
 ---
 
