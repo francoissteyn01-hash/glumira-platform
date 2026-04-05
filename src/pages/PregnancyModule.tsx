@@ -91,15 +91,15 @@ export default function PregnancyModule() {
             </label>
             <label style={labelStyle}>
               Weeks Gestation
-              <input type="number" min={1} max={42} value={form.weeksGestation} onChange={e => setForm(f => ({ ...f, weeksGestation: parseInt(e.target.value) || 1 }))} style={inputStyle} />
+              <input type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" min={1} max={42} value={form.weeksGestation} onChange={e => setForm(f => ({ ...f, weeksGestation: parseInt(e.target.value) || 1 }))} style={inputStyle} />
             </label>
             <label style={labelStyle}>
               Current A1c (%)
-              <input type="number" step="0.1" placeholder="e.g. 6.2" value={form.currentA1c} onChange={e => setForm(f => ({ ...f, currentA1c: e.target.value }))} style={inputStyle} />
+              <input type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" step="0.1" placeholder="e.g. 6.2" value={form.currentA1c} onChange={e => setForm(f => ({ ...f, currentA1c: e.target.value }))} style={inputStyle} />
             </label>
             <label style={labelStyle}>
               Hypo Events (Last Week)
-              <input type="number" min={0} max={30} value={form.hypoEventsLastWeek} onChange={e => setForm(f => ({ ...f, hypoEventsLastWeek: parseInt(e.target.value) || 0 }))} style={inputStyle} />
+              <input type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" min={0} max={30} value={form.hypoEventsLastWeek} onChange={e => setForm(f => ({ ...f, hypoEventsLastWeek: parseInt(e.target.value) || 0 }))} style={inputStyle} />
             </label>
             <label style={labelStyle}>
               On Insulin?
@@ -112,8 +112,8 @@ export default function PregnancyModule() {
 
           <div style={{ display: "flex", alignItems: "center", gap: 8, margin: "16px 0 8px" }}>
             <span style={{ fontSize: 13, color: "#4a5568" }}>Glucose Unit:</span>
-            <button onClick={() => setUnit("mmol")} style={{ ...pillStyle, ...(unit === "mmol" ? pillActive : {}) }}>mmol/L</button>
-            <button onClick={() => setUnit("mg")} style={{ ...pillStyle, ...(unit === "mg" ? pillActive : {}) }}>mg/dL</button>
+            <button type="button" onClick={() => setUnit("mmol")} style={{ ...pillStyle, ...(unit === "mmol" ? pillActive : {}) }}>mmol/L</button>
+            <button type="button" onClick={() => setUnit("mg")} style={{ ...pillStyle, ...(unit === "mg" ? pillActive : {}) }}>mg/dL</button>
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginTop: 8 }}>
@@ -127,7 +127,7 @@ export default function PregnancyModule() {
             </label>
           </div>
 
-          <button onClick={handleAssess} style={{ marginTop: 20, padding: "10px 28px", background: "#2ab5c1", color: "#fff", border: "none", borderRadius: 8, fontSize: 15, fontWeight: 600, cursor: "pointer" }}>
+          <button type="button" onClick={handleAssess} style={{ marginTop: 20, padding: "10px 28px", background: "#2ab5c1", color: "#fff", border: "none", borderRadius: 8, fontSize: 15, fontWeight: 600, cursor: "pointer" }}>
             Assess Glucose Targets
           </button>
         </div>
@@ -289,7 +289,7 @@ export default function PregnancyModule() {
             },
           ].map(item => (
             <div key={item.id} style={{ marginBottom: 8 }}>
-              <button
+              <button type="button"
                 onClick={() => setOpenTrimesterMeal(openTrimesterMeal === item.id ? null : item.id)}
                 style={{ width: "100%", textAlign: "left", padding: "12px 16px", background: openTrimesterMeal === item.id ? "#e0f7f9" : "#f8f9fa", border: "1px solid #e2e8f0", borderRadius: 8, cursor: "pointer", fontSize: 14, fontWeight: 600, color: "#1a2a5e", display: "flex", justifyContent: "space-between", alignItems: "center" }}
               >
@@ -307,7 +307,7 @@ export default function PregnancyModule() {
 
         {/* Pre-eclampsia Nutrition */}
         <div style={{ ...cardStyle, marginTop: 16 }}>
-          <button
+          <button type="button"
             onClick={() => setShowPreeclampsia(!showPreeclampsia)}
             style={{ width: "100%", textAlign: "left", padding: 0, background: "none", border: "none", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center" }}
           >
@@ -333,7 +333,7 @@ export default function PregnancyModule() {
 
         {/* Post-partum */}
         <div style={{ ...cardStyle, marginTop: 16 }}>
-          <button
+          <button type="button"
             onClick={() => setShowPostpartum(!showPostpartum)}
             style={{ width: "100%", textAlign: "left", padding: 0, background: "none", border: "none", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center" }}
           >
@@ -359,7 +359,7 @@ export default function PregnancyModule() {
 
         {/* Breastfeeding Carb Calculator */}
         <div style={{ ...cardStyle, marginTop: 16 }}>
-          <button
+          <button type="button"
             onClick={() => setShowBreastfeedingCalc(!showBreastfeedingCalc)}
             style={{ width: "100%", textAlign: "left", padding: 0, background: "none", border: "none", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center" }}
           >

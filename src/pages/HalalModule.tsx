@@ -144,7 +144,7 @@ export default function HalalModule() {
 
   const Section = ({ id, title, children }: { id: string; title: string; children: React.ReactNode }) => (
     <div style={card}>
-      <button
+      <button type="button"
         onClick={() => toggle(id)}
         style={{
           all: "unset", cursor: "pointer", width: "100%", display: "flex",
@@ -178,7 +178,7 @@ export default function HalalModule() {
         <Section id="database" title="Halal Food Database — 6 Regional Cuisines">
           <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 12 }}>
             {CUISINES.map(c => (
-              <button
+              <button type="button"
                 key={c}
                 onClick={() => setSelectedCuisine(c)}
                 style={{

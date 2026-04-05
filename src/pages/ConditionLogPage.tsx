@@ -198,7 +198,7 @@ export default function ConditionLogPage() {
                 Duration (minutes, optional)
               </label>
               <input
-                type="number" step="any" min="0"
+                type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" step="any" min="0"
                 value={durationMin} onChange={(e) => setDurationMin(e.target.value)}
                 placeholder="e.g. 45"
                 style={{ ...inputStyle, fontFamily: "'JetBrains Mono', monospace" }}

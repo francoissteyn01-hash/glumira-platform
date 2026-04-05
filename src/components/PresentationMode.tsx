@@ -87,7 +87,7 @@ export default function PresentationToggle() {
   const { active, toggle } = usePresentationMode();
 
   return (
-    <button
+    <button type="button"
       onClick={toggle}
       title={active ? "Exit Presentation Mode" : "Enter Presentation Mode"}
       style={{

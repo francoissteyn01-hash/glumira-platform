@@ -116,7 +116,7 @@ export default function SickDayModule() {
 
   const Section = ({ id, title, children }: { id: string; title: string; children: React.ReactNode }) => (
     <div style={card}>
-      <button
+      <button type="button"
         onClick={() => toggle(id)}
         style={{
           all: "unset", cursor: "pointer", width: "100%", display: "flex",
@@ -300,7 +300,7 @@ export default function SickDayModule() {
 
         {/* ─── 5. The Gastroenteritis Crisis Protocol ──────────────── */}
         <div style={anoukBox}>
-          <button
+          <button type="button"
             onClick={() => toggle("anouk")}
             style={{
               all: "unset", cursor: "pointer", width: "100%", display: "flex",
@@ -379,7 +379,7 @@ export default function SickDayModule() {
 
         {/* ─── 6. When to Go to Hospital ──────────── */}
         <div style={emergencyBox}>
-          <button
+          <button type="button"
             onClick={() => toggle("hospital")}
             style={{
               all: "unset", cursor: "pointer", width: "100%", display: "flex",
@@ -441,7 +441,7 @@ export default function SickDayModule() {
               </div>
             ))}
           </div>
-          <button
+          <button type="button"
             onClick={() => setContacts(prev => [...prev, { name: "", phone: "", notes: "" }])}
             style={{
               marginTop: 12, padding: "8px 16px", borderRadius: 8, border: `1px dashed ${TEAL}`,

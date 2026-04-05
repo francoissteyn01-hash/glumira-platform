@@ -160,7 +160,7 @@ export default function StoryEngine({ profile, onComplete }: Props) {
       </div>
 
       {/* Skip button */}
-      <button
+      <button type="button"
         onClick={(e) => { e.stopPropagation(); player.advance(); }}
         style={{
           position: "absolute", top: 12, left: 20, zIndex: 20,

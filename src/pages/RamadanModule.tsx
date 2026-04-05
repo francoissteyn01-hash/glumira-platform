@@ -126,7 +126,7 @@ export default function RamadanModule() {
   /* helpers */
   const Section = ({ id, title, children }: { id: string; title: string; children: React.ReactNode }) => (
     <div style={card}>
-      <button
+      <button type="button"
         onClick={() => toggle(id)}
         style={{
           all: "unset", cursor: "pointer", width: "100%", display: "flex",
@@ -274,7 +274,7 @@ export default function RamadanModule() {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
             <label style={label}>
               Current daily basal (units)
-              <input type="number" min={0} step={0.5} value={currentBasal} onChange={e => setCurrentBasal(e.target.value)} style={input} placeholder="e.g. 20" />
+              <input type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" min={0} step={0.5} value={currentBasal} onChange={e => setCurrentBasal(e.target.value)} style={input} placeholder="e.g. 20" />
             </label>
             <label style={label}>
               Reduction %
@@ -313,7 +313,7 @@ export default function RamadanModule() {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
             <label style={label}>
               Pre-Tarawih BG (mmol/L)
-              <input type="number" min={0} step={0.1} value={preTarawihBG} onChange={e => setPreTarawihBG(e.target.value)} style={input} placeholder="e.g. 8.5" />
+              <input type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" min={0} step={0.1} value={preTarawihBG} onChange={e => setPreTarawihBG(e.target.value)} style={input} placeholder="e.g. 8.5" />
             </label>
             <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
               {preTarawihBG && (
@@ -357,7 +357,7 @@ export default function RamadanModule() {
 
         {/* ─── 6. Emergency protocol ──────────────── */}
         <div style={emergencyBox}>
-          <button
+          <button type="button"
             onClick={() => toggle("emergency")}
             style={{
               all: "unset", cursor: "pointer", width: "100%", display: "flex",

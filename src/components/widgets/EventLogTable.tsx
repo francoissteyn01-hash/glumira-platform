@@ -22,7 +22,7 @@ export default function EventLogTable({ entries }: Props) {
     <div style={{ background: "#ffffff", borderRadius: 12, border: "1px solid #dee2e6", overflow: "hidden" }}>
       <div style={{ padding: "14px 20px", borderBottom: "1px solid #e9ecef", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: "#1a2a5e", fontFamily: "'Playfair Display', serif" }}>Event Log</h3>
-        <button onClick={() => setSortAsc(!sortAsc)} style={{ background: "none", border: "1px solid #dee2e6", borderRadius: 6, padding: "4px 10px", cursor: "pointer", fontSize: 11, color: "#52667a", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+        <button type="button" onClick={() => setSortAsc(!sortAsc)} style={{ background: "none", border: "1px solid #dee2e6", borderRadius: 6, padding: "4px 10px", cursor: "pointer", fontSize: 11, color: "#52667a", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
           {sortAsc ? "\u2191 Oldest first" : "\u2193 Newest first"}
         </button>
       </div>

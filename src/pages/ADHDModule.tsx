@@ -228,19 +228,19 @@ export default function ADHDModule() {
           <h2 className="text-base font-semibold mb-4">Quick Log</h2>
           <p className="text-xs text-gray-400 mb-3">One-tap logging for executive function support</p>
           <div className="grid grid-cols-3 gap-3">
-            <button
+            <button type="button"
               onClick={() => handleLog("ate")}
               className="flex flex-col items-center justify-center gap-1 rounded-xl bg-[#2AB5C1]/10 border border-[#2AB5C1]/30 py-4 min-h-[48px] text-sm font-medium text-[#1A2A5E] hover:bg-[#2AB5C1]/20 active:scale-95 transition-transform"
             >
               <span className="text-2xl">I ate</span>
             </button>
-            <button
+            <button type="button"
               onClick={() => handleLog("dosed")}
               className="flex flex-col items-center justify-center gap-1 rounded-xl bg-[#1A2A5E]/10 border border-[#1A2A5E]/20 py-4 min-h-[48px] text-sm font-medium text-[#1A2A5E] hover:bg-[#1A2A5E]/15 active:scale-95 transition-transform"
             >
               <span className="text-2xl">I dosed</span>
             </button>
-            <button
+            <button type="button"
               onClick={() => handleLog("checked")}
               className="flex flex-col items-center justify-center gap-1 rounded-xl bg-[#4CAF50]/10 border border-[#4CAF50]/30 py-4 min-h-[48px] text-sm font-medium text-[#1A2A5E] hover:bg-[#4CAF50]/20 active:scale-95 transition-transform"
             >

@@ -72,24 +72,24 @@ export default function PaediatricModule() {
         <div style={cardStyle}>
           <h2 style={{ color: "#1a2a5e", fontSize: 18, marginBottom: 16 }}>Patient Details</h2>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16 }}>
-            <label style={labelStyle}>Age (years)<input type="number" min={0} max={25} value={form.ageYears} onChange={e => setForm(f => ({ ...f, ageYears: parseInt(e.target.value) || 0 }))} style={inputStyle} /></label>
-            <label style={labelStyle}>Weight (kg)<input type="number" min={1} max={150} step="0.1" value={form.weightKg} onChange={e => setForm(f => ({ ...f, weightKg: parseFloat(e.target.value) || 1 }))} style={inputStyle} /></label>
+            <label style={labelStyle}>Age (years)<input type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" min={0} max={25} value={form.ageYears} onChange={e => setForm(f => ({ ...f, ageYears: parseInt(e.target.value) || 0 }))} style={inputStyle} /></label>
+            <label style={labelStyle}>Weight (kg)<input type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" min={1} max={150} step="0.1" value={form.weightKg} onChange={e => setForm(f => ({ ...f, weightKg: parseFloat(e.target.value) || 1 }))} style={inputStyle} /></label>
             <label style={labelStyle}>Diabetes Type
               <select value={form.diabetesType} onChange={e => setForm(f => ({ ...f, diabetesType: e.target.value as any }))} style={inputStyle}>
                 <option value="type1">Type 1</option><option value="type2">Type 2</option>
               </select>
             </label>
-            <label style={labelStyle}>Years Since Diagnosis<input type="number" min={0} max={25} value={form.yearsSinceDiagnosis} onChange={e => setForm(f => ({ ...f, yearsSinceDiagnosis: parseInt(e.target.value) || 0 }))} style={inputStyle} /></label>
+            <label style={labelStyle}>Years Since Diagnosis<input type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" min={0} max={25} value={form.yearsSinceDiagnosis} onChange={e => setForm(f => ({ ...f, yearsSinceDiagnosis: parseInt(e.target.value) || 0 }))} style={inputStyle} /></label>
             <label style={labelStyle}>Puberty Stage
               <select value={form.pubertyStage} onChange={e => setForm(f => ({ ...f, pubertyStage: e.target.value as any }))} style={inputStyle}>
                 {PUBERTY_STAGES.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
               </select>
             </label>
-            <label style={labelStyle}>Hypos / Week<input type="number" min={0} max={20} value={form.recentHyposPerWeek} onChange={e => setForm(f => ({ ...f, recentHyposPerWeek: parseInt(e.target.value) || 0 }))} style={inputStyle} /></label>
-            <label style={labelStyle}>Meals / Day<input type="number" min={1} max={8} value={form.mealsPerDay} onChange={e => setForm(f => ({ ...f, mealsPerDay: parseInt(e.target.value) || 3 }))} style={inputStyle} /></label>
-            <label style={labelStyle}>Avg Carbs / Meal (g)<input type="number" min={0} max={200} value={form.avgCarbsPerMeal} onChange={e => setForm(f => ({ ...f, avgCarbsPerMeal: parseInt(e.target.value) || 0 }))} style={inputStyle} /></label>
+            <label style={labelStyle}>Hypos / Week<input type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" min={0} max={20} value={form.recentHyposPerWeek} onChange={e => setForm(f => ({ ...f, recentHyposPerWeek: parseInt(e.target.value) || 0 }))} style={inputStyle} /></label>
+            <label style={labelStyle}>Meals / Day<input type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" min={1} max={8} value={form.mealsPerDay} onChange={e => setForm(f => ({ ...f, mealsPerDay: parseInt(e.target.value) || 3 }))} style={inputStyle} /></label>
+            <label style={labelStyle}>Avg Carbs / Meal (g)<input type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" min={0} max={200} value={form.avgCarbsPerMeal} onChange={e => setForm(f => ({ ...f, avgCarbsPerMeal: parseInt(e.target.value) || 0 }))} style={inputStyle} /></label>
             <label style={labelStyle}>Current A1c (%)
-              <input type="number" step="0.1" placeholder="Optional" value={form.currentA1c} onChange={e => setForm(f => ({ ...f, currentA1c: e.target.value }))} style={inputStyle} />
+              <input type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" step="0.1" placeholder="Optional" value={form.currentA1c} onChange={e => setForm(f => ({ ...f, currentA1c: e.target.value }))} style={inputStyle} />
             </label>
           </div>
           <div style={{ display: "flex", gap: 20, marginTop: 16 }}>
@@ -100,7 +100,7 @@ export default function PaediatricModule() {
               <input type="checkbox" checked={form.usePump} onChange={e => setForm(f => ({ ...f, usePump: e.target.checked }))} /> Insulin Pump
             </label>
           </div>
-          <button onClick={handleCalculate} style={btnStyle}>Calculate Dose Estimates</button>
+          <button type="button" onClick={handleCalculate} style={btnStyle}>Calculate Dose Estimates</button>
         </div>
 
         {/* Results */}
@@ -272,7 +272,7 @@ export default function PaediatricModule() {
             },
           ].map(item => (
             <div key={item.id} style={{ marginBottom: 8 }}>
-              <button
+              <button type="button"
                 onClick={() => setOpenAgeBand(openAgeBand === item.id ? null : item.id)}
                 style={{ width: "100%", textAlign: "left", padding: "12px 16px", background: openAgeBand === item.id ? "#fef3c7" : "#f8f9fa", border: "1px solid #e2e8f0", borderRadius: 8, cursor: "pointer", fontSize: 14, fontWeight: 600, color: "#1a2a5e", display: "flex", justifyContent: "space-between", alignItems: "center" }}
               >
@@ -290,7 +290,7 @@ export default function PaediatricModule() {
 
         {/* Growth Spurt Alert */}
         <div style={{ ...cardStyle, marginTop: 16 }}>
-          <button
+          <button type="button"
             onClick={() => setShowGrowthSpurt(!showGrowthSpurt)}
             style={{ width: "100%", textAlign: "left", padding: 0, background: "none", border: "none", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center" }}
           >
@@ -315,7 +315,7 @@ export default function PaediatricModule() {
 
         {/* Puberty Section */}
         <div style={{ ...cardStyle, marginTop: 16 }}>
-          <button
+          <button type="button"
             onClick={() => setShowPuberty(!showPuberty)}
             style={{ width: "100%", textAlign: "left", padding: 0, background: "none", border: "none", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center" }}
           >

@@ -5,6 +5,7 @@
  */
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import DecimalInput from "@/components/ui/DecimalInput";
 
 /* ── colour tokens ─────────────────────────────────── */
 const NAVY = "#1A2A5E";
@@ -108,7 +109,7 @@ export default function KosherModule() {
 
   const Section = ({ id, title, children }: { id: string; title: string; children: React.ReactNode }) => (
     <div style={card}>
-      <button
+      <button type="button"
         onClick={() => toggle(id)}
         style={{
           all: "unset", cursor: "pointer", width: "100%", display: "flex",
@@ -173,7 +174,7 @@ export default function KosherModule() {
         <Section id="kashrut" title="Kashrut Food Database">
           <div style={{ display: "flex", gap: 8, marginBottom: 16 }}>
             {(["Ashkenazi", "Sephardi", "Mizrachi"] as const).map(tab => (
-              <button
+              <button type="button"
                 key={tab}
                 onClick={() => setKashrutTab(tab)}
                 style={{
@@ -281,7 +282,7 @@ export default function KosherModule() {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
             <label style={labelStyle}>
               Current daily basal (units)
-              <input type="number" min={0} step={0.5} value={currentBasalYK} onChange={e => setCurrentBasalYK(e.target.value)} style={inputStyle} placeholder="e.g. 22" />
+              <input type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" min={0} step={0.5} value={currentBasalYK} onChange={e => setCurrentBasalYK(e.target.value)} style={inputStyle} placeholder="e.g. 22" />
             </label>
             <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
               {currentBasalYK && (
@@ -311,7 +312,7 @@ export default function KosherModule() {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
             <label style={labelStyle}>
               Number of cups
-              <input type="number" min={1} max={10} value={wineCups} onChange={e => setWineCups(parseInt(e.target.value) || 1)} style={inputStyle} />
+              <DecimalInput min={1} max={10} value={wineCups} onChange={(v) => setWineCups(Math.max(1, Math.round(v)))} style={inputStyle} />
             </label>
             <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
               <div style={{ background: "#f0fdfa", borderRadius: 8, padding: 12 }}>

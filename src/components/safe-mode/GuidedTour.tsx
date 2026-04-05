@@ -143,7 +143,7 @@ export default function GuidedTour({ profileId, onComplete }: Props) {
 
         {/* Actions */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <button
+          <button type="button"
             onClick={finish}
             style={{
               background: "none",
@@ -157,7 +157,7 @@ export default function GuidedTour({ profileId, onComplete }: Props) {
           >
             Skip tour
           </button>
-          <button
+          <button type="button"
             onClick={next}
             style={{
               padding: "9px 24px",

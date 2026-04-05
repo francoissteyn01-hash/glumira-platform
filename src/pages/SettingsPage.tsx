@@ -69,7 +69,7 @@ export default function SettingsPage() {
               {pwMsg}
             </p>
           )}
-          <button
+          <button type="button"
             onClick={changePw}
             disabled={pwNew.length < 8}
             style={{

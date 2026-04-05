@@ -112,7 +112,7 @@ export function SessionWarningModal({
           Your session will expire in 2 minutes due to inactivity. Click below to stay signed in.
         </p>
         <div style={{ display: "flex", gap: 10, justifyContent: "center" }}>
-          <button
+          <button type="button"
             onClick={onLogout}
             style={{
               padding: "10px 20px",
@@ -128,7 +128,7 @@ export function SessionWarningModal({
           >
             Sign out
           </button>
-          <button
+          <button type="button"
             onClick={onStay}
             style={{
               padding: "10px 24px",

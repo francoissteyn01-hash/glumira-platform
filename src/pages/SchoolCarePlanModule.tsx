@@ -141,11 +141,11 @@ export default function SchoolCarePlanModule() {
                     <option value="pen">Insulin Pen</option><option value="pump">Insulin Pump</option><option value="syringe">Syringe</option>
                   </select>
                 </label>
-                <label style={labelStyle}>Duration of Action (hours)<input type="number" min={2} max={8} value={form.diaHours} onChange={e => update("diaHours", parseInt(e.target.value) || 4)} style={inputStyle} /></label>
-                <label style={labelStyle}>Target Low (mg/dL)<input type="number" value={form.targetGlucoseMin} onChange={e => update("targetGlucoseMin", parseInt(e.target.value) || 70)} style={inputStyle} /></label>
-                <label style={labelStyle}>Target High (mg/dL)<input type="number" value={form.targetGlucoseMax} onChange={e => update("targetGlucoseMax", parseInt(e.target.value) || 180)} style={inputStyle} /></label>
-                <label style={labelStyle}>Hypo Threshold (mg/dL)<input type="number" value={form.hypoThresholdMgdl} onChange={e => update("hypoThresholdMgdl", parseInt(e.target.value) || 70)} style={inputStyle} /></label>
-                <label style={labelStyle}>Hyper Threshold (mg/dL)<input type="number" value={form.hyperThresholdMgdl} onChange={e => update("hyperThresholdMgdl", parseInt(e.target.value) || 250)} style={inputStyle} /></label>
+                <label style={labelStyle}>Duration of Action (hours)<input type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" min={2} max={8} value={form.diaHours} onChange={e => update("diaHours", parseInt(e.target.value) || 4)} style={inputStyle} /></label>
+                <label style={labelStyle}>Target Low (mg/dL)<input type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" value={form.targetGlucoseMin} onChange={e => update("targetGlucoseMin", parseInt(e.target.value) || 70)} style={inputStyle} /></label>
+                <label style={labelStyle}>Target High (mg/dL)<input type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" value={form.targetGlucoseMax} onChange={e => update("targetGlucoseMax", parseInt(e.target.value) || 180)} style={inputStyle} /></label>
+                <label style={labelStyle}>Hypo Threshold (mg/dL)<input type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" value={form.hypoThresholdMgdl} onChange={e => update("hypoThresholdMgdl", parseInt(e.target.value) || 70)} style={inputStyle} /></label>
+                <label style={labelStyle}>Hyper Threshold (mg/dL)<input type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" value={form.hyperThresholdMgdl} onChange={e => update("hyperThresholdMgdl", parseInt(e.target.value) || 250)} style={inputStyle} /></label>
               </div>
             </div>
 
@@ -165,11 +165,11 @@ export default function SchoolCarePlanModule() {
                   <input placeholder="Name" value={c.name} onChange={e => updateContact(i, "name", e.target.value)} style={inputStyle} />
                   <input placeholder="Relationship" value={c.relationship} onChange={e => updateContact(i, "relationship", e.target.value)} style={inputStyle} />
                   <input placeholder="Phone" value={c.phone} onChange={e => updateContact(i, "phone", e.target.value)} style={inputStyle} />
-                  {i > 0 && <button onClick={() => removeContact(i)} style={{ border: "none", background: "#fef2f2", color: "#dc2626", borderRadius: 8, cursor: "pointer", padding: "0 8px" }}>✕</button>}
+                  {i > 0 && <button type="button" onClick={() => removeContact(i)} style={{ border: "none", background: "#fef2f2", color: "#dc2626", borderRadius: 8, cursor: "pointer", padding: "0 8px" }}>✕</button>}
                 </div>
               ))}
               {(form.emergencyContacts?.length ?? 0) < 4 && (
-                <button onClick={addContact} style={{ fontSize: 13, color: "#2ab5c1", background: "none", border: "none", cursor: "pointer" }}>+ Add Contact</button>
+                <button type="button" onClick={addContact} style={{ fontSize: 13, color: "#2ab5c1", background: "none", border: "none", cursor: "pointer" }}>+ Add Contact</button>
               )}
             </div>
 
@@ -188,7 +188,7 @@ export default function SchoolCarePlanModule() {
               </label>
             </div>
 
-            <button onClick={handleGenerate} style={btnStyle}>Generate Care Plan</button>
+            <button type="button" onClick={handleGenerate} style={btnStyle}>Generate Care Plan</button>
           </div>
 
           {/* Preview Column */}
@@ -196,7 +196,7 @@ export default function SchoolCarePlanModule() {
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <h3 style={{ color: "#1a2a5e", fontSize: 16, margin: 0 }}>Document Preview</h3>
-                <button onClick={handlePrint} style={{ ...btnStyle, marginTop: 0, padding: "8px 20px", fontSize: 13 }}>Print / Save PDF</button>
+                <button type="button" onClick={handlePrint} style={{ ...btnStyle, marginTop: 0, padding: "8px 20px", fontSize: 13 }}>Print / Save PDF</button>
               </div>
               <iframe
                 ref={previewRef}

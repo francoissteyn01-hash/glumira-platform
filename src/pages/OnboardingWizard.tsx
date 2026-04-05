@@ -243,7 +243,7 @@ export default function OnboardingWizard() {
             </div>
           ))}
           <div style={{ marginTop: 24, display: "flex", justifyContent: "center" }}>
-            <button style={{ ...btnPrimary, opacity: profile ? 1 : 0.4 }} disabled={!profile} onClick={next}>
+            <button type="button" style={{ ...btnPrimary, opacity: profile ? 1 : 0.4 }} disabled={!profile} onClick={next}>
               Continue
             </button>
           </div>
@@ -265,7 +265,7 @@ export default function OnboardingWizard() {
               {profile === "caregiver" ? "Child's age" : "Your age"}
             </label>
             <input
-              type="number"
+              type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*"
               value={age}
               onChange={e => setAge(e.target.value)}
               placeholder="e.g. 8"
@@ -281,7 +281,7 @@ export default function OnboardingWizard() {
             </label>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
               {INSULIN_TYPES.slice(0, 4).map(t => (
-                <button
+                <button type="button"
                   key={t}
                   onClick={() => setInsulinType(t)}
                   style={{
@@ -315,11 +315,11 @@ export default function OnboardingWizard() {
           </div>
 
           <div style={{ display: "flex", gap: 12, justifyContent: "center" }}>
-            <button style={btnGhost} onClick={back}>Back</button>
-            <button style={btnPrimary} onClick={next}>Continue</button>
+            <button type="button" style={btnGhost} onClick={back}>Back</button>
+            <button type="button" style={btnPrimary} onClick={next}>Continue</button>
           </div>
 
-          <button
+          <button type="button"
             onClick={next}
             style={{ background: "none", border: "none", color: T.muted, fontSize: 12, marginTop: 16, cursor: "pointer" }}
           >
@@ -360,8 +360,8 @@ export default function OnboardingWizard() {
           ))}
 
           <div style={{ display: "flex", gap: 12, justifyContent: "center", marginTop: 24 }}>
-            <button style={btnGhost} onClick={back}>Back</button>
-            <button style={btnPrimary} onClick={next}>Continue</button>
+            <button type="button" style={btnGhost} onClick={back}>Back</button>
+            <button type="button" style={btnPrimary} onClick={next}>Continue</button>
           </div>
         </div>
       )}
@@ -387,12 +387,12 @@ export default function OnboardingWizard() {
             She'll introduce herself in a short story — then you're ready.
           </p>
 
-          <button style={btnPrimary} onClick={finish}>
+          <button type="button" style={btnPrimary} onClick={finish}>
             Let's go
           </button>
 
           <div style={{ marginTop: 16 }}>
-            <button
+            <button type="button"
               onClick={() => navigate("/dashboard")}
               style={{ background: "none", border: "none", color: T.muted, fontSize: 12, cursor: "pointer" }}
             >

@@ -253,7 +253,7 @@ export default function DashboardPage() {
         {/* Date range selector */}
         <div style={{ display: "flex", gap: 6, marginBottom: 16, flexWrap: "wrap" }}>
           {(["Today", "3D", "7D", "14D", "30D"] as const).map((label) => (
-            <button key={label} onClick={() => setDateRange(label)} style={{ padding: "6px 14px", borderRadius: 6, border: "1px solid #dee2e6", background: dateRange === label ? "#1a2a5e" : "#ffffff", color: dateRange === label ? "#ffffff" : "#52667a", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+            <button type="button" key={label} onClick={() => setDateRange(label)} style={{ padding: "6px 14px", borderRadius: 6, border: "1px solid #dee2e6", background: dateRange === label ? "#1a2a5e" : "#ffffff", color: dateRange === label ? "#ffffff" : "#52667a", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
               {label}
             </button>
           ))}
@@ -418,7 +418,7 @@ export default function DashboardPage() {
               }}
             />
           </div>
-          <button
+          <button type="button"
             onClick={syncNS}
             disabled={syncing || !nsUrl}
             style={{
@@ -480,7 +480,7 @@ export default function DashboardPage() {
         {/* ── Footer ─────────────────────────────────────────────────── */}
         <div style={{ borderTop: "1px solid #e9ecef", marginTop: 8, padding: "16px 0" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12, flexWrap: "wrap", gap: 8 }}>
-            <button style={{ padding: "8px 20px", borderRadius: 8, border: "2px solid #1a2a5e", background: "transparent", color: "#1a2a5e", fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+            <button type="button" style={{ padding: "8px 20px", borderRadius: 8, border: "2px solid #1a2a5e", background: "transparent", color: "#1a2a5e", fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
               Compare Days
             </button>
             <ExportReportButton />

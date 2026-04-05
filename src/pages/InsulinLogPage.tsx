@@ -255,7 +255,7 @@ export default function InsulinLogPage() {
           </Field>
           <Field label="Dose (units)">
             <input
-              type="number" step="any" min="0.25"
+              type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" step="any" min="0.25"
               value={form.dose_units} onChange={(e) => set("dose_units")(e.target.value)}
               placeholder="e.g. 0.25, 1.5, 5.50"
               style={{ ...inputStyle, fontFamily: "'JetBrains Mono', monospace" }}

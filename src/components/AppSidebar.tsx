@@ -160,7 +160,7 @@ function DesktopSidebar({ collapsed, setCollapsed }: { collapsed: boolean; setCo
             GluMira&trade;
           </span>
         )}
-        <button
+        <button type="button"
           onClick={() => setCollapsed(!collapsed)}
           aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
           style={{
@@ -182,7 +182,7 @@ function DesktopSidebar({ collapsed, setCollapsed }: { collapsed: boolean; setCo
 
         {/* Modules (expandable) */}
         {!collapsed && <div style={sectionLabelStyle}>Modules</div>}
-        <button
+        <button type="button"
           onClick={() => setModulesOpen(!modulesOpen)}
           title={collapsed ? "Modules" : undefined}
           style={itemStyle(false, collapsed)}
@@ -218,7 +218,7 @@ function DesktopSidebar({ collapsed, setCollapsed }: { collapsed: boolean; setCo
 
       {/* Sign out — red, bottom */}
       <div style={{ borderTop: `1px solid ${BORDER}`, padding: "8px 0" }}>
-        <button
+        <button type="button"
           onClick={signOut}
           title={collapsed ? "Sign out" : undefined}
           style={{
@@ -304,7 +304,7 @@ function MobileBottomBar() {
         <NavLink to="/meals/plan" style={({ isActive }) => tabStyle(isActive)}>
           <Icon d={ICONS.meal} size={20} /><span>Meals</span>
         </NavLink>
-        <button onClick={() => setSheetOpen(true)} style={tabStyle(sheetOpen)}>
+        <button type="button" onClick={() => setSheetOpen(true)} style={tabStyle(sheetOpen)}>
           <Icon d={ICONS.more} size={20} /><span>More</span>
         </button>
       </nav>
@@ -342,7 +342,7 @@ function MobileBottomBar() {
               padding: "6px 20px 10px", borderBottom: `1px solid ${BORDER}`,
             }}>
               <span style={{ fontSize: 15, fontWeight: 700, color: NAVY }}>More</span>
-              <button
+              <button type="button"
                 onClick={() => setSheetOpen(false)}
                 aria-label="Close"
                 style={{ background: "none", border: "none", cursor: "pointer", color: MUTED, padding: 4 }}
@@ -361,7 +361,7 @@ function MobileBottomBar() {
               <div style={sectionLabelStyle}>Account</div>
               {moreItem("/settings", "Settings", ICONS.settings)}
               {moreItem("/faq", "FAQ", ICONS.faq)}
-              <button
+              <button type="button"
                 onClick={() => { setSheetOpen(false); signOut(); }}
                 style={{
                   display: "flex", alignItems: "center", gap: 14,

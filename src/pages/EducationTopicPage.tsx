@@ -40,7 +40,7 @@ export default function EducationTopicPage() {
     <div className="min-h-screen bg-gray-950 pb-24">
       <div className="max-w-3xl mx-auto px-4 py-8 space-y-6">
         {/* Back button */}
-        <button
+        <button type="button"
           onClick={() => navigate("/education")}
           className="flex items-center gap-1.5 text-gray-400 text-sm hover:text-white transition-colors"
         >
@@ -103,7 +103,7 @@ export default function EducationTopicPage() {
         </div>
 
         {/* Mark as read */}
-        <button
+        <button type="button"
           onClick={() => setMarkedRead(prev => !prev)}
           className={`w-full py-3 rounded-xl text-sm font-medium transition-colors ${
             markedRead
@@ -144,7 +144,7 @@ export default function EducationTopicPage() {
       </div>
 
       {/* Floating "Ask Mira" button */}
-      <button
+      <button type="button"
         onClick={() => navigate(`/mira?q=${encodeURIComponent(topic.title)}`)}
         className="fixed bottom-6 right-6 w-14 h-14 bg-teal-600 hover:bg-teal-500 text-white rounded-full shadow-lg shadow-teal-900/50 flex items-center justify-center transition-colors z-50"
         title="Ask Mira about this"

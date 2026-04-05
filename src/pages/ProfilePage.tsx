@@ -553,13 +553,13 @@ export default function ProfilePage() {
             )}
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12 }}>
               <Field label="ICR (optional)">
-                <TextInput value={form.icr} onChange={set("icr")} placeholder="e.g. 10" type="number" />
+                <TextInput value={form.icr} onChange={set("icr")} placeholder="e.g. 10" type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" />
               </Field>
               <Field label="ISF (optional)">
-                <TextInput value={form.isf} onChange={set("isf")} placeholder="e.g. 2.5" type="number" />
+                <TextInput value={form.isf} onChange={set("isf")} placeholder="e.g. 2.5" type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" />
               </Field>
               <Field label="Correction target">
-                <TextInput value={form.correction_target} onChange={set("correction_target")} placeholder="e.g. 5.5" type="number" />
+                <TextInput value={form.correction_target} onChange={set("correction_target")} placeholder="e.g. 5.5" type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" />
               </Field>
             </div>
           </Card>

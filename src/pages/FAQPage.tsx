@@ -15,7 +15,7 @@ export default function FAQPage() {
         <div className="space-y-2">
           {FAQ_ITEMS.map((item,i)=>(
             <div key={i} className="rounded-xl border border-gray-800 bg-gray-900 overflow-hidden">
-              <button onClick={()=>setOpen(open===i?null:i)} className="w-full text-left px-5 py-4 flex items-center justify-between">
+              <button type="button" onClick={()=>setOpen(open===i?null:i)} className="w-full text-left px-5 py-4 flex items-center justify-between">
                 <span className="font-medium text-white text-sm">{item.q}</span>
                 <span className="text-gray-300 ml-4 flex-shrink-0">{open===i?"−":"+"}</span>
               </button>

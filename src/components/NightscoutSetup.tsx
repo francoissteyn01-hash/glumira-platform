@@ -82,14 +82,14 @@ export default function NightscoutSetup() {
         <input type="password" value={secret} onChange={(e) => setSecret(e.target.value)} placeholder="API Secret (optional)" style={inputStyle} />
       </div>
       <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
-        <button onClick={testConnection} disabled={!url || status === "testing"} style={{ padding: "8px 18px", borderRadius: 8, border: "1px solid #dee2e6", background: "#f8f9fa", color: "#1a2a5e", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+        <button type="button" onClick={testConnection} disabled={!url || status === "testing"} style={{ padding: "8px 18px", borderRadius: 8, border: "1px solid #dee2e6", background: "#f8f9fa", color: "#1a2a5e", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
           Test Connection
         </button>
         <label style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "#1a2a5e", cursor: "pointer", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
           <input type="checkbox" checked={syncEnabled} onChange={(e) => setSyncEnabled(e.target.checked)} style={{ accentColor: "#2ab5c1", width: 18, height: 18 }} />
           Enable Sync
         </label>
-        <button onClick={save} disabled={saving} style={{ marginLeft: "auto", padding: "8px 18px", borderRadius: 8, border: "none", background: "#2ab5c1", color: "#ffffff", fontSize: 12, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+        <button type="button" onClick={save} disabled={saving} style={{ marginLeft: "auto", padding: "8px 18px", borderRadius: 8, border: "none", background: "#2ab5c1", color: "#ffffff", fontSize: 12, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
           {saving ? "Saving\u2026" : "Save"}
         </button>
       </div>

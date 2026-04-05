@@ -270,7 +270,7 @@ export default function MealLogPage() {
             </Field>
             <Field label="Units">
               <input
-                type="number" step="any" min="0"
+                type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" step="any" min="0"
                 value={form.units} onChange={(e) => set("units")(e.target.value)}
                 placeholder="e.g. 0.25, 1.5, 5.50"
                 style={{ ...inputStyle, fontFamily: "'JetBrains Mono', monospace" }}
@@ -285,7 +285,7 @@ export default function MealLogPage() {
           <div style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: 12 }}>
             <Field label="Glucose (optional)">
               <input
-                type="number" step="any" min="0"
+                type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" step="any" min="0"
                 value={form.glucose_value} onChange={(e) => set("glucose_value")(e.target.value)}
                 placeholder="e.g. 5.4"
                 style={{ ...inputStyle, fontFamily: "'JetBrains Mono', monospace" }}
@@ -348,7 +348,7 @@ export default function MealLogPage() {
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
               <Field label="Carbs (g)">
                 <input
-                  type="number" step="any" min="0"
+                  type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" step="any" min="0"
                   value={form.carbs_g} onChange={(e) => set("carbs_g")(e.target.value)}
                   placeholder="e.g. 2.2"
                   style={{ ...inputStyle, fontFamily: "'JetBrains Mono', monospace" }}
@@ -357,7 +357,7 @@ export default function MealLogPage() {
               </Field>
               <Field label="Protein (g)">
                 <input
-                  type="number" step="any" min="0"
+                  type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" step="any" min="0"
                   value={form.protein_g} onChange={(e) => set("protein_g")(e.target.value)}
                   placeholder="e.g. 2.2"
                   style={{ ...inputStyle, fontFamily: "'JetBrains Mono', monospace" }}
@@ -366,7 +366,7 @@ export default function MealLogPage() {
               </Field>
               <Field label="Fat (g)">
                 <input
-                  type="number" step="any" min="0"
+                  type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" step="any" min="0"
                   value={form.fat_g} onChange={(e) => set("fat_g")(e.target.value)}
                   placeholder="e.g. 8.5"
                   style={{ ...inputStyle, fontFamily: "'JetBrains Mono', monospace" }}
@@ -375,7 +375,7 @@ export default function MealLogPage() {
               </Field>
               <Field label="Fibre (g)">
                 <input
-                  type="number" step="any" min="0"
+                  type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" step="any" min="0"
                   value={form.fibre_g} onChange={(e) => set("fibre_g")(e.target.value)}
                   placeholder="e.g. 3.1"
                   style={{ ...inputStyle, fontFamily: "'JetBrains Mono', monospace" }}
@@ -409,7 +409,7 @@ export default function MealLogPage() {
             </Field>
             <Field label="Grams consumed">
               <input
-                type="number" step="any" min="0"
+                type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" step="any" min="0"
                 value={form.low_treatment_grams} onChange={(e) => set("low_treatment_grams")(e.target.value)}
                 placeholder="e.g. 4"
                 style={{ ...inputStyle, fontFamily: "'JetBrains Mono', monospace" }}

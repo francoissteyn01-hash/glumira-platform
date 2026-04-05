@@ -123,16 +123,16 @@ export default function HandwrittenImportPage() {
                 {rows.map((row, i) => (
                   <tr key={i}>
                     <td style={{ padding: "4px 4px" }}><input type="time" value={row.time} onChange={(e) => updateRow(i, "time", e.target.value)} style={{ ...inputStyle, minWidth: 90 }} /></td>
-                    <td style={{ padding: "4px 4px" }}><input type="number" step="any" value={row.glucose} onChange={(e) => updateRow(i, "glucose", e.target.value)} placeholder="mmol" style={{ ...inputStyle, minWidth: 70 }} /></td>
+                    <td style={{ padding: "4px 4px" }}><input type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" step="any" value={row.glucose} onChange={(e) => updateRow(i, "glucose", e.target.value)} placeholder="mmol" style={{ ...inputStyle, minWidth: 70 }} /></td>
                     <td style={{ padding: "4px 4px" }}><input value={row.insulin_type} onChange={(e) => updateRow(i, "insulin_type", e.target.value)} placeholder="e.g. Fiasp" style={{ ...inputStyle, minWidth: 80 }} /></td>
-                    <td style={{ padding: "4px 4px" }}><input type="number" step="any" value={row.dose} onChange={(e) => updateRow(i, "dose", e.target.value)} placeholder="U" style={{ ...inputStyle, minWidth: 60 }} /></td>
+                    <td style={{ padding: "4px 4px" }}><input type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" step="any" value={row.dose} onChange={(e) => updateRow(i, "dose", e.target.value)} placeholder="U" style={{ ...inputStyle, minWidth: 60 }} /></td>
                     <td style={{ padding: "4px 4px" }}><input value={row.food_notes} onChange={(e) => updateRow(i, "food_notes", e.target.value)} placeholder="Food" style={{ ...inputStyle, minWidth: 120 }} /></td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-          <button onClick={addRow} style={{ marginTop: 10, padding: "8px 18px", borderRadius: 8, border: "1px solid #dee2e6", background: "#f8f9fa", color: "#1a2a5e", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+          <button type="button" onClick={addRow} style={{ marginTop: 10, padding: "8px 18px", borderRadius: 8, border: "1px solid #dee2e6", background: "#f8f9fa", color: "#1a2a5e", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
             + Add Row
           </button>
         </div>
@@ -140,7 +140,7 @@ export default function HandwrittenImportPage() {
         {error && <div style={{ borderRadius: 8, background: "#fef2f2", border: "1px solid #fca5a5", padding: "10px 14px", fontSize: 13, color: "#991b1b", marginBottom: 12 }}>{error}</div>}
         {toast && <div style={{ borderRadius: 8, background: "#f0fdf4", border: "1px solid #86efac", padding: "10px 14px", fontSize: 13, color: "#166534", marginBottom: 12 }}>{toast}</div>}
 
-        <button onClick={importAll} disabled={importing || rows.every((r) => !r.time)} style={{ width: "100%", minHeight: 52, borderRadius: 10, border: "none", background: importing ? "#94a3b8" : "#16a34a", color: "#ffffff", fontSize: 15, fontWeight: 700, cursor: importing ? "not-allowed" : "pointer", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+        <button type="button" onClick={importAll} disabled={importing || rows.every((r) => !r.time)} style={{ width: "100%", minHeight: 52, borderRadius: 10, border: "none", background: importing ? "#94a3b8" : "#16a34a", color: "#ffffff", fontSize: 15, fontWeight: 700, cursor: importing ? "not-allowed" : "pointer", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
           {importing ? "Importing..." : "Import All to Meal Log"}
         </button>
 

@@ -62,7 +62,7 @@ export default function StoryCTA({ cta, ctaOptions, onAction }: StoryCTAProps) {
   return (
     <div style={containerStyle}>
       {buttons.map((btn, i) => (
-        <button
+        <button type="button"
           key={btn.label}
           style={i === 0 ? primaryStyle : secondaryStyle}
           onClick={() => onAction(btn.action, btn.target)}

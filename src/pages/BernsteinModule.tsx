@@ -153,7 +153,7 @@ export default function BernsteinModule() {
 
   const Section = ({ id, title, children }: { id: string; title: string; children: React.ReactNode }) => (
     <div style={card}>
-      <button
+      <button type="button"
         onClick={() => toggle(id)}
         style={{
           all: "unset", cursor: "pointer", width: "100%", display: "flex",
@@ -228,7 +228,7 @@ export default function BernsteinModule() {
         <Section id="foods" title="Allowed Foods Database">
           <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 16 }}>
             {FOOD_CATEGORIES.map(cat => (
-              <button
+              <button type="button"
                 key={cat}
                 onClick={() => setFoodTab(cat)}
                 style={{
@@ -305,7 +305,7 @@ export default function BernsteinModule() {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
             <label style={labelStyle}>
               Protein consumed (grams)
-              <input type="number" min={0} step={1} value={proteinGrams} onChange={e => setProteinGrams(e.target.value)} style={inputStyle} placeholder="e.g. 40" />
+              <input type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" min={0} step={1} value={proteinGrams} onChange={e => setProteinGrams(e.target.value)} style={inputStyle} placeholder="e.g. 40" />
             </label>
             <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
               {proteinGrams && (
@@ -334,7 +334,7 @@ export default function BernsteinModule() {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16, marginBottom: 16 }}>
             <label style={labelStyle}>
               Calculated dose (U)
-              <input type="number" min={0} step={0.1} value={targetDose} onChange={e => setTargetDose(e.target.value)} style={inputStyle} placeholder="e.g. 1.3" />
+              <input type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" min={0} step={0.1} value={targetDose} onChange={e => setTargetDose(e.target.value)} style={inputStyle} placeholder="e.g. 1.3" />
             </label>
             <label style={labelStyle}>
               Pen/pump increment

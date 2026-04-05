@@ -55,7 +55,7 @@ function AccordionItem({ title, children }: { title: string; children: React.Rea
   const [open, setOpen] = useState(false);
   return (
     <div className="border border-gray-200 rounded-lg overflow-hidden">
-      <button
+      <button type="button"
         onClick={() => setOpen(!open)}
         className="w-full flex items-center justify-between px-4 py-3 text-left text-sm font-medium text-[#1A2A5E] hover:bg-gray-50 transition-colors"
       >
@@ -131,7 +131,7 @@ export default function ThyroidModule() {
               TSH Level (mIU/L)
             </label>
             <input
-              type="number"
+              type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*"
               step="0.1"
               min="0"
               max="50"
@@ -148,7 +148,7 @@ export default function ThyroidModule() {
               Free T4 (pmol/L)
             </label>
             <input
-              type="number"
+              type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*"
               step="0.1"
               min="0"
               max="50"
@@ -196,7 +196,7 @@ export default function ThyroidModule() {
               Your current ISF (mg/dL per unit)
             </label>
             <input
-              type="number"
+              type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*"
               step="1"
               min="1"
               max="500"
@@ -307,7 +307,7 @@ export default function ThyroidModule() {
                 Years since T1D diagnosis
               </label>
               <input
-                type="number"
+                type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*"
                 step="1"
                 min="0"
                 max="80"

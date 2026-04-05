@@ -191,12 +191,12 @@ export default function MiraPage() {
         <div className="px-4 pb-2 max-w-2xl mx-auto w-full">
           <div className="flex flex-wrap gap-2">
             {SUGGESTED_PROMPTS.map((p, i) => (
-              <button key={i} onClick={() => send(p)} className="text-xs bg-gray-800 border border-gray-700 text-gray-300 rounded-lg px-3 py-1.5 hover:bg-gray-700 transition-colors">
+              <button type="button" key={i} onClick={() => send(p)} className="text-xs bg-gray-800 border border-gray-700 text-gray-300 rounded-lg px-3 py-1.5 hover:bg-gray-700 transition-colors">
                 {p}
               </button>
             ))}
             {isSafeMode() && feedbackStep < 0 && (
-              <button onClick={startFeedback} className="text-xs bg-amber-900/30 border border-amber-700/50 text-amber-400 rounded-lg px-3 py-1.5 hover:bg-amber-900/50 transition-colors">
+              <button type="button" onClick={startFeedback} className="text-xs bg-amber-900/30 border border-amber-700/50 text-amber-400 rounded-lg px-3 py-1.5 hover:bg-amber-900/50 transition-colors">
                 Give Feedback
               </button>
             )}
@@ -206,7 +206,7 @@ export default function MiraPage() {
       {/* Persistent feedback chip when in safe mode and past initial prompts */}
       {isSafeMode() && messages.length > 2 && feedbackStep < 0 && (
         <div className="px-4 pb-1 max-w-2xl mx-auto w-full">
-          <button onClick={startFeedback} className="text-xs bg-amber-900/30 border border-amber-700/50 text-amber-400 rounded-lg px-3 py-1.5 hover:bg-amber-900/50 transition-colors">
+          <button type="button" onClick={startFeedback} className="text-xs bg-amber-900/30 border border-amber-700/50 text-amber-400 rounded-lg px-3 py-1.5 hover:bg-amber-900/50 transition-colors">
             Give Feedback
           </button>
         </div>
@@ -218,7 +218,7 @@ export default function MiraPage() {
       <div className="border-t border-gray-800 bg-gray-900 px-4 py-3 max-w-2xl mx-auto w-full">
         <div className="flex gap-2">
           <input value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && send()} placeholder="Ask Mira a question…" className="flex-1 rounded-xl border border-gray-700 bg-gray-950 px-4 py-2.5 text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-500" />
-          <button onClick={() => send()} disabled={loading || !input.trim()} className="rounded-xl bg-brand-600 hover:bg-brand-700 disabled:opacity-40 text-white px-4 py-2.5 text-sm font-medium transition-colors">Send</button>
+          <button type="button" onClick={() => send()} disabled={loading || !input.trim()} className="rounded-xl bg-brand-600 hover:bg-brand-700 disabled:opacity-40 text-white px-4 py-2.5 text-sm font-medium transition-colors">Send</button>
         </div>
       </div>
     </div>

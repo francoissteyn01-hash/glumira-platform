@@ -7,6 +7,7 @@
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { DISCLAIMER } from "@/lib/constants";
+import DecimalInput from "@/components/ui/DecimalInput";
 
 const T = {
   bg: "#f8f9fa", navy: "#1a2a5e", teal: "#2ab5c1", amber: "#f59e0b",
@@ -169,7 +170,7 @@ export default function CreateProfilePage() {
             <p style={{ fontSize: 15, fontWeight: 600, color: T.navy, marginBottom: 12 }}>What's your role?</p>
             <div style={{ display: "grid", gap: 8 }}>
               {(["caregiver", "patient", "teen", "clinician"] as Role[]).map((r) => (
-                <button
+                <button type="button"
                   key={r}
                   onClick={() => set({ role: r })}
                   style={{
@@ -186,7 +187,7 @@ export default function CreateProfilePage() {
               ))}
             </div>
             <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 20 }}>
-              <button onClick={nextStep} style={btnPrimary}>Next</button>
+              <button type="button" onClick={nextStep} style={btnPrimary}>Next</button>
             </div>
           </div>
         )}
@@ -203,17 +204,17 @@ export default function CreateProfilePage() {
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
                 <div>
                   <label style={{ fontSize: 12, color: T.muted, marginBottom: 4, display: "block" }}>Age</label>
-                  <input type="number" value={form.age} onChange={(e) => set({ age: parseInt(e.target.value) || 0 })} min={0} max={120} style={inputStyle} />
+                  <DecimalInput value={form.age} onChange={(v) => set({ age: Math.round(v) })} min={0} max={120} style={inputStyle} />
                 </div>
                 <div>
                   <label style={{ fontSize: 12, color: T.muted, marginBottom: 4, display: "block" }}>Weight (kg, optional)</label>
-                  <input type="number" value={form.weight} onChange={(e) => set({ weight: parseInt(e.target.value) || 0 })} min={0} max={300} style={inputStyle} />
+                  <DecimalInput value={form.weight} onChange={(v) => set({ weight: v })} min={0} max={300} style={inputStyle} />
                 </div>
               </div>
             </div>
             <div style={{ display: "flex", justifyContent: "space-between", marginTop: 20 }}>
-              <button onClick={prevStep} style={btnSecondary}>Back</button>
-              <button onClick={nextStep} style={btnPrimary}>Next</button>
+              <button type="button" onClick={prevStep} style={btnSecondary}>Back</button>
+              <button type="button" onClick={nextStep} style={btnPrimary}>Next</button>
             </div>
           </div>
         )}
@@ -241,7 +242,7 @@ export default function CreateProfilePage() {
                     </div>
                     <div>
                       <label style={{ fontSize: 11, color: T.muted }}>Dose (U)</label>
-                      <input type="number" value={r.dose} onChange={(e) => updateRegimen(i, { dose: parseFloat(e.target.value) || 0 })} step={0.25} min={0} max={200} style={inputStyle} />
+                      <DecimalInput value={r.dose} onChange={(v) => updateRegimen(i, { dose: v })} step={0.25} min={0} max={200} style={inputStyle} />
                     </div>
                     <div>
                       <label style={{ fontSize: 11, color: T.muted }}>Time</label>
@@ -249,21 +250,21 @@ export default function CreateProfilePage() {
                     </div>
                   </div>
                   {form.regimen.length > 1 && (
-                    <button onClick={() => removeRegimen(i)} style={{ marginTop: 8, fontSize: 11, color: T.muted, background: "none", border: "none", cursor: "pointer" }}>
+                    <button type="button" onClick={() => removeRegimen(i)} style={{ marginTop: 8, fontSize: 11, color: T.muted, background: "none", border: "none", cursor: "pointer" }}>
                       Remove
                     </button>
                   )}
                 </div>
               ))}
               {form.regimen.length < 6 && (
-                <button onClick={addRegimen} style={{ ...btnSecondary, width: "100%", borderStyle: "dashed" }}>
+                <button type="button" onClick={addRegimen} style={{ ...btnSecondary, width: "100%", borderStyle: "dashed" }}>
                   + Add Insulin
                 </button>
               )}
             </div>
             <div style={{ display: "flex", justifyContent: "space-between", marginTop: 20 }}>
-              <button onClick={prevStep} style={btnSecondary}>Back</button>
-              <button onClick={nextStep} style={btnPrimary}>Next</button>
+              <button type="button" onClick={prevStep} style={btnSecondary}>Back</button>
+              <button type="button" onClick={nextStep} style={btnPrimary}>Next</button>
             </div>
           </div>
         )}
@@ -285,16 +286,16 @@ export default function CreateProfilePage() {
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
               <div>
                 <label style={{ fontSize: 12, color: T.muted, marginBottom: 4, display: "block" }}>Low Target</label>
-                <input type="number" value={form.targetLow} onChange={(e) => set({ targetLow: parseFloat(e.target.value) || 0 })} step={form.unitMgdl ? 1 : 0.1} style={inputStyle} />
+                <DecimalInput value={form.targetLow} onChange={(v) => set({ targetLow: v })} step={form.unitMgdl ? 1 : 0.1} style={inputStyle} />
               </div>
               <div>
                 <label style={{ fontSize: 12, color: T.muted, marginBottom: 4, display: "block" }}>High Target</label>
-                <input type="number" value={form.targetHigh} onChange={(e) => set({ targetHigh: parseFloat(e.target.value) || 0 })} step={form.unitMgdl ? 1 : 0.1} style={inputStyle} />
+                <DecimalInput value={form.targetHigh} onChange={(v) => set({ targetHigh: v })} step={form.unitMgdl ? 1 : 0.1} style={inputStyle} />
               </div>
             </div>
             <div style={{ display: "flex", justifyContent: "space-between", marginTop: 20 }}>
-              <button onClick={prevStep} style={btnSecondary}>Back</button>
-              <button onClick={nextStep} style={btnPrimary}>Next</button>
+              <button type="button" onClick={prevStep} style={btnSecondary}>Back</button>
+              <button type="button" onClick={nextStep} style={btnPrimary}>Next</button>
             </div>
           </div>
         )}
@@ -305,7 +306,7 @@ export default function CreateProfilePage() {
             <p style={{ fontSize: 15, fontWeight: 600, color: T.navy, marginBottom: 12 }}>Dietary Approach</p>
             <div style={{ display: "grid", gap: 8 }}>
               {DIETARY_OPTIONS.map((d) => (
-                <button
+                <button type="button"
                   key={d.value}
                   onClick={() => set({ dietary: d.value })}
                   style={{
@@ -322,8 +323,8 @@ export default function CreateProfilePage() {
               ))}
             </div>
             <div style={{ display: "flex", justifyContent: "space-between", marginTop: 20 }}>
-              <button onClick={prevStep} style={btnSecondary}>Back</button>
-              <button onClick={nextStep} style={btnPrimary}>Next</button>
+              <button type="button" onClick={prevStep} style={btnSecondary}>Back</button>
+              <button type="button" onClick={nextStep} style={btnPrimary}>Next</button>
             </div>
           </div>
         )}
@@ -343,8 +344,8 @@ export default function CreateProfilePage() {
               </div>
             </div>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <button onClick={prevStep} style={btnSecondary}>Back</button>
-              <button onClick={save} style={btnPrimary}>Start Exploring</button>
+              <button type="button" onClick={prevStep} style={btnSecondary}>Back</button>
+              <button type="button" onClick={save} style={btnPrimary}>Start Exploring</button>
             </div>
           </div>
         )}

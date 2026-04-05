@@ -33,7 +33,7 @@ export default function ShareButton() {
   }
 
   return (
-    <button
+    <button type="button"
       onClick={share}
       style={{
         minWidth: 40, minHeight: 40, borderRadius: 8,

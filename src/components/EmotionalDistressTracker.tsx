@@ -124,7 +124,7 @@ export default function EmotionalDistressTracker({ defaultOpen = false }: Props)
             <div>
               <label style={labelStyle}>Sleep (hours)</label>
               <input
-                type="number" step="0.5" min="0" max="24"
+                type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" step="0.5" min="0" max="24"
                 value={sleepHours} onChange={(e) => setSleepHours(e.target.value)}
                 placeholder="e.g. 6.5"
                 style={{ ...inputStyle, fontFamily: "'JetBrains Mono', monospace" }}
@@ -133,7 +133,7 @@ export default function EmotionalDistressTracker({ defaultOpen = false }: Props)
             <div>
               <label style={labelStyle}>Overnight alarms</label>
               <input
-                type="number" step="1" min="0"
+                type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" step="1" min="0"
                 value={overnightAlarms} onChange={(e) => setOvernightAlarms(e.target.value)}
                 style={{ ...inputStyle, fontFamily: "'JetBrains Mono', monospace" }}
               />

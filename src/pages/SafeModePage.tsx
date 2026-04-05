@@ -77,7 +77,7 @@ function ProfileCard({ profile, onClick }: { profile: DemoProfile; onClick: () =
       <p style={{ fontSize: 13, color: T.muted, margin: "0 0 14px", lineHeight: 1.5, fontFamily: T.font }}>
         {profile.description}
       </p>
-      <button
+      <button type="button"
         style={{
           width: "100%",
           padding: "9px 0",
@@ -143,7 +143,7 @@ export default function SafeModePage() {
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
             {/* Slot 1 */}
             {slot1 ? (
-              <button
+              <button type="button"
                 onClick={() => navigate(`/safe-mode/profile/custom-1`)}
                 style={{
                   padding: "10px 20px",
@@ -160,7 +160,7 @@ export default function SafeModePage() {
                 {slot1.name ?? "Custom Profile 1"} — Explore
               </button>
             ) : (
-              <button
+              <button type="button"
                 onClick={() => navigate("/safe-mode/create?slot=1")}
                 style={{
                   padding: "10px 20px",
@@ -179,7 +179,7 @@ export default function SafeModePage() {
             )}
             {/* Slot 2 */}
             {slot2 ? (
-              <button
+              <button type="button"
                 onClick={() => navigate(`/safe-mode/profile/custom-2`)}
                 style={{
                   padding: "10px 20px",
@@ -196,7 +196,7 @@ export default function SafeModePage() {
                 {slot2.name ?? "Custom Profile 2"} — Explore
               </button>
             ) : (
-              <button
+              <button type="button"
                 onClick={() => navigate("/safe-mode/create?slot=2")}
                 style={{
                   padding: "10px 20px",

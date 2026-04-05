@@ -62,7 +62,7 @@ export default function BetaProfileSwitcher({ onChange }: Props) {
 
   return (
     <div ref={dropdownRef} style={{ position: "relative", display: "inline-block", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
-      <button
+      <button type="button"
         onClick={() => setOpen(!open)}
         aria-haspopup="listbox"
         aria-expanded={open}
@@ -134,7 +134,7 @@ export default function BetaProfileSwitcher({ onChange }: Props) {
               Case Studies
             </p>
             {BETA_PROFILES.map((p) => (
-              <button
+              <button type="button"
                 key={p.id}
                 role="option"
                 aria-selected={p.id === activeId}
@@ -188,7 +188,7 @@ export default function BetaProfileSwitcher({ onChange }: Props) {
               </p>
             )}
             {customProfiles.map((p) => (
-              <button
+              <button type="button"
                 key={p.id}
                 role="option"
                 aria-selected={p.id === activeId}

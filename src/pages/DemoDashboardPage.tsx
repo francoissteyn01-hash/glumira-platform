@@ -163,7 +163,7 @@ export default function DemoDashboardPage() {
       <div style={{ minHeight: "100vh", background: T.bg, display: "flex", alignItems: "center", justifyContent: "center" }}>
         <div style={{ textAlign: "center" }}>
           <p style={{ color: T.red, fontSize: 15, fontFamily: T.font }}>Profile not found.</p>
-          <button onClick={() => navigate("/safe-mode")} style={{ marginTop: 12, padding: "8px 20px", borderRadius: 8, border: "none", background: T.teal, color: "#fff", fontSize: 13, cursor: "pointer", fontFamily: T.font }}>
+          <button type="button" onClick={() => navigate("/safe-mode")} style={{ marginTop: 12, padding: "8px 20px", borderRadius: 8, border: "none", background: T.teal, color: "#fff", fontSize: 13, cursor: "pointer", fontFamily: T.font }}>
             Back to Safe Mode
           </button>
         </div>
@@ -201,7 +201,7 @@ export default function DemoDashboardPage() {
             <h1 style={{ fontSize: 20, fontWeight: 700, color: T.navy, margin: 0 }}>{profile.name}</h1>
             <p style={{ fontSize: 13, color: T.muted, margin: "4px 0 0" }}>{profile.description}</p>
           </div>
-          <button
+          <button type="button"
             onClick={() => navigate("/safe-mode")}
             style={{ padding: "7px 16px", borderRadius: 8, border: `1px solid ${T.border}`, background: "transparent", color: T.navy, fontSize: 12, cursor: "pointer", fontFamily: T.font, whiteSpace: "nowrap" }}
           >

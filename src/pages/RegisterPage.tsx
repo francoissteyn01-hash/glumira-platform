@@ -171,9 +171,9 @@ export default function RegisterPage() {
 
           {/* Tabs */}
           <div className="au-tabs">
-            <button className={`au-tab${mode === "signin" ? " on" : ""}`} onClick={() => switchMode("signin")}>Sign in</button>
-            <button className={`au-tab${mode === "signup" ? " on" : ""}`} onClick={() => switchMode("signup")}>Register</button>
-            <button className={`au-tab${mode === "caregiver" ? " on" : ""}`} onClick={() => switchMode("caregiver")}>Caregiver</button>
+            <button type="button" className={`au-tab${mode === "signin" ? " on" : ""}`} onClick={() => switchMode("signin")}>Sign in</button>
+            <button type="button" className={`au-tab${mode === "signup" ? " on" : ""}`} onClick={() => switchMode("signup")}>Register</button>
+            <button type="button" className={`au-tab${mode === "caregiver" ? " on" : ""}`} onClick={() => switchMode("caregiver")}>Caregiver</button>
           </div>
 
           {/* Messages */}
@@ -197,16 +197,16 @@ export default function RegisterPage() {
               </div>
 
               <div style={{ textAlign: "right", marginBottom: 14 }}>
-                <button className="au-link" onClick={() => switchMode("reset")}>Forgot password?</button>
+                <button type="button" className="au-link" onClick={() => switchMode("reset")}>Forgot password?</button>
               </div>
 
-              <button className="au-btn" onClick={handleSignIn} disabled={loading}>
+              <button type="button" className="au-btn" onClick={handleSignIn} disabled={loading}>
                 {loading ? "Signing in..." : "Sign in to GluMira\u2122"}
               </button>
 
               <div style={{ textAlign: "center", marginTop: 14, fontSize: 13, color: "#8899aa" }}>
                 Don't have an account?{" "}
-                <button className="au-link" onClick={() => switchMode("signup")}>Create one free &rarr;</button>
+                <button type="button" className="au-link" onClick={() => switchMode("signup")}>Create one free &rarr;</button>
               </div>
             </>
           )}
@@ -237,19 +237,19 @@ export default function RegisterPage() {
               </label>
               <div className="au-roles">
                 {roles.map(r => (
-                  <button key={r.id} className={`au-role${role === r.id ? " on" : ""}`} onClick={() => setRole(r.id)} type="button">
+                  <button type="button" key={r.id} className={`au-role${role === r.id ? " on" : ""}`} onClick={() => setRole(r.id)} type="button">
                     {r.label}
                   </button>
                 ))}
               </div>
 
-              <button className="au-btn" onClick={handleSignUp} disabled={loading || !name || !regEmail || !regPw || !role}>
+              <button type="button" className="au-btn" onClick={handleSignUp} disabled={loading || !name || !regEmail || !regPw || !role}>
                 {loading ? "Creating account..." : "Create account"}
               </button>
 
               <div style={{ textAlign: "center", marginTop: 14, fontSize: 13, color: "#8899aa" }}>
                 Already have an account?{" "}
-                <button className="au-link" onClick={() => switchMode("signin")}>Sign in &rarr;</button>
+                <button type="button" className="au-link" onClick={() => switchMode("signin")}>Sign in &rarr;</button>
               </div>
             </>
           )}
@@ -258,7 +258,7 @@ export default function RegisterPage() {
             <div className="au-done">
               <h2>Check your email</h2>
               <p>We've sent a confirmation link to <strong style={{ color: T }}>{regEmail}</strong>. Click the link to activate your account.</p>
-              <button className="au-link" style={{ marginTop: 16, fontSize: 13 }} onClick={() => switchMode("signin")}>
+              <button type="button" className="au-link" style={{ marginTop: 16, fontSize: 13 }} onClick={() => switchMode("signin")}>
                 &larr; Back to sign in
               </button>
             </div>
@@ -278,7 +278,7 @@ export default function RegisterPage() {
                 <label>Share token</label>
                 <input type="password" placeholder="Paste your token" value={cgToken} onChange={e => setCgToken(e.target.value)} onKeyDown={e => e.key === "Enter" && handleCaregiver()} />
               </div>
-              <button className="au-btn" onClick={handleCaregiver} disabled={loading}>
+              <button type="button" className="au-btn" onClick={handleCaregiver} disabled={loading}>
                 {loading ? "Verifying..." : "Access dashboard"}
               </button>
             </>
@@ -294,11 +294,11 @@ export default function RegisterPage() {
                 <label>Email address</label>
                 <input type="email" placeholder="you@email.com" value={resetEmail} onChange={e => setResetEmail(e.target.value)} onKeyDown={e => e.key === "Enter" && handleReset()} />
               </div>
-              <button className="au-btn" onClick={handleReset} disabled={loading}>
+              <button type="button" className="au-btn" onClick={handleReset} disabled={loading}>
                 {loading ? "Sending..." : "Send reset link"}
               </button>
               <div style={{ textAlign: "center", marginTop: 14 }}>
-                <button className="au-link" onClick={() => switchMode("signin")}>&larr; Back to sign in</button>
+                <button type="button" className="au-link" onClick={() => switchMode("signin")}>&larr; Back to sign in</button>
               </div>
             </>
           )}

@@ -129,7 +129,7 @@ function MealCard({
 
       {/* log button */}
       {!logged && (
-        <button
+        <button type="button"
           onClick={onLog}
           className="mt-3 w-full rounded-xl border border-cyan-200 bg-cyan-50 py-2 text-xs font-semibold text-cyan-700 transition hover:bg-cyan-100 active:scale-[0.98]"
         >
@@ -194,7 +194,7 @@ export default function MealPlanPage() {
       {/* ── View Toggle ───────────────────────────────────────────────────── */}
       <div className="mb-5 flex rounded-xl bg-white p-1 shadow-sm">
         {(["today", "week"] as const).map((v) => (
-          <button
+          <button type="button"
             key={v}
             onClick={() => setView(v)}
             className={`flex-1 rounded-lg py-1.5 text-xs font-semibold transition ${
@@ -245,7 +245,7 @@ export default function MealPlanPage() {
 
           {/* Shopping List */}
           <section className="mt-6">
-            <button
+            <button type="button"
               onClick={() => setShoppingOpen((o) => !o)}
               className="flex w-full items-center justify-between rounded-2xl bg-white p-4 shadow-sm transition hover:shadow-md"
             >

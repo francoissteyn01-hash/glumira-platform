@@ -79,10 +79,10 @@ export default function MenstrualCycleModule() {
           <h3 style={cardTitle}>Cycle Phases</h3>
           <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
             <label style={{ fontSize: 13, color: "#4a5568" }}>Cycle Length:
-              <input type="number" min={21} max={40} value={cycleLength} onChange={e => setCycleLength(parseInt(e.target.value) || 28)} style={{ ...inputStyle, width: 70, marginLeft: 8 }} />
+              <input type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" min={21} max={40} value={cycleLength} onChange={e => setCycleLength(parseInt(e.target.value) || 28)} style={{ ...inputStyle, width: 70, marginLeft: 8 }} />
             </label>
             <label style={{ fontSize: 13, color: "#4a5568" }}>Current Day:
-              <input type="number" min={1} max={cycleLength} value={currentDay} onChange={e => setCurrentDay(parseInt(e.target.value) || 1)} style={{ ...inputStyle, width: 70, marginLeft: 8 }} />
+              <input type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" min={1} max={cycleLength} value={currentDay} onChange={e => setCurrentDay(parseInt(e.target.value) || 1)} style={{ ...inputStyle, width: 70, marginLeft: 8 }} />
             </label>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 8 }}>
@@ -112,13 +112,13 @@ export default function MenstrualCycleModule() {
               <input placeholder="e.g. 6.2, 7.8, 5.4" value={entryForm.glucoseReadings} onChange={e => setEntryForm(f => ({ ...f, glucoseReadings: e.target.value }))} style={inputStyle} />
             </label>
             <label style={labelStyle}>Basal Dose (U)
-              <input type="number" step="0.1" placeholder="Optional" value={entryForm.basalDose} onChange={e => setEntryForm(f => ({ ...f, basalDose: e.target.value }))} style={inputStyle} />
+              <input type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" step="0.1" placeholder="Optional" value={entryForm.basalDose} onChange={e => setEntryForm(f => ({ ...f, basalDose: e.target.value }))} style={inputStyle} />
             </label>
             <label style={labelStyle}>Total Bolus (U)
-              <input type="number" step="0.1" placeholder="Optional" value={entryForm.totalBolus} onChange={e => setEntryForm(f => ({ ...f, totalBolus: e.target.value }))} style={inputStyle} />
+              <input type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" step="0.1" placeholder="Optional" value={entryForm.totalBolus} onChange={e => setEntryForm(f => ({ ...f, totalBolus: e.target.value }))} style={inputStyle} />
             </label>
             <label style={labelStyle}>Total Carbs (g)
-              <input type="number" placeholder="Optional" value={entryForm.totalCarbs} onChange={e => setEntryForm(f => ({ ...f, totalCarbs: e.target.value }))} style={inputStyle} />
+              <input type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" placeholder="Optional" value={entryForm.totalCarbs} onChange={e => setEntryForm(f => ({ ...f, totalCarbs: e.target.value }))} style={inputStyle} />
             </label>
           </div>
 
@@ -126,7 +126,7 @@ export default function MenstrualCycleModule() {
             <div style={{ fontSize: 13, fontWeight: 500, color: "#4a5568", marginBottom: 6 }}>Symptoms</div>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
               {SYMPTOMS.map(s => (
-                <button key={s} onClick={() => toggleSymptom(s)} style={{ padding: "4px 10px", borderRadius: 16, fontSize: 12, border: `1px solid ${entryForm.symptoms.includes(s) ? "#2ab5c1" : "#d1d5db"}`, background: entryForm.symptoms.includes(s) ? "#e0f7f9" : "#fff", color: entryForm.symptoms.includes(s) ? "#0e7490" : "#4a5568", cursor: "pointer" }}>
+                <button type="button" key={s} onClick={() => toggleSymptom(s)} style={{ padding: "4px 10px", borderRadius: 16, fontSize: 12, border: `1px solid ${entryForm.symptoms.includes(s) ? "#2ab5c1" : "#d1d5db"}`, background: entryForm.symptoms.includes(s) ? "#e0f7f9" : "#fff", color: entryForm.symptoms.includes(s) ? "#0e7490" : "#4a5568", cursor: "pointer" }}>
                   {s.replace("_", " ")}
                 </button>
               ))}
@@ -136,16 +136,16 @@ export default function MenstrualCycleModule() {
           <div style={{ marginTop: 12, display: "flex", alignItems: "center", gap: 12 }}>
             <span style={{ fontSize: 13, fontWeight: 500, color: "#4a5568" }}>Mood:</span>
             {MOODS.map(m => (
-              <button key={m} onClick={() => setEntryForm(f => ({ ...f, mood: m }))} style={{ padding: "4px 12px", borderRadius: 16, fontSize: 12, border: `1px solid ${entryForm.mood === m ? "#2ab5c1" : "#d1d5db"}`, background: entryForm.mood === m ? "#e0f7f9" : "#fff", color: entryForm.mood === m ? "#0e7490" : "#4a5568", cursor: "pointer" }}>
+              <button type="button" key={m} onClick={() => setEntryForm(f => ({ ...f, mood: m }))} style={{ padding: "4px 12px", borderRadius: 16, fontSize: 12, border: `1px solid ${entryForm.mood === m ? "#2ab5c1" : "#d1d5db"}`, background: entryForm.mood === m ? "#e0f7f9" : "#fff", color: entryForm.mood === m ? "#0e7490" : "#4a5568", cursor: "pointer" }}>
                 {m}
               </button>
             ))}
           </div>
 
           <div style={{ display: "flex", gap: 12, marginTop: 16 }}>
-            <button onClick={addEntry} style={btnStyle}>Log & Analyze</button>
+            <button type="button" onClick={addEntry} style={btnStyle}>Log & Analyze</button>
             {entries.length > 0 && (
-              <button onClick={analyzeAll} style={{ ...btnStyle, background: "#1a2a5e" }}>Re-Analyze All ({entries.length} days)</button>
+              <button type="button" onClick={analyzeAll} style={{ ...btnStyle, background: "#1a2a5e" }}>Re-Analyze All ({entries.length} days)</button>
             )}
           </div>
           {entries.length > 0 && (
@@ -320,7 +320,7 @@ export default function MenstrualCycleModule() {
             },
           ].map(item => (
             <div key={item.id} style={{ marginBottom: 8 }}>
-              <button
+              <button type="button"
                 onClick={() => setOpenPhaseNutrition(openPhaseNutrition === item.id ? null : item.id)}
                 style={{ width: "100%", textAlign: "left", padding: "12px 16px", background: openPhaseNutrition === item.id ? "#fae8ff" : "#f8f9fa", border: "1px solid #e2e8f0", borderRadius: 8, cursor: "pointer", fontSize: 14, fontWeight: 600, color: "#1a2a5e", display: "flex", justifyContent: "space-between", alignItems: "center" }}
               >
@@ -338,7 +338,7 @@ export default function MenstrualCycleModule() {
 
         {/* Craving Management */}
         <div style={{ ...cardStyle, marginTop: 16 }}>
-          <button
+          <button type="button"
             onClick={() => setShowCravings(!showCravings)}
             style={{ width: "100%", textAlign: "left", padding: 0, background: "none", border: "none", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center" }}
           >
@@ -378,7 +378,7 @@ export default function MenstrualCycleModule() {
 
         {/* Hormonal Contraception Impact */}
         <div style={{ ...cardStyle, marginTop: 16 }}>
-          <button
+          <button type="button"
             onClick={() => setShowContraception(!showContraception)}
             style={{ width: "100%", textAlign: "left", padding: 0, background: "none", border: "none", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center" }}
           >

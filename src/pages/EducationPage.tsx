@@ -97,7 +97,7 @@ export default function EducationPage() {
           <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
             <span className="text-xs text-gray-500 shrink-0 self-center">Age:</span>
             {AGE_RANGES.map(a => (
-              <button
+              <button type="button"
                 key={a}
                 onClick={() => setAgeFilter(a)}
                 className={`px-3 py-1 rounded-full text-xs font-medium shrink-0 transition-colors ${
@@ -113,7 +113,7 @@ export default function EducationPage() {
           <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
             <span className="text-xs text-gray-500 shrink-0 self-center">For:</span>
             {AUDIENCES.map(a => (
-              <button
+              <button type="button"
                 key={a}
                 onClick={() => setAudienceFilter(a)}
                 className={`px-3 py-1 rounded-full text-xs font-medium shrink-0 transition-colors ${
@@ -138,7 +138,7 @@ export default function EducationPage() {
             return (
               <div key={group.id} className="rounded-xl border border-gray-800 bg-gray-900 overflow-hidden">
                 {/* Group header */}
-                <button
+                <button type="button"
                   onClick={() => toggleGroup(group.id)}
                   className="w-full text-left p-4 hover:bg-gray-800/50 transition-colors"
                 >
@@ -183,7 +183,7 @@ export default function EducationPage() {
                             </span>
                           </div>
                         </Link>
-                        <button
+                        <button type="button"
                           onClick={() => navigate(`/mira?q=${encodeURIComponent(topic.title)}`)}
                           className="shrink-0 text-[10px] font-medium text-teal-400 border border-teal-700 rounded-lg px-2 py-1 hover:bg-teal-900/40 transition-colors"
                         >
@@ -200,7 +200,7 @@ export default function EducationPage() {
           {filtered.length === 0 && (
             <div className="text-center py-12">
               <p className="text-gray-500 text-sm">No topics match your search or filters.</p>
-              <button
+              <button type="button"
                 onClick={() => { setSearch(""); setAgeFilter("All"); setAudienceFilter("All"); }}
                 className="mt-3 text-teal-500 text-sm hover:underline"
               >
