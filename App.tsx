@@ -9,6 +9,7 @@ import { Suspense, lazy } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { GlucoseUnitsProvider } from "@/context/GlucoseUnitsContext";
 import { PresentationModeProvider } from "@/components/PresentationMode";
+import { SensoryProvider } from "@/contexts/SensoryContext";
 import AppSidebar, { useSidebarOffset } from "@/components/AppSidebar";
 import { useSessionTimeout, SessionWarningModal } from "@/hooks/useSessionTimeout";
 
@@ -38,6 +39,7 @@ const MenstrualCycleModule    = lazy(() => import("@/pages/MenstrualCycleModule"
 
 /* ─── Specialist & Dietary Modules ─────────────────────────────────────── */
 const ADHDModule              = lazy(() => import("@/pages/ADHDModule"));
+const AutismModule            = lazy(() => import("@/pages/AutismModule"));
 const ThyroidModule           = lazy(() => import("@/pages/ThyroidModule"));
 const RamadanModule           = lazy(() => import("@/pages/RamadanModule"));
 const KosherModule            = lazy(() => import("@/pages/KosherModule"));
@@ -117,6 +119,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <GlucoseUnitsProvider>
+        <SensoryProvider>
         <PresentationModeProvider>
         <div className="min-h-screen" style={{ background: "#f8f9fa", color: "#1a2a5e" }}>
           <a href="#main-content" className="skip-link">Skip to content</a>
@@ -156,6 +159,7 @@ export default function App() {
               <Route path="/menstrual-cycle" element={<Navigate to="/modules/menstrual" replace />} />
               {/* Specialist & Dietary Modules */}
               <Route path="/modules/adhd"       element={<ADHDModule />} />
+              <Route path="/modules/autism"     element={<AutismModule />} />
               <Route path="/modules/thyroid"    element={<ThyroidModule />} />
               <Route path="/modules/ramadan"    element={<RamadanModule />} />
               <Route path="/modules/kosher"     element={<KosherModule />} />
@@ -177,6 +181,7 @@ export default function App() {
           </AppShell>
         </div>
         </PresentationModeProvider>
+        </SensoryProvider>
       </GlucoseUnitsProvider>
     </BrowserRouter>
   );

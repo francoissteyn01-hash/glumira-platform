@@ -48,6 +48,7 @@ const CLINICAL_MODULES = [
   { path: "/modules/school-care", label: "School Care" },
   { path: "/modules/menstrual", label: "Menstrual" },
   { path: "/modules/adhd", label: "ADHD" },
+  { path: "/modules/autism", label: "Autism + T1D" },
   { path: "/modules/thyroid", label: "Thyroid" },
 ];
 
