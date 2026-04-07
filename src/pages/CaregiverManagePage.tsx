@@ -99,11 +99,11 @@ export default function CaregiverManagePage() {
   const slotsUsed = links.length;
 
   return (
-    <div className="min-h-screen bg-gray-950">
+    <div className="min-h-screen bg-[var(--bg-primary)]">
       <div className="max-w-2xl mx-auto px-4 py-8 space-y-8">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-white">Manage Caregivers</h1>
-          <span className="text-xs text-gray-400">
+          <h1 className="text-2xl font-bold text-[var(--text-primary)]">Manage Caregivers</h1>
+          <span className="text-xs text-[var(--text-muted)]">
             {slotsUsed} of {MAX_CAREGIVERS} slots used
           </span>
         </div>
@@ -118,7 +118,7 @@ export default function CaregiverManagePage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="caregiver@email.com"
-              className="w-full rounded-lg bg-gray-800 border border-gray-700 px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-500"
+              className="w-full rounded-lg bg-[var(--bg-card)] border border-[var(--border)] px-3 py-2.5 text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-brand-500"
             />
             <div className="flex items-center gap-3">
               <label htmlFor="cg-role" className="sr-only">Role</label>
@@ -126,7 +126,7 @@ export default function CaregiverManagePage() {
                 id="cg-role"
                 value={role}
                 onChange={(e) => setRole(e.target.value as "editor" | "viewer")}
-                className="rounded-lg bg-gray-800 border border-gray-700 px-3 py-2.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
+                className="rounded-lg bg-[var(--bg-card)] border border-[var(--border)] px-3 py-2.5 text-sm text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-brand-500"
               >
                 <option value="viewer">Viewer — read only</option>
                 <option value="editor">Editor — can edit data</option>
@@ -147,16 +147,16 @@ export default function CaregiverManagePage() {
         {/* ── Linked caregivers ───────────────────────────────────────── */}
         <Card title="Linked Caregivers">
           {loading ? (
-            <p className="text-sm text-gray-400 animate-pulse">Loading…</p>
+            <p className="text-sm text-[var(--text-muted)] animate-pulse">Loading…</p>
           ) : links.length === 0 ? (
-            <p className="text-sm text-gray-500">No caregivers linked yet.</p>
+            <p className="text-sm text-[var(--text-muted)]">No caregivers linked yet.</p>
           ) : (
-            <ul className="divide-y divide-gray-800">
+            <ul className="divide-y divide-[var(--border)]">
               {links.map((link) => (
                 <li key={link.id} className="py-4 first:pt-0 last:pb-0">
                   <div className="flex items-start justify-between gap-4">
                     <div className="min-w-0 flex-1">
-                      <p className="text-sm text-white truncate">{link.caregiver_email}</p>
+                      <p className="text-sm text-[var(--text-primary)] truncate">{link.caregiver_email}</p>
                       <div className="mt-1 flex items-center gap-2">
                         <RoleBadge role={link.role} />
                         <StatusBadge status={link.invite_status} />
@@ -166,14 +166,14 @@ export default function CaregiverManagePage() {
                       {link.invite_status === "accepted" && (
                         <button type="button"
                           onClick={() => changeRole(link.id, link.role === "editor" ? "viewer" : "editor")}
-                          className="rounded-md border border-gray-700 px-2.5 py-1.5 text-xs text-gray-300 hover:text-white hover:border-gray-500 transition-colors"
+                          className="rounded-md border border-[var(--border)] px-2.5 py-1.5 text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--border-light)] transition-colors"
                         >
                           {link.role === "editor" ? "Make viewer" : "Make editor"}
                         </button>
                       )}
                       <button type="button"
                         onClick={() => revoke(link.id)}
-                        className="rounded-md border border-gray-700 px-2.5 py-1.5 text-xs text-red-400 hover:text-red-300 hover:border-red-700 transition-colors"
+                        className="rounded-md border border-[var(--border)] px-2.5 py-1.5 text-xs text-red-400 hover:text-red-300 hover:border-red-700 transition-colors"
                       >
                         Revoke
                       </button>
@@ -191,7 +191,7 @@ export default function CaregiverManagePage() {
             <div
               key={i}
               className={`h-1.5 flex-1 rounded-full transition-colors ${
-                i < slotsUsed ? "bg-brand-500" : "bg-gray-800"
+                i < slotsUsed ? "bg-brand-500" : "bg-[var(--bg-card)]"
               }`}
             />
           ))}
@@ -205,8 +205,8 @@ export default function CaregiverManagePage() {
 
 function Card({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-xl border border-gray-800 bg-gray-900 p-6 space-y-4">
-      <h2 className="text-sm font-semibold text-white">{title}</h2>
+    <div className="rounded-xl border border-[var(--border)] bg-[var(--bg-card)] p-6 space-y-4">
+      <h2 className="text-sm font-semibold text-[var(--text-primary)]">{title}</h2>
       {children}
     </div>
   );
@@ -219,7 +219,7 @@ function RoleBadge({ role }: { role: string }) {
       className={`inline-flex items-center rounded-md px-2 py-0.5 text-[10px] font-medium ${
         isEditor
           ? "bg-brand-600/20 text-brand-400"
-          : "bg-gray-700/50 text-gray-400"
+          : "bg-[var(--bg-card)]/50 text-[var(--text-muted)]"
       }`}
     >
       {isEditor ? "Editor" : "Viewer"}

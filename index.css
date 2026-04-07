@@ -75,6 +75,6 @@
 
 html { scroll-behavior: smooth; }
 body { @apply antialiased; background: var(--bg-primary); color: var(--text-primary); }
-:focus-visible { @apply outline-none ring-2 ring-brand-500 ring-offset-2; ring-offset-color: var(--bg-primary); }
+:focus-visible { @apply outline-none ring-2 ring-brand-500 ring-offset-2; }
 .skip-link { @apply sr-only; }
 .skip-link:focus { @apply not-sr-only fixed top-2 left-2 z-[100] rounded-lg bg-brand-600 px-4 py-2 text-sm text-white; }

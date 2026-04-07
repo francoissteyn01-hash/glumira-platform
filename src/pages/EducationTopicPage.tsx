@@ -1,6 +1,6 @@
 /**
  * GluMira V7 — Individual Education Topic Page
- * Mobile-first, Scandinavian Minimalist (bg-gray-950).
+ * Mobile-first, Scandinavian Minimalist (bg-[var(--bg-primary)]).
  */
 import { useState, useMemo } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
@@ -25,9 +25,9 @@ export default function EducationTopicPage() {
 
   if (!topic) {
     return (
-      <div className="min-h-screen bg-gray-950 flex items-center justify-center">
+      <div className="min-h-screen bg-[var(--bg-primary)] flex items-center justify-center">
         <div className="text-center space-y-4">
-          <p className="text-gray-400 text-sm">Topic not found.</p>
+          <p className="text-[var(--text-muted)] text-sm">Topic not found.</p>
           <Link to="/education" className="text-teal-500 text-sm hover:underline">
             Back to Education
           </Link>
@@ -37,12 +37,12 @@ export default function EducationTopicPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-950 pb-24">
+    <div className="min-h-screen bg-[var(--bg-primary)] pb-24">
       <div className="max-w-3xl mx-auto px-4 py-8 space-y-6">
         {/* Back button */}
         <button type="button"
           onClick={() => navigate("/education")}
-          className="flex items-center gap-1.5 text-gray-400 text-sm hover:text-white transition-colors"
+          className="flex items-center gap-1.5 text-[var(--text-muted)] text-sm hover:text-[var(--text-primary)] transition-colors"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -51,16 +51,16 @@ export default function EducationTopicPage() {
         </button>
 
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-xs text-gray-500">
-          <Link to="/education" className="hover:text-gray-300 transition-colors">Education</Link>
+        <div className="flex items-center gap-2 text-xs text-[var(--text-muted)]">
+          <Link to="/education" className="hover:text-[var(--text-secondary)] transition-colors">Education</Link>
           <span>/</span>
           <span className="text-teal-500 font-medium">Group {topic.group}</span>
           <span>/</span>
-          <span className="text-gray-400">{topic.groupTitle}</span>
+          <span className="text-[var(--text-muted)]">{topic.groupTitle}</span>
         </div>
 
         {/* Title */}
-        <h1 className="text-xl sm:text-2xl font-bold text-white leading-snug">
+        <h1 className="text-xl sm:text-2xl font-bold text-[var(--text-primary)] leading-snug">
           {topic.title}
         </h1>
 
@@ -82,21 +82,21 @@ export default function EducationTopicPage() {
         </div>
 
         {/* Content section */}
-        <div className="rounded-xl border border-gray-800 bg-gray-900 p-5 space-y-4">
-          <h2 className="text-sm font-semibold text-white uppercase tracking-wide">Content</h2>
-          <p className="text-sm text-gray-400 leading-relaxed">
+        <div className="rounded-xl border border-[var(--border)] bg-[var(--bg-card)] p-5 space-y-4">
+          <h2 className="text-sm font-semibold text-[var(--text-primary)] uppercase tracking-wide">Content</h2>
+          <p className="text-sm text-[var(--text-muted)] leading-relaxed">
             Content coming soon — this topic is being written by our clinical education team.
           </p>
         </div>
 
         {/* Key takeaways */}
-        <div className="rounded-xl border border-gray-800 bg-gray-900 p-5 space-y-3">
-          <h2 className="text-sm font-semibold text-white uppercase tracking-wide">Key Takeaways</h2>
+        <div className="rounded-xl border border-[var(--border)] bg-[var(--bg-card)] p-5 space-y-3">
+          <h2 className="text-sm font-semibold text-[var(--text-primary)] uppercase tracking-wide">Key Takeaways</h2>
           <ul className="space-y-2">
             {[1, 2, 3].map(i => (
               <li key={i} className="flex items-start gap-2">
                 <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-teal-500 shrink-0" />
-                <span className="text-sm text-gray-500">Coming soon</span>
+                <span className="text-sm text-[var(--text-muted)]">Coming soon</span>
               </li>
             ))}
           </ul>
@@ -108,7 +108,7 @@ export default function EducationTopicPage() {
           className={`w-full py-3 rounded-xl text-sm font-medium transition-colors ${
             markedRead
               ? "bg-teal-600 text-white"
-              : "bg-gray-800 text-gray-300 hover:bg-gray-700"
+              : "bg-[var(--bg-card)] text-[var(--text-secondary)] hover:opacity-80"
           }`}
         >
           {markedRead ? "Marked as Read" : "Mark as Read"}
@@ -117,7 +117,7 @@ export default function EducationTopicPage() {
         {/* Related topics */}
         {relatedTopics.length > 0 && (
           <div className="space-y-3">
-            <h2 className="text-sm font-semibold text-white uppercase tracking-wide">
+            <h2 className="text-sm font-semibold text-[var(--text-primary)] uppercase tracking-wide">
               Related Topics in Group {topic.group}
             </h2>
             <div className="space-y-2">
@@ -125,9 +125,9 @@ export default function EducationTopicPage() {
                 <Link
                   key={rt.id}
                   to={`/education/${rt.id}`}
-                  className="block rounded-xl border border-gray-800 bg-gray-900 p-4 hover:bg-gray-800/60 transition-colors"
+                  className="block rounded-xl border border-[var(--border)] bg-[var(--bg-card)] p-4 hover:opacity-90 transition-colors"
                 >
-                  <p className="text-sm text-white">{rt.title}</p>
+                  <p className="text-sm text-[var(--text-primary)]">{rt.title}</p>
                   <div className="flex items-center gap-2 mt-1.5">
                     <span className="text-[10px] text-teal-400 bg-teal-900/50 px-2 py-0.5 rounded-full">
                       {rt.ageRange === "all" ? "All ages" : `Ages ${rt.ageRange}`}

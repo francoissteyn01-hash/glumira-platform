@@ -135,19 +135,19 @@ export default function MiraPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-950 flex flex-col">
+    <div className="min-h-screen bg-[var(--bg-primary)] flex flex-col">
       {/* Header */}
-      <div className="border-b border-gray-800 bg-gray-900 px-4 py-3">
+      <div className="border-b border-[var(--border)] bg-[var(--bg-card)] px-4 py-3">
         <div className="flex items-center justify-between max-w-2xl mx-auto w-full">
           <div className="flex items-center gap-3">
             <div style={{ width: 36, height: 36 }} />
             <div>
-              <p className="font-semibold text-white text-sm">Mira AI</p>
-              <p className="text-xs text-gray-300">Educational assistant · Not medical advice</p>
+              <p className="font-semibold text-[var(--text-primary)] text-sm">Mira AI</p>
+              <p className="text-xs text-[var(--text-secondary)]">Educational assistant · Not medical advice</p>
             </div>
           </div>
           {/* Bernstein Mode toggle */}
-          <label className="flex items-center gap-2 cursor-pointer text-xs text-gray-300">
+          <label className="flex items-center gap-2 cursor-pointer text-xs text-[var(--text-secondary)]">
             <input type="checkbox" checked={bernstein} onChange={(e) => setBernstein(e.target.checked)} style={{ accentColor: "#f59e0b", width: 16, height: 16 }} />
             Bernstein Mode
           </label>
@@ -155,7 +155,7 @@ export default function MiraPage() {
         {/* Profile context badge */}
         {profileBadge && (
           <div className="max-w-2xl mx-auto w-full mt-2">
-            <span className="text-[10px] text-gray-400 bg-gray-800 rounded px-2 py-0.5">Mira knows: {profileBadge}</span>
+            <span className="text-[10px] text-[var(--text-muted)] bg-[var(--bg-card)] rounded px-2 py-0.5">Mira knows: {profileBadge}</span>
           </div>
         )}
       </div>
@@ -164,14 +164,14 @@ export default function MiraPage() {
       <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4 max-w-2xl mx-auto w-full">
         {messages.map((m, i) => (
           <div key={i} className={cn("flex", m.role === "user" ? "justify-end" : "justify-start")}>
-            <div className={cn("max-w-[80%] rounded-2xl px-4 py-3 text-sm whitespace-pre-wrap", m.role === "user" ? "bg-brand-600 text-white rounded-br-sm" : "bg-gray-800 border border-gray-700 text-gray-200 rounded-bl-sm")}>
+            <div className={cn("max-w-[80%] rounded-2xl px-4 py-3 text-sm whitespace-pre-wrap", m.role === "user" ? "bg-brand-600 text-white rounded-br-sm" : "bg-[var(--bg-card)] border border-[var(--border)] text-[var(--text-secondary)] rounded-bl-sm")}>
               {m.content}
             </div>
           </div>
         ))}
         {loading && (
           <div className="flex justify-start">
-            <div className="bg-gray-800 border border-gray-700 rounded-2xl rounded-bl-sm px-4 py-3">
+            <div className="bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl rounded-bl-sm px-4 py-3">
               <span className="flex gap-1">
                 <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce [animation-delay:0ms]" />
                 <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce [animation-delay:150ms]" />
@@ -188,7 +188,7 @@ export default function MiraPage() {
         <div className="px-4 pb-2 max-w-2xl mx-auto w-full">
           <div className="flex flex-wrap gap-2">
             {SUGGESTED_PROMPTS.map((p, i) => (
-              <button type="button" key={i} onClick={() => send(p)} className="text-xs bg-gray-800 border border-gray-700 text-gray-300 rounded-lg px-3 py-1.5 hover:bg-gray-700 transition-colors">
+              <button type="button" key={i} onClick={() => send(p)} className="text-xs bg-[var(--bg-card)] border border-[var(--border)] text-[var(--text-secondary)] rounded-lg px-3 py-1.5 hover:opacity-80 transition-colors">
                 {p}
               </button>
             ))}
@@ -209,12 +209,12 @@ export default function MiraPage() {
         </div>
       )}
 
-      <p className="text-xs text-gray-400 text-center px-4 pb-1 max-w-2xl mx-auto w-full">{DISCLAIMER}</p>
+      <p className="text-xs text-[var(--text-muted)] text-center px-4 pb-1 max-w-2xl mx-auto w-full">{DISCLAIMER}</p>
 
       {/* Input */}
-      <div className="border-t border-gray-800 bg-gray-900 px-4 py-3 max-w-2xl mx-auto w-full">
+      <div className="border-t border-[var(--border)] bg-[var(--bg-card)] px-4 py-3 max-w-2xl mx-auto w-full">
         <div className="flex gap-2">
-          <input value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && send()} placeholder="Ask Mira a question…" className="flex-1 rounded-xl border border-gray-700 bg-gray-950 px-4 py-2.5 text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-500" />
+          <input value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && send()} placeholder="Ask Mira a question…" className="flex-1 rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] px-4 py-2.5 text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-brand-500" />
           <button type="button" onClick={() => send()} disabled={loading || !input.trim()} className="rounded-xl bg-brand-600 hover:bg-brand-700 disabled:opacity-40 text-white px-4 py-2.5 text-sm font-medium transition-colors">Send</button>
         </div>
       </div>

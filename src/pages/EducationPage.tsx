@@ -1,7 +1,7 @@
 /**
  * GluMira V7 — Education Hub
  * 100 topics across 10 groups (A-J) with search, filters, and collapsible sections.
- * Scandinavian Minimalist — bg-gray-950 interior.
+ * Scandinavian Minimalist — bg-[var(--bg-primary)] interior.
  */
 import { useState, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -17,7 +17,7 @@ function highlightMatch(text: string, query: string) {
   return (
     <>
       {text.slice(0, idx)}
-      <mark className="bg-teal-400/30 text-white rounded px-0.5">{text.slice(idx, idx + query.length)}</mark>
+      <mark className="bg-teal-400/30 text-[var(--text-primary)] rounded px-0.5">{text.slice(idx, idx + query.length)}</mark>
       {text.slice(idx + query.length)}
     </>
   );
@@ -68,11 +68,11 @@ export default function EducationPage() {
   }, [filtered]);
 
   return (
-    <div className="min-h-screen bg-gray-950">
+    <div className="min-h-screen bg-[var(--bg-primary)]">
       <div className="max-w-4xl mx-auto px-4 py-8 space-y-6">
         {/* Header */}
         <div className="flex items-center gap-3">
-          <h1 className="text-2xl font-bold text-white">Education</h1>
+          <h1 className="text-2xl font-bold text-[var(--text-primary)]">Education</h1>
           <span className="bg-teal-600 text-white text-xs font-medium px-2.5 py-0.5 rounded-full">
             {filtered.length} topics
           </span>
@@ -80,7 +80,7 @@ export default function EducationPage() {
 
         {/* Search */}
         <div className="relative">
-          <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-muted)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
           <input
@@ -88,14 +88,14 @@ export default function EducationPage() {
             placeholder="Search topics..."
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 bg-gray-900 border border-gray-800 rounded-xl text-sm text-white placeholder-gray-500 focus:outline-none focus:border-teal-600 transition-colors"
+            className="w-full pl-10 pr-4 py-2.5 bg-[var(--bg-card)] border border-[var(--border)] rounded-xl text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:border-teal-600 transition-colors"
           />
         </div>
 
         {/* Filter pills */}
         <div className="space-y-3">
           <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
-            <span className="text-xs text-gray-500 shrink-0 self-center">Age:</span>
+            <span className="text-xs text-[var(--text-muted)] shrink-0 self-center">Age:</span>
             {AGE_RANGES.map(a => (
               <button type="button"
                 key={a}
@@ -103,7 +103,7 @@ export default function EducationPage() {
                 className={`px-3 py-1 rounded-full text-xs font-medium shrink-0 transition-colors ${
                   ageFilter === a
                     ? "bg-teal-600 text-white"
-                    : "bg-gray-800 text-gray-400 hover:bg-gray-700"
+                    : "bg-[var(--bg-card)] text-[var(--text-muted)] hover:opacity-80"
                 }`}
               >
                 {a}
@@ -111,7 +111,7 @@ export default function EducationPage() {
             ))}
           </div>
           <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
-            <span className="text-xs text-gray-500 shrink-0 self-center">For:</span>
+            <span className="text-xs text-[var(--text-muted)] shrink-0 self-center">For:</span>
             {AUDIENCES.map(a => (
               <button type="button"
                 key={a}
@@ -119,7 +119,7 @@ export default function EducationPage() {
                 className={`px-3 py-1 rounded-full text-xs font-medium shrink-0 transition-colors ${
                   audienceFilter === a
                     ? "bg-teal-600 text-white"
-                    : "bg-gray-800 text-gray-400 hover:bg-gray-700"
+                    : "bg-[var(--bg-card)] text-[var(--text-muted)] hover:opacity-80"
                 }`}
               >
                 {a}
@@ -136,42 +136,42 @@ export default function EducationPage() {
             const isOpen = openGroups.has(group.id);
 
             return (
-              <div key={group.id} className="rounded-xl border border-gray-800 bg-gray-900 overflow-hidden">
+              <div key={group.id} className="rounded-xl border border-[var(--border)] bg-[var(--bg-card)] overflow-hidden">
                 {/* Group header */}
                 <button type="button"
                   onClick={() => toggleGroup(group.id)}
-                  className="w-full text-left p-4 hover:bg-gray-800/50 transition-colors"
+                  className="w-full text-left p-4 hover:opacity-80 transition-colors"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <span className="text-teal-500 font-bold text-sm">{group.id}</span>
                       <div>
-                        <p className="font-semibold text-white text-sm">{group.title}</p>
-                        <p className="text-xs text-gray-500 mt-0.5">{group.description}</p>
+                        <p className="font-semibold text-[var(--text-primary)] text-sm">{group.title}</p>
+                        <p className="text-xs text-[var(--text-muted)] mt-0.5">{group.description}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="bg-gray-800 text-gray-400 text-xs px-2 py-0.5 rounded-full">
+                      <span className="bg-[var(--bg-card)] text-[var(--text-muted)] text-xs px-2 py-0.5 rounded-full">
                         {topics.length}
                       </span>
-                      <span className="text-gray-500 text-xs">{isOpen ? "−" : "+"}</span>
+                      <span className="text-[var(--text-muted)] text-xs">{isOpen ? "−" : "+"}</span>
                     </div>
                   </div>
                 </button>
 
                 {/* Topics */}
                 {isOpen && (
-                  <div className="border-t border-gray-800">
+                  <div className="border-t border-[var(--border)]">
                     {topics.map(topic => (
                       <div
                         key={topic.id}
-                        className="flex items-center justify-between gap-3 px-4 py-3 border-b border-gray-800/50 last:border-b-0 hover:bg-gray-800/30 transition-colors"
+                        className="flex items-center justify-between gap-3 px-4 py-3 border-b border-[var(--border)]/50 last:border-b-0 hover:opacity-90 transition-colors"
                       >
                         <Link
                           to={`/education/${topic.id}`}
                           className="flex-1 min-w-0"
                         >
-                          <p className="text-sm text-white leading-snug">
+                          <p className="text-sm text-[var(--text-primary)] leading-snug">
                             {highlightMatch(topic.title, search)}
                           </p>
                           <div className="flex items-center gap-2 mt-1.5">
@@ -199,7 +199,7 @@ export default function EducationPage() {
 
           {filtered.length === 0 && (
             <div className="text-center py-12">
-              <p className="text-gray-500 text-sm">No topics match your search or filters.</p>
+              <p className="text-[var(--text-muted)] text-sm">No topics match your search or filters.</p>
               <button type="button"
                 onClick={() => { setSearch(""); setAgeFilter("All"); setAudienceFilter("All"); }}
                 className="mt-3 text-teal-500 text-sm hover:underline"

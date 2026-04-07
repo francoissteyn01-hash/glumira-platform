@@ -12,9 +12,6 @@ function getInitialTheme(): Theme {
     const stored = localStorage.getItem("glumira-theme");
     if (stored === "dark" || stored === "light") return stored;
   } catch {}
-  if (typeof window !== "undefined" && window.matchMedia("(prefers-color-scheme: dark)").matches) {
-    return "dark";
-  }
   return "light";
 }
 

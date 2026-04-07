@@ -56,7 +56,7 @@ const TutorialPage            = lazy(() => import("@/pages/TutorialPage"));
 /* ─── Loading fallback ───────────────────────────────────────────────────── */
 function LoadingFallback() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-950">
+    <div className="min-h-screen flex items-center justify-center bg-[var(--bg-primary)]">
       <p className="text-gray-400 animate-pulse text-sm">Loading…</p>
     </div>
   );
