@@ -1,11 +1,179 @@
-import { useState } from "react";
-const TITLE = "Paleo";
-const DESC = "No grains, no processed foods. Whole-food focused, naturally lower carb.";
-const ICON = "🦴";
-const COLOR = "#92400E";
-const DAILY_CARBS = "50-100g";
-const MACRO = "20% carb / 30% protein / 50% fat";
-const CONSIDERATIONS = ["Eliminates grains, legumes, dairy, processed foods","Naturally lower carb due to grain exclusion","Higher protein and fat — similar insulin profile to low-carb","Anti-inflammatory — may improve insulin sensitivity","Calcium and fibre supplementation may be needed","Socially restrictive — requires meal planning"];
-const FOODS = ["Grass-fed meat","Wild-caught fish","Eggs","Vegetables (all types)","Fruits (moderate)","Nuts and seeds","Sweet potatoes","Coconut oil and olive oil","Avocado","Herbs and spices"];
-const AVOID = ["All grains (wheat, rice, oats)","Legumes (beans, lentils, peanuts)","Dairy","Refined sugar","Processed foods","Seed oils (canola, soybean)","Artificial sweeteners","Alcohol (strict version)","White potatoes","Soy products"];
-export default function PaleoModule(){const[tab,setTab]=useState("overview");return(<div style={{minHeight:"100vh",background:"#f8f9fa",padding:"24px 16px"}}><div style={{maxWidth:720,margin:"0 auto"}}><div style={{display:"flex",alignItems:"center",gap:12,marginBottom:24}}><span style={{fontSize:32}}>{ICON}</span><div><h1 style={{margin:0,fontSize:22,color:"#1a2a5e"}}>{TITLE} Diet Module</h1><p style={{margin:"4px 0 0",fontSize:13,color:"#64748b"}}>{DESC}</p></div></div><div style={{display:"flex",gap:8,marginBottom:20,flexWrap:"wrap"}}>{["overview","foods","considerations"].map(t=>(<button key={t} onClick={()=>setTab(t)} style={{padding:"8px 16px",borderRadius:8,border:`1px solid ${tab===t?COLOR:"#e2e8f0"}`,background:tab===t?`${COLOR}10`:"white",color:tab===t?COLOR:"#64748b",fontWeight:tab===t?600:400,cursor:"pointer",fontSize:13,textTransform:"capitalize"}}>{t}</button>))}</div>{tab==="overview"&&(<div style={{background:"white",borderRadius:12,padding:20,border:"1px solid #e2e8f0"}}><div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16,marginBottom:16}}><div style={{padding:14,borderRadius:8,background:`${COLOR}08`,border:`1px solid ${COLOR}20`}}><div style={{fontSize:11,color:"#64748b",marginBottom:4}}>Daily Carbs</div><div style={{fontSize:18,fontWeight:700,color:COLOR}}>{DAILY_CARBS}</div></div><div style={{padding:14,borderRadius:8,background:"#f1f5f9"}}><div style={{fontSize:11,color:"#64748b",marginBottom:4}}>Macro Split</div><div style={{fontSize:13,fontWeight:600,color:"#1a2a5e"}}>{MACRO}</div></div></div></div>)}{tab==="foods"&&(<div style={{background:"white",borderRadius:12,padding:20,border:"1px solid #e2e8f0"}}><h3 style={{color:"#059669",fontSize:14,margin:"0 0 12px"}}>✅ Include</h3>{FOODS.map((f:string,i:number)=>(<div key={i} style={{padding:"8px 12px",borderBottom:"1px solid #f1f5f9",fontSize:13,color:"#1a2a5e"}}>{f}</div>))}<h3 style={{color:"#dc2626",fontSize:14,margin:"20px 0 12px"}}>❌ Avoid</h3>{AVOID.map((f:string,i:number)=>(<div key={i} style={{padding:"8px 12px",borderBottom:"1px solid #f1f5f9",fontSize:13,color:"#64748b"}}>{f}</div>))}</div>)}{tab==="considerations"&&(<div style={{background:"white",borderRadius:12,padding:20,border:"1px solid #e2e8f0"}}>{CONSIDERATIONS.map((c:string,i:number)=>(<div key={i} style={{display:"flex",gap:10,padding:"10px 0",borderBottom:"1px solid #f1f5f9"}}><span style={{color:COLOR,fontWeight:700,fontSize:14}}>→</span><span style={{fontSize:13,color:"#1a2a5e",lineHeight:1.5}}>{c}</span></div>))}</div>)}<p style={{marginTop:24,fontSize:11,color:"#94a3b8",textAlign:"center"}}>GluMira™ is an educational platform and does not constitute medical advice.</p></div></div>);}
+/**
+ * GluMira™ V7 — App.tsx
+ * Root component. All routes + nav + auth guard.
+ * Landing page at /, dark navbar for authenticated pages, light navbar for public pages.
+ */
+
+import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Suspense, lazy } from "react";
+import { useAuth } from "@/hooks/useAuth";
+import { GlucoseUnitsProvider } from "@/context/GlucoseUnitsContext";
+import { PresentationModeProvider } from "@/components/PresentationMode";
+import { SensoryProvider } from "@/contexts/SensoryContext";
+import AppSidebar, { useSidebarOffset } from "@/components/AppSidebar";
+import { useSessionTimeout, SessionWarningModal } from "@/hooks/useSessionTimeout";
+
+/* ─── Lazy pages ─────────────────────────────────────────────────────────── */
+const LandingPage   = lazy(() => import("@/pages/LandingPage"));
+const AuthPage      = lazy(() => import("@/pages/RegisterPage"));
+const DashboardPage = lazy(() => import("@/pages/DashboardPage"));
+const EducationPage = lazy(() => import("@/pages/EducationPage"));
+const MiraPage      = lazy(() => import("@/pages/MiraPage"));
+const BadgesPage    = lazy(() => import("@/pages/BadgesPage"));
+const FAQPage       = lazy(() => import("@/pages/FAQPage"));
+const SettingsPage  = lazy(() => import("@/pages/SettingsPage"));
+const ProfilePage   = lazy(() => import("@/pages/ProfilePage"));
+const MealLogPage    = lazy(() => import("@/pages/MealLogPage"));
+const InsulinLogPage    = lazy(() => import("@/pages/InsulinLogPage"));
+const ConditionLogPage     = lazy(() => import("@/pages/ConditionLogPage"));
+const OnboardingWizard        = lazy(() => import("@/pages/OnboardingWizard"));
+const OnboardingStoryPage     = lazy(() => import("@/pages/OnboardingStoryPage"));
+const HandwrittenImportPage   = lazy(() => import("@/pages/HandwrittenImportPage"));
+const CaregiverManagePage     = lazy(() => import("@/pages/CaregiverManagePage"));
+
+/* ─── GROUP4 Modules ────────────────────────────────────────────────────── */
+const PregnancyModule         = lazy(() => import("@/pages/PregnancyModule"));
+const PaediatricModule        = lazy(() => import("@/pages/PaediatricModule"));
+const SchoolCarePlanModule    = lazy(() => import("@/pages/SchoolCarePlanModule"));
+const MenstrualCycleModule    = lazy(() => import("@/pages/MenstrualCycleModule"));
+
+/* ─── Specialist & Dietary Modules ─────────────────────────────────────── */
+const ADHDModule              = lazy(() => import("@/pages/ADHDModule"));
+const AutismModule            = lazy(() => import("@/pages/AutismModule"));
+const ThyroidModule           = lazy(() => import("@/pages/ThyroidModule"));
+const RamadanModule           = lazy(() => import("@/pages/RamadanModule"));
+const KosherModule            = lazy(() => import("@/pages/KosherModule"));
+const HalalModule             = lazy(() => import("@/pages/HalalModule"));
+const BernsteinModule         = lazy(() => import("@/pages/BernsteinModule"));
+const SickDayModule           = lazy(() => import("@/pages/SickDayModule"));
+const MealPlanPage            = lazy(() => import("@/pages/MealPlanPage"));
+const EducationTopicPage      = lazy(() => import("@/pages/EducationTopicPage"));
+
+const DevPanel                = lazy(() => import("@/pages/DevPanel"));
+const RegisterPage            = lazy(() => import("@/pages/RegisterPage"));
+const TutorialPage            = lazy(() => import("@/pages/TutorialPage"));
+
+/* ─── Loading fallback ───────────────────────────────────────────────────── */
+function LoadingFallback() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-[var(--bg-primary)]">
+      <p className="text-gray-400 animate-pulse text-sm">Loading…</p>
+    </div>
+  );
+}
+
+/* ─── Paths with no sidebar chrome ───────────────────────────────────────── */
+const CHROMELESS = ["/", "/auth", "/auth/callback", "/dev", "/tutorial"];
+function isChromeless(pathname: string): boolean {
+  if (CHROMELESS.includes(pathname)) return true;
+  if (pathname === "/register") return true;
+  return false;
+}
+
+/* ─── Shell: sidebar + content wrapper with session timeout ───────────────── */
+function AppShell({ children }: { children: React.ReactNode }) {
+  const location = useLocation();
+  const chromeless = isChromeless(location.pathname);
+  const sidebarOffset = useSidebarOffset();
+  const { showWarning, stayActive, logout } = useSessionTimeout(!chromeless);
+
+  if (chromeless) {
+    return <>{children}</>;
+  }
+
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+
+  return (
+    <>
+      <AppSidebar />
+      <div
+        style={{
+          marginLeft: sidebarOffset,
+          paddingBottom: isMobile ? 72 : 0,
+          minHeight: "100vh",
+          transition: "margin-left 0.2s ease",
+          background: "#f8f9fa",
+        }}
+      >
+        {children}
+      </div>
+      <SessionWarningModal open={showWarning} onStay={stayActive} onLogout={logout} />
+    </>
+  );
+}
+
+/* ─── Smart home route ───────────────────────────────────────────────────── */
+function HomeRoute() {
+  const { user } = useAuth();
+  if (user) return <Navigate to="/dashboard" replace />;
+  return <LandingPage />;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+export default function App() {
+  return (
+    <BrowserRouter>
+      <GlucoseUnitsProvider>
+        <SensoryProvider>
+        <PresentationModeProvider>
+        <div className="min-h-screen" style={{ background: "#f8f9fa", color: "#1a2a5e" }}>
+          <a href="#main-content" className="skip-link">Skip to content</a>
+          <AppShell>
+          <main id="main-content">
+          <Suspense fallback={<LoadingFallback />}>
+            <Routes>
+              <Route path="/"          element={<HomeRoute />} />
+              <Route path="/auth"      element={<AuthPage />} />
+              <Route path="/auth/callback" element={<Navigate to="/dashboard" replace />} />
+              {/* Dev phase: all routes bypass auth */}
+              <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/education" element={<EducationPage />} />
+              <Route path="/education/:id" element={<EducationTopicPage />} />
+              <Route path="/mira"      element={<MiraPage />} />
+              <Route path="/badges"    element={<BadgesPage />} />
+              <Route path="/faq"       element={<FAQPage />} />
+              <Route path="/settings"  element={<SettingsPage />} />
+              <Route path="/log"       element={<MealLogPage />} />
+              <Route path="/insulin"    element={<InsulinLogPage />} />
+              <Route path="/conditions" element={<ConditionLogPage />} />
+              <Route path="/profile"           element={<ProfilePage />} />
+              <Route path="/onboarding"             element={<OnboardingWizard />} />
+              <Route path="/onboarding/story"     element={<OnboardingStoryPage />} />
+              <Route path="/import/handwritten"   element={<HandwrittenImportPage />} />
+              <Route path="/caregivers"              element={<CaregiverManagePage />} />
+              <Route path="/settings/caregivers"    element={<CaregiverManagePage />} />
+              {/* GROUP4 Modules */}
+              <Route path="/modules/pregnancy"       element={<PregnancyModule />} />
+              <Route path="/modules/paediatric"      element={<PaediatricModule />} />
+              <Route path="/modules/school-care"     element={<SchoolCarePlanModule />} />
+              <Route path="/modules/menstrual"       element={<MenstrualCycleModule />} />
+              {/* Legacy route redirects */}
+              <Route path="/pregnancy" element={<Navigate to="/modules/pregnancy" replace />} />
+              <Route path="/paediatric" element={<Navigate to="/modules/paediatric" replace />} />
+              <Route path="/school-care-plan" element={<Navigate to="/modules/school-care" replace />} />
+              <Route path="/menstrual-cycle" element={<Navigate to="/modules/menstrual" replace />} />
+              {/* Specialist & Dietary Modules */}
+              <Route path="/modules/adhd"       element={<ADHDModule />} />
+              <Route path="/modules/autism"     element={<AutismModule />} />
+              <Route path="/modules/thyroid"    element={<ThyroidModule />} />
+              <Route path="/modules/ramadan"    element={<RamadanModule />} />
+              <Route path="/modules/kosher"     element={<KosherModule />} />
+              <Route path="/modules/halal"      element={<HalalModule />} />
+              <Route path="/modules/bernstein"  element={<BernsteinModule />} />
+              <Route path="/modules/sick-day"   element={<SickDayModule />} />
+              <Route path="/meals/plan"         element={<MealPlanPage />} />
+              <Route path="/dev"                   element={<DevPanel />} />
+              <Route path="/register"              element={<RegisterPage />} />
+              <Route path="/tutorial"              element={<TutorialPage />} />
+              <Route path="*"          element={<Navigate to="/" replace />} />
+            </Routes>
+          </Suspense>
+          </main>
+          </AppShell>
+        </div>
+        </PresentationModeProvider>
+        </SensoryProvider>
+      </GlucoseUnitsProvider>
+    </BrowserRouter>
+  );
+}
