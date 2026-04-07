@@ -22,15 +22,15 @@ export default function ActiveInsulinCard({ totalIOB, pressure }: Props) {
 
   return (
     <div style={{
-      background: "#ffffff", borderRadius: 12, border: "1px solid #dee2e6",
+      background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)",
       padding: 20, display: "flex", flexDirection: "column", gap: 12,
     }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
         <div>
-          <p style={{ margin: 0, fontSize: 12, fontWeight: 600, color: "#52667a", textTransform: "uppercase", letterSpacing: 0.5, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+          <p style={{ margin: 0, fontSize: 12, fontWeight: 600, color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: 0.5, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
             Active Insulin (IOB)
           </p>
-          <p style={{ margin: "4px 0 0", fontSize: 32, fontWeight: 700, color: "#1a2a5e", fontFamily: "'JetBrains Mono', monospace" }}>
+          <p style={{ margin: "4px 0 0", fontSize: 32, fontWeight: 700, color: "var(--text-primary)", fontFamily: "'JetBrains Mono', monospace" }}>
             {totalIOB.toFixed(1)}<span style={{ fontSize: 16, fontWeight: 500, marginLeft: 4 }}>U</span>
           </p>
         </div>
@@ -44,7 +44,7 @@ export default function ActiveInsulinCard({ totalIOB, pressure }: Props) {
       </div>
 
       {/* Pressure bar */}
-      <div style={{ height: 8, borderRadius: 4, background: "#e9ecef", overflow: "hidden" }}>
+      <div style={{ height: 8, borderRadius: 4, background: "var(--border-divider)", overflow: "hidden" }}>
         <div
           style={{
             height: "100%",

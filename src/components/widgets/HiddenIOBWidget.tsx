@@ -37,7 +37,7 @@ export default function HiddenIOBWidget({ quietTailIOB }: Props) {
 
   return (
     <div style={{
-      background: "#ffffff", borderRadius: 12, border: "1px solid #dee2e6",
+      background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)",
       padding: 20, display: "flex", alignItems: "center", gap: 16,
     }}>
       <div style={{
@@ -49,7 +49,7 @@ export default function HiddenIOBWidget({ quietTailIOB }: Props) {
       </div>
       <div>
         <p style={{
-          margin: 0, fontSize: 12, fontWeight: 600, color: "#52667a",
+          margin: 0, fontSize: 12, fontWeight: 600, color: "var(--text-secondary)",
           textTransform: "uppercase", letterSpacing: 0.5,
           fontFamily: "'DM Sans', system-ui, sans-serif",
         }}>
@@ -57,12 +57,12 @@ export default function HiddenIOBWidget({ quietTailIOB }: Props) {
         </p>
         <p style={{
           margin: "2px 0 0", fontSize: 24, fontWeight: 700,
-          color: isNegligible ? "#94a3b8" : "#1a2a5e",
+          color: isNegligible ? "var(--text-faint)" : "var(--text-primary)",
           fontFamily: "'JetBrains Mono', monospace",
         }}>
           {quietTailIOB.toFixed(1)}<span style={{ fontSize: 13, fontWeight: 500, marginLeft: 4 }}>U</span>
         </p>
-        <p style={{ margin: "2px 0 0", fontSize: 11, color: "#94a3b8", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+        <p style={{ margin: "2px 0 0", fontSize: 11, color: "var(--text-faint)", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
           {isNegligible ? "No residual insulin detected" : "Hidden residual from long-acting insulin"}
         </p>
       </div>

@@ -53,7 +53,7 @@ export default function ExportReportButton({ date }: Props) {
         padding: "0 24px",
         borderRadius: 8,
         border: "none",
-        background: downloading ? "#94a3b8" : "#2ab5c1",
+        background: downloading ? "var(--text-faint)" : "var(--accent-teal)",
         color: "#ffffff",
         fontSize: 13,
         fontWeight: 700,

@@ -37,8 +37,8 @@ export default function ShareButton() {
       onClick={share}
       style={{
         minWidth: 40, minHeight: 40, borderRadius: 8,
-        border: "1px solid #dee2e6", background: "#ffffff",
-        color: copied ? "#22c55e" : "#52667a",
+        border: "1px solid var(--border-light)", background: "var(--bg-card)",
+        color: copied ? "#22c55e" : "var(--text-secondary)",
         fontSize: copied ? 12 : 18, cursor: "pointer",
         display: "flex", alignItems: "center", justifyContent: "center",
         gap: 6, padding: "0 12px",

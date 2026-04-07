@@ -53,10 +53,10 @@ export default function GlucoseOverlay({
   if (data.length === 0) {
     return (
       <div style={{
-        background: "#ffffff", borderRadius: 12, border: "1px solid #dee2e6",
+        background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)",
         padding: 32, textAlign: "center",
       }}>
-        <p style={{ fontSize: 14, color: "#52667a", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+        <p style={{ fontSize: 14, color: "var(--text-secondary)", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
           No glucose data available.
         </p>
       </div>
@@ -64,26 +64,26 @@ export default function GlucoseOverlay({
   }
 
   return (
-    <div style={{ background: "#ffffff", borderRadius: 12, border: "1px solid #dee2e6", padding: "16px 16px 8px" }}>
+    <div style={{ background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)", padding: "16px 16px 8px" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12, padding: "0 4px" }}>
-        <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: "#1a2a5e", fontFamily: "'Playfair Display', serif" }}>
+        <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: "var(--text-primary)", fontFamily: "'Playfair Display', serif" }}>
           Glucose ({unitLabel(units)})
         </h3>
         <div style={{ display: "flex", gap: 12 }}>
-          <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 11, color: "#52667a" }}>
+          <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 11, color: "var(--text-secondary)" }}>
             <span style={{ width: 10, height: 10, borderRadius: 2, background: "#fef9c3", border: "1px solid #eab308", display: "inline-block" }} />High
           </span>
-          <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 11, color: "#52667a" }}>
+          <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 11, color: "var(--text-secondary)" }}>
             <span style={{ width: 10, height: 10, borderRadius: 2, background: "#22c55e", display: "inline-block" }} />In Range
           </span>
-          <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 11, color: "#52667a" }}>
+          <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 11, color: "var(--text-secondary)" }}>
             <span style={{ width: 10, height: 10, borderRadius: 2, background: "#fecaca", border: "1px solid #ef4444", display: "inline-block" }} />Low
           </span>
         </div>
       </div>
       <ResponsiveContainer width="100%" height={220}>
         <LineChart data={displayData} margin={{ top: 4, right: 8, left: -16, bottom: 0 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#e9ecef" />
+          <CartesianGrid strokeDasharray="3 3" stroke="var(--border-divider)" />
 
           {/* Low zone background (red) */}
           <ReferenceArea y1={yMin} y2={low} fill="#fecaca" fillOpacity={0.35} />
@@ -98,30 +98,30 @@ export default function GlucoseOverlay({
           <XAxis
             dataKey="time"
             tickFormatter={formatTime}
-            tick={{ fontSize: 11, fill: "#52667a" }}
+            tick={{ fontSize: 11, fill: "var(--text-secondary)" }}
             interval="preserveStartEnd"
             minTickGap={60}
           />
           <YAxis
             domain={[yMin, "auto"]}
-            tick={{ fontSize: 11, fill: "#52667a" }}
-            label={{ value: unitLabel(units), angle: -90, position: "insideLeft", style: { fontSize: 11, fill: "#52667a" }, offset: 20 }}
+            tick={{ fontSize: 11, fill: "var(--text-secondary)" }}
+            label={{ value: unitLabel(units), angle: -90, position: "insideLeft", style: { fontSize: 11, fill: "var(--text-secondary)" }, offset: 20 }}
           />
           <Tooltip
             labelFormatter={(label: any) => formatTime(String(label))}
             formatter={(value: any) => [`${value} ${unitLabel(units)}`, "Glucose"]}
             contentStyle={{
-              background: "#ffffff", border: "1px solid #dee2e6", borderRadius: 8,
+              background: "var(--bg-card)", border: "1px solid var(--border-light)", borderRadius: 8,
               fontSize: 12, fontFamily: "'DM Sans', system-ui, sans-serif",
             }}
           />
           <Line
             type="monotone"
             dataKey="value"
-            stroke="#1a2a5e"
+            stroke="var(--text-primary)"
             strokeWidth={2}
-            dot={{ fill: "#1a2a5e", r: 3, strokeWidth: 0 }}
-            activeDot={{ r: 5, fill: "#2ab5c1" }}
+            dot={{ fill: "var(--text-primary)", r: 3, strokeWidth: 0 }}
+            activeDot={{ r: 5, fill: "var(--accent-teal)" }}
             animationDuration={600}
           />
         </LineChart>

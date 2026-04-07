@@ -31,10 +31,10 @@ function Section({ title, subtitle, children, defaultOpen = false }: SectionProp
         aria-expanded={open}
       >
         <div>
-          <h2 className="text-base font-semibold text-[#1A2A5E]">{title}</h2>
+          <h2 className="text-base font-semibold text-[var(--text-primary)]">{title}</h2>
           {subtitle && <p className="text-xs text-gray-500 mt-0.5">{subtitle}</p>}
         </div>
-        <span className="text-[#2AB5C1] text-lg font-bold ml-3">{open ? "−" : "+"}</span>
+        <span className="text-[var(--accent-teal)] text-lg font-bold ml-3">{open ? "−" : "+"}</span>
       </button>
       {open && <div className="px-5 pb-5">{children}</div>}
     </section>
@@ -45,10 +45,10 @@ export default function AutismModule() {
   const autismTopics = EDUCATION_TOPICS.filter((t) => t.group === "K");
 
   return (
-    <div className="min-h-screen bg-[#F8F9FA] text-[#1A2A5E]">
+    <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
       <header className="sticky top-0 z-10 bg-white/90 backdrop-blur border-b border-gray-200 px-4 py-3">
         <div className="max-w-2xl mx-auto flex items-center justify-between">
-          <Link to="/" className="text-sm text-[#1A2A5E]/60 hover:text-[#1A2A5E]">
+          <Link to="/" className="text-sm text-[var(--text-primary)]/60 hover:text-[var(--text-primary)]">
             &larr; Back
           </Link>
           <h1 className="text-lg font-semibold tracking-tight">Autism + T1D</h1>
@@ -58,7 +58,7 @@ export default function AutismModule() {
 
       <main className="max-w-2xl mx-auto px-4 py-6 space-y-4">
         <div className="text-center pb-2">
-          <h2 className="text-xl font-bold text-[#1A2A5E]">Autism + T1D</h2>
+          <h2 className="text-xl font-bold text-[var(--text-primary)]">Autism + T1D</h2>
           <p className="text-sm text-gray-500 mt-1">
             Tools for managing Type 1 Diabetes with sensory awareness
           </p>
@@ -94,9 +94,9 @@ export default function AutismModule() {
               <li key={t.id}>
                 <Link
                   to={`/education/${t.id}`}
-                  className="block rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm hover:border-[#2AB5C1]/60"
+                  className="block rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm hover:border-[var(--accent-teal)]/60"
                 >
-                  <span className="font-medium text-[#1A2A5E]">{t.id}. {t.title}</span>
+                  <span className="font-medium text-[var(--text-primary)]">{t.id}. {t.title}</span>
                 </Link>
               </li>
             ))}

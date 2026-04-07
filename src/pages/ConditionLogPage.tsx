@@ -36,17 +36,17 @@ const INTENSITY_COLOURS: Record<string, string> = {
 
 const inputStyle: React.CSSProperties = {
   width: "100%", minHeight: 48, padding: "12px 14px", borderRadius: 8,
-  border: "1px solid #dee2e6", background: "#ffffff", color: "#1a2a5e",
+  border: "1px solid var(--border-light)", background: "var(--bg-card)", color: "var(--text-primary)",
   fontSize: 14, fontFamily: "'DM Sans', system-ui, sans-serif",
   outline: "none", boxSizing: "border-box",
 };
 
 const focusIn = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-  e.currentTarget.style.borderColor = "#2ab5c1";
+  e.currentTarget.style.borderColor = "var(--accent-teal)";
   e.currentTarget.style.boxShadow = "0 0 0 3px rgba(42,181,193,0.15)";
 };
 const focusOut = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-  e.currentTarget.style.borderColor = "#dee2e6";
+  e.currentTarget.style.borderColor = "var(--border-light)";
   e.currentTarget.style.boxShadow = "none";
 };
 
@@ -101,28 +101,28 @@ export default function ConditionLogPage() {
   useKeyboardSave(save);
 
   return (
-    <div style={{ minHeight: "100vh", background: "#f8f9fa" }}>
+    <div style={{ minHeight: "100vh", background: "var(--bg-primary)" }}>
       <div style={{ maxWidth: 640, margin: "0 auto", padding: "clamp(16px, 4vw, 32px)" }}>
 
         {/* Header */}
         <div style={{ marginBottom: 24 }}>
           <h1 style={{
             fontFamily: "'Playfair Display', serif", fontSize: "clamp(24px, 6vw, 32px)",
-            fontWeight: 700, color: "#1a2a5e", margin: "0 0 4px",
+            fontWeight: 700, color: "var(--text-primary)", margin: "0 0 4px",
           }}>
             Condition Log
           </h1>
-          <p style={{ fontSize: 14, color: "#52667a", margin: 0, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+          <p style={{ fontSize: 14, color: "var(--text-secondary)", margin: 0, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
             Log events that may affect your insulin sensitivity.
           </p>
         </div>
 
         {/* ── Quick-tap event buttons ───────────────────────────────────── */}
         <div style={{
-          background: "#ffffff", borderRadius: 12, border: "1px solid #dee2e6",
+          background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)",
           padding: 20, marginBottom: 16,
         }}>
-          <p style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, color: "#1a2a5e", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+          <p style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, color: "var(--text-primary)", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
             What happened?
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(100px, 1fr))", gap: 8 }}>
@@ -136,9 +136,9 @@ export default function ConditionLogPage() {
                   style={{
                     display: "flex", flexDirection: "column", alignItems: "center", gap: 4,
                     padding: "12px 8px", borderRadius: 10, cursor: "pointer",
-                    border: `2px solid ${active ? "#2ab5c1" : "#dee2e6"}`,
-                    background: active ? "rgba(42,181,193,0.08)" : "#ffffff",
-                    fontSize: 12, fontWeight: active ? 700 : 500, color: "#1a2a5e",
+                    border: `2px solid ${active ? "var(--accent-teal)" : "var(--border-light)"}`,
+                    background: active ? "rgba(42,181,193,0.08)" : "var(--bg-card)",
+                    fontSize: 12, fontWeight: active ? 700 : 500, color: "var(--text-primary)",
                     fontFamily: "'DM Sans', system-ui, sans-serif",
                     transition: "all 0.15s",
                   }}
@@ -154,10 +154,10 @@ export default function ConditionLogPage() {
         {/* ── Intensity selector ────────────────────────────────────────── */}
         {eventType && (
           <div style={{
-            background: "#ffffff", borderRadius: 12, border: "1px solid #dee2e6",
+            background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)",
             padding: 20, marginBottom: 16,
           }}>
-            <p style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, color: "#1a2a5e", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+            <p style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, color: "var(--text-primary)", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
               Intensity
             </p>
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
@@ -170,9 +170,9 @@ export default function ConditionLogPage() {
                     onClick={() => setIntensity(int)}
                     style={{
                       padding: "10px 20px", borderRadius: 8, cursor: "pointer",
-                      border: `2px solid ${active ? INTENSITY_COLOURS[int] : "#dee2e6"}`,
-                      background: active ? `${INTENSITY_COLOURS[int]}18` : "#ffffff",
-                      color: active ? INTENSITY_COLOURS[int] : "#52667a",
+                      border: `2px solid ${active ? INTENSITY_COLOURS[int] : "var(--border-light)"}`,
+                      background: active ? `${INTENSITY_COLOURS[int]}18` : "var(--bg-card)",
+                      color: active ? INTENSITY_COLOURS[int] : "var(--text-secondary)",
                       fontSize: 13, fontWeight: active ? 700 : 500,
                       fontFamily: "'DM Sans', system-ui, sans-serif",
                       textTransform: "capitalize",
@@ -190,11 +190,11 @@ export default function ConditionLogPage() {
         {/* ── Duration & Notes ──────────────────────────────────────────── */}
         {eventType && (
           <div style={{
-            background: "#ffffff", borderRadius: 12, border: "1px solid #dee2e6",
+            background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)",
             padding: 20, marginBottom: 16,
           }}>
             <div style={{ marginBottom: 16 }}>
-              <label style={{ display: "block", fontSize: 13, fontWeight: 600, color: "#1a2a5e", marginBottom: 6, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+              <label style={{ display: "block", fontSize: 13, fontWeight: 600, color: "var(--text-primary)", marginBottom: 6, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
                 Duration (minutes, optional)
               </label>
               <input
@@ -206,7 +206,7 @@ export default function ConditionLogPage() {
               />
             </div>
             <div>
-              <label style={{ display: "block", fontSize: 13, fontWeight: 600, color: "#1a2a5e", marginBottom: 6, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+              <label style={{ display: "block", fontSize: 13, fontWeight: 600, color: "var(--text-primary)", marginBottom: 6, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
                 Notes
               </label>
               <textarea
@@ -223,7 +223,7 @@ export default function ConditionLogPage() {
         {/* ── Save & Feedback ───────────────────────────────────────────── */}
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
           {error && (
-            <div style={{ borderRadius: 8, background: "#fef2f2", border: "1px solid #fca5a5", padding: "10px 14px", fontSize: 13, color: "#991b1b" }}>
+            <div style={{ borderRadius: 8, background: "var(--error-bg)", border: "1px solid var(--error-border)", padding: "10px 14px", fontSize: 13, color: "var(--error-text)" }}>
               {error}
             </div>
           )}

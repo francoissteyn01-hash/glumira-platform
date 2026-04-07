@@ -92,9 +92,9 @@ export default function PresentationToggle() {
       title={active ? "Exit Presentation Mode" : "Enter Presentation Mode"}
       style={{
         minWidth: 40, minHeight: 40, borderRadius: 8,
-        border: `1px solid ${active ? "#2ab5c1" : "#dee2e6"}`,
-        background: active ? "rgba(42,181,193,0.1)" : "#ffffff",
-        color: active ? "#2ab5c1" : "#52667a",
+        border: `1px solid ${active ? "var(--accent-teal)" : "var(--border-light)"}`,
+        background: active ? "rgba(42,181,193,0.1)" : "var(--bg-card)",
+        color: active ? "var(--accent-teal)" : "var(--text-secondary)",
         fontSize: 18, cursor: "pointer", display: "flex",
         alignItems: "center", justifyContent: "center",
         transition: "all 0.15s",

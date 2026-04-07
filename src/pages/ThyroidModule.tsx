@@ -57,7 +57,7 @@ function AccordionItem({ title, children }: { title: string; children: React.Rea
     <div className="border border-gray-200 rounded-lg overflow-hidden">
       <button type="button"
         onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between px-4 py-3 text-left text-sm font-medium text-[#1A2A5E] hover:bg-gray-50 transition-colors"
+        className="w-full flex items-center justify-between px-4 py-3 text-left text-sm font-medium text-[var(--text-primary)] hover:bg-gray-50 transition-colors"
       >
         {title}
         <svg
@@ -97,11 +97,11 @@ export default function ThyroidModule() {
   );
 
   return (
-    <div className="min-h-screen bg-[#F8F9FA]">
+    <div className="min-h-screen bg-[var(--bg-primary)]">
       <div className="max-w-lg mx-auto px-4 py-8 space-y-6">
         {/* Header */}
         <div>
-          <h1 className="text-2xl font-bold text-[#1A2A5E]">Thyroid Module</h1>
+          <h1 className="text-2xl font-bold text-[var(--text-primary)]">Thyroid Module</h1>
           <p className="text-sm text-gray-500 mt-1">
             Understand how your thyroid function affects your insulin needs.
           </p>
@@ -109,14 +109,14 @@ export default function ThyroidModule() {
 
         {/* My Thyroid Profile */}
         <section className="bg-white rounded-xl p-5 shadow-sm space-y-4">
-          <h2 className="text-lg font-semibold text-[#1A2A5E]">My Thyroid Profile</h2>
+          <h2 className="text-lg font-semibold text-[var(--text-primary)]">My Thyroid Profile</h2>
 
           <div>
             <label className="block text-xs font-medium text-gray-500 mb-1">Condition</label>
             <select
               value={condition}
               onChange={(e) => setCondition(e.target.value as Condition)}
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-[#1A2A5E] bg-white focus:outline-none focus:ring-2 focus:ring-[#1A2A5E]/20"
+              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-[var(--text-primary)] bg-white focus:outline-none focus:ring-2 focus:ring-[var(--text-primary)]/20"
             >
               {CONDITIONS.map((c) => (
                 <option key={c.value} value={c.value}>
@@ -137,7 +137,7 @@ export default function ThyroidModule() {
               max="50"
               value={tsh}
               onChange={(e) => setTsh(parseFloat(e.target.value) || 0)}
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-[#1A2A5E] focus:outline-none focus:ring-2 focus:ring-[#1A2A5E]/20"
+              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--text-primary)]/20"
             />
             <TshIndicator tsh={tsh} />
             <p className="text-xs text-gray-400 mt-1">Reference range: 0.4 - 4.0 mIU/L</p>
@@ -154,7 +154,7 @@ export default function ThyroidModule() {
               max="50"
               value={t4}
               onChange={(e) => setT4(parseFloat(e.target.value) || 0)}
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-[#1A2A5E] focus:outline-none focus:ring-2 focus:ring-[#1A2A5E]/20"
+              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--text-primary)]/20"
             />
           </div>
 
@@ -166,9 +166,9 @@ export default function ThyroidModule() {
                 onChange={(e) => setOnMedication(e.target.checked)}
                 className="sr-only peer"
               />
-              <div className="w-9 h-5 bg-gray-200 rounded-full peer peer-checked:bg-[#1A2A5E] transition-colors after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-4" />
+              <div className="w-9 h-5 bg-gray-200 rounded-full peer peer-checked:bg-[var(--text-primary)] transition-colors after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-4" />
             </label>
-            <span className="text-sm text-[#1A2A5E]">On thyroid medication</span>
+            <span className="text-sm text-[var(--text-primary)]">On thyroid medication</span>
           </div>
 
           {onMedication && (
@@ -180,16 +180,16 @@ export default function ThyroidModule() {
                   onChange={(e) => setIsDoseChanging(e.target.checked)}
                   className="sr-only peer"
                 />
-                <div className="w-9 h-5 bg-gray-200 rounded-full peer peer-checked:bg-[#1A2A5E] transition-colors after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-4" />
+                <div className="w-9 h-5 bg-gray-200 rounded-full peer peer-checked:bg-[var(--text-primary)] transition-colors after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-4" />
               </label>
-              <span className="text-sm text-[#1A2A5E]">Currently adjusting dose</span>
+              <span className="text-sm text-[var(--text-primary)]">Currently adjusting dose</span>
             </div>
           )}
         </section>
 
         {/* Insulin Sensitivity Impact */}
         <section className="bg-white rounded-xl p-5 shadow-sm space-y-4">
-          <h2 className="text-lg font-semibold text-[#1A2A5E]">Insulin Sensitivity Impact</h2>
+          <h2 className="text-lg font-semibold text-[var(--text-primary)]">Insulin Sensitivity Impact</h2>
 
           <div>
             <label className="block text-xs font-medium text-gray-500 mb-1">
@@ -202,20 +202,20 @@ export default function ThyroidModule() {
               max="500"
               value={currentISF}
               onChange={(e) => setCurrentISF(parseFloat(e.target.value) || 1)}
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-[#1A2A5E] focus:outline-none focus:ring-2 focus:ring-[#1A2A5E]/20"
+              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--text-primary)]/20"
             />
           </div>
 
           <div className="grid grid-cols-3 gap-3 text-center">
-            <div className="bg-[#F8F9FA] rounded-lg p-3">
+            <div className="bg-[var(--bg-primary)] rounded-lg p-3">
               <p className="text-xs text-gray-500">Current ISF</p>
-              <p className="text-xl font-bold text-[#1A2A5E]">{currentISF}</p>
+              <p className="text-xl font-bold text-[var(--text-primary)]">{currentISF}</p>
             </div>
-            <div className="bg-[#F8F9FA] rounded-lg p-3">
+            <div className="bg-[var(--bg-primary)] rounded-lg p-3">
               <p className="text-xs text-gray-500">Adjusted ISF</p>
-              <p className="text-xl font-bold text-[#1A2A5E]">{impact.adjustedISF}</p>
+              <p className="text-xl font-bold text-[var(--text-primary)]">{impact.adjustedISF}</p>
             </div>
-            <div className="bg-[#F8F9FA] rounded-lg p-3">
+            <div className="bg-[var(--bg-primary)] rounded-lg p-3">
               <p className="text-xs text-gray-500">Change</p>
               <p
                 className={`text-xl font-bold ${
@@ -252,7 +252,7 @@ export default function ThyroidModule() {
 
         {/* Monitoring Schedule */}
         <section className="bg-white rounded-xl p-5 shadow-sm space-y-4">
-          <h2 className="text-lg font-semibold text-[#1A2A5E]">Monitoring Schedule</h2>
+          <h2 className="text-lg font-semibold text-[var(--text-primary)]">Monitoring Schedule</h2>
 
           <div>
             <label className="block text-xs font-medium text-gray-500 mb-1">Last TSH test date</label>
@@ -260,7 +260,7 @@ export default function ThyroidModule() {
               type="date"
               value={lastTshDate}
               onChange={(e) => setLastTshDate(e.target.value)}
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-[#1A2A5E] focus:outline-none focus:ring-2 focus:ring-[#1A2A5E]/20"
+              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--text-primary)]/20"
             />
           </div>
 
@@ -271,11 +271,11 @@ export default function ThyroidModule() {
                 <div
                   key={i}
                   className={`flex items-center justify-between p-3 rounded-lg border ${
-                    isPast ? "border-red-200 bg-red-50" : "border-gray-100 bg-[#F8F9FA]"
+                    isPast ? "border-red-200 bg-red-50" : "border-gray-100 bg-[var(--bg-primary)]"
                   }`}
                 >
                   <div>
-                    <p className="text-sm font-medium text-[#1A2A5E]">{item.test}</p>
+                    <p className="text-sm font-medium text-[var(--text-primary)]">{item.test}</p>
                     <p className={`text-xs ${isPast ? "text-red-500 font-semibold" : "text-gray-400"}`}>
                       {isPast ? "Overdue" : "Due"}: {item.dueDate}
                     </p>
@@ -300,7 +300,7 @@ export default function ThyroidModule() {
         {/* Hashimoto + T1D Overlap */}
         {condition === "hashimotos" && (
           <section className="bg-white rounded-xl p-5 shadow-sm space-y-4">
-            <h2 className="text-lg font-semibold text-[#1A2A5E]">Hashimoto's + T1D Overlap</h2>
+            <h2 className="text-lg font-semibold text-[var(--text-primary)]">Hashimoto's + T1D Overlap</h2>
 
             <div>
               <label className="block text-xs font-medium text-gray-500 mb-1">
@@ -313,7 +313,7 @@ export default function ThyroidModule() {
                 max="80"
                 value={t1dYears}
                 onChange={(e) => setT1dYears(parseInt(e.target.value) || 0)}
-                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-[#1A2A5E] focus:outline-none focus:ring-2 focus:ring-[#1A2A5E]/20"
+                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--text-primary)]/20"
               />
             </div>
 
@@ -350,7 +350,7 @@ export default function ThyroidModule() {
 
         {/* Educational Accordion */}
         <section className="space-y-2">
-          <h2 className="text-lg font-semibold text-[#1A2A5E] mb-3">
+          <h2 className="text-lg font-semibold text-[var(--text-primary)] mb-3">
             How thyroid function affects your insulin needs
           </h2>
 

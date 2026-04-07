@@ -19,7 +19,7 @@ const EMPTY_ROW: Row = { time: "", glucose: "", insulin_type: "", dose: "", food
 
 const inputStyle: React.CSSProperties = {
   width: "100%", minHeight: 40, padding: "8px 10px", borderRadius: 6,
-  border: "1px solid #dee2e6", background: "#ffffff", color: "#1a2a5e",
+  border: "1px solid var(--border-light)", background: "var(--bg-card)", color: "var(--text-primary)",
   fontSize: 13, fontFamily: "'DM Sans', system-ui, sans-serif",
   outline: "none", boxSizing: "border-box",
 };
@@ -78,23 +78,23 @@ export default function HandwrittenImportPage() {
   }
 
   return (
-    <div style={{ minHeight: "100vh", background: "#f8f9fa" }}>
+    <div style={{ minHeight: "100vh", background: "var(--bg-primary)" }}>
       <div style={{ maxWidth: 800, margin: "0 auto", padding: "clamp(16px, 4vw, 32px)" }}>
-        <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(24px, 6vw, 32px)", fontWeight: 700, color: "#1a2a5e", margin: "0 0 4px" }}>
+        <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(24px, 6vw, 32px)", fontWeight: 700, color: "var(--text-primary)", margin: "0 0 4px" }}>
           Import Handwritten Notes
         </h1>
-        <p style={{ fontSize: 14, color: "#52667a", margin: "0 0 20px", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+        <p style={{ fontSize: 14, color: "var(--text-secondary)", margin: "0 0 20px", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
           Take a photo of your logbook page, then enter the data below.
         </p>
 
         {/* Photo capture */}
-        <div style={{ background: "#ffffff", borderRadius: 12, border: "1px solid #dee2e6", padding: 20, marginBottom: 20 }}>
+        <div style={{ background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)", padding: 20, marginBottom: 20 }}>
           <label style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12, cursor: "pointer" }}>
             {photo ? (
-              <img src={photo} alt="Logbook" loading="lazy" style={{ maxWidth: "100%", maxHeight: 300, borderRadius: 8, border: "1px solid #dee2e6" }} />
+              <img src={photo} alt="Logbook" loading="lazy" style={{ maxWidth: "100%", maxHeight: 300, borderRadius: 8, border: "1px solid var(--border-light)" }} />
             ) : (
-              <div style={{ width: "100%", height: 150, borderRadius: 8, border: "2px dashed #dee2e6", display: "flex", alignItems: "center", justifyContent: "center", background: "#f8f9fa" }}>
-                <span style={{ fontSize: 14, color: "#94a3b8", fontFamily: "'DM Sans', system-ui, sans-serif" }}>{"\u{1F4F7}"} Tap to capture logbook page</span>
+              <div style={{ width: "100%", height: 150, borderRadius: 8, border: "2px dashed var(--border-light)", display: "flex", alignItems: "center", justifyContent: "center", background: "var(--bg-primary)" }}>
+                <span style={{ fontSize: 14, color: "var(--text-faint)", fontFamily: "'DM Sans', system-ui, sans-serif" }}>{"\u{1F4F7}"} Tap to capture logbook page</span>
               </div>
             )}
             <input type="file" accept="image/*" capture="environment" style={{ display: "none" }} onChange={(e) => {
@@ -108,14 +108,14 @@ export default function HandwrittenImportPage() {
         </div>
 
         {/* Data entry rows */}
-        <div style={{ background: "#ffffff", borderRadius: 12, border: "1px solid #dee2e6", padding: 20, marginBottom: 20 }}>
-          <p style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, color: "#1a2a5e", fontFamily: "'DM Sans', system-ui, sans-serif" }}>Enter data from your logbook:</p>
+        <div style={{ background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)", padding: 20, marginBottom: 20 }}>
+          <p style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, color: "var(--text-primary)", fontFamily: "'DM Sans', system-ui, sans-serif" }}>Enter data from your logbook:</p>
           <div style={{ overflowX: "auto" }}>
             <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 600 }}>
               <thead>
                 <tr>
                   {["Time", "Glucose", "Insulin", "Dose", "Food Notes"].map((h) => (
-                    <th key={h} style={{ fontSize: 11, fontWeight: 600, color: "#52667a", padding: "6px 4px", textAlign: "left", fontFamily: "'DM Sans', system-ui, sans-serif" }}>{h}</th>
+                    <th key={h} style={{ fontSize: 11, fontWeight: 600, color: "var(--text-secondary)", padding: "6px 4px", textAlign: "left", fontFamily: "'DM Sans', system-ui, sans-serif" }}>{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -132,12 +132,12 @@ export default function HandwrittenImportPage() {
               </tbody>
             </table>
           </div>
-          <button type="button" onClick={addRow} style={{ marginTop: 10, padding: "8px 18px", borderRadius: 8, border: "1px solid #dee2e6", background: "#f8f9fa", color: "#1a2a5e", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+          <button type="button" onClick={addRow} style={{ marginTop: 10, padding: "8px 18px", borderRadius: 8, border: "1px solid var(--border-light)", background: "var(--bg-primary)", color: "#1a2a5e", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
             + Add Row
           </button>
         </div>
 
-        {error && <div style={{ borderRadius: 8, background: "#fef2f2", border: "1px solid #fca5a5", padding: "10px 14px", fontSize: 13, color: "#991b1b", marginBottom: 12 }}>{error}</div>}
+        {error && <div style={{ borderRadius: 8, background: "var(--error-bg)", border: "1px solid var(--error-border)", padding: "10px 14px", fontSize: 13, color: "var(--error-text)", marginBottom: 12 }}>{error}</div>}
         {toast && <div style={{ borderRadius: 8, background: "#f0fdf4", border: "1px solid #86efac", padding: "10px 14px", fontSize: 13, color: "#166534", marginBottom: 12 }}>{toast}</div>}
 
         <button type="button" onClick={importAll} disabled={importing || rows.every((r) => !r.time)} style={{ width: "100%", minHeight: 52, borderRadius: 10, border: "none", background: importing ? "#94a3b8" : "#16a34a", color: "#ffffff", fontSize: 15, fontWeight: 700, cursor: importing ? "not-allowed" : "pointer", fontFamily: "'DM Sans', system-ui, sans-serif" }}>

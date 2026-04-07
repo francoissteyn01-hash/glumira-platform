@@ -6,11 +6,11 @@
 
 import { Link } from "react-router-dom";
 
-const BG = "#f8f9fa";
-const NAVY = "#1a2a5e";
-const TEAL = "#2ab5c1";
-const MUTED = "#718096";
-const BORDER = "#e2e8f0";
+const BG = "var(--bg-primary)";
+const NAVY = "var(--text-primary)";
+const TEAL = "var(--accent-teal)";
+const MUTED = "var(--text-muted)";
+const BORDER = "var(--border)";
 
 const font = "'DM Sans', system-ui, sans-serif";
 
@@ -164,7 +164,7 @@ const SECTIONS: Section[] = [
               key={m.name}
               style={{
                 border: `1px solid ${BORDER}`,
-                background: "#ffffff",
+                background: "var(--bg-card)",
                 borderRadius: 10,
                 padding: "12px 14px",
               }}
@@ -208,14 +208,14 @@ const SECTIONS: Section[] = [
         </ul>
         <div
           style={{
-            background: "#fef3c7",
-            border: "1px solid #fcd34d",
+            background: "var(--disclaimer-bg)",
+            border: "1px solid var(--disclaimer-border)",
             borderRadius: 10,
             padding: "12px 16px",
             margin: "16px 0",
           }}
         >
-          <p style={{ margin: 0, fontSize: 13, color: "#92400e" }}>
+          <p style={{ margin: 0, fontSize: 13, color: "var(--disclaimer-text)" }}>
             <strong>Mira educates — she never prescribes.</strong> Every answer ends with a reminder to check
             with your healthcare team before making changes.
           </p>
@@ -248,7 +248,7 @@ export default function TutorialPage() {
         <nav
           aria-label="Tutorial sections"
           style={{
-            background: "#ffffff",
+            background: "var(--bg-card)",
             border: `1px solid ${BORDER}`,
             borderRadius: 12,
             padding: "18px 22px",
@@ -279,7 +279,7 @@ export default function TutorialPage() {
               key={s.id}
               id={s.id}
               style={{
-                background: "#ffffff",
+                background: "var(--bg-card)",
                 border: `1px solid ${BORDER}`,
                 borderRadius: 12,
                 padding: "24px 28px",
@@ -307,7 +307,7 @@ export default function TutorialPage() {
         <div
           style={{
             marginTop: 40,
-            background: "#ffffff",
+            background: "var(--bg-card)",
             border: `1px solid ${BORDER}`,
             borderRadius: 12,
             padding: "24px 28px",

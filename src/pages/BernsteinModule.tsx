@@ -12,8 +12,8 @@ const TEAL = "#2AB5C1";
 
 /* ── shared inline styles ──────────────────────────── */
 const card: React.CSSProperties = {
-  background: "#fff", borderRadius: 12, padding: 24,
-  marginBottom: 20, border: "1px solid #e2e8f0",
+  background: "var(--bg-card)", borderRadius: 12, padding: 24,
+  marginBottom: 20, border: "1px solid var(--border)",
 };
 const heading2: React.CSSProperties = { color: NAVY, fontSize: 20, fontWeight: 700, marginBottom: 12 };
 const heading3: React.CSSProperties = { color: NAVY, fontSize: 16, fontWeight: 600, marginBottom: 8 };
@@ -168,7 +168,7 @@ export default function BernsteinModule() {
   );
 
   return (
-    <div style={{ minHeight: "100vh", background: "#ffffff", padding: 24 }}>
+    <div style={{ minHeight: "100vh", background: "var(--bg-card)", padding: 24 }}>
       <div style={{ maxWidth: 780, margin: "0 auto" }}>
         <Link to="/education" style={{ color: TEAL, fontSize: 14, textDecoration: "none" }}>
           &larr; Back to Education
@@ -178,7 +178,7 @@ export default function BernsteinModule() {
           <h1 style={{ margin: 0, fontFamily: "'Inter', sans-serif", color: NAVY, fontSize: 30, fontWeight: 800 }}>
             Bernstein Low-Carb Protocol
           </h1>
-          <p style={{ margin: "4px 0 0", color: "#718096", fontSize: 15 }}>
+          <p style={{ margin: "4px 0 0", color: "var(--text-muted)", fontSize: 15 }}>
             Dr. Richard K. Bernstein's approach to tight glucose control through carbohydrate restriction
           </p>
         </div>
@@ -244,7 +244,7 @@ export default function BernsteinModule() {
           </div>
 
           {foodTab === "Avoid" && (
-            <div style={{ background: "#fef2f2", borderRadius: 8, padding: 12, marginBottom: 12, fontSize: 13, color: "#991b1b" }}>
+            <div style={{ background: "var(--error-bg)", borderRadius: 8, padding: 12, marginBottom: 12, fontSize: 13, color: "var(--error-text)" }}>
               <strong>These foods are excluded</strong> from the Bernstein protocol due to high carbohydrate content.
               Each one exceeds the 12 g carb limit for a single meal.
             </div>
@@ -252,7 +252,7 @@ export default function BernsteinModule() {
 
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
             <thead>
-              <tr style={{ borderBottom: "2px solid #e2e8f0", textAlign: "left" }}>
+              <tr style={{ borderBottom: "2px solid var(--border)", textAlign: "left" }}>
                 <th style={{ padding: 8 }}>Food</th>
                 <th style={{ padding: 8 }}>Carbs (g)</th>
                 <th style={{ padding: 8 }}>Serving</th>
@@ -316,7 +316,7 @@ export default function BernsteinModule() {
               )}
             </div>
           </div>
-          <div style={{ background: "#fffbeb", borderRadius: 8, padding: 12, fontSize: 13, color: "#92400e" }}>
+          <div style={{ background: "var(--disclaimer-bg)", borderRadius: 8, padding: 12, fontSize: 13, color: "var(--disclaimer-text)" }}>
             <strong>Dosing tip:</strong> If eating more than 30 g protein in a meal, consider a small extended
             bolus to cover the delayed glucose rise. On a pump, use a square/extended bolus over 3-4 hours.
             On MDI, you may add a small dose of regular insulin with the meal.
@@ -380,7 +380,7 @@ export default function BernsteinModule() {
           </p>
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
             <thead>
-              <tr style={{ borderBottom: "2px solid #e2e8f0", textAlign: "left" }}>
+              <tr style={{ borderBottom: "2px solid var(--border)", textAlign: "left" }}>
                 <th style={{ padding: 8 }}>Period</th>
                 <th style={{ padding: 8 }}>Target</th>
                 <th style={{ padding: 8 }}>Action</th>
@@ -396,7 +396,7 @@ export default function BernsteinModule() {
               ))}
             </tbody>
           </table>
-          <div style={{ background: "#fef2f2", borderRadius: 8, padding: 12, marginTop: 12, fontSize: 13, color: "#991b1b" }}>
+          <div style={{ background: "var(--error-bg)", borderRadius: 8, padding: 12, marginTop: 12, fontSize: 13, color: "var(--error-text)" }}>
             <strong>Critical safety note:</strong> As you reduce carbs, your TDD will drop significantly
             (often by 50-70 %). Reduce basal and bolus insulin <em>proactively</em>. Monitor BG at least
             6-8 times daily during transition. Have fast-acting glucose readily available at all times.
@@ -404,7 +404,7 @@ export default function BernsteinModule() {
         </Section>
 
         {/* ─── Disclaimer ─────────────────────────── */}
-        <div style={{ background: "#f8fafc", borderRadius: 12, padding: 20, marginTop: 8, border: "1px solid #e2e8f0" }}>
+        <div style={{ background: "#f8fafc", borderRadius: 12, padding: 20, marginTop: 8, border: "1px solid var(--border)" }}>
           <p style={{ margin: 0, fontSize: 13, color: "#64748b", lineHeight: 1.7 }}>
             <strong>Disclaimer:</strong> This module is an educational reference based on the published
             work of Dr. Richard K. Bernstein. It does not constitute medical advice.

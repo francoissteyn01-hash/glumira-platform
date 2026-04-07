@@ -59,21 +59,21 @@ export default function PregnancyModule() {
   const fmt = (mmol: number) => unit === "mg" ? `${Math.round(mmol * 18.018)} mg/dL` : `${mmol.toFixed(1)} mmol/L`;
 
   return (
-    <div style={{ minHeight: "100vh", background: "#f8f9fa", padding: "24px" }}>
+    <div style={{ minHeight: "100vh", background: "var(--bg-primary)", padding: "24px" }}>
       <div style={{ maxWidth: 900, margin: "0 auto" }}>
-        <Link to="/education" style={{ color: "#2ab5c1", fontSize: 14, textDecoration: "none" }}>← Back to Education</Link>
+        <Link to="/education" style={{ color: "var(--accent-teal)", fontSize: 14, textDecoration: "none" }}>← Back to Education</Link>
 
         <div style={{ display: "flex", alignItems: "center", gap: 12, margin: "16px 0 24px" }}>
           <div style={{ width: 48, height: 48, borderRadius: 12, background: "#e0f7f9", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24 }}>🤱</div>
           <div>
-            <h1 style={{ margin: 0, fontFamily: "'Playfair Display', serif", color: "#1a2a5e", fontSize: 28 }}>Pregnancy Glucose Assessment</h1>
-            <p style={{ margin: 0, color: "#718096", fontSize: 14 }}>Educational trimester-specific glucose targets and risk analysis</p>
+            <h1 style={{ margin: 0, fontFamily: "'Playfair Display', serif", color: "var(--text-primary)", fontSize: 28 }}>Pregnancy Glucose Assessment</h1>
+            <p style={{ margin: 0, color: "var(--text-muted)", fontSize: 14 }}>Educational trimester-specific glucose targets and risk analysis</p>
           </div>
         </div>
 
         {/* Input Form */}
-        <div style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: 16, padding: 24, marginBottom: 20 }}>
-          <h2 style={{ color: "#1a2a5e", fontSize: 18, marginBottom: 16 }}>Patient Information</h2>
+        <div style={{ background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 16, padding: 24, marginBottom: 20 }}>
+          <h2 style={{ color: "var(--text-primary)", fontSize: 18, marginBottom: 16 }}>Patient Information</h2>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16 }}>
             <label style={labelStyle}>
               Diabetes Type
@@ -127,7 +127,7 @@ export default function PregnancyModule() {
             </label>
           </div>
 
-          <button type="button" onClick={handleAssess} style={{ marginTop: 20, padding: "10px 28px", background: "#2ab5c1", color: "#fff", border: "none", borderRadius: 8, fontSize: 15, fontWeight: 600, cursor: "pointer" }}>
+          <button type="button" onClick={handleAssess} style={{ marginTop: 20, padding: "10px 28px", background: "var(--accent-teal)", color: "#fff", border: "none", borderRadius: 8, fontSize: 15, fontWeight: 600, cursor: "pointer" }}>
             Assess Glucose Targets
           </button>
         </div>
@@ -174,7 +174,7 @@ export default function PregnancyModule() {
                 </div>
                 <div style={statBox}>
                   <div style={statLabel}>A1c Status</div>
-                  <div style={{ fontSize: 13, color: "#1a2a5e" }}>{result.a1cStatus ?? "Not provided"}</div>
+                  <div style={{ fontSize: 13, color: "var(--text-primary)" }}>{result.a1cStatus ?? "Not provided"}</div>
                 </div>
               </div>
             </div>
@@ -182,7 +182,7 @@ export default function PregnancyModule() {
             {/* Trimester Guidance */}
             <div style={{ ...cardStyle, background: "#e8f4fd", borderColor: "#2ab5c1" }}>
               <h3 style={cardTitle}>Trimester Guidance</h3>
-              <p style={{ fontSize: 14, color: "#1a2a5e", lineHeight: 1.6 }}>{result.trimesterGuidance}</p>
+              <p style={{ fontSize: 14, color: "var(--text-primary)", lineHeight: 1.6 }}>{result.trimesterGuidance}</p>
             </div>
 
             {/* Risks */}
@@ -203,7 +203,7 @@ export default function PregnancyModule() {
             {/* Monitoring Schedule */}
             <div style={cardStyle}>
               <h3 style={cardTitle}>Monitoring Schedule</h3>
-              <ul style={{ margin: 0, paddingLeft: 20, fontSize: 13, lineHeight: 1.8, color: "#1a2a5e" }}>
+              <ul style={{ margin: 0, paddingLeft: 20, fontSize: 13, lineHeight: 1.8, color: "var(--text-primary)" }}>
                 {result.monitoringSchedule.map((s, i) => <li key={i}>{s}</li>)}
               </ul>
             </div>
@@ -211,16 +211,16 @@ export default function PregnancyModule() {
             {/* Insulin Notes */}
             <div style={cardStyle}>
               <h3 style={cardTitle}>Insulin Notes</h3>
-              <ul style={{ margin: 0, paddingLeft: 20, fontSize: 13, lineHeight: 1.8, color: "#1a2a5e" }}>
+              <ul style={{ margin: 0, paddingLeft: 20, fontSize: 13, lineHeight: 1.8, color: "var(--text-primary)" }}>
                 {result.insulinNotes.map((n, i) => <li key={i}>{n}</li>)}
               </ul>
             </div>
 
             {/* Warnings */}
             {result.warnings.length > 0 && (
-              <div style={{ ...cardStyle, background: "#fef2f2", borderColor: "#fca5a5" }}>
+              <div style={{ ...cardStyle, background: "var(--error-bg)", borderColor: "#fca5a5" }}>
                 <h3 style={{ ...cardTitle, color: "#dc2626" }}>Warnings</h3>
-                {result.warnings.map((w, i) => <p key={i} style={{ fontSize: 13, color: "#991b1b", margin: "4px 0" }}>{w}</p>)}
+                {result.warnings.map((w, i) => <p key={i} style={{ fontSize: 13, color: "var(--error-text)", margin: "4px 0" }}>{w}</p>)}
               </div>
             )}
           </div>
@@ -291,13 +291,13 @@ export default function PregnancyModule() {
             <div key={item.id} style={{ marginBottom: 8 }}>
               <button type="button"
                 onClick={() => setOpenTrimesterMeal(openTrimesterMeal === item.id ? null : item.id)}
-                style={{ width: "100%", textAlign: "left", padding: "12px 16px", background: openTrimesterMeal === item.id ? "#e0f7f9" : "#f8f9fa", border: "1px solid #e2e8f0", borderRadius: 8, cursor: "pointer", fontSize: 14, fontWeight: 600, color: "#1a2a5e", display: "flex", justifyContent: "space-between", alignItems: "center" }}
+                style={{ width: "100%", textAlign: "left", padding: "12px 16px", background: openTrimesterMeal === item.id ? "#e0f7f9" : "var(--bg-primary)", border: "1px solid var(--border)", borderRadius: 8, cursor: "pointer", fontSize: 14, fontWeight: 600, color: "var(--text-primary)", display: "flex", justifyContent: "space-between", alignItems: "center" }}
               >
                 {item.title}
                 <span style={{ fontSize: 18, transform: openTrimesterMeal === item.id ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s" }}>&#9662;</span>
               </button>
               {openTrimesterMeal === item.id && (
-                <div style={{ padding: "12px 16px", border: "1px solid #e2e8f0", borderTop: "none", borderRadius: "0 0 8px 8px" }}>
+                <div style={{ padding: "12px 16px", border: "1px solid var(--border)", borderTop: "none", borderRadius: "0 0 8px 8px" }}>
                   {item.content}
                 </div>
               )}
@@ -312,7 +312,7 @@ export default function PregnancyModule() {
             style={{ width: "100%", textAlign: "left", padding: 0, background: "none", border: "none", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center" }}
           >
             <h3 style={{ ...cardTitle, margin: 0 }}>Pre-eclampsia Nutrition</h3>
-            <span style={{ fontSize: 18, color: "#1a2a5e", transform: showPreeclampsia ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s" }}>&#9662;</span>
+            <span style={{ fontSize: 18, color: "var(--text-primary)", transform: showPreeclampsia ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s" }}>&#9662;</span>
           </button>
           {showPreeclampsia && (
             <div style={{ fontSize: 13, color: "#4a5568", lineHeight: 1.8, marginTop: 12 }}>
@@ -324,7 +324,7 @@ export default function PregnancyModule() {
                 <li><strong>Potassium-rich foods:</strong> Bananas (~27g carbs each — bolus accordingly), sweet potatoes, avocados help counterbalance sodium</li>
                 <li><strong>Magnesium:</strong> Dark leafy greens, pumpkin seeds, dark chocolate (70%+) — supports healthy blood pressure</li>
               </ul>
-              <div style={{ padding: 10, background: "#fef2f2", borderRadius: 8, border: "1px solid #fca5a5", marginTop: 8 }}>
+              <div style={{ padding: 10, background: "var(--error-bg)", borderRadius: 8, border: "1px solid var(--error-border)", marginTop: 8 }}>
                 <strong style={{ color: "#dc2626" }}>Warning signs to report immediately:</strong> severe headache, visual disturbances, sudden swelling (face/hands), upper abdominal pain, protein in urine
               </div>
             </div>
@@ -338,7 +338,7 @@ export default function PregnancyModule() {
             style={{ width: "100%", textAlign: "left", padding: 0, background: "none", border: "none", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center" }}
           >
             <h3 style={{ ...cardTitle, margin: 0 }}>Post-partum Insulin & Nutrition</h3>
-            <span style={{ fontSize: 18, color: "#1a2a5e", transform: showPostpartum ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s" }}>&#9662;</span>
+            <span style={{ fontSize: 18, color: "var(--text-primary)", transform: showPostpartum ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s" }}>&#9662;</span>
           </button>
           {showPostpartum && (
             <div style={{ fontSize: 13, color: "#4a5568", lineHeight: 1.8, marginTop: 12 }}>
@@ -364,7 +364,7 @@ export default function PregnancyModule() {
             style={{ width: "100%", textAlign: "left", padding: 0, background: "none", border: "none", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center" }}
           >
             <h3 style={{ ...cardTitle, margin: 0 }}>Breastfeeding Carb Calculator</h3>
-            <span style={{ fontSize: 18, color: "#1a2a5e", transform: showBreastfeedingCalc ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s" }}>&#9662;</span>
+            <span style={{ fontSize: 18, color: "var(--text-primary)", transform: showBreastfeedingCalc ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s" }}>&#9662;</span>
           </button>
           {showBreastfeedingCalc && (
             <div style={{ fontSize: 13, color: "#4a5568", lineHeight: 1.8, marginTop: 12 }}>
@@ -372,13 +372,13 @@ export default function PregnancyModule() {
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginTop: 12 }}>
                 <div style={{ ...statBox, background: "#e8f4fd" }}>
                   <div style={statLabel}>Extra Carbs Needed</div>
-                  <div style={{ fontSize: 22, fontWeight: 700, color: "#1a2a5e", fontFamily: "'JetBrains Mono', monospace" }}>+50-60g/day</div>
-                  <div style={{ fontSize: 11, color: "#718096", marginTop: 4 }}>Spread across meals and snacks</div>
+                  <div style={{ fontSize: 22, fontWeight: 700, color: "var(--text-primary)", fontFamily: "'JetBrains Mono', monospace" }}>+50-60g/day</div>
+                  <div style={{ fontSize: 11, color: "var(--text-muted)", marginTop: 4 }}>Spread across meals and snacks</div>
                 </div>
                 <div style={{ ...statBox, background: "#f0fdf4" }}>
                   <div style={statLabel}>Bolus Reduction</div>
                   <div style={{ fontSize: 22, fontWeight: 700, color: "#16a34a", fontFamily: "'JetBrains Mono', monospace" }}>~20% less</div>
-                  <div style={{ fontSize: 11, color: "#718096", marginTop: 4 }}>Reduce bolus doses by approximately 20%</div>
+                  <div style={{ fontSize: 11, color: "var(--text-muted)", marginTop: 4 }}>Reduce bolus doses by approximately 20%</div>
                 </div>
               </div>
               <ul style={{ paddingLeft: 20, margin: "12px 0" }}>
@@ -395,7 +395,7 @@ export default function PregnancyModule() {
           )}
         </div>
 
-        <footer style={{ textAlign: "center", fontSize: 11, color: "#718096", marginTop: 32, paddingTop: 16, borderTop: "1px solid #e2e8f0" }}>
+        <footer style={{ textAlign: "center", fontSize: 11, color: "var(--text-muted)", marginTop: 32, paddingTop: 16, borderTop: "1px solid var(--border)" }}>
           <p>{result?.disclaimer ?? "GluMira™ is an educational platform. Not a medical device."}</p>
         </footer>
       </div>
@@ -405,12 +405,12 @@ export default function PregnancyModule() {
 
 const labelStyle: React.CSSProperties = { display: "flex", flexDirection: "column", gap: 4, fontSize: 13, fontWeight: 500, color: "#4a5568" };
 const inputStyle: React.CSSProperties = { padding: "8px 12px", border: "1px solid #d1d5db", borderRadius: 8, fontSize: 14, fontFamily: "'DM Sans', sans-serif" };
-const pillStyle: React.CSSProperties = { padding: "4px 12px", border: "1px solid #d1d5db", borderRadius: 20, fontSize: 12, background: "#fff", cursor: "pointer" };
-const pillActive: React.CSSProperties = { background: "#2ab5c1", color: "#fff", borderColor: "#2ab5c1" };
-const cardStyle: React.CSSProperties = { background: "#fff", border: "1px solid #e2e8f0", borderRadius: 16, padding: 20 };
-const cardTitle: React.CSSProperties = { fontSize: 16, color: "#1a2a5e", marginBottom: 12, fontFamily: "'Playfair Display', serif" };
-const thStyle: React.CSSProperties = { textAlign: "left", padding: "8px 12px", borderBottom: "2px solid #e2e8f0", color: "#1a2a5e", fontWeight: 600 };
+const pillStyle: React.CSSProperties = { padding: "4px 12px", border: "1px solid #d1d5db", borderRadius: 20, fontSize: 12, background: "var(--bg-card)", cursor: "pointer" };
+const pillActive: React.CSSProperties = { background: "var(--accent-teal)", color: "#fff", borderColor: "#2ab5c1" };
+const cardStyle: React.CSSProperties = { background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 16, padding: 20 };
+const cardTitle: React.CSSProperties = { fontSize: 16, color: "var(--text-primary)", marginBottom: 12, fontFamily: "'Playfair Display', serif" };
+const thStyle: React.CSSProperties = { textAlign: "left", padding: "8px 12px", borderBottom: "2px solid var(--border)", color: "var(--text-primary)", fontWeight: 600 };
 const tdStyle: React.CSSProperties = { padding: "8px 12px", borderBottom: "1px solid #f1f5f9", color: "#4a5568" };
-const statBox: React.CSSProperties = { background: "#f8f9fa", padding: 12, borderRadius: 12, textAlign: "center" };
-const statLabel: React.CSSProperties = { fontSize: 11, color: "#718096", marginBottom: 4 };
-const statValue: React.CSSProperties = { fontSize: 22, fontWeight: 700, color: "#1a2a5e", fontFamily: "'JetBrains Mono', monospace" };
+const statBox: React.CSSProperties = { background: "var(--bg-primary)", padding: 12, borderRadius: 12, textAlign: "center" };
+const statLabel: React.CSSProperties = { fontSize: 11, color: "var(--text-muted)", marginBottom: 4 };
+const statValue: React.CSSProperties = { fontSize: 22, fontWeight: 700, color: "var(--text-primary)", fontFamily: "'JetBrains Mono', monospace" };

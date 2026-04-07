@@ -41,15 +41,15 @@ export default function PatternHighlights({ patterns }: Props) {
 
   if (top3.length === 0) {
     return (
-      <div style={{ background: "#ffffff", borderRadius: 12, border: "1px solid #dee2e6", padding: 20, textAlign: "center" }}>
-        <p style={{ fontSize: 14, color: "#52667a", fontFamily: "'DM Sans', system-ui, sans-serif" }}>No patterns detected yet. Keep logging to enable analysis.</p>
+      <div style={{ background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)", padding: 20, textAlign: "center" }}>
+        <p style={{ fontSize: 14, color: "var(--text-secondary)", fontFamily: "'DM Sans', system-ui, sans-serif" }}>No patterns detected yet. Keep logging to enable analysis.</p>
       </div>
     );
   }
 
   return (
-    <div style={{ background: "#ffffff", borderRadius: 12, border: "1px solid #dee2e6", padding: 16 }}>
-      <h3 style={{ margin: "0 0 12px", fontSize: 16, fontWeight: 700, color: "#1a2a5e", fontFamily: "'Playfair Display', serif" }}>
+    <div style={{ background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)", padding: 16 }}>
+      <h3 style={{ margin: "0 0 12px", fontSize: 16, fontWeight: 700, color: "var(--text-primary)", fontFamily: "'Playfair Display', serif" }}>
         Pattern Highlights
       </h3>
       <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
@@ -60,11 +60,11 @@ export default function PatternHighlights({ patterns }: Props) {
             <div
               key={p.id}
               onClick={() => setExpanded(isOpen ? null : p.id)}
-              style={{ padding: "12px 14px", borderRadius: 10, border: "1px solid #dee2e6", cursor: "pointer", transition: "background 0.15s", background: isOpen ? "#f8f9fa" : "#ffffff" }}
+              style={{ padding: "12px 14px", borderRadius: 10, border: "1px solid var(--border-light)", cursor: "pointer", transition: "background 0.15s", background: isOpen ? "var(--bg-primary)" : "var(--bg-card)" }}
             >
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                 <span style={{ fontSize: 20 }}>{ICONS[p.type] ?? "\u{1F50D}"}</span>
-                <span style={{ flex: 1, fontSize: 13, fontWeight: 600, color: "#1a2a5e", fontFamily: "'DM Sans', system-ui, sans-serif", textTransform: "capitalize" }}>
+                <span style={{ flex: 1, fontSize: 13, fontWeight: 600, color: "var(--text-primary)", fontFamily: "'DM Sans', system-ui, sans-serif", textTransform: "capitalize" }}>
                   {p.type.replace(/_/g, " ")}
                 </span>
                 <span style={{ padding: "2px 8px", borderRadius: 4, background: cc.bg, color: cc.text, fontSize: 10, fontWeight: 700, textTransform: "uppercase", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
@@ -72,9 +72,9 @@ export default function PatternHighlights({ patterns }: Props) {
                 </span>
               </div>
               {isOpen && (
-                <div style={{ marginTop: 10, paddingTop: 10, borderTop: "1px solid #e9ecef" }}>
-                  <p style={{ fontSize: 12, color: "#1a2a5e", margin: "0 0 6px", lineHeight: 1.5, fontFamily: "'DM Sans', system-ui, sans-serif" }}>{p.observation}</p>
-                  <p style={{ fontSize: 12, color: "#2ab5c1", margin: 0, lineHeight: 1.5, fontFamily: "'DM Sans', system-ui, sans-serif", fontWeight: 600 }}>{p.suggestion}</p>
+                <div style={{ marginTop: 10, paddingTop: 10, borderTop: "1px solid var(--border-divider)" }}>
+                  <p style={{ fontSize: 12, color: "var(--text-primary)", margin: "0 0 6px", lineHeight: 1.5, fontFamily: "'DM Sans', system-ui, sans-serif" }}>{p.observation}</p>
+                  <p style={{ fontSize: 12, color: "var(--accent-teal)", margin: 0, lineHeight: 1.5, fontFamily: "'DM Sans', system-ui, sans-serif", fontWeight: 600 }}>{p.suggestion}</p>
                 </div>
               )}
             </div>

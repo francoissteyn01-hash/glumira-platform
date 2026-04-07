@@ -9,11 +9,11 @@ import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 
-const BG = "#f8f9fa";
-const NAVY = "#1a2a5e";
-const TEAL = "#2ab5c1";
-const MUTED = "#718096";
-const BORDER = "#e2e8f0";
+const BG = "var(--bg-sidebar)";
+const NAVY = "var(--text-primary)";
+const TEAL = "var(--accent-teal)";
+const MUTED = "var(--text-muted)";
+const BORDER = "var(--border)";
 const RED = "#ef4444";
 
 /* ─── Icons (inline SVG) ────────────────────────────────────────────────── */
@@ -285,7 +285,7 @@ function MobileBottomBar() {
         aria-label="Main navigation"
         style={{
           position: "fixed", bottom: 0, left: 0, right: 0,
-          background: "#ffffff",
+          background: "var(--mobile-bg)",
           borderTop: `1px solid ${BORDER}`,
           display: "flex",
           zIndex: 40,
@@ -317,7 +317,7 @@ function MobileBottomBar() {
           onClick={() => setSheetOpen(false)}
           style={{
             position: "fixed", inset: 0, zIndex: 60,
-            background: "rgba(15,27,61,0.5)",
+            background: "var(--sheet-overlay)",
             display: "flex", alignItems: "flex-end",
           }}
         >
@@ -326,7 +326,7 @@ function MobileBottomBar() {
             style={{
               width: "100%",
               maxHeight: "80vh",
-              background: "#ffffff",
+              background: "var(--mobile-bg)",
               borderRadius: "16px 16px 0 0",
               overflow: "hidden",
               display: "flex",

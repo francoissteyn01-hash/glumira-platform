@@ -67,11 +67,11 @@ export default function ADHDModule() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F9FA] text-[#1A2A5E]">
+    <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
       {/* Header */}
       <header className="sticky top-0 z-10 bg-white/90 backdrop-blur border-b border-gray-200 px-4 py-3">
         <div className="max-w-2xl mx-auto flex items-center justify-between">
-          <Link to="/" className="text-sm text-[#1A2A5E]/60 hover:text-[#1A2A5E]">
+          <Link to="/" className="text-sm text-[var(--text-primary)]/60 hover:text-[var(--text-primary)]">
             &larr; Back
           </Link>
           <h1 className="text-lg font-semibold tracking-tight">ADHD + T1D</h1>
@@ -88,7 +88,7 @@ export default function ADHDModule() {
           <select
             value={stimulantType}
             onChange={(e) => setStimulantType(e.target.value)}
-            className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm mb-4 focus:outline-none focus:ring-2 focus:ring-[#2AB5C1]"
+            className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm mb-4 focus:outline-none focus:ring-2 focus:ring-[var(--accent-teal)]"
           >
             {STIMULANT_OPTIONS.map((o) => (
               <option key={o.value} value={o.value}>{o.label}</option>
@@ -99,7 +99,7 @@ export default function ADHDModule() {
           <select
             value={doseHour}
             onChange={(e) => setDoseHour(Number(e.target.value))}
-            className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm mb-4 focus:outline-none focus:ring-2 focus:ring-[#2AB5C1]"
+            className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm mb-4 focus:outline-none focus:ring-2 focus:ring-[var(--accent-teal)]"
           >
             {HOURS.map((h) => (
               <option key={h} value={h}>{`${h.toString().padStart(2, "0")}:00`}</option>
@@ -110,7 +110,7 @@ export default function ADHDModule() {
           <select
             value={insulinDoseHour}
             onChange={(e) => setInsulinDoseHour(Number(e.target.value))}
-            className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#2AB5C1]"
+            className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent-teal)]"
           >
             {HOURS.map((h) => (
               <option key={h} value={h}>{`${h.toString().padStart(2, "0")}:00`}</option>
@@ -140,7 +140,7 @@ export default function ADHDModule() {
               const widthPct = (p.duration / 24) * 100;
               return (
                 <div
-                  className="absolute top-0 h-5 rounded-full bg-[#2AB5C1]/30 border border-[#2AB5C1]"
+                  className="absolute top-0 h-5 rounded-full bg-[var(--accent-teal)]/30 border border-[var(--accent-teal)]"
                   style={{ left: `${startPct}%`, width: `${Math.min(widthPct, 100 - startPct)}%` }}
                   title="Stimulant active"
                 />
@@ -157,7 +157,7 @@ export default function ADHDModule() {
             <span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>24:00</span>
           </div>
           <div className="flex gap-4 text-xs mb-4">
-            <span className="flex items-center gap-1"><span className="inline-block w-3 h-3 rounded bg-[#2AB5C1]/40 border border-[#2AB5C1]" /> Stimulant</span>
+            <span className="flex items-center gap-1"><span className="inline-block w-3 h-3 rounded bg-[var(--accent-teal)]/40 border border-[var(--accent-teal)]" /> Stimulant</span>
             <span className="flex items-center gap-1"><span className="inline-block w-3 h-3 rounded bg-[#1A2A5E]/20 border border-[#1A2A5E]/40" /> Insulin</span>
           </div>
 
@@ -184,7 +184,7 @@ export default function ADHDModule() {
             {mealPlan.map((meal, i) => (
               <div
                 key={i}
-                className="flex items-start gap-3 rounded-xl bg-[#F8F9FA] px-4 py-3 border border-gray-100"
+                className="flex items-start gap-3 rounded-xl bg-[var(--bg-primary)] px-4 py-3 border border-gray-100"
               >
                 <div className="flex-shrink-0 w-14 text-center">
                   <span className="block text-sm font-semibold">{meal.time}</span>
@@ -230,19 +230,19 @@ export default function ADHDModule() {
           <div className="grid grid-cols-3 gap-3">
             <button type="button"
               onClick={() => handleLog("ate")}
-              className="flex flex-col items-center justify-center gap-1 rounded-xl bg-[#2AB5C1]/10 border border-[#2AB5C1]/30 py-4 min-h-[48px] text-sm font-medium text-[#1A2A5E] hover:bg-[#2AB5C1]/20 active:scale-95 transition-transform"
+              className="flex flex-col items-center justify-center gap-1 rounded-xl bg-[var(--accent-teal)]/10 border border-[var(--accent-teal)]/30 py-4 min-h-[48px] text-sm font-medium text-[var(--text-primary)] hover:bg-[var(--accent-teal)]/20 active:scale-95 transition-transform"
             >
               <span className="text-2xl">I ate</span>
             </button>
             <button type="button"
               onClick={() => handleLog("dosed")}
-              className="flex flex-col items-center justify-center gap-1 rounded-xl bg-[#1A2A5E]/10 border border-[#1A2A5E]/20 py-4 min-h-[48px] text-sm font-medium text-[#1A2A5E] hover:bg-[#1A2A5E]/15 active:scale-95 transition-transform"
+              className="flex flex-col items-center justify-center gap-1 rounded-xl bg-[#1A2A5E]/10 border border-[#1A2A5E]/20 py-4 min-h-[48px] text-sm font-medium text-[var(--text-primary)] hover:bg-[#1A2A5E]/15 active:scale-95 transition-transform"
             >
               <span className="text-2xl">I dosed</span>
             </button>
             <button type="button"
               onClick={() => handleLog("checked")}
-              className="flex flex-col items-center justify-center gap-1 rounded-xl bg-[#4CAF50]/10 border border-[#4CAF50]/30 py-4 min-h-[48px] text-sm font-medium text-[#1A2A5E] hover:bg-[#4CAF50]/20 active:scale-95 transition-transform"
+              className="flex flex-col items-center justify-center gap-1 rounded-xl bg-[#4CAF50]/10 border border-[#4CAF50]/30 py-4 min-h-[48px] text-sm font-medium text-[var(--text-primary)] hover:bg-[#4CAF50]/20 active:scale-95 transition-transform"
             >
               <span className="text-2xl">I checked</span>
             </button>

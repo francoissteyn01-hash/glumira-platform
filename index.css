@@ -2,8 +2,79 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─── Theme Variables ────────────────────────────────────────────────────── */
+[data-theme="light"],
+:root {
+  --bg-primary: #F8F9FA;
+  --bg-card: #FFFFFF;
+  --bg-sidebar: #F8F9FA;
+  --bg-toggle: #f1f3f5;
+  --bg-input: #F8F9FA;
+  --text-primary: #1A2A5E;
+  --text-secondary: #52667A;
+  --text-muted: #718096;
+  --text-faint: #94a3b8;
+  --border: #E2E8F0;
+  --border-light: #dee2e6;
+  --border-divider: #e9ecef;
+  --accent-teal: #2AB5C1;
+  --accent-amber: #F59E0B;
+  --disclaimer-bg: #fffbeb;
+  --disclaimer-border: #fbbf24;
+  --disclaimer-text: #92400e;
+  --card-hover: #f1f3f5;
+  --error-bg: #fef2f2;
+  --error-border: #fca5a5;
+  --error-text: #991b1b;
+  --mobile-bg: #ffffff;
+  --sheet-overlay: rgba(15,27,61,0.5);
+  --placeholder: #c4c9d2;
+  --date-btn-bg: #ffffff;
+  --date-btn-active-bg: #1a2a5e;
+  --date-btn-active-text: #ffffff;
+  --simulation-border: #dee2e6;
+}
+
+[data-theme="dark"] {
+  --bg-primary: #0D1B3E;
+  --bg-card: #1A2A5E;
+  --bg-sidebar: #0D1B3E;
+  --bg-toggle: #162042;
+  --bg-input: #162042;
+  --text-primary: #F8F9FA;
+  --text-secondary: #A0AEC0;
+  --text-muted: #8897AE;
+  --text-faint: #6B7A94;
+  --border: #2D3748;
+  --border-light: #2D3748;
+  --border-divider: #243056;
+  --accent-teal: #2AB5C1;
+  --accent-amber: #F59E0B;
+  --disclaimer-bg: rgba(251, 191, 36, 0.08);
+  --disclaimer-border: rgba(251, 191, 36, 0.3);
+  --disclaimer-text: #fbbf24;
+  --card-hover: #243056;
+  --error-bg: rgba(239, 68, 68, 0.1);
+  --error-border: rgba(239, 68, 68, 0.3);
+  --error-text: #fca5a5;
+  --mobile-bg: #0D1B3E;
+  --sheet-overlay: rgba(0,0,0,0.7);
+  --placeholder: #4A5568;
+  --date-btn-bg: #162042;
+  --date-btn-active-bg: #2AB5C1;
+  --date-btn-active-text: #ffffff;
+  --simulation-border: #2D3748;
+}
+
+/* Smooth theme transitions */
+*,
+*::before,
+*::after {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
 html { scroll-behavior: smooth; }
-body { @apply antialiased bg-gray-950 text-gray-100; }
-:focus-visible { @apply outline-none ring-2 ring-brand-500 ring-offset-2 ring-offset-gray-950; }
+body { @apply antialiased; background: var(--bg-primary); color: var(--text-primary); }
+:focus-visible { @apply outline-none ring-2 ring-brand-500 ring-offset-2; ring-offset-color: var(--bg-primary); }
 .skip-link { @apply sr-only; }
 .skip-link:focus { @apply not-sr-only fixed top-2 left-2 z-[100] rounded-lg bg-brand-600 px-4 py-2 text-sm text-white; }

@@ -13,8 +13,8 @@ const TEAL = "#2AB5C1";
 
 /* ── shared inline styles ──────────────────────────── */
 const card: React.CSSProperties = {
-  background: "#fff", borderRadius: 12, padding: 24,
-  marginBottom: 20, border: "1px solid #e2e8f0",
+  background: "var(--bg-card)", borderRadius: 12, padding: 24,
+  marginBottom: 20, border: "1px solid var(--border)",
 };
 const heading2: React.CSSProperties = { color: NAVY, fontSize: 20, fontWeight: 700, marginBottom: 12 };
 const heading3: React.CSSProperties = { color: NAVY, fontSize: 16, fontWeight: 600, marginBottom: 8 };
@@ -124,7 +124,7 @@ export default function KosherModule() {
   );
 
   return (
-    <div style={{ minHeight: "100vh", background: "#ffffff", padding: 24 }}>
+    <div style={{ minHeight: "100vh", background: "var(--bg-card)", padding: 24 }}>
       <div style={{ maxWidth: 780, margin: "0 auto" }}>
         <Link to="/education" style={{ color: TEAL, fontSize: 14, textDecoration: "none" }}>
           &larr; Back to Education
@@ -134,7 +134,7 @@ export default function KosherModule() {
           <h1 style={{ margin: 0, fontFamily: "'Inter', sans-serif", color: NAVY, fontSize: 30, fontWeight: 800 }}>
             Kosher &amp; Diabetes
           </h1>
-          <p style={{ margin: "4px 0 0", color: "#718096", fontSize: 15 }}>
+          <p style={{ margin: "4px 0 0", color: "var(--text-muted)", fontSize: 15 }}>
             Jewish dietary law considerations for diabetes management
           </p>
         </div>
@@ -190,7 +190,7 @@ export default function KosherModule() {
           </div>
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
             <thead>
-              <tr style={{ borderBottom: "2px solid #e2e8f0", textAlign: "left" }}>
+              <tr style={{ borderBottom: "2px solid var(--border)", textAlign: "left" }}>
                 <th style={{ padding: 8 }}>Food</th>
                 <th style={{ padding: 8 }}>Carbs (g)</th>
                 <th style={{ padding: 8 }}>Notes</th>
@@ -222,7 +222,7 @@ export default function KosherModule() {
 
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
             <thead>
-              <tr style={{ borderBottom: "2px solid #e2e8f0", textAlign: "left" }}>
+              <tr style={{ borderBottom: "2px solid var(--border)", textAlign: "left" }}>
                 <th style={{ padding: 8 }}>Food</th>
                 <th style={{ padding: 8 }}>Carbs (g)</th>
                 <th style={{ padding: 8 }}>Notes</th>
@@ -242,7 +242,7 @@ export default function KosherModule() {
           <h3 style={{ ...heading3, marginTop: 20 }}>Seder Plate Items</h3>
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
             <thead>
-              <tr style={{ borderBottom: "2px solid #e2e8f0", textAlign: "left" }}>
+              <tr style={{ borderBottom: "2px solid var(--border)", textAlign: "left" }}>
                 <th style={{ padding: 8 }}>Item</th>
                 <th style={{ padding: 8 }}>Carbs (g)</th>
                 <th style={{ padding: 8 }}>Note</th>
@@ -295,7 +295,7 @@ export default function KosherModule() {
             </div>
           </div>
 
-          <div style={{ background: "#fef2f2", borderRadius: 8, padding: 12, fontSize: 13, color: "#991b1b" }}>
+          <div style={{ background: "var(--error-bg)", borderRadius: 8, padding: 12, fontSize: 13, color: "var(--error-text)" }}>
             <strong>Break-fast rules:</strong> Check BG every 2-3 hours. If BG drops below 3.9 mmol/L (70 mg/dL),
             break the fast immediately with 15 g fast-acting carbs. If BG exceeds 16.7 mmol/L (300 mg/dL) or
             ketones are present, break fast and give correction dose. <strong>Pikuach nefesh is not optional.</strong>
@@ -323,7 +323,7 @@ export default function KosherModule() {
             </div>
           </div>
 
-          <div style={{ background: "#fffbeb", borderRadius: 8, padding: 12, fontSize: 13, color: "#92400e" }}>
+          <div style={{ background: "var(--disclaimer-bg)", borderRadius: 8, padding: 12, fontSize: 13, color: "var(--disclaimer-text)" }}>
             <strong>Alcohol note:</strong> Wine can cause delayed hypoglycaemia (2-12 hours later) due to liver
             inhibition of gluconeogenesis. Consider reducing overnight basal by 10-20 % after Seder.
             Grape juice is a valid halachic alternative with different carb counts (~20 g/cup).
@@ -334,7 +334,7 @@ export default function KosherModule() {
         <Section id="calendar" title="Holiday Calendar with Insulin Planning">
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
             <thead>
-              <tr style={{ borderBottom: "2px solid #e2e8f0", textAlign: "left" }}>
+              <tr style={{ borderBottom: "2px solid var(--border)", textAlign: "left" }}>
                 <th style={{ padding: 8 }}>Holiday</th>
                 <th style={{ padding: 8 }}>Insulin Considerations</th>
                 <th style={{ padding: 8 }}>Notes</th>
@@ -353,7 +353,7 @@ export default function KosherModule() {
         </Section>
 
         {/* ─── Disclaimer ─────────────────────────── */}
-        <div style={{ background: "#f8fafc", borderRadius: 12, padding: 20, marginTop: 8, border: "1px solid #e2e8f0" }}>
+        <div style={{ background: "#f8fafc", borderRadius: 12, padding: 20, marginTop: 8, border: "1px solid var(--border)" }}>
           <p style={{ margin: 0, fontSize: 13, color: "#64748b", lineHeight: 1.7 }}>
             <strong>Disclaimer:</strong> This module provides general educational guidance only.
             <strong> Consult your rabbi and your diabetes care team</strong> before making any changes

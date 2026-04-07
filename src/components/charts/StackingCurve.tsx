@@ -37,12 +37,12 @@ function CustomTooltip({ active, payload }: any) {
   const d = payload[0].payload as StackingPoint;
   return (
     <div style={{
-      background: "#ffffff", border: "1px solid #dee2e6", borderRadius: 8,
+      background: "var(--bg-card)", border: "1px solid var(--border-light)", borderRadius: 8,
       padding: "10px 14px", boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
       fontFamily: "'DM Sans', system-ui, sans-serif",
     }}>
-      <p style={{ fontSize: 12, color: "#52667a", margin: "0 0 4px" }}>{formatTime(d.time)}</p>
-      <p style={{ fontSize: 15, fontWeight: 700, color: "#1a2a5e", margin: "0 0 2px" }}>
+      <p style={{ fontSize: 12, color: "var(--text-secondary)", margin: "0 0 4px" }}>{formatTime(d.time)}</p>
+      <p style={{ fontSize: 15, fontWeight: 700, color: "var(--text-primary)", margin: "0 0 2px" }}>
         {d.totalIOB.toFixed(2)} U
       </p>
       <p style={{ fontSize: 12, color: PRESSURE_COLOURS[d.pressure], fontWeight: 600, margin: 0, textTransform: "capitalize" }}>
@@ -78,10 +78,10 @@ export default function StackingCurve({ data }: Props) {
   if (data.length === 0) {
     return (
       <div style={{
-        background: "#ffffff", borderRadius: 12, border: "1px solid #dee2e6",
+        background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)",
         padding: 32, textAlign: "center",
       }}>
-        <p style={{ fontSize: 14, color: "#52667a", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+        <p style={{ fontSize: 14, color: "var(--text-secondary)", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
           No insulin data for today. Log a dose to see the stacking curve.
         </p>
       </div>
@@ -89,14 +89,14 @@ export default function StackingCurve({ data }: Props) {
   }
 
   return (
-    <div style={{ background: "#ffffff", borderRadius: 12, border: "1px solid #dee2e6", padding: "16px 16px 8px" }}>
+    <div style={{ background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)", padding: "16px 16px 8px" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12, padding: "0 4px" }}>
-        <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: "#1a2a5e", fontFamily: "'Playfair Display', serif" }}>
+        <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: "var(--text-primary)", fontFamily: "'Playfair Display', serif" }}>
           Insulin Stacking Curve
         </h3>
         <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
           {(["light", "moderate", "strong", "overlap"] as const).map((p) => (
-            <span key={p} style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 11, color: "#52667a", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+            <span key={p} style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 11, color: "var(--text-secondary)", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
               <span style={{ width: 10, height: 10, borderRadius: 2, background: PRESSURE_COLOURS[p], display: "inline-block" }} />
               {p === "overlap" ? "Overlap Risk" : p.charAt(0).toUpperCase() + p.slice(1)}
             </span>
@@ -112,24 +112,24 @@ export default function StackingCurve({ data }: Props) {
               ))}
             </linearGradient>
           </defs>
-          <CartesianGrid strokeDasharray="3 3" stroke="#e9ecef" />
+          <CartesianGrid strokeDasharray="3 3" stroke="var(--border-divider)" />
           <XAxis
             dataKey="time"
             tickFormatter={formatTime}
-            tick={{ fontSize: 11, fill: "#52667a" }}
+            tick={{ fontSize: 11, fill: "var(--text-secondary)" }}
             interval="preserveStartEnd"
             minTickGap={60}
           />
           <YAxis
-            tick={{ fontSize: 11, fill: "#52667a" }}
+            tick={{ fontSize: 11, fill: "var(--text-secondary)" }}
             tickFormatter={(v: number) => `${v.toFixed(1)}`}
-            label={{ value: "IOB (U)", angle: -90, position: "insideLeft", style: { fontSize: 11, fill: "#52667a" }, offset: 20 }}
+            label={{ value: "IOB (U)", angle: -90, position: "insideLeft", style: { fontSize: 11, fill: "var(--text-secondary)" }, offset: 20 }}
           />
           <Tooltip content={<CustomTooltip />} />
           <Area
             type="monotone"
             dataKey="totalIOB"
-            stroke="#1a2a5e"
+            stroke="var(--text-primary)"
             strokeWidth={2}
             fill={`url(#${gradientId})`}
             animationDuration={600}

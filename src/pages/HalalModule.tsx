@@ -12,8 +12,8 @@ const TEAL = "#2AB5C1";
 
 /* ── shared inline styles ──────────────────────────── */
 const card: React.CSSProperties = {
-  background: "#fff", borderRadius: 12, padding: 24,
-  marginBottom: 20, border: "1px solid #e2e8f0",
+  background: "var(--bg-card)", borderRadius: 12, padding: 24,
+  marginBottom: 20, border: "1px solid var(--border)",
 };
 const heading2: React.CSSProperties = { color: NAVY, fontSize: 20, fontWeight: 700, marginBottom: 12 };
 const heading3: React.CSSProperties = { color: NAVY, fontSize: 16, fontWeight: 600, marginBottom: 8 };
@@ -159,7 +159,7 @@ export default function HalalModule() {
   );
 
   return (
-    <div style={{ minHeight: "100vh", background: "#ffffff", padding: 24 }}>
+    <div style={{ minHeight: "100vh", background: "var(--bg-card)", padding: 24 }}>
       <div style={{ maxWidth: 780, margin: "0 auto" }}>
         <Link to="/education" style={{ color: TEAL, fontSize: 14, textDecoration: "none" }}>
           &larr; Back to Education
@@ -169,7 +169,7 @@ export default function HalalModule() {
           <h1 style={{ margin: 0, fontFamily: "'Inter', sans-serif", color: NAVY, fontSize: 30, fontWeight: 800 }}>
             Halal &amp; Diabetes
           </h1>
-          <p style={{ margin: "4px 0 0", color: "#718096", fontSize: 15 }}>
+          <p style={{ margin: "4px 0 0", color: "var(--text-muted)", fontSize: 15 }}>
             Halal food guidance, carb counts, and medication permissibility for diabetes management
           </p>
         </div>
@@ -206,7 +206,7 @@ export default function HalalModule() {
 
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
             <thead>
-              <tr style={{ borderBottom: "2px solid #e2e8f0", textAlign: "left" }}>
+              <tr style={{ borderBottom: "2px solid var(--border)", textAlign: "left" }}>
                 <th style={{ padding: 8 }}>Dish</th>
                 <th style={{ padding: 8 }}>Carbs (g)</th>
                 <th style={{ padding: 8 }}>Serving</th>
@@ -235,7 +235,7 @@ export default function HalalModule() {
           </p>
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
             <thead>
-              <tr style={{ borderBottom: "2px solid #e2e8f0", textAlign: "left" }}>
+              <tr style={{ borderBottom: "2px solid var(--border)", textAlign: "left" }}>
                 <th style={{ padding: 8 }}>Ingredient</th>
                 <th style={{ padding: 8 }}>Status</th>
                 <th style={{ padding: 8 }}>Notes</th>
@@ -288,7 +288,7 @@ export default function HalalModule() {
           </p>
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
             <thead>
-              <tr style={{ borderBottom: "2px solid #e2e8f0", textAlign: "left" }}>
+              <tr style={{ borderBottom: "2px solid var(--border)", textAlign: "left" }}>
                 <th style={{ padding: 8 }}>Food</th>
                 <th style={{ padding: 8 }}>Carbs (g)</th>
                 <th style={{ padding: 8 }}>Protein (g)</th>
@@ -321,7 +321,7 @@ export default function HalalModule() {
           </p>
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
             <thead>
-              <tr style={{ borderBottom: "2px solid #e2e8f0", textAlign: "left" }}>
+              <tr style={{ borderBottom: "2px solid var(--border)", textAlign: "left" }}>
                 <th style={{ padding: 8 }}>Food</th>
                 <th style={{ padding: 8 }}>Carbs (g)</th>
                 <th style={{ padding: 8 }}>Tip</th>
@@ -337,7 +337,7 @@ export default function HalalModule() {
               ))}
             </tbody>
           </table>
-          <div style={{ background: "#fffbeb", borderRadius: 8, padding: 12, marginTop: 12, fontSize: 13, color: "#92400e" }}>
+          <div style={{ background: "var(--disclaimer-bg)", borderRadius: 8, padding: 12, marginTop: 12, fontSize: 13, color: "var(--disclaimer-text)" }}>
             <strong>Post-Ramadan transition:</strong> Your insulin sensitivity may have changed during Ramadan.
             Monitor BG more frequently for the first 3-5 days after Eid. Your ICR and ISF may need
             re-calibration.
@@ -363,7 +363,7 @@ export default function HalalModule() {
         </div>
 
         {/* ─── Disclaimer ─────────────────────────── */}
-        <div style={{ background: "#f8fafc", borderRadius: 12, padding: 20, marginTop: 8, border: "1px solid #e2e8f0" }}>
+        <div style={{ background: "#f8fafc", borderRadius: 12, padding: 20, marginTop: 8, border: "1px solid var(--border)" }}>
           <p style={{ margin: 0, fontSize: 13, color: "#64748b", lineHeight: 1.7 }}>
             <strong>Disclaimer:</strong> This module provides general educational guidance only.
             <strong> Consult your local halal authority and your diabetes care team</strong> before making

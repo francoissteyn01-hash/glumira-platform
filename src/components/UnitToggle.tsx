@@ -19,8 +19,8 @@ export default function UnitToggle() {
           padding: "5px 12px",
           borderRadius: 6,
           border: "none",
-          background: active ? "#2ab5c1" : "transparent",
-          color: active ? "#ffffff" : "#52667a",
+          background: active ? "var(--accent-teal)" : "transparent",
+          color: active ? "#ffffff" : "var(--text-secondary)",
           fontSize: 12,
           fontWeight: active ? 700 : 500,
           cursor: "pointer",
@@ -38,10 +38,10 @@ export default function UnitToggle() {
       style={{
         display: "inline-flex",
         alignItems: "center",
-        background: "#f1f3f5",
+        background: "var(--bg-toggle)",
         borderRadius: 8,
         padding: 2,
-        border: "1px solid #dee2e6",
+        border: "1px solid var(--border)",
       }}
     >
       {opt("mmol", "mmol/L")}

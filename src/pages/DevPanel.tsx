@@ -6,11 +6,11 @@
 
 import { useState } from "react";
 
-const BG = "#f8f9fa";
-const NAVY = "#1a2a5e";
-const TEAL = "#2ab5c1";
-const MUTED = "#718096";
-const BORDER = "#e2e8f0";
+const BG = "var(--bg-primary)";
+const NAVY = "var(--text-primary)";
+const TEAL = "var(--accent-teal)";
+const MUTED = "var(--text-muted)";
+const BORDER = "var(--border)";
 
 type Route = { path: string; name: string };
 type Section = { label: string; routes: Route[] };
@@ -107,7 +107,7 @@ export default function DevPanel() {
         .dp-search {
           width: 100%;
           padding: 11px 14px;
-          background: #ffffff;
+          background: var(--bg-card);
           border: 1px solid ${BORDER};
           border-radius: 8px;
           font-family: 'JetBrains Mono', monospace;

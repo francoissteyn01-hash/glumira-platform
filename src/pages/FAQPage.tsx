@@ -9,7 +9,7 @@ export default function FAQPage() {
         <div>
           <h1 className="text-2xl font-bold text-white">Frequently Asked Questions</h1>
           <p className="text-sm text-gray-300 mt-1">
-            New to GluMira™? Start with the <Link to="/tutorial" className="text-[#2ab5c1] underline hover:text-[#229aaa]">Tutorial</Link>. Can't find an answer? Ask Mira AI.
+            New to GluMira™? Start with the <Link to="/tutorial" className="text-[var(--accent-teal)] underline hover:text-[#229aaa]">Tutorial</Link>. Can't find an answer? Ask Mira AI.
           </p>
         </div>
         <div className="space-y-2">

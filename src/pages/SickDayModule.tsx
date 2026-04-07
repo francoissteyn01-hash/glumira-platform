@@ -13,8 +13,8 @@ const TEAL = "#2AB5C1";
 
 /* ── shared inline styles ──────────────────────────── */
 const card: React.CSSProperties = {
-  background: "#fff", borderRadius: 12, padding: 24,
-  marginBottom: 20, border: "1px solid #e2e8f0",
+  background: "var(--bg-card)", borderRadius: 12, padding: 24,
+  marginBottom: 20, border: "1px solid var(--border)",
 };
 const heading2: React.CSSProperties = { color: NAVY, fontSize: 20, fontWeight: 700, marginBottom: 12 };
 const heading3: React.CSSProperties = { color: NAVY, fontSize: 16, fontWeight: 600, marginBottom: 8 };
@@ -28,11 +28,11 @@ const pill: React.CSSProperties = {
   fontSize: 12, fontWeight: 600, marginRight: 6, marginBottom: 6,
 };
 const emergencyBox: React.CSSProperties = {
-  background: "#fef2f2", border: "2px solid #fca5a5", borderRadius: 12,
+  background: "var(--error-bg)", border: "2px solid var(--error-border)", borderRadius: 12,
   padding: 24, marginBottom: 20,
 };
 const anoukBox: React.CSSProperties = {
-  background: "#fffbeb", border: "2px solid #fcd34d", borderRadius: 12,
+  background: "var(--disclaimer-bg)", border: "2px solid var(--disclaimer-border)", borderRadius: 12,
   padding: 24, marginBottom: 20,
 };
 
@@ -131,7 +131,7 @@ export default function SickDayModule() {
   );
 
   return (
-    <div style={{ minHeight: "100vh", background: "#ffffff", padding: 24 }}>
+    <div style={{ minHeight: "100vh", background: "var(--bg-card)", padding: 24 }}>
       <div style={{ maxWidth: 780, margin: "0 auto" }}>
         <Link to="/education" style={{ color: TEAL, fontSize: 14, textDecoration: "none" }}>
           &larr; Back to Education
@@ -141,7 +141,7 @@ export default function SickDayModule() {
           <h1 style={{ margin: 0, fontFamily: "'Inter', sans-serif", color: NAVY, fontSize: 30, fontWeight: 800 }}>
             Sick Day Rules
           </h1>
-          <p style={{ margin: "4px 0 0", color: "#718096", fontSize: 15 }}>
+          <p style={{ margin: "4px 0 0", color: "var(--text-muted)", fontSize: 15 }}>
             Essential protocols for managing diabetes during illness — never skip this
           </p>
         </div>
@@ -154,7 +154,7 @@ export default function SickDayModule() {
           </p>
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
             <thead>
-              <tr style={{ borderBottom: "2px solid #e2e8f0", textAlign: "left" }}>
+              <tr style={{ borderBottom: "2px solid var(--border)", textAlign: "left" }}>
                 <th style={{ padding: 8, width: 30 }}></th>
                 <th style={{ padding: 8 }}>Check</th>
                 <th style={{ padding: 8 }}>Frequency</th>
@@ -266,7 +266,7 @@ export default function SickDayModule() {
           )}
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
             <thead>
-              <tr style={{ borderBottom: "2px solid #e2e8f0", textAlign: "left" }}>
+              <tr style={{ borderBottom: "2px solid var(--border)", textAlign: "left" }}>
                 <th style={{ padding: 8 }}>Age</th>
                 <th style={{ padding: 8 }}>Min/hour</th>
                 <th style={{ padding: 8 }}>24h total</th>
@@ -307,22 +307,22 @@ export default function SickDayModule() {
               justifyContent: "space-between", alignItems: "center",
             }}
           >
-            <h2 style={{ ...heading2, color: "#92400e", marginBottom: 0 }}>
+            <h2 style={{ ...heading2, color: "var(--disclaimer-text)", marginBottom: 0 }}>
               Vomiting Protocol — "The Gastroenteritis Crisis Protocol"
             </h2>
-            <span style={{ color: "#92400e", fontSize: 22, fontWeight: 700 }}>{open.anouk ? "−" : "+"}</span>
+            <span style={{ color: "var(--disclaimer-text)", fontSize: 22, fontWeight: 700 }}>{open.anouk ? "−" : "+"}</span>
           </button>
           {open.anouk && (
             <div style={{ marginTop: 16, fontSize: 14, color: "#1e293b" }}>
-              <p style={{ marginBottom: 12, color: "#92400e", fontWeight: 600 }}>
+              <p style={{ marginBottom: 12, color: "var(--disclaimer-text)", fontWeight: 600 }}>
                 This is a core GluMira scenario. When a person with T1D is vomiting and cannot keep food
                 down, they are at high risk of DKA — even if blood glucose is not very high.
               </p>
 
-              <h3 style={{ ...heading3, color: "#92400e" }}>Step-by-step protocol:</h3>
+              <h3 style={{ ...heading3, color: "var(--disclaimer-text)" }}>Step-by-step protocol:</h3>
 
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                <div style={{ background: "#fff", borderRadius: 8, padding: 16 }}>
+                <div style={{ background: "var(--bg-card)", borderRadius: 8, padding: 16 }}>
                   <p style={{ margin: 0, fontWeight: 700, color: NAVY }}>1. Cannot keep food down</p>
                   <p style={{ margin: "4px 0 0", fontSize: 13, color: "#4a5568", lineHeight: 1.7 }}>
                     Try <strong>small frequent sips</strong> rather than large drinks. Small frequent sips &gt; large drinks.
@@ -331,7 +331,7 @@ export default function SickDayModule() {
                   </p>
                 </div>
 
-                <div style={{ background: "#fff", borderRadius: 8, padding: 16 }}>
+                <div style={{ background: "var(--bg-card)", borderRadius: 8, padding: 16 }}>
                   <p style={{ margin: 0, fontWeight: 700, color: NAVY }}>2. Monitor ketones every 1-2 hours</p>
                   <p style={{ margin: "4px 0 0", fontSize: 13, color: "#4a5568", lineHeight: 1.7 }}>
                     Use blood ketone meter. If ketones are rising despite insulin corrections, this is a
@@ -339,7 +339,7 @@ export default function SickDayModule() {
                   </p>
                 </div>
 
-                <div style={{ background: "#fff", borderRadius: 8, padding: 16, border: "2px solid #dc2626" }}>
+                <div style={{ background: "var(--bg-card)", borderRadius: 8, padding: 16, border: "2px solid #dc2626" }}>
                   <p style={{ margin: 0, fontWeight: 700, color: "#dc2626", fontSize: 15 }}>
                     3. Ketones rising + vomiting = EMERGENCY
                   </p>
@@ -350,7 +350,7 @@ export default function SickDayModule() {
                   </p>
                 </div>
 
-                <div style={{ background: "#fff", borderRadius: 8, padding: 16 }}>
+                <div style={{ background: "var(--bg-card)", borderRadius: 8, padding: 16 }}>
                   <p style={{ margin: 0, fontWeight: 700, color: NAVY }}>4. If keeping some fluids down</p>
                   <p style={{ margin: "4px 0 0", fontSize: 13, color: "#4a5568", lineHeight: 1.7 }}>
                     Continue small sips (5 ml every 5 minutes = 60 ml/hour). Use a syringe or teaspoon for accuracy.
@@ -359,7 +359,7 @@ export default function SickDayModule() {
                   </p>
                 </div>
 
-                <div style={{ background: "#fff", borderRadius: 8, padding: 16 }}>
+                <div style={{ background: "var(--bg-card)", borderRadius: 8, padding: 16 }}>
                   <p style={{ margin: 0, fontWeight: 700, color: NAVY }}>5. Anti-emetics</p>
                   <p style={{ margin: "4px 0 0", fontSize: 13, color: "#4a5568", lineHeight: 1.7 }}>
                     Ask your doctor about ondansetron (Zofran) — available as a dissolving tablet that can be
@@ -368,7 +368,7 @@ export default function SickDayModule() {
                 </div>
               </div>
 
-              <div style={{ background: "#fef2f2", borderRadius: 8, padding: 16, marginTop: 16, fontSize: 13, color: "#991b1b" }}>
+              <div style={{ background: "#fef2f2", borderRadius: 8, padding: 16, marginTop: 16, fontSize: 13, color: "var(--error-text)" }}>
                 <strong>Remember:</strong> The combination of vomiting + rising ketones + inability to keep fluids
                 down is a medical emergency in T1D. Hospital is not "overreacting" — it is the correct response.
                 DKA can develop within hours and is life-threatening.
@@ -393,7 +393,7 @@ export default function SickDayModule() {
           </button>
           {open.hospital && (
             <div style={{ marginTop: 16 }}>
-              <p style={{ fontSize: 14, color: "#991b1b", marginBottom: 12, fontWeight: 600 }}>
+              <p style={{ fontSize: 14, color: "var(--error-text)", marginBottom: 12, fontWeight: 600 }}>
                 Go to A&amp;E / Emergency Room if ANY of the following are present:
               </p>
               <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
@@ -404,7 +404,7 @@ export default function SickDayModule() {
                   </div>
                 ))}
               </div>
-              <div style={{ background: "#fff", borderRadius: 8, padding: 16, marginTop: 16, fontSize: 13, color: "#1e293b" }}>
+              <div style={{ background: "var(--bg-card)", borderRadius: 8, padding: 16, marginTop: 16, fontSize: 13, color: "#1e293b" }}>
                 <strong>What to bring to hospital:</strong>
                 <ul style={{ margin: "8px 0 0", paddingLeft: 20, lineHeight: 2 }}>
                   <li>Insulin pens/pump supplies</li>
@@ -453,7 +453,7 @@ export default function SickDayModule() {
         </Section>
 
         {/* ─── Disclaimer ─────────────────────────── */}
-        <div style={{ background: "#f8fafc", borderRadius: 12, padding: 20, marginTop: 8, border: "1px solid #e2e8f0" }}>
+        <div style={{ background: "#f8fafc", borderRadius: 12, padding: 20, marginTop: 8, border: "1px solid var(--border)" }}>
           <p style={{ margin: 0, fontSize: 13, color: "#64748b", lineHeight: 1.7 }}>
             <strong>Disclaimer:</strong> These sick day rules are general guidelines based on established
             diabetes education resources. They do not replace individual medical advice from your

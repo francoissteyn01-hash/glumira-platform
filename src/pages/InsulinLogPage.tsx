@@ -70,22 +70,22 @@ const EMPTY_FORM: InsulinForm = {
 
 const inputStyle: React.CSSProperties = {
   width: "100%", minHeight: 48, padding: "12px 14px", borderRadius: 8,
-  border: "1px solid #dee2e6", background: "#ffffff", color: "#1a2a5e",
+  border: "1px solid var(--border-light)", background: "var(--bg-card)", color: "var(--text-primary)",
   fontSize: 14, fontFamily: "'DM Sans', system-ui, sans-serif",
   outline: "none", boxSizing: "border-box",
 };
 
 const labelStyle: React.CSSProperties = {
-  display: "block", fontSize: 13, fontWeight: 600, color: "#1a2a5e",
+  display: "block", fontSize: 13, fontWeight: 600, color: "var(--text-primary)",
   marginBottom: 6, fontFamily: "'DM Sans', system-ui, sans-serif",
 };
 
 const focusIn = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-  e.currentTarget.style.borderColor = "#2ab5c1";
+  e.currentTarget.style.borderColor = "var(--accent-teal)";
   e.currentTarget.style.boxShadow = "0 0 0 3px rgba(42,181,193,0.15)";
 };
 const focusOut = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-  e.currentTarget.style.borderColor = "#dee2e6";
+  e.currentTarget.style.borderColor = "var(--border-light)";
   e.currentTarget.style.boxShadow = "none";
 };
 
@@ -201,24 +201,24 @@ export default function InsulinLogPage() {
 
   /* ─── Render ────────────────────────────────────────────────────────── */
   return (
-    <div style={{ minHeight: "100vh", background: "#f8f9fa" }}>
+    <div style={{ minHeight: "100vh", background: "var(--bg-primary)" }}>
       <div style={{ maxWidth: 640, margin: "0 auto", padding: "clamp(16px, 4vw, 32px)" }}>
 
         {/* Header */}
         <div style={{ marginBottom: 24 }}>
           <h1 style={{
             fontFamily: "'Playfair Display', serif", fontSize: "clamp(24px, 6vw, 32px)",
-            fontWeight: 700, color: "#1a2a5e", margin: "0 0 4px",
+            fontWeight: 700, color: "var(--text-primary)", margin: "0 0 4px",
           }}>
             Insulin Log
           </h1>
-          <p style={{ fontSize: 14, color: "#52667a", margin: 0, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+          <p style={{ fontSize: 14, color: "var(--text-secondary)", margin: 0, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
             Record every insulin dose with full decimal precision.
           </p>
         </div>
 
         {/* ── Time & Event Type ─────────────────────────────────────────── */}
-        <div style={{ background: "#ffffff", borderRadius: 12, border: "1px solid #dee2e6", padding: 20, marginBottom: 16 }}>
+        <div style={{ background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)", padding: 20, marginBottom: 16 }}>
           <Field label="Time">
             <input
               type="datetime-local" value={form.event_time}
@@ -240,11 +240,11 @@ export default function InsulinLogPage() {
         </div>
 
         {/* ── Insulin & Dose ────────────────────────────────────────────── */}
-        <div style={{ background: "#ffffff", borderRadius: 12, border: "1px solid #dee2e6", padding: 20, marginBottom: 16 }}>
+        <div style={{ background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)", padding: 20, marginBottom: 16 }}>
           <Field label="Insulin type">
             <select
               value={form.insulin_type} onChange={(e) => set("insulin_type")(e.target.value)}
-              style={{ ...inputStyle, appearance: "auto", cursor: "pointer", color: form.insulin_type ? "#1a2a5e" : "#52667a" }}
+              style={{ ...inputStyle, appearance: "auto", cursor: "pointer", color: form.insulin_type ? "var(--text-primary)" : "var(--text-secondary)" }}
               onFocus={focusIn as any} onBlur={focusOut as any}
             >
               <option value="">Select insulin…</option>
@@ -266,11 +266,11 @@ export default function InsulinLogPage() {
 
         {/* ── Link to Meal (optional) ───────────────────────────────────── */}
         {todaysMeals.length > 0 && (
-          <div style={{ background: "#ffffff", borderRadius: 12, border: "1px solid #dee2e6", padding: 20, marginBottom: 16 }}>
+          <div style={{ background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)", padding: 20, marginBottom: 16 }}>
             <Field label="Link to meal entry (optional)">
               <select
                 value={form.food_linked_id} onChange={(e) => set("food_linked_id")(e.target.value)}
-                style={{ ...inputStyle, appearance: "auto", cursor: "pointer", color: form.food_linked_id ? "#1a2a5e" : "#52667a" }}
+                style={{ ...inputStyle, appearance: "auto", cursor: "pointer", color: form.food_linked_id ? "var(--text-primary)" : "var(--text-secondary)" }}
                 onFocus={focusIn as any} onBlur={focusOut as any}
               >
                 <option value="">No linked meal</option>
@@ -283,13 +283,13 @@ export default function InsulinLogPage() {
         )}
 
         {/* ── Correction Toggle & Notes ─────────────────────────────────── */}
-        <div style={{ background: "#ffffff", borderRadius: 12, border: "1px solid #dee2e6", padding: 20, marginBottom: 16 }}>
+        <div style={{ background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)", padding: 20, marginBottom: 16 }}>
           <label style={{
             display: "flex", alignItems: "center", gap: 12, minHeight: 48,
             padding: "10px 14px", borderRadius: 8, cursor: "pointer",
-            border: `1px solid ${form.is_correction ? "#2ab5c1" : "#dee2e6"}`,
+            border: `1px solid ${form.is_correction ? "var(--accent-teal)" : "var(--border-light)"}`,
             background: form.is_correction ? "rgba(42,181,193,0.08)" : "#ffffff",
-            fontSize: 14, color: "#1a2a5e", fontFamily: "'DM Sans', system-ui, sans-serif",
+            fontSize: 14, color: "var(--text-primary)", fontFamily: "'DM Sans', system-ui, sans-serif",
             marginBottom: 16,
           }}>
             <input
@@ -313,7 +313,7 @@ export default function InsulinLogPage() {
         {/* ── Save Button & Feedback ────────────────────────────────────── */}
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
           {error && (
-            <div style={{ borderRadius: 8, background: "#fef2f2", border: "1px solid #fca5a5", padding: "10px 14px", fontSize: 13, color: "#991b1b" }}>
+            <div style={{ borderRadius: 8, background: "var(--error-bg)", border: "1px solid var(--error-border)", padding: "10px 14px", fontSize: 13, color: "var(--error-text)" }}>
               {error}
             </div>
           )}

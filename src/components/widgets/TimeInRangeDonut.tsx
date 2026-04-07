@@ -26,8 +26,8 @@ export default function TimeInRangeDonut({ readings, targetLow = 3.9, targetHigh
   const tirPct = Math.round((tir / total) * 100);
 
   return (
-    <div style={{ background: "#ffffff", borderRadius: 12, border: "1px solid #dee2e6", padding: 16 }}>
-      <h3 style={{ margin: "0 0 8px", fontSize: 16, fontWeight: 700, color: "#1a2a5e", fontFamily: "'Playfair Display', serif" }}>Time in Range</h3>
+    <div style={{ background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)", padding: 16 }}>
+      <h3 style={{ margin: "0 0 8px", fontSize: 16, fontWeight: 700, color: "var(--text-primary)", fontFamily: "'Playfair Display', serif" }}>Time in Range</h3>
       <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
         <div style={{ width: 100, height: 100, position: "relative" }}>
           <ResponsiveContainer>
@@ -38,12 +38,12 @@ export default function TimeInRangeDonut({ readings, targetLow = 3.9, targetHigh
             </PieChart>
           </ResponsiveContainer>
           <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <span style={{ fontSize: 18, fontWeight: 700, color: "#1a2a5e", fontFamily: "'JetBrains Mono', monospace" }}>{tirPct}%</span>
+            <span style={{ fontSize: 18, fontWeight: 700, color: "var(--text-primary)", fontFamily: "'JetBrains Mono', monospace" }}>{tirPct}%</span>
           </div>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
           {data.map((d, i) => (
-            <span key={i} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 11, color: "#52667a", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+            <span key={i} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 11, color: "var(--text-secondary)", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
               <span style={{ width: 8, height: 8, borderRadius: 2, background: d.colour, display: "inline-block" }} />
               {d.name}: {Math.round((d.value / total) * 100)}%
             </span>

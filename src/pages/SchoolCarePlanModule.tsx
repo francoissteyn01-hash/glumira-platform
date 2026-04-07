@@ -83,22 +83,22 @@ export default function SchoolCarePlanModule() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: "#f8f9fa", padding: 24 }}>
+    <div style={{ minHeight: "100vh", background: "var(--bg-primary)", padding: 24 }}>
       <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-        <Link to="/education" style={{ color: "#2ab5c1", fontSize: 14, textDecoration: "none" }}>← Back to Education</Link>
+        <Link to="/education" style={{ color: "var(--accent-teal)", fontSize: 14, textDecoration: "none" }}>← Back to Education</Link>
 
         <div style={{ display: "flex", alignItems: "center", gap: 12, margin: "16px 0 24px" }}>
           <div style={{ width: 48, height: 48, borderRadius: 12, background: "#dbeafe", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24 }}>🏫</div>
           <div>
-            <h1 style={{ margin: 0, fontFamily: "'Playfair Display', serif", color: "#1a2a5e", fontSize: 28 }}>School Care Plan Generator</h1>
-            <p style={{ margin: 0, color: "#718096", fontSize: 14 }}>Generate a printable diabetes care plan for school staff</p>
+            <h1 style={{ margin: 0, fontFamily: "'Playfair Display', serif", color: "var(--text-primary)", fontSize: 28 }}>School Care Plan Generator</h1>
+            <p style={{ margin: 0, color: "var(--text-muted)", fontSize: 14 }}>Generate a printable diabetes care plan for school staff</p>
           </div>
         </div>
 
         {errors.length > 0 && (
-          <div style={{ background: "#fef2f2", border: "1px solid #fca5a5", borderRadius: 12, padding: 16, marginBottom: 16 }}>
+          <div style={{ background: "var(--error-bg)", border: "1px solid var(--error-border)", borderRadius: 12, padding: 16, marginBottom: 16 }}>
             <h4 style={{ color: "#dc2626", margin: "0 0 8px", fontSize: 14 }}>Please fix the following:</h4>
-            <ul style={{ margin: 0, paddingLeft: 20, fontSize: 13, color: "#991b1b" }}>
+            <ul style={{ margin: 0, paddingLeft: 20, fontSize: 13, color: "var(--error-text)" }}>
               {errors.map((e, i) => <li key={i}>{e}</li>)}
             </ul>
           </div>
@@ -169,7 +169,7 @@ export default function SchoolCarePlanModule() {
                 </div>
               ))}
               {(form.emergencyContacts?.length ?? 0) < 4 && (
-                <button type="button" onClick={addContact} style={{ fontSize: 13, color: "#2ab5c1", background: "none", border: "none", cursor: "pointer" }}>+ Add Contact</button>
+                <button type="button" onClick={addContact} style={{ fontSize: 13, color: "var(--accent-teal)", background: "none", border: "none", cursor: "pointer" }}>+ Add Contact</button>
               )}
             </div>
 
@@ -195,20 +195,20 @@ export default function SchoolCarePlanModule() {
           {generatedHtml && (
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <h3 style={{ color: "#1a2a5e", fontSize: 16, margin: 0 }}>Document Preview</h3>
+                <h3 style={{ color: "var(--text-primary)", fontSize: 16, margin: 0 }}>Document Preview</h3>
                 <button type="button" onClick={handlePrint} style={{ ...btnStyle, marginTop: 0, padding: "8px 20px", fontSize: 13 }}>Print / Save PDF</button>
               </div>
               <iframe
                 ref={previewRef}
                 srcDoc={generatedHtml}
-                style={{ width: "100%", height: "calc(100vh - 200px)", border: "1px solid #e2e8f0", borderRadius: 12, background: "#fff" }}
+                style={{ width: "100%", height: "calc(100vh - 200px)", border: "1px solid var(--border)", borderRadius: 12, background: "var(--bg-card)" }}
                 title="School Care Plan Preview"
               />
             </div>
           )}
         </div>
 
-        <footer style={{ textAlign: "center", fontSize: 11, color: "#718096", marginTop: 32, paddingTop: 16, borderTop: "1px solid #e2e8f0" }}>
+        <footer style={{ textAlign: "center", fontSize: 11, color: "var(--text-muted)", marginTop: 32, paddingTop: 16, borderTop: "1px solid var(--border)" }}>
           <p>GluMira™ is an educational platform. Not a medical device. Always follow your diabetes care team's guidance.</p>
         </footer>
       </div>
@@ -218,6 +218,6 @@ export default function SchoolCarePlanModule() {
 
 const labelStyle: React.CSSProperties = { display: "flex", flexDirection: "column", gap: 4, fontSize: 13, fontWeight: 500, color: "#4a5568" };
 const inputStyle: React.CSSProperties = { padding: "8px 12px", border: "1px solid #d1d5db", borderRadius: 8, fontSize: 14 };
-const cardStyle: React.CSSProperties = { background: "#fff", border: "1px solid #e2e8f0", borderRadius: 16, padding: 20 };
-const cardTitle: React.CSSProperties = { fontSize: 16, color: "#1a2a5e", marginBottom: 12, fontFamily: "'Playfair Display', serif" };
-const btnStyle: React.CSSProperties = { marginTop: 20, padding: "10px 28px", background: "#2ab5c1", color: "#fff", border: "none", borderRadius: 8, fontSize: 15, fontWeight: 600, cursor: "pointer" };
+const cardStyle: React.CSSProperties = { background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 16, padding: 20 };
+const cardTitle: React.CSSProperties = { fontSize: 16, color: "var(--text-primary)", marginBottom: 12, fontFamily: "'Playfair Display', serif" };
+const btnStyle: React.CSSProperties = { marginTop: 20, padding: "10px 28px", background: "var(--accent-teal)", color: "#fff", border: "none", borderRadius: 8, fontSize: 15, fontWeight: 600, cursor: "pointer" };

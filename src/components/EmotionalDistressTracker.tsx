@@ -11,13 +11,13 @@ import { useAuth } from "@/hooks/useAuth";
 
 const inputStyle: React.CSSProperties = {
   width: "100%", minHeight: 44, padding: "10px 14px", borderRadius: 8,
-  border: "1px solid #dee2e6", background: "#ffffff", color: "#1a2a5e",
+  border: "1px solid var(--border-light)", background: "var(--bg-card)", color: "var(--text-primary)",
   fontSize: 14, fontFamily: "'DM Sans', system-ui, sans-serif",
   outline: "none", boxSizing: "border-box",
 };
 
 const labelStyle: React.CSSProperties = {
-  display: "block", fontSize: 13, fontWeight: 600, color: "#1a2a5e",
+  display: "block", fontSize: 13, fontWeight: 600, color: "var(--text-primary)",
   marginBottom: 6, fontFamily: "'DM Sans', system-ui, sans-serif",
 };
 
@@ -82,7 +82,7 @@ export default function EmotionalDistressTracker({ defaultOpen = false }: Props)
   }, [session, today, distress, sleepHours, overnightAlarms, burnout, anxiety, caregiverNotes]);
 
   return (
-    <div style={{ background: "#ffffff", borderRadius: 12, border: "1px solid #dee2e6", overflow: "hidden" }}>
+    <div style={{ background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)", overflow: "hidden" }}>
       {/* Collapsible header */}
       <button
         type="button"
@@ -91,11 +91,11 @@ export default function EmotionalDistressTracker({ defaultOpen = false }: Props)
           width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between",
           padding: "16px 20px", background: "none", border: "none", cursor: "pointer",
           fontFamily: "'Playfair Display', serif", fontSize: 16, fontWeight: 700,
-          color: "#1a2a5e", textAlign: "left",
+          color: "var(--text-primary)", textAlign: "left",
         }}
       >
         <span>How are you feeling today?</span>
-        <span style={{ fontSize: 14, color: "#52667a", transition: "transform 0.2s", transform: open ? "rotate(180deg)" : "rotate(0deg)" }}>
+        <span style={{ fontSize: 14, color: "var(--text-secondary)", transition: "transform 0.2s", transform: open ? "rotate(180deg)" : "rotate(0deg)" }}>
           &#9662;
         </span>
       </button>
@@ -114,7 +114,7 @@ export default function EmotionalDistressTracker({ defaultOpen = false }: Props)
               onChange={(e) => setDistress(parseInt(e.target.value, 10))}
               style={{ width: "100%", accentColor: DISTRESS_COLOURS[distress], cursor: "pointer" }}
             />
-            <div style={{ display: "flex", justifyContent: "space-between", fontSize: 10, color: "#94a3b8", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", fontSize: 10, color: "var(--text-faint)", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
               <span>Calm</span><span>Mild</span><span>Moderate</span><span>High</span><span>Overwhelmed</span>
             </div>
           </div>
@@ -145,9 +145,9 @@ export default function EmotionalDistressTracker({ defaultOpen = false }: Props)
             <label style={{
               display: "flex", alignItems: "center", gap: 10, padding: "10px 16px",
               borderRadius: 8, cursor: "pointer",
-              border: `2px solid ${burnout ? "#ef4444" : "#dee2e6"}`,
-              background: burnout ? "rgba(239,68,68,0.06)" : "#ffffff",
-              fontSize: 13, color: "#1a2a5e", fontFamily: "'DM Sans', system-ui, sans-serif",
+              border: `2px solid ${burnout ? "#ef4444" : "var(--border-light)"}`,
+              background: burnout ? "rgba(239,68,68,0.06)" : "var(--bg-card)",
+              fontSize: 13, color: "var(--text-primary)", fontFamily: "'DM Sans', system-ui, sans-serif",
               transition: "all 0.15s",
             }}>
               <input
@@ -159,9 +159,9 @@ export default function EmotionalDistressTracker({ defaultOpen = false }: Props)
             <label style={{
               display: "flex", alignItems: "center", gap: 10, padding: "10px 16px",
               borderRadius: 8, cursor: "pointer",
-              border: `2px solid ${anxiety ? "#f97316" : "#dee2e6"}`,
-              background: anxiety ? "rgba(249,115,22,0.06)" : "#ffffff",
-              fontSize: 13, color: "#1a2a5e", fontFamily: "'DM Sans', system-ui, sans-serif",
+              border: `2px solid ${anxiety ? "#f97316" : "var(--border-light)"}`,
+              background: anxiety ? "rgba(249,115,22,0.06)" : "var(--bg-card)",
+              fontSize: 13, color: "var(--text-primary)", fontFamily: "'DM Sans', system-ui, sans-serif",
               transition: "all 0.15s",
             }}>
               <input
@@ -200,7 +200,7 @@ export default function EmotionalDistressTracker({ defaultOpen = false }: Props)
             type="button" onClick={save} disabled={saving}
             style={{
               width: "100%", minHeight: 48, borderRadius: 10, border: "none",
-              background: saving ? "#94a3b8" : "#2ab5c1", color: "#ffffff",
+              background: saving ? "var(--text-faint)" : "var(--accent-teal)", color: "#ffffff",
               fontSize: 14, fontWeight: 700, cursor: saving ? "not-allowed" : "pointer",
               fontFamily: "'DM Sans', system-ui, sans-serif",
               transition: "background 0.2s",

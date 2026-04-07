@@ -129,7 +129,7 @@ function isUnder18(dob: string): boolean {
 function Card({ title, defaultOpen = false, children }: { title: string; defaultOpen?: boolean; children: React.ReactNode }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
-    <div style={{ background: "#ffffff", borderRadius: 12, border: "1px solid #dee2e6", overflow: "hidden" }}>
+    <div style={{ background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)", overflow: "hidden" }}>
       <button
         type="button"
         onClick={() => setOpen(!open)}
@@ -137,11 +137,11 @@ function Card({ title, defaultOpen = false, children }: { title: string; default
           width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between",
           padding: "16px 20px", background: "none", border: "none", cursor: "pointer",
           fontFamily: "'Playfair Display', serif", fontSize: "clamp(16px, 5vw, 20px)",
-          fontWeight: 700, color: "#1a2a5e", textAlign: "left",
+          fontWeight: 700, color: "var(--text-primary)", textAlign: "left",
         }}
       >
         {title}
-        <span style={{ fontSize: 18, color: "#52667a", transition: "transform 0.2s", transform: open ? "rotate(180deg)" : "rotate(0deg)" }}>
+        <span style={{ fontSize: 18, color: "var(--text-secondary)", transition: "transform 0.2s", transform: open ? "rotate(180deg)" : "rotate(0deg)" }}>
           &#9662;
         </span>
       </button>
@@ -154,13 +154,13 @@ function Card({ title, defaultOpen = false, children }: { title: string; default
 
 const inputStyle: React.CSSProperties = {
   width: "100%", minHeight: 48, padding: "12px 14px", borderRadius: 8,
-  border: "1px solid #dee2e6", background: "#ffffff", color: "#1a2a5e",
+  border: "1px solid var(--border-light)", background: "var(--bg-card)", color: "var(--text-primary)",
   fontSize: 14, fontFamily: "'DM Sans', system-ui, sans-serif",
   outline: "none", boxSizing: "border-box",
 };
 
 const labelStyle: React.CSSProperties = {
-  display: "block", fontSize: 13, fontWeight: 600, color: "#1a2a5e",
+  display: "block", fontSize: 13, fontWeight: 600, color: "var(--text-primary)",
   marginBottom: 6, fontFamily: "'DM Sans', system-ui, sans-serif",
 };
 
@@ -193,7 +193,7 @@ function SelectInput({ value, onChange, options, placeholder }: {
   return (
     <select
       value={value} onChange={(e) => onChange(e.target.value)}
-      style={{ ...inputStyle, appearance: "auto", cursor: "pointer", color: value ? "#1a2a5e" : "#52667a" }}
+      style={{ ...inputStyle, appearance: "auto", cursor: "pointer", color: value ? "var(--text-primary)" : "var(--text-secondary)" }}
     >
       <option value="">{placeholder ?? "Select…"}</option>
       {options.map((o) => <option key={o} value={o}>{o}</option>)}
@@ -214,9 +214,9 @@ function CheckboxGrid({ options, selected, onToggle }: {
             style={{
               display: "flex", alignItems: "center", gap: 8, minHeight: 48,
               padding: "8px 12px", borderRadius: 8, cursor: "pointer",
-              border: `1px solid ${checked ? "#2ab5c1" : "#dee2e6"}`,
+              border: `1px solid ${checked ? "var(--accent-teal)" : "var(--border-light)"}`,
               background: checked ? "rgba(42,181,193,0.08)" : "#ffffff",
-              fontSize: 13, color: "#1a2a5e", fontFamily: "'DM Sans', system-ui, sans-serif",
+              fontSize: 13, color: "var(--text-primary)", fontFamily: "'DM Sans', system-ui, sans-serif",
               transition: "all 0.15s",
             }}
           >
@@ -244,9 +244,9 @@ function MultiSelectPills({ options, selected, onToggle }: {
             key={opt.value} type="button" onClick={() => onToggle(opt.value)}
             style={{
               minHeight: 48, padding: "10px 16px", borderRadius: 8, cursor: "pointer",
-              border: `1px solid ${checked ? "#2ab5c1" : "#dee2e6"}`,
+              border: `1px solid ${checked ? "var(--accent-teal)" : "var(--border-light)"}`,
               background: checked ? "rgba(42,181,193,0.12)" : "#ffffff",
-              color: checked ? "#2ab5c1" : "#52667a",
+              color: checked ? "var(--accent-teal)" : "var(--text-secondary)",
               fontSize: 13, fontWeight: checked ? 600 : 400,
               fontFamily: "'DM Sans', system-ui, sans-serif",
               transition: "all 0.15s",
@@ -266,18 +266,18 @@ function ProgressBar({ percent }: { percent: number }) {
   return (
     <div style={{ marginBottom: 24 }}>
       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
-        <span style={{ fontSize: 13, fontWeight: 600, color: "#1a2a5e", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+        <span style={{ fontSize: 13, fontWeight: 600, color: "var(--text-primary)", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
           Profile completion
         </span>
-        <span style={{ fontSize: 13, fontWeight: 700, color: percent === 100 ? "#16a34a" : "#2ab5c1", fontFamily: "'JetBrains Mono', monospace" }}>
+        <span style={{ fontSize: 13, fontWeight: 700, color: percent === 100 ? "#16a34a" : "var(--accent-teal)", fontFamily: "'JetBrains Mono', monospace" }}>
           {percent}%
         </span>
       </div>
-      <div style={{ height: 8, borderRadius: 4, background: "#dee2e6", overflow: "hidden" }}>
+      <div style={{ height: 8, borderRadius: 4, background: "var(--border-light)", overflow: "hidden" }}>
         <div
           style={{
             width: `${percent}%`, height: "100%", borderRadius: 4,
-            background: percent === 100 ? "#16a34a" : "linear-gradient(90deg, #2ab5c1, #1a2a5e)",
+            background: percent === 100 ? "#16a34a" : "linear-gradient(90deg, var(--accent-teal), var(--text-primary))",
             transition: "width 0.4s ease",
           }}
         />
@@ -380,25 +380,25 @@ export default function ProfilePage() {
 
   if (loading) {
     return (
-      <div style={{ minHeight: "100vh", background: "#f8f9fa", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <p style={{ color: "#52667a", fontSize: 14, fontFamily: "'DM Sans', system-ui, sans-serif" }}>Loading profile...</p>
+      <div style={{ minHeight: "100vh", background: "var(--bg-primary)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <p style={{ color: "var(--text-secondary)", fontSize: 14, fontFamily: "'DM Sans', system-ui, sans-serif" }}>Loading profile...</p>
       </div>
     );
   }
 
   return (
-    <div style={{ minHeight: "100vh", background: "#f8f9fa" }}>
+    <div style={{ minHeight: "100vh", background: "var(--bg-primary)" }}>
       <div style={{ maxWidth: 640, margin: "0 auto", padding: "clamp(16px, 4vw, 32px)" }}>
 
         {/* Header */}
         <div style={{ marginBottom: 24 }}>
           <h1 style={{
             fontFamily: "'Playfair Display', serif", fontSize: "clamp(24px, 6vw, 32px)",
-            fontWeight: 700, color: "#1a2a5e", margin: "0 0 4px",
+            fontWeight: 700, color: "var(--text-primary)", margin: "0 0 4px",
           }}>
             Patient Profile
           </h1>
-          <p style={{ fontSize: 14, color: "#52667a", margin: 0, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+          <p style={{ fontSize: 14, color: "var(--text-secondary)", margin: 0, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
             Complete your profile to personalise your GluMira™ experience.
           </p>
         </div>
@@ -408,8 +408,8 @@ export default function ProfilePage() {
 
         {/* Medical disclaimer */}
         <div style={{
-          borderRadius: 8, background: "#fffbeb", border: "1px solid #fbbf24",
-          padding: "10px 14px", marginBottom: 20, fontSize: 12, color: "#92400e",
+          borderRadius: 8, background: "var(--disclaimer-bg)", border: "1px solid var(--disclaimer-border)",
+          padding: "10px 14px", marginBottom: 20, fontSize: 12, color: "var(--disclaimer-text)",
           fontFamily: "'DM Sans', system-ui, sans-serif",
         }}>
           {DISCLAIMER}
@@ -419,7 +419,7 @@ export default function ProfilePage() {
 
           {/* ── Section 0: Profile Type ─────────────────────────────────── */}
           <Card title="Who are you?" defaultOpen={true}>
-            <p style={{ fontSize: 13, color: "#52667a", marginBottom: 12, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+            <p style={{ fontSize: 13, color: "var(--text-secondary)", marginBottom: 12, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
               This helps GluMira™ personalise your experience and onboarding story.
             </p>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 10 }}>
@@ -432,16 +432,16 @@ export default function ProfilePage() {
                     style={{
                       display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 4,
                       padding: "16px 14px", borderRadius: 10, cursor: "pointer", textAlign: "left",
-                      border: `1.5px solid ${selected ? "#2ab5c1" : "#e2e8f0"}`,
+                      border: `1.5px solid ${selected ? "var(--accent-teal)" : "var(--border)"}`,
                       background: selected ? "rgba(42,181,193,0.05)" : "#ffffff",
                       transition: "all 0.15s",
                     }}
                   >
                     <span style={{ fontSize: 24 }}>{pt.icon}</span>
-                    <span style={{ fontSize: 14, fontWeight: 600, color: "#1a2a5e", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+                    <span style={{ fontSize: 14, fontWeight: 600, color: "var(--text-primary)", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
                       {selected ? "\u2713 " : ""}{pt.label}
                     </span>
-                    <span style={{ fontSize: 12, color: "#94a3b8", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+                    <span style={{ fontSize: 12, color: "var(--text-faint)", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
                       {pt.desc}
                     </span>
                   </button>
@@ -469,7 +469,7 @@ export default function ProfilePage() {
             {under18 && (
               <div style={{
                 borderRadius: 8, background: "rgba(42,181,193,0.08)", border: "1px solid #2ab5c1",
-                padding: "10px 14px", marginBottom: 12, fontSize: 13, color: "#1a2a5e",
+                padding: "10px 14px", marginBottom: 12, fontSize: 13, color: "var(--text-primary)",
                 fontFamily: "'DM Sans', system-ui, sans-serif",
               }}>
                 Under-18 detected — eligible for 3-month free tier.
@@ -521,8 +521,8 @@ export default function ProfilePage() {
                         type="button"
                         onClick={() => set("basal_times")(form.basal_times.filter((_, j) => j !== i))}
                         style={{
-                          width: 32, height: 32, borderRadius: 6, border: "1px solid #dee2e6",
-                          background: "#fff", color: "#991b1b", fontSize: 16, cursor: "pointer",
+                          width: 32, height: 32, borderRadius: 6, border: "1px solid var(--border-light)",
+                          background: "#fff", color: "var(--error-text)", fontSize: 16, cursor: "pointer",
                           display: "flex", alignItems: "center", justifyContent: "center",
                         }}
                         aria-label="Remove time slot"
@@ -546,7 +546,7 @@ export default function ProfilePage() {
                     </button>
                   )}
                 </div>
-                <p style={{ fontSize: 11, color: "#94a3b8", marginTop: 6, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+                <p style={{ fontSize: 11, color: "var(--text-faint)", marginTop: 6, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
                   {form.basal_times.length} of 4 slots used
                 </p>
               </Field>
@@ -579,9 +579,9 @@ export default function ProfilePage() {
                     key={n} type="button" onClick={() => set("meals_per_day")(n)}
                     style={{
                       minWidth: 48, minHeight: 48, borderRadius: 8, cursor: "pointer",
-                      border: `1px solid ${form.meals_per_day === n ? "#2ab5c1" : "#dee2e6"}`,
+                      border: `1px solid ${form.meals_per_day === n ? "var(--accent-teal)" : "var(--border-light)"}`,
                       background: form.meals_per_day === n ? "rgba(42,181,193,0.12)" : "#ffffff",
-                      color: form.meals_per_day === n ? "#2ab5c1" : "#52667a",
+                      color: form.meals_per_day === n ? "var(--accent-teal)" : "var(--text-secondary)",
                       fontSize: 15, fontWeight: form.meals_per_day === n ? 700 : 400,
                       fontFamily: "'JetBrains Mono', monospace",
                     }}
@@ -595,7 +595,7 @@ export default function ProfilePage() {
 
           {/* ── Section 4: Comorbidities ────────────────────────────────── */}
           <Card title="Comorbidities">
-            <p style={{ fontSize: 13, color: "#52667a", marginBottom: 12, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+            <p style={{ fontSize: 13, color: "var(--text-secondary)", marginBottom: 12, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
               Select any conditions that apply. This helps GluMira™ personalise educational content.
             </p>
             <CheckboxGrid options={COMORBIDITIES} selected={form.comorbidities} onToggle={toggleArray("comorbidities")} />
@@ -603,7 +603,7 @@ export default function ProfilePage() {
 
           {/* ── Section 5: Special Condition Flags ──────────────────────── */}
           <Card title="Special Condition Flags">
-            <p style={{ fontSize: 13, color: "#52667a", marginBottom: 12, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+            <p style={{ fontSize: 13, color: "var(--text-secondary)", marginBottom: 12, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
               Flag any current conditions that may affect insulin sensitivity or timing.
             </p>
             <CheckboxGrid options={SPECIAL_CONDITIONS} selected={form.special_conditions} onToggle={toggleArray("special_conditions")} />
@@ -614,9 +614,9 @@ export default function ProfilePage() {
             <label style={{
               display: "flex", alignItems: "center", gap: 12, minHeight: 48,
               padding: "10px 14px", borderRadius: 8, cursor: "pointer",
-              border: `1px solid ${form.is_caregiver ? "#2ab5c1" : "#dee2e6"}`,
+              border: `1px solid ${form.is_caregiver ? "var(--accent-teal)" : "var(--border-light)"}`,
               background: form.is_caregiver ? "rgba(42,181,193,0.08)" : "#ffffff",
-              fontSize: 14, color: "#1a2a5e", fontFamily: "'DM Sans', system-ui, sans-serif",
+              fontSize: 14, color: "var(--text-primary)", fontFamily: "'DM Sans', system-ui, sans-serif",
               marginBottom: form.is_caregiver ? 16 : 0,
             }}>
               <input
@@ -642,7 +642,7 @@ export default function ProfilePage() {
         {/* ── Save Button & Feedback ─────────────────────────────────────── */}
         <div style={{ marginTop: 24, display: "flex", flexDirection: "column", gap: 12 }}>
           {error && (
-            <div style={{ borderRadius: 8, background: "#fef2f2", border: "1px solid #fca5a5", padding: "10px 14px", fontSize: 13, color: "#991b1b" }}>
+            <div style={{ borderRadius: 8, background: "var(--error-bg)", border: "1px solid var(--error-border)", padding: "10px 14px", fontSize: 13, color: "var(--error-text)" }}>
               {error}
             </div>
           )}
@@ -655,7 +655,7 @@ export default function ProfilePage() {
             type="button" onClick={save} disabled={saving}
             style={{
               width: "100%", minHeight: 52, borderRadius: 10, border: "none",
-              background: saving ? "#94a3b8" : "#2ab5c1", color: "#ffffff",
+              background: saving ? "var(--text-faint)" : "var(--accent-teal)", color: "#ffffff",
               fontSize: 15, fontWeight: 700, cursor: saving ? "not-allowed" : "pointer",
               fontFamily: "'DM Sans', system-ui, sans-serif",
               transition: "background 0.2s",

@@ -32,7 +32,7 @@ const PRESSURE_COLOURS: Record<string, string> = {
 };
 
 function getColour(pressure: string, iob: number, maxIOB: number): string {
-  if (iob <= 0 || maxIOB <= 0) return "#f1f3f5";
+  if (iob <= 0 || maxIOB <= 0) return "var(--card-hover)";
   const base = PRESSURE_COLOURS[pressure] ?? "#22c55e";
   const opacity = Math.max(0.15, Math.min(1, iob / maxIOB));
   return `${base}${Math.round(opacity * 255).toString(16).padStart(2, "0")}`;
@@ -51,10 +51,10 @@ export default function BasalHeatmap({ doses, rows }: Props) {
   if (rows.length === 0) {
     return (
       <div style={{
-        background: "#ffffff", borderRadius: 12, border: "1px solid #dee2e6",
+        background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)",
         padding: 32, textAlign: "center",
       }}>
-        <p style={{ fontSize: 14, color: "#52667a", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+        <p style={{ fontSize: 14, color: "var(--text-secondary)", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
           No basal doses recorded today.
         </p>
       </div>
@@ -62,8 +62,8 @@ export default function BasalHeatmap({ doses, rows }: Props) {
   }
 
   return (
-    <div style={{ background: "#ffffff", borderRadius: 12, border: "1px solid #dee2e6", padding: 16 }}>
-      <h3 style={{ margin: "0 0 12px", fontSize: 16, fontWeight: 700, color: "#1a2a5e", fontFamily: "'Playfair Display', serif" }}>
+    <div style={{ background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)", padding: 16 }}>
+      <h3 style={{ margin: "0 0 12px", fontSize: 16, fontWeight: 700, color: "var(--text-primary)", fontFamily: "'Playfair Display', serif" }}>
         Basal Dose Heatmap
       </h3>
       <div style={{ overflowX: "auto" }}>
@@ -76,7 +76,7 @@ export default function BasalHeatmap({ doses, rows }: Props) {
                 style={{
                   flex: "0 0 auto",
                   width: `${(3 / 24) * 100}%`,
-                  fontSize: 10, color: "#52667a",
+                  fontSize: 10, color: "var(--text-secondary)",
                   fontFamily: "'JetBrains Mono', monospace",
                 }}
               >
@@ -91,13 +91,13 @@ export default function BasalHeatmap({ doses, rows }: Props) {
               {/* Label */}
               <div style={{
                 width: 160, flexShrink: 0, fontSize: 12, fontWeight: 600,
-                color: "#1a2a5e", fontFamily: "'DM Sans', system-ui, sans-serif",
+                color: "var(--text-primary)", fontFamily: "'DM Sans', system-ui, sans-serif",
                 paddingRight: 8, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
               }}>
                 {row.label}
               </div>
               {/* Heat bar */}
-              <div style={{ flex: 1, display: "flex", height: 24, borderRadius: 4, overflow: "hidden", border: "1px solid #e9ecef" }}>
+              <div style={{ flex: 1, display: "flex", height: 24, borderRadius: 4, overflow: "hidden", border: "1px solid var(--border-divider)" }}>
                 {row.slots.map((slot, si) => {
                   const hasOverlap = slot.pressure === "overlap" || slot.pressure === "strong";
                   return (

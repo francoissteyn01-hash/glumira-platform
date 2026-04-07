@@ -17,8 +17,8 @@ const CFG: Record<PressureClass, { label: string; colour: string; bg: string }> 
 export default function RiskWindowCard({ pressure }: Props) {
   const c = CFG[pressure];
   return (
-    <div style={{ background: "#ffffff", borderRadius: 12, border: "1px solid #dee2e6", padding: 20 }}>
-      <p style={{ margin: 0, fontSize: 12, fontWeight: 600, color: "#52667a", textTransform: "uppercase", letterSpacing: 0.5, fontFamily: "'DM Sans', system-ui, sans-serif" }}>Stacking Risk</p>
+    <div style={{ background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)", padding: 20 }}>
+      <p style={{ margin: 0, fontSize: 12, fontWeight: 600, color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: 0.5, fontFamily: "'DM Sans', system-ui, sans-serif" }}>Stacking Risk</p>
       <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 8 }}>
         <span style={{ width: 14, height: 14, borderRadius: "50%", background: c.colour, display: "inline-block" }} />
         <span style={{ fontSize: 20, fontWeight: 700, color: c.colour, fontFamily: "'DM Sans', system-ui, sans-serif" }}>{c.label}</span>

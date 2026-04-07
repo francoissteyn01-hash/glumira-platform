@@ -79,22 +79,22 @@ const EMPTY_FORM: MealLogForm = {
 
 const inputStyle: React.CSSProperties = {
   width: "100%", minHeight: 48, padding: "12px 14px", borderRadius: 8,
-  border: "1px solid #dee2e6", background: "#ffffff", color: "#1a2a5e",
+  border: "1px solid var(--border-light)", background: "var(--bg-card)", color: "var(--text-primary)",
   fontSize: 14, fontFamily: "'DM Sans', system-ui, sans-serif",
   outline: "none", boxSizing: "border-box",
 };
 
 const labelStyle: React.CSSProperties = {
-  display: "block", fontSize: 13, fontWeight: 600, color: "#1a2a5e",
+  display: "block", fontSize: 13, fontWeight: 600, color: "var(--text-primary)",
   marginBottom: 6, fontFamily: "'DM Sans', system-ui, sans-serif",
 };
 
 const focusIn = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-  e.currentTarget.style.borderColor = "#2ab5c1";
+  e.currentTarget.style.borderColor = "var(--accent-teal)";
   e.currentTarget.style.boxShadow = "0 0 0 3px rgba(42,181,193,0.15)";
 };
 const focusOut = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-  e.currentTarget.style.borderColor = "#dee2e6";
+  e.currentTarget.style.borderColor = "var(--border-light)";
   e.currentTarget.style.boxShadow = "none";
 };
 
@@ -215,24 +215,24 @@ export default function MealLogPage() {
 
   /* ─── Render ────────────────────────────────────────────────────────── */
   return (
-    <div style={{ minHeight: "100vh", background: "#f8f9fa" }}>
+    <div style={{ minHeight: "100vh", background: "var(--bg-primary)" }}>
       <div style={{ maxWidth: 640, margin: "0 auto", padding: "clamp(16px, 4vw, 32px)" }}>
 
         {/* Header */}
         <div style={{ marginBottom: 24 }}>
           <h1 style={{
             fontFamily: "'Playfair Display', serif", fontSize: "clamp(24px, 6vw, 32px)",
-            fontWeight: 700, color: "#1a2a5e", margin: "0 0 4px",
+            fontWeight: 700, color: "var(--text-primary)", margin: "0 0 4px",
           }}>
             Meal &amp; Event Log
           </h1>
-          <p style={{ fontSize: 14, color: "#52667a", margin: 0, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+          <p style={{ fontSize: 14, color: "var(--text-secondary)", margin: 0, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
             Log meals, insulin doses, and low interventions with full decimal precision.
           </p>
         </div>
 
         {/* ── Time & Event Type ─────────────────────────────────────────── */}
-        <div style={{ background: "#ffffff", borderRadius: 12, border: "1px solid #dee2e6", padding: 20, marginBottom: 16 }}>
+        <div style={{ background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)", padding: 20, marginBottom: 16 }}>
           <Field label="Time">
             <input
               type="datetime-local" value={form.meal_time}
@@ -255,11 +255,11 @@ export default function MealLogPage() {
 
         {/* ── Insulin (conditional) ─────────────────────────────────────── */}
         {showInsulin && (
-          <div style={{ background: "#ffffff", borderRadius: 12, border: "1px solid #dee2e6", padding: 20, marginBottom: 16 }}>
+          <div style={{ background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)", padding: 20, marginBottom: 16 }}>
             <Field label="Insulin type">
               <select
                 value={form.insulin_type} onChange={(e) => set("insulin_type")(e.target.value)}
-                style={{ ...inputStyle, appearance: "auto", cursor: "pointer", color: form.insulin_type ? "#1a2a5e" : "#52667a" }}
+                style={{ ...inputStyle, appearance: "auto", cursor: "pointer", color: form.insulin_type ? "var(--text-primary)" : "var(--text-secondary)" }}
                 onFocus={focusIn as any} onBlur={focusOut as any}
               >
                 <option value="">Select insulin…</option>
@@ -281,7 +281,7 @@ export default function MealLogPage() {
         )}
 
         {/* ── Glucose ───────────────────────────────────────────────────── */}
-        <div style={{ background: "#ffffff", borderRadius: 12, border: "1px solid #dee2e6", padding: 20, marginBottom: 16 }}>
+        <div style={{ background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)", padding: 20, marginBottom: 16 }}>
           <div style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: 12 }}>
             <Field label="Glucose (optional)">
               <input
@@ -307,7 +307,7 @@ export default function MealLogPage() {
 
         {/* ── Macros & Food ─────────────────────────────────────────────── */}
         {!isLowIntervention && (
-          <div style={{ background: "#ffffff", borderRadius: 12, border: "1px solid #dee2e6", padding: 20, marginBottom: 16 }}>
+          <div style={{ background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)", padding: 20, marginBottom: 16 }}>
             <Field label="Food description">
               <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
                 <input
@@ -316,7 +316,7 @@ export default function MealLogPage() {
                   placeholder="e.g. 2 slices toast with peanut butter"
                   style={{ ...inputStyle, flex: 1 }} onFocus={focusIn} onBlur={focusOut}
                 />
-                <label style={{ minWidth: 48, minHeight: 48, borderRadius: 8, border: "1px solid #dee2e6", background: "#f8f9fa", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", fontSize: 20, flexShrink: 0 }}>
+                <label style={{ minWidth: 48, minHeight: 48, borderRadius: 8, border: "1px solid var(--border-light)", background: "var(--bg-primary)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", fontSize: 20, flexShrink: 0 }}>
                   {photoUploading ? "\u23F3" : "\u{1F4F7}"}
                   <input
                     type="file" accept="image/*" capture="environment"
@@ -388,9 +388,9 @@ export default function MealLogPage() {
 
         {/* ── Low Intervention (conditional) ────────────────────────────── */}
         {isLowIntervention && (
-          <div style={{ background: "#ffffff", borderRadius: 12, border: "1px solid #fca5a5", padding: 20, marginBottom: 16 }}>
+          <div style={{ background: "#ffffff", borderRadius: 12, border: "1px solid var(--error-border)", padding: 20, marginBottom: 16 }}>
             <div style={{
-              fontSize: 12, fontWeight: 700, color: "#991b1b", textTransform: "uppercase",
+              fontSize: 12, fontWeight: 700, color: "var(--error-text)", textTransform: "uppercase",
               letterSpacing: 1, marginBottom: 14, fontFamily: "'DM Sans', system-ui, sans-serif",
             }}>
               Low Treatment
@@ -398,7 +398,7 @@ export default function MealLogPage() {
             <Field label="Treatment type">
               <select
                 value={form.low_treatment_type} onChange={(e) => set("low_treatment_type")(e.target.value)}
-                style={{ ...inputStyle, appearance: "auto", cursor: "pointer", color: form.low_treatment_type ? "#1a2a5e" : "#52667a" }}
+                style={{ ...inputStyle, appearance: "auto", cursor: "pointer", color: form.low_treatment_type ? "var(--text-primary)" : "var(--text-secondary)" }}
                 onFocus={focusIn as any} onBlur={focusOut as any}
               >
                 <option value="">Select treatment…</option>
@@ -420,7 +420,7 @@ export default function MealLogPage() {
         )}
 
         {/* ── Comment ───────────────────────────────────────────────────── */}
-        <div style={{ background: "#ffffff", borderRadius: 12, border: "1px solid #dee2e6", padding: 20, marginBottom: 16 }}>
+        <div style={{ background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)", padding: 20, marginBottom: 16 }}>
           <Field label="Comment">
             <textarea
               value={form.comment} onChange={(e) => set("comment")(e.target.value)}
@@ -435,7 +435,7 @@ export default function MealLogPage() {
         {/* ── Save Button & Feedback ────────────────────────────────────── */}
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
           {error && (
-            <div style={{ borderRadius: 8, background: "#fef2f2", border: "1px solid #fca5a5", padding: "10px 14px", fontSize: 13, color: "#991b1b" }}>
+            <div style={{ borderRadius: 8, background: "var(--error-bg)", border: "1px solid var(--error-border)", padding: "10px 14px", fontSize: 13, color: "var(--error-text)" }}>
               {error}
             </div>
           )}

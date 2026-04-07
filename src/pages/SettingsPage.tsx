@@ -10,10 +10,10 @@ import UnitToggle from "@/components/UnitToggle";
 import NightscoutSetup from "@/components/NightscoutSetup";
 import { useAutoSave, SavedIndicator } from "@/hooks/useAutoSave";
 
-const NAVY = "#1a2a5e";
-const TEAL = "#2ab5c1";
-const BORDER = "#e2e8f0";
-const MUTED = "#718096";
+const NAVY = "var(--text-primary)";
+const TEAL = "var(--accent-teal)";
+const BORDER = "var(--border)";
+const MUTED = "var(--text-muted)";
 
 export default function SettingsPage() {
   const { user } = useAuth();
@@ -46,7 +46,7 @@ export default function SettingsPage() {
   }
 
   return (
-    <div style={{ minHeight: "100vh", background: "#f8f9fa", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+    <div style={{ minHeight: "100vh", background: "var(--bg-primary)", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
       <div style={{ maxWidth: 640, margin: "0 auto", padding: "32px 20px 60px" }}>
         <h1 style={{ fontSize: 24, fontWeight: 700, color: NAVY, marginBottom: 24 }}>Settings</h1>
 
@@ -143,7 +143,7 @@ function Section({
 }: { title: string; children: React.ReactNode; indicator?: React.ReactNode }) {
   return (
     <div style={{
-      background: "#ffffff",
+      background: "var(--bg-card)",
       border: `1px solid ${BORDER}`,
       borderRadius: 12,
       padding: "20px 22px",
@@ -163,7 +163,7 @@ const inputStyle: React.CSSProperties = {
   padding: "10px 12px",
   borderRadius: 8,
   border: `1px solid ${BORDER}`,
-  background: "#f8f9fa",
+  background: "var(--bg-input)",
   fontSize: 14,
   color: NAVY,
   outline: "none",

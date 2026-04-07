@@ -70,10 +70,10 @@ export default function InsulinActivityCurve({ curves }: Props) {
   if (curves.length === 0) {
     return (
       <div style={{
-        background: "#ffffff", borderRadius: 12, border: "1px solid #dee2e6",
+        background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)",
         padding: 32, textAlign: "center",
       }}>
-        <p style={{ fontSize: 14, color: "#52667a", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+        <p style={{ fontSize: 14, color: "var(--text-secondary)", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
           No insulin activity to display.
         </p>
       </div>
@@ -81,42 +81,42 @@ export default function InsulinActivityCurve({ curves }: Props) {
   }
 
   return (
-    <div style={{ background: "#ffffff", borderRadius: 12, border: "1px solid #dee2e6", padding: "16px 16px 8px" }}>
+    <div style={{ background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)", padding: "16px 16px 8px" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12, padding: "0 4px" }}>
-        <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: "#1a2a5e", fontFamily: "'Playfair Display', serif" }}>
+        <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: "var(--text-primary)", fontFamily: "'Playfair Display', serif" }}>
           Insulin Activity Curves
         </h3>
         <div style={{ display: "flex", gap: 12 }}>
-          <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 11, color: "#52667a" }}>
+          <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 11, color: "var(--text-secondary)" }}>
             <span style={{ width: 10, height: 10, borderRadius: 2, background: BASAL_COLOUR, display: "inline-block" }} />Basal
           </span>
-          <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 11, color: "#52667a" }}>
+          <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 11, color: "var(--text-secondary)" }}>
             <span style={{ width: 10, height: 10, borderRadius: 2, background: BOLUS_COLOUR, display: "inline-block" }} />Bolus
           </span>
-          <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 11, color: "#52667a" }}>
+          <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 11, color: "var(--text-secondary)" }}>
             <span style={{ width: 10, height: 10, borderRadius: 2, background: OVERLAP_COLOUR, display: "inline-block" }} />Overlap
           </span>
         </div>
       </div>
       <ResponsiveContainer width="100%" height={240}>
         <ComposedChart data={data} margin={{ top: 4, right: 8, left: -16, bottom: 0 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#e9ecef" />
+          <CartesianGrid strokeDasharray="3 3" stroke="var(--border-divider)" />
           <XAxis
             dataKey="time"
             tickFormatter={formatTime}
-            tick={{ fontSize: 11, fill: "#52667a" }}
+            tick={{ fontSize: 11, fill: "var(--text-secondary)" }}
             interval="preserveStartEnd"
             minTickGap={60}
           />
           <YAxis
-            tick={{ fontSize: 11, fill: "#52667a" }}
+            tick={{ fontSize: 11, fill: "var(--text-secondary)" }}
             tickFormatter={(v: number) => `${v.toFixed(1)}`}
           />
           <Tooltip
             labelFormatter={(label: any) => formatTime(String(label))}
             formatter={(value: any, name: any) => [`${Number(value).toFixed(2)} U`, name]}
             contentStyle={{
-              background: "#ffffff", border: "1px solid #dee2e6", borderRadius: 8,
+              background: "var(--bg-card)", border: "1px solid var(--border-light)", borderRadius: 8,
               fontSize: 12, fontFamily: "'DM Sans', system-ui, sans-serif",
             }}
           />

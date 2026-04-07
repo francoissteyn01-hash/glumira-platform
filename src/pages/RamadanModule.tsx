@@ -12,11 +12,11 @@ const TEAL = "#2AB5C1";
 
 /* ── shared inline styles ──────────────────────────── */
 const card: React.CSSProperties = {
-  background: "#fff",
+  background: "var(--bg-card)",
   borderRadius: 12,
   padding: 24,
   marginBottom: 20,
-  border: "1px solid #e2e8f0",
+  border: "1px solid var(--border)",
 };
 const heading2: React.CSSProperties = { color: NAVY, fontSize: 20, fontWeight: 700, marginBottom: 12 };
 const heading3: React.CSSProperties = { color: NAVY, fontSize: 16, fontWeight: 600, marginBottom: 8 };
@@ -34,7 +34,7 @@ const pill: React.CSSProperties = {
   fontSize: 12, fontWeight: 600, marginRight: 6, marginBottom: 6,
 };
 const emergencyBox: React.CSSProperties = {
-  background: "#fef2f2", border: "1px solid #fca5a5", borderRadius: 12,
+  background: "var(--error-bg)", border: "1px solid var(--error-border)", borderRadius: 12,
   padding: 20, marginBottom: 20,
 };
 
@@ -141,7 +141,7 @@ export default function RamadanModule() {
   );
 
   return (
-    <div style={{ minHeight: "100vh", background: "#ffffff", padding: 24 }}>
+    <div style={{ minHeight: "100vh", background: "var(--bg-card)", padding: 24 }}>
       <div style={{ maxWidth: 780, margin: "0 auto" }}>
         {/* nav */}
         <Link to="/education" style={{ color: TEAL, fontSize: 14, textDecoration: "none" }}>
@@ -153,7 +153,7 @@ export default function RamadanModule() {
           <h1 style={{ margin: 0, fontFamily: "'Inter', sans-serif", color: NAVY, fontSize: 30, fontWeight: 800 }}>
             Ramadan &amp; Diabetes
           </h1>
-          <p style={{ margin: "4px 0 0", color: "#718096", fontSize: 15 }}>
+          <p style={{ margin: "4px 0 0", color: "var(--text-muted)", fontSize: 15 }}>
             Safe fasting guidance for people living with diabetes during Ramadan
           </p>
         </div>
@@ -166,7 +166,7 @@ export default function RamadanModule() {
           </p>
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
             <thead>
-              <tr style={{ borderBottom: "2px solid #e2e8f0", textAlign: "left" }}>
+              <tr style={{ borderBottom: "2px solid var(--border)", textAlign: "left" }}>
                 <th style={{ padding: 6 }}></th>
                 <th style={{ padding: 6 }}>Food</th>
                 <th style={{ padding: 6 }}>Carbs (g)</th>
@@ -222,7 +222,7 @@ export default function RamadanModule() {
           </div>
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
             <thead>
-              <tr style={{ borderBottom: "2px solid #e2e8f0", textAlign: "left" }}>
+              <tr style={{ borderBottom: "2px solid var(--border)", textAlign: "left" }}>
                 <th style={{ padding: 6 }}></th>
                 <th style={{ padding: 6 }}>Food</th>
                 <th style={{ padding: 6 }}>Carbs (g)</th>
@@ -324,7 +324,7 @@ export default function RamadanModule() {
               )}
             </div>
           </div>
-          <div style={{ background: "#fffbeb", borderRadius: 8, padding: 12, fontSize: 13, color: "#92400e" }}>
+          <div style={{ background: "var(--disclaimer-bg)", borderRadius: 8, padding: 12, fontSize: 13, color: "var(--disclaimer-text)" }}>
             <strong>Tip:</strong> If pre-Tarawih BG is below 7 mmol/L, consider a 15 g carb snack before prayers.
             If below 5 mmol/L, have a larger snack (20-30 g) and recheck before starting.
           </div>
@@ -337,7 +337,7 @@ export default function RamadanModule() {
           </p>
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
             <thead>
-              <tr style={{ borderBottom: "2px solid #e2e8f0", textAlign: "left" }}>
+              <tr style={{ borderBottom: "2px solid var(--border)", textAlign: "left" }}>
                 <th style={{ padding: 8 }}>Category</th>
                 <th style={{ padding: 8 }}>Ruling</th>
                 <th style={{ padding: 8 }}>Reference</th>
@@ -381,7 +381,7 @@ export default function RamadanModule() {
                 <li>You feel symptoms of DKA (nausea, vomiting, abdominal pain, fruity breath)</li>
                 <li>You become unwell for any reason</li>
               </ol>
-              <div style={{ background: "#fff", borderRadius: 8, padding: 16, marginTop: 12 }}>
+              <div style={{ background: "var(--bg-card)", borderRadius: 8, padding: 16, marginTop: 12 }}>
                 <h3 style={{ ...heading3, color: "#dc2626" }}>Hypo during fast — steps:</h3>
                 <ol style={{ margin: 0, paddingLeft: 20, lineHeight: 2, fontSize: 13 }}>
                   <li>Stop fasting immediately — this is <strong>not optional</strong></li>
@@ -408,7 +408,7 @@ export default function RamadanModule() {
           </p>
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
             <thead>
-              <tr style={{ borderBottom: "2px solid #e2e8f0", textAlign: "left" }}>
+              <tr style={{ borderBottom: "2px solid var(--border)", textAlign: "left" }}>
                 <th style={{ padding: 8 }}>Food</th>
                 <th style={{ padding: 8 }}>Carbs (g)</th>
               </tr>
@@ -428,7 +428,7 @@ export default function RamadanModule() {
         </Section>
 
         {/* ─── Disclaimer ─────────────────────────── */}
-        <div style={{ background: "#f8fafc", borderRadius: 12, padding: 20, marginTop: 8, border: "1px solid #e2e8f0" }}>
+        <div style={{ background: "#f8fafc", borderRadius: 12, padding: 20, marginTop: 8, border: "1px solid var(--border)" }}>
           <p style={{ margin: 0, fontSize: 13, color: "#64748b", lineHeight: 1.7 }}>
             <strong>Disclaimer:</strong> This module provides general educational guidance only.
             Every person's diabetes is different. <strong>Consult your imam and your diabetes care team</strong> before

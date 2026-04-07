@@ -58,18 +58,18 @@ export default function DoseReferencePanel({ foodDescription, mealType }: Props)
       background: "rgba(42,181,193,0.05)", borderRadius: 10, border: "1px solid rgba(42,181,193,0.2)",
       padding: "12px 16px", marginTop: 8,
     }}>
-      <p style={{ margin: "0 0 8px", fontSize: 11, fontWeight: 600, color: "#2ab5c1", textTransform: "uppercase", letterSpacing: 0.5, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+      <p style={{ margin: "0 0 8px", fontSize: 11, fontWeight: 600, color: "var(--accent-teal)", textTransform: "uppercase", letterSpacing: 0.5, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
         Historical reference — not a recommendation
       </p>
       {loading ? (
-        <p style={{ fontSize: 12, color: "#52667a", margin: 0, fontFamily: "'DM Sans', system-ui, sans-serif" }}>Searching past meals...</p>
+        <p style={{ fontSize: 12, color: "var(--text-secondary)", margin: 0, fontFamily: "'DM Sans', system-ui, sans-serif" }}>Searching past meals...</p>
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
           {refs.map((r, i) => (
-            <div key={i} style={{ fontSize: 12, color: "#1a2a5e", fontFamily: "'DM Sans', system-ui, sans-serif", lineHeight: 1.5 }}>
+            <div key={i} style={{ fontSize: 12, color: "var(--text-primary)", fontFamily: "'DM Sans', system-ui, sans-serif", lineHeight: 1.5 }}>
               <span style={{ fontWeight: 600 }}>Last time:</span> {r.meal_description.slice(0, 40)} — {r.dose_units.toFixed(1)}U {r.insulin_type}, {r.carbs_g.toFixed(0)}g carbs
-              {r.pre_glucose > 0 && <span style={{ color: "#52667a" }}> (BG {r.pre_glucose.toFixed(1)})</span>}
-              <span style={{ color: "#94a3b8", marginLeft: 6 }}>{r.date}</span>
+              {r.pre_glucose > 0 && <span style={{ color: "var(--text-secondary)" }}> (BG {r.pre_glucose.toFixed(1)})</span>}
+              <span style={{ color: "var(--text-faint)", marginLeft: 6 }}>{r.date}</span>
             </div>
           ))}
         </div>

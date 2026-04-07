@@ -27,6 +27,7 @@ import TimeInRangeDonut from "@/components/widgets/TimeInRangeDonut";
 import EventLogTable from "@/components/widgets/EventLogTable";
 import PresentationToggle from "@/components/PresentationMode";
 import ShareButton from "@/components/ShareButton";
+import ThemeToggle from "@/components/ThemeToggle";
 import { usePatientName } from "@/hooks/usePatientName";
 
 /* ─── Types ───────────────────────────────────────────────────────────────── */
@@ -225,19 +226,19 @@ export default function DashboardPage() {
 
   /* ─── Render ────────────────────────────────────────────────────────── */
   return (
-    <div style={{ minHeight: "100vh", background: "#f8f9fa" }}>
+    <div style={{ minHeight: "100vh", background: "var(--bg-primary)" }}>
       <div style={{ maxWidth: 960, margin: "0 auto", padding: "clamp(16px, 4vw, 32px)" }}>
 
-        {/* Header + Unit Toggle */}
+        {/* Header + Unit Toggle + Theme Toggle */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20, flexWrap: "wrap", gap: 12 }}>
           <div>
             <h1 style={{
               fontFamily: "'Playfair Display', serif", fontSize: "clamp(24px, 6vw, 32px)",
-              fontWeight: 700, color: "#1a2a5e", margin: "0 0 4px",
+              fontWeight: 700, color: "var(--text-primary)", margin: "0 0 4px",
             }}>
               {isCaregiver && patientName ? `${patientName}\u2019s Dashboard` : "Dashboard"}
             </h1>
-            <p style={{ fontSize: 14, color: "#52667a", margin: 0, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+            <p style={{ fontSize: 14, color: "var(--text-secondary)", margin: 0, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
               {isCaregiver && patientName
                 ? `Managing for ${patientName}`
                 : `Welcome back${user?.email ? `, ${user.email.split("@")[0]}` : ""}`}
@@ -246,6 +247,7 @@ export default function DashboardPage() {
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <ShareButton />
             <PresentationToggle />
+            <ThemeToggle />
             <UnitToggle />
           </div>
         </div>
@@ -253,7 +255,7 @@ export default function DashboardPage() {
         {/* Date range selector */}
         <div style={{ display: "flex", gap: 6, marginBottom: 16, flexWrap: "wrap" }}>
           {(["Today", "3D", "7D", "14D", "30D"] as const).map((label) => (
-            <button type="button" key={label} onClick={() => setDateRange(label)} style={{ padding: "6px 14px", borderRadius: 6, border: "1px solid #dee2e6", background: dateRange === label ? "#1a2a5e" : "#ffffff", color: dateRange === label ? "#ffffff" : "#52667a", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+            <button type="button" key={label} onClick={() => setDateRange(label)} style={{ padding: "6px 14px", borderRadius: 6, border: "1px solid var(--border-light)", background: dateRange === label ? "var(--date-btn-active-bg)" : "var(--bg-card)", color: dateRange === label ? "var(--date-btn-active-text)" : "var(--text-secondary)", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
               {label}
             </button>
           ))}
@@ -261,8 +263,8 @@ export default function DashboardPage() {
 
         {/* Disclaimer */}
         <div style={{
-          borderRadius: 8, background: "#fffbeb", border: "1px solid #fbbf24",
-          padding: "10px 14px", marginBottom: 20, fontSize: 12, color: "#92400e",
+          borderRadius: 8, background: "var(--disclaimer-bg)", border: "1px solid var(--disclaimer-border)",
+          padding: "10px 14px", marginBottom: 20, fontSize: 12, color: "var(--disclaimer-text)",
           fontFamily: "'DM Sans', system-ui, sans-serif",
         }}>
           {DISCLAIMER}
@@ -275,21 +277,21 @@ export default function DashboardPage() {
 
           {/* Current Glucose */}
           <div style={{
-            background: "#ffffff", borderRadius: 12, border: "1px solid #dee2e6", padding: 20,
+            background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)", padding: 20,
           }}>
-            <p style={{ margin: 0, fontSize: 12, fontWeight: 600, color: "#52667a", textTransform: "uppercase", letterSpacing: 0.5, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+            <p style={{ margin: 0, fontSize: 12, fontWeight: 600, color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: 0.5, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
               Latest Glucose
             </p>
             {latest ? (
               <>
-                <p style={{ margin: "4px 0 0", fontSize: 32, fontWeight: 700, color: "#1a2a5e", fontFamily: "'JetBrains Mono', monospace" }}>
+                <p style={{ margin: "4px 0 0", fontSize: 32, fontWeight: 700, color: "var(--text-primary)", fontFamily: "'JetBrains Mono', monospace" }}>
                   {fmtGlucose(latest.glucose, glucoseUnits)}
-                  <span style={{ fontSize: 16, marginLeft: 6, color: "#52667a" }}>{ARROWS[latest.trend] ?? "\u2014"}</span>
+                  <span style={{ fontSize: 16, marginLeft: 6, color: "var(--text-secondary)" }}>{ARROWS[latest.trend] ?? "\u2014"}</span>
                 </p>
-                <p style={{ margin: "2px 0 0", fontSize: 11, color: "#94a3b8", fontFamily: "'DM Sans', system-ui, sans-serif" }}>{timeAgo(latest.time)}</p>
+                <p style={{ margin: "2px 0 0", fontSize: 11, color: "var(--text-faint)", fontFamily: "'DM Sans', system-ui, sans-serif" }}>{timeAgo(latest.time)}</p>
               </>
             ) : (
-              <p style={{ margin: "4px 0 0", fontSize: 32, fontWeight: 700, color: "#dee2e6", fontFamily: "'JetBrains Mono', monospace" }}>&mdash;</p>
+              <p style={{ margin: "4px 0 0", fontSize: 32, fontWeight: 700, color: "var(--border-light)", fontFamily: "'JetBrains Mono', monospace" }}>&mdash;</p>
             )}
           </div>
 
@@ -328,8 +330,8 @@ export default function DashboardPage() {
                     style={{
                       display: "inline-flex", alignItems: "center", gap: 4,
                       padding: "4px 10px", borderRadius: 6,
-                      background: "#f1f3f5", border: `1px solid ${ev.intensity ? intensityColours[ev.intensity] ?? "#dee2e6" : "#dee2e6"}`,
-                      fontSize: 11, color: "#1a2a5e", fontFamily: "'DM Sans', system-ui, sans-serif",
+                      background: "var(--card-hover)", border: `1px solid ${ev.intensity ? intensityColours[ev.intensity] ?? "var(--border-light)" : "var(--border-light)"}`,
+                      fontSize: 11, color: "var(--text-primary)", fontFamily: "'DM Sans', system-ui, sans-serif",
                     }}
                   >
                     <span>{icons[ev.event_type] ?? "\u2699\uFE0F"}</span>
@@ -372,9 +374,9 @@ export default function DashboardPage() {
         </div>
 
         {/* ── Simulation Panel (placeholder) ─────────────────────────── */}
-        <div style={{ background: "#ffffff", borderRadius: 12, border: "1px dashed #dee2e6", padding: 32, textAlign: "center", marginBottom: 20 }}>
-          <p style={{ fontSize: 14, fontWeight: 600, color: "#94a3b8", margin: 0, fontFamily: "'DM Sans', system-ui, sans-serif" }}>Coming soon — timing simulation</p>
-          <p style={{ fontSize: 12, color: "#c4c9d2", margin: "4px 0 0", fontFamily: "'DM Sans', system-ui, sans-serif" }}>Compare before/after timing adjustments</p>
+        <div style={{ background: "var(--bg-card)", borderRadius: 12, border: "1px dashed var(--simulation-border)", padding: 32, textAlign: "center", marginBottom: 20 }}>
+          <p style={{ fontSize: 14, fontWeight: 600, color: "var(--text-faint)", margin: 0, fontFamily: "'DM Sans', system-ui, sans-serif" }}>Coming soon — timing simulation</p>
+          <p style={{ fontSize: 12, color: "var(--placeholder)", margin: "4px 0 0", fontFamily: "'DM Sans', system-ui, sans-serif" }}>Compare before/after timing adjustments</p>
         </div>
 
         {/* ── Event Log Table ─────────────────────────────────────────── */}
@@ -389,10 +391,10 @@ export default function DashboardPage() {
 
         {/* ── Nightscout Connection ─────────────────────────────────────── */}
         <div style={{
-          background: "#ffffff", borderRadius: 12, border: "1px solid #dee2e6",
+          background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)",
           padding: 20, marginBottom: 20,
         }}>
-          <p style={{ margin: "0 0 12px", fontSize: 15, fontWeight: 700, color: "#1a2a5e", fontFamily: "'Playfair Display', serif" }}>
+          <p style={{ margin: "0 0 12px", fontSize: 15, fontWeight: 700, color: "var(--text-primary)", fontFamily: "'Playfair Display', serif" }}>
             Nightscout Connection
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 12, marginBottom: 12 }}>
@@ -402,7 +404,7 @@ export default function DashboardPage() {
               placeholder="https://yoursite.herokuapp.com"
               style={{
                 width: "100%", minHeight: 44, padding: "10px 14px", borderRadius: 8,
-                border: "1px solid #dee2e6", background: "#f8f9fa", color: "#1a2a5e",
+                border: "1px solid var(--border-light)", background: "var(--bg-input)", color: "var(--text-primary)",
                 fontSize: 13, fontFamily: "'DM Sans', system-ui, sans-serif", outline: "none", boxSizing: "border-box",
               }}
             />
@@ -413,7 +415,7 @@ export default function DashboardPage() {
               placeholder="API Secret (optional)"
               style={{
                 width: "100%", minHeight: 44, padding: "10px 14px", borderRadius: 8,
-                border: "1px solid #dee2e6", background: "#f8f9fa", color: "#1a2a5e",
+                border: "1px solid var(--border-light)", background: "var(--bg-input)", color: "var(--text-primary)",
                 fontSize: 13, fontFamily: "'DM Sans', system-ui, sans-serif", outline: "none", boxSizing: "border-box",
               }}
             />
@@ -423,7 +425,7 @@ export default function DashboardPage() {
             disabled={syncing || !nsUrl}
             style={{
               minHeight: 40, padding: "0 20px", borderRadius: 8, border: "none",
-              background: syncing ? "#94a3b8" : "#2ab5c1", color: "#ffffff",
+              background: syncing ? "var(--text-faint)" : "var(--accent-teal)", color: "#ffffff",
               fontSize: 13, fontWeight: 700, cursor: syncing ? "not-allowed" : "pointer",
               fontFamily: "'DM Sans', system-ui, sans-serif",
             }}
@@ -434,8 +436,8 @@ export default function DashboardPage() {
 
         {error && (
           <div style={{
-            borderRadius: 8, background: "#fef2f2", border: "1px solid #fca5a5",
-            padding: "10px 14px", marginBottom: 20, fontSize: 13, color: "#991b1b",
+            borderRadius: 8, background: "var(--error-bg)", border: "1px solid var(--error-border)",
+            padding: "10px 14px", marginBottom: 20, fontSize: 13, color: "var(--error-text)",
           }}>
             {error}
           </div>
@@ -444,11 +446,11 @@ export default function DashboardPage() {
         {/* ── Recent Readings ───────────────────────────────────────────── */}
         {readings.length > 0 && (
           <div style={{
-            background: "#ffffff", borderRadius: 12, border: "1px solid #dee2e6",
+            background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)",
             overflow: "hidden", marginBottom: 20,
           }}>
-            <div style={{ padding: "14px 20px", borderBottom: "1px solid #e9ecef" }}>
-              <p style={{ margin: 0, fontSize: 15, fontWeight: 700, color: "#1a2a5e", fontFamily: "'Playfair Display', serif" }}>
+            <div style={{ padding: "14px 20px", borderBottom: "1px solid var(--border-divider)" }}>
+              <p style={{ margin: 0, fontSize: 15, fontWeight: 700, color: "var(--text-primary)", fontFamily: "'Playfair Display', serif" }}>
                 Recent Readings
               </p>
             </div>
@@ -458,7 +460,7 @@ export default function DashboardPage() {
                   key={i}
                   style={{
                     display: "flex", justifyContent: "space-between", alignItems: "center",
-                    padding: "10px 20px", borderBottom: i < 19 ? "1px solid #f1f3f5" : "none",
+                    padding: "10px 20px", borderBottom: i < 19 ? "1px solid var(--card-hover)" : "none",
                   }}
                 >
                   <span style={{
@@ -467,7 +469,7 @@ export default function DashboardPage() {
                   }}>
                     {fmtGlucose(r.glucose, glucoseUnits)} {ARROWS[r.trend] ?? ""}
                   </span>
-                  <span style={{ fontSize: 12, color: "#94a3b8", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+                  <span style={{ fontSize: 12, color: "var(--text-faint)", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
                     {timeAgo(r.time)}
                   </span>
                 </div>
@@ -478,17 +480,17 @@ export default function DashboardPage() {
 
         {/* ── Footer ─────────────────────────────────────────────────── */}
         {/* ── Footer ─────────────────────────────────────────────────── */}
-        <div style={{ borderTop: "1px solid #e9ecef", marginTop: 8, padding: "16px 0" }}>
+        <div style={{ borderTop: "1px solid var(--border-divider)", marginTop: 8, padding: "16px 0" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12, flexWrap: "wrap", gap: 8 }}>
-            <button type="button" style={{ padding: "8px 20px", borderRadius: 8, border: "2px solid #1a2a5e", background: "transparent", color: "#1a2a5e", fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+            <button type="button" style={{ padding: "8px 20px", borderRadius: 8, border: "2px solid var(--text-primary)", background: "transparent", color: "var(--text-primary)", fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
               Compare Days
             </button>
             <ExportReportButton />
           </div>
-          <p style={{ fontSize: 11, color: "#94a3b8", textAlign: "center", margin: "8px 0 4px", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+          <p style={{ fontSize: 11, color: "var(--text-faint)", textAlign: "center", margin: "8px 0 4px", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
             {DISCLAIMER}
           </p>
-          <p style={{ fontSize: 10, color: "#c4c9d2", textAlign: "center", margin: 0, fontFamily: "'JetBrains Mono', monospace" }}>
+          <p style={{ fontSize: 10, color: "var(--placeholder)", textAlign: "center", margin: 0, fontFamily: "'JetBrains Mono', monospace" }}>
             V7 — Powered by IOB Hunter™
           </p>
         </div>
