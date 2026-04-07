@@ -42,13 +42,11 @@ const SECTIONS: Section[] = [
       <>
         <p>
           Create your account, then set up your profile with your insulin regimen, glucose targets, and
-          diagnosis details. You can explore Safe Mode first — no sign-up needed — to see what GluMira™
-          looks like with fictional demo profiles.
+          diagnosis details.
         </p>
         <ul>
           <li><strong>Sign up</strong> at <Link to="/register" style={{ color: TEAL }}>/register</Link> (email + password)</li>
           <li><strong>Complete onboarding</strong> — tell GluMira™ about your regimen and targets</li>
-          <li><strong>Or try Safe Mode</strong> at <Link to="/safe-mode" style={{ color: TEAL }}>/safe-mode</Link> with no real data</li>
         </ul>
       </>
     ),
@@ -320,11 +318,11 @@ export default function TutorialPage() {
             Ready to explore?
           </h3>
           <p style={{ fontSize: 13, color: MUTED, margin: "0 0 16px" }}>
-            Try Safe Mode with a demo profile — no real data needed.
+            Jump into your dashboard or sign up to get started.
           </p>
           <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
             <Link
-              to="/safe-mode"
+              to="/dashboard"
               style={{
                 background: TEAL,
                 color: NAVY,
@@ -335,7 +333,7 @@ export default function TutorialPage() {
                 textDecoration: "none",
               }}
             >
-              Open Safe Mode
+              Open Dashboard
             </Link>
             <Link
               to="/register"

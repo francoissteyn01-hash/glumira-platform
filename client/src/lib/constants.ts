@@ -24,7 +24,6 @@ export const NAV_LINKS = [
   { label: "Badges",     href: "/badges" },
   { label: "Settings",   href: "/settings" },
   { label: "FAQ",        href: "/faq" },
-  { label: "Safe Mode", href: "/safe-mode" },
 ] as const;
 
 export const BADGE_TIERS = ["bronze", "silver", "gold", "platinum"] as const;

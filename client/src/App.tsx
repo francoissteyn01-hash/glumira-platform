@@ -30,10 +30,6 @@ const HalalModule          = lazy(() => import("./pages/HalalModule"));
 const BernsteinModule      = lazy(() => import("./pages/BernsteinModule"));
 const SickDayModule        = lazy(() => import("./pages/SickDayModule"));
 
-/* Safe Mode */
-const SafeModePage         = lazy(() => import("./pages/SafeModePage"));
-const DemoDashboard        = lazy(() => import("./components/DemoDashboard"));
-const CreateProfilePage    = lazy(() => import("./pages/CreateProfilePage"));
 
 const MODULE_LINKS = [
   { label: "Pregnancy",        href: "/modules/pregnancy"  },
@@ -129,10 +125,6 @@ export default function App() {
             <Route path="/modules/halal"       element={<HalalModule />} />
             <Route path="/modules/bernstein"   element={<BernsteinModule />} />
             <Route path="/modules/sick-day"    element={<SickDayModule />} />
-            {/* Safe Mode */}
-            <Route path="/safe-mode"               element={<SafeModePage />} />
-            <Route path="/safe-mode/profile/:id"   element={<DemoDashboard />} />
-            <Route path="/safe-mode/create"        element={<CreateProfilePage />} />
             <Route path="*"                    element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </Suspense>

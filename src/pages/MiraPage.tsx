@@ -24,9 +24,6 @@ const FEEDBACK_QUESTIONS = [
   "Anything else you'd like to share?",
 ];
 
-function isSafeMode(): boolean {
-  try { return sessionStorage.getItem("glumira_safe_mode") === "1"; } catch { return false; }
-}
 
 async function submitFeedback(answers: string[]) {
   const [mostUseful, mostConfusing, featureRequest, ratingStr, otherThoughts] = answers;
@@ -195,7 +192,7 @@ export default function MiraPage() {
                 {p}
               </button>
             ))}
-            {isSafeMode() && feedbackStep < 0 && (
+            {feedbackStep < 0 && (
               <button type="button" onClick={startFeedback} className="text-xs bg-amber-900/30 border border-amber-700/50 text-amber-400 rounded-lg px-3 py-1.5 hover:bg-amber-900/50 transition-colors">
                 Give Feedback
               </button>
@@ -203,8 +200,8 @@ export default function MiraPage() {
           </div>
         </div>
       )}
-      {/* Persistent feedback chip when in safe mode and past initial prompts */}
-      {isSafeMode() && messages.length > 2 && feedbackStep < 0 && (
+      {/* Persistent feedback chip */}
+      {messages.length > 2 && feedbackStep < 0 && (
         <div className="px-4 pb-1 max-w-2xl mx-auto w-full">
           <button type="button" onClick={startFeedback} className="text-xs bg-amber-900/30 border border-amber-700/50 text-amber-400 rounded-lg px-3 py-1.5 hover:bg-amber-900/50 transition-colors">
             Give Feedback

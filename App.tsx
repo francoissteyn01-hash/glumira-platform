@@ -49,10 +49,6 @@ const SickDayModule           = lazy(() => import("@/pages/SickDayModule"));
 const MealPlanPage            = lazy(() => import("@/pages/MealPlanPage"));
 const EducationTopicPage      = lazy(() => import("@/pages/EducationTopicPage"));
 
-/* ─── Safe Mode ────────────────────────────────────────────────────────────── */
-const SafeModePage            = lazy(() => import("@/pages/SafeModePage"));
-const DemoDashboardPage       = lazy(() => import("@/pages/DemoDashboardPage"));
-const CreateProfilePage       = lazy(() => import("@/pages/CreateProfilePage"));
 const DevPanel                = lazy(() => import("@/pages/DevPanel"));
 const RegisterPage            = lazy(() => import("@/pages/RegisterPage"));
 const TutorialPage            = lazy(() => import("@/pages/TutorialPage"));
@@ -70,7 +66,6 @@ function LoadingFallback() {
 const CHROMELESS = ["/", "/auth", "/auth/callback", "/dev", "/tutorial"];
 function isChromeless(pathname: string): boolean {
   if (CHROMELESS.includes(pathname)) return true;
-  if (pathname.startsWith("/safe-mode")) return true;
   if (pathname === "/register") return true;
   return false;
 }
@@ -167,10 +162,6 @@ export default function App() {
               <Route path="/modules/bernstein"  element={<BernsteinModule />} />
               <Route path="/modules/sick-day"   element={<SickDayModule />} />
               <Route path="/meals/plan"         element={<MealPlanPage />} />
-              {/* Safe Mode — no auth required */}
-              <Route path="/safe-mode"             element={<SafeModePage />} />
-              <Route path="/safe-mode/profile/:id" element={<DemoDashboardPage />} />
-              <Route path="/safe-mode/create"      element={<CreateProfilePage />} />
               <Route path="/dev"                   element={<DevPanel />} />
               <Route path="/register"              element={<RegisterPage />} />
               <Route path="/tutorial"              element={<TutorialPage />} />

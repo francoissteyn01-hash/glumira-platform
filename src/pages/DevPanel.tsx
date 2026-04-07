@@ -63,13 +63,6 @@ const SECTIONS: Section[] = [
       { path: "/modules/sick-day", name: "Sick Day" },
     ],
   },
-  {
-    label: "SAFE MODE",
-    routes: [
-      { path: "/safe-mode", name: "Safe Mode Hub" },
-      { path: "/safe-mode/create", name: "Create Custom Profile" },
-    ],
-  },
 ];
 
 export default function DevPanel() {

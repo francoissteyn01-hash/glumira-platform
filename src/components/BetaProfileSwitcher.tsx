@@ -223,7 +223,7 @@ export default function BetaProfileSwitcher({ onChange }: Props) {
             ))}
             {customProfiles.length < 2 && (
               <a
-                href="/safe-mode/create"
+                href="/dashboard"
                 style={{
                   display: "block",
                   padding: "10px 16px",

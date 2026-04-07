@@ -1,6 +1,6 @@
 /**
  * GluMira™ V7 — Guided Tour
- * Step-by-step overlay on first visit to dashboard in safe mode.
+ * Step-by-step overlay on first visit to dashboard.
  * Shows once per profile (saved to localStorage). Respects prefers-reduced-motion.
  */
 

@@ -25,7 +25,6 @@ const FEEDBACK_QUESTIONS = [
 
 export default function MiraPage() {
   const [params] = useSearchParams();
-  const isSafeMode = params.get("safe") === "1" || !!localStorage.getItem("glumira-safe-mode");
 
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -124,7 +123,7 @@ export default function MiraPage() {
         await apiFetch("/api/feedback", {
           method: "POST",
           body: JSON.stringify({
-            session_id: `safe-${Date.now()}`,
+            session_id: `mira-${Date.now()}`,
             demo_profile_id: params.get("profile") ?? undefined,
             most_useful: newData.most_useful,
             most_confusing: newData.most_confusing,
@@ -201,8 +200,8 @@ export default function MiraPage() {
         <p className="text-xs text-[#718096] text-center">{DISCLAIMER}</p>
       </div>
 
-      {/* Feedback chip (safe mode only) */}
-      {isSafeMode && !feedbackMode && (
+      {/* Feedback chip */}
+      {!feedbackMode && (
         <div className="px-4 py-1 max-w-2xl mx-auto w-full flex justify-center">
           <button
             onClick={startFeedback}
