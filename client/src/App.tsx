@@ -14,6 +14,7 @@ const MiraPage             = lazy(() => import("./pages/MiraPage"));
 const BadgesPage           = lazy(() => import("./pages/BadgesPage"));
 const FAQPage              = lazy(() => import("./pages/FAQPage"));
 const OnboardingStoryPage  = lazy(() => import("./pages/OnboardingStoryPage"));
+const InsulinLogPage       = lazy(() => import("./pages/InsulinLogPage"));
 
 /* GROUP4 Modules */
 const PregnancyModule      = lazy(() => import("./pages/PregnancyModule"));
@@ -106,6 +107,7 @@ export default function App() {
           <Routes>
             <Route path="/"            element={<Navigate to="/dashboard" replace />} />
             <Route path="/dashboard"   element={<DashboardPage />} />
+            <Route path="/log"         element={<InsulinLogPage />} />
             <Route path="/education"   element={<EducationPage />} />
             <Route path="/mira"        element={<MiraPage />} />
             <Route path="/badges"      element={<BadgesPage />} />

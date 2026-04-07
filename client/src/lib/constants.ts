@@ -19,6 +19,7 @@ export const DISCLAIMER =
 
 export const NAV_LINKS = [
   { label: "Dashboard",  href: "/dashboard" },
+  { label: "Log Insulin", href: "/log" },
   { label: "Education",  href: "/education" },
   { label: "Mira AI",    href: "/mira" },
   { label: "Badges",     href: "/badges" },
