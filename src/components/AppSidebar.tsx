@@ -53,11 +53,26 @@ const CLINICAL_MODULES = [
 ];
 
 const DIETARY_MODULES = [
-  { path: "/modules/ramadan", label: "Ramadan" },
-  { path: "/modules/kosher", label: "Kosher" },
-  { path: "/modules/halal", label: "Halal" },
   { path: "/modules/bernstein", label: "Bernstein" },
+  { path: "/modules/carnivore", label: "Carnivore" },
+  { path: "/modules/dash", label: "DASH" },
+  { path: "/modules/full-carb", label: "Full Carb" },
+  { path: "/modules/gluten-free", label: "Gluten-Free" },
+  { path: "/modules/halal", label: "Halal" },
+  { path: "/modules/high-protein", label: "High Protein" },
+  { path: "/modules/intermittent-fasting", label: "IF (Fasting)" },
+  { path: "/modules/keto", label: "Keto" },
+  { path: "/modules/kosher", label: "Kosher" },
+  { path: "/modules/low-carb", label: "Low Carb" },
+  { path: "/modules/low-gi", label: "Low GI" },
+  { path: "/modules/mediterranean", label: "Mediterranean" },
+  { path: "/modules/mixed-balanced", label: "Mixed / Balanced" },
+  { path: "/modules/paleo", label: "Paleo" },
+  { path: "/modules/plant-based", label: "Plant-Based" },
+  { path: "/modules/ramadan", label: "Ramadan" },
   { path: "/modules/sick-day", label: "Sick Day" },
+  { path: "/modules/vegetarian", label: "Vegetarian" },
+  { path: "/modules/zone", label: "Zone" },
 ];
 
 /* ─── Shared item styles ────────────────────────────────────────────────── */

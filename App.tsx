@@ -46,6 +46,21 @@ const KosherModule            = lazy(() => import("@/pages/KosherModule"));
 const HalalModule             = lazy(() => import("@/pages/HalalModule"));
 const BernsteinModule         = lazy(() => import("@/pages/BernsteinModule"));
 const SickDayModule           = lazy(() => import("@/pages/SickDayModule"));
+const CarnivoreModule        = lazy(() => import("@/pages/CarnivoreModule"));
+const DASHModule              = lazy(() => import("@/pages/DASHModule"));
+const FullCarbModule          = lazy(() => import("@/pages/FullCarbModule"));
+const GlutenFreeModule        = lazy(() => import("@/pages/GlutenFreeModule"));
+const HighProteinModule       = lazy(() => import("@/pages/HighProteinModule"));
+const IntermittentFastingModule = lazy(() => import("@/pages/IntermittentFastingModule"));
+const KetoModule              = lazy(() => import("@/pages/KetoModule"));
+const LowCarbModule           = lazy(() => import("@/pages/LowCarbModule"));
+const LowGIModule             = lazy(() => import("@/pages/LowGIModule"));
+const MediterraneanModule     = lazy(() => import("@/pages/MediterraneanModule"));
+const MixedBalancedModule     = lazy(() => import("@/pages/MixedBalancedModule"));
+const PaleoModule             = lazy(() => import("@/pages/PaleoModule"));
+const PlantBasedModule        = lazy(() => import("@/pages/PlantBasedModule"));
+const VegetarianModule        = lazy(() => import("@/pages/VegetarianModule"));
+const ZoneModule              = lazy(() => import("@/pages/ZoneModule"));
 const MealPlanPage            = lazy(() => import("@/pages/MealPlanPage"));
 const EducationTopicPage      = lazy(() => import("@/pages/EducationTopicPage"));
 
@@ -161,6 +176,21 @@ export default function App() {
               <Route path="/modules/halal"      element={<HalalModule />} />
               <Route path="/modules/bernstein"  element={<BernsteinModule />} />
               <Route path="/modules/sick-day"   element={<SickDayModule />} />
+              <Route path="/modules/carnivore"           element={<CarnivoreModule />} />
+              <Route path="/modules/dash"                element={<DASHModule />} />
+              <Route path="/modules/full-carb"           element={<FullCarbModule />} />
+              <Route path="/modules/gluten-free"         element={<GlutenFreeModule />} />
+              <Route path="/modules/high-protein"        element={<HighProteinModule />} />
+              <Route path="/modules/intermittent-fasting" element={<IntermittentFastingModule />} />
+              <Route path="/modules/keto"                element={<KetoModule />} />
+              <Route path="/modules/low-carb"            element={<LowCarbModule />} />
+              <Route path="/modules/low-gi"              element={<LowGIModule />} />
+              <Route path="/modules/mediterranean"       element={<MediterraneanModule />} />
+              <Route path="/modules/mixed-balanced"      element={<MixedBalancedModule />} />
+              <Route path="/modules/paleo"               element={<PaleoModule />} />
+              <Route path="/modules/plant-based"         element={<PlantBasedModule />} />
+              <Route path="/modules/vegetarian"          element={<VegetarianModule />} />
+              <Route path="/modules/zone"                element={<ZoneModule />} />
               <Route path="/meals/plan"         element={<MealPlanPage />} />
               <Route path="/dev"                   element={<DevPanel />} />
               <Route path="/register"              element={<RegisterPage />} />
