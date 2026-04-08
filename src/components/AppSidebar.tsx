@@ -43,12 +43,12 @@ const ICONS = {
 };
 
 const CLINICAL_MODULES = [
-  { path: "/modules/pregnancy", label: "Pregnancy" },
-  { path: "/modules/paediatric", label: "Paediatric" },
-  { path: "/modules/school-care", label: "School Care" },
-  { path: "/modules/menstrual", label: "Menstrual" },
   { path: "/modules/adhd", label: "ADHD" },
   { path: "/modules/autism", label: "Autism + T1D" },
+  { path: "/modules/menstrual", label: "Menstrual" },
+  { path: "/modules/paediatric", label: "Paediatric" },
+  { path: "/modules/pregnancy", label: "Pregnancy" },
+  { path: "/modules/school-care", label: "School Care" },
   { path: "/modules/thyroid", label: "Thyroid" },
 ];
 
@@ -190,11 +190,12 @@ function DesktopSidebar({ collapsed, setCollapsed }: { collapsed: boolean; setCo
 
       {/* Scroll area */}
       <nav style={{ flex: 1, overflowY: "auto", padding: "8px 0" }}>
-        {/* Primary */}
-        {!collapsed && <div style={sectionLabelStyle}>Primary</div>}
+        {/* Insulin & Monitoring */}
+        {!collapsed && <div style={sectionLabelStyle}>Insulin & Monitoring</div>}
         {navItem("/dashboard", "Dashboard", ICONS.dashboard)}
-        {navItem("/education", "Education", ICONS.education)}
-        {navItem("/mira", "Mira AI", ICONS.mira)}
+        {navItem("/log", "Log Meal", ICONS.meal)}
+        {navItem("/insulin", "Log Insulin", ICONS.modules)}
+        {navItem("/conditions", "Log Conditions", ICONS.modules)}
 
         {/* Modules (expandable) */}
         {!collapsed && <div style={sectionLabelStyle}>Modules</div>}

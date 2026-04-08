@@ -45,11 +45,12 @@ const SECTIONS: Section[] = [
   {
     label: "CLINICAL MODULES",
     routes: [
-      { path: "/modules/pregnancy", name: "Pregnancy" },
-      { path: "/modules/paediatric", name: "Paediatric" },
-      { path: "/modules/school-care", name: "School Care Plan" },
-      { path: "/modules/menstrual", name: "Menstrual Cycle" },
       { path: "/modules/adhd", name: "ADHD" },
+      { path: "/modules/autism", name: "Autism + T1D" },
+      { path: "/modules/menstrual", name: "Menstrual Cycle" },
+      { path: "/modules/paediatric", name: "Paediatric" },
+      { path: "/modules/pregnancy", name: "Pregnancy" },
+      { path: "/modules/school-care", name: "School Care Plan" },
       { path: "/modules/thyroid", name: "Thyroid" },
     ],
   },
