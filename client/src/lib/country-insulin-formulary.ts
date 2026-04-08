@@ -193,6 +193,8 @@ export function getBolusInsulins(country: string): string[] {
 
 /**
  * Calculate IOB at a given time offset (hours) from injection.
+ * Uses real PK models — depot-release (two-compartment) for peakless,
+ * Gaussian for peaked insulins. NO linear triangles.
  * Returns fraction of original dose remaining (0–1).
  */
 export function calculateIOB(
@@ -203,22 +205,25 @@ export function calculateIOB(
   if (!profile || hoursAfterInjection < 0 || hoursAfterInjection > profile.doa) return 0;
 
   if (profile.model === "depot-release") {
-    // Exponential decay — peakless
-    const k = Math.LN2 / profile.halfLifeHours;
-    return Math.exp(-k * hoursAfterInjection);
+    // Two-compartment depot-release: IOB from integral of remaining activity
+    const ka = profile.halfLifeHours < 15 ? 0.15 : profile.halfLifeHours < 20 ? 0.10 : 0.08;
+    const ke = Math.LN2 / profile.halfLifeHours;
+    const t = hoursAfterInjection;
+    if (t === 0) return 1;
+    const remainingKe = Math.exp(-ke * t) / ke;
+    const remainingKa = Math.exp(-ka * t) / ka;
+    const totalArea = (1 / ke) - (1 / ka);
+    if (totalArea <= 0) return 0;
+    return Math.max(0, (remainingKe - remainingKa) / totalArea);
   }
 
-  // Gaussian-peaked model
+  // Gaussian-peaked model — full bell curve, no linear ramp
   const peak = profile.peakHours ?? profile.doa / 4;
-  const sigma = profile.halfLifeHours / 1.177; // sigma from half-life
-  if (hoursAfterInjection <= peak) {
-    // Rising phase — linear ramp to peak
-    const riseIOB = hoursAfterInjection / peak;
-    return riseIOB;
-  }
-  // Decay phase — Gaussian decay from peak
-  const t = hoursAfterInjection - peak;
-  return Math.exp(-0.5 * (t / sigma) ** 2);
+  const sigma = profile.model === "bilinear"
+    ? profile.halfLifeHours / 1.177
+    : peak * 0.6; // sigma proportional to peak for proper bell shape
+  const diff = hoursAfterInjection - peak;
+  return Math.exp(-0.5 * (diff / sigma) ** 2);
 }
 
 /**
