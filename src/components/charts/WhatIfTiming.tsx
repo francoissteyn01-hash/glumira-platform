@@ -230,7 +230,7 @@ const WhatIfTiming: React.FC<WhatIfTimingProps> = ({
                               step={0.25}
                               value={entry.dose}
                               onChange={(e) => onDoseChange('basal', i, parseFloat(e.target.value))}
-                              style={{ flex: 1 }}
+                              className="what-if-time-slider" style={{ flex: 1 }}
                             />
                             <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 13, flexShrink: 0, minWidth: 40, textAlign: 'right' }}>
                               {entry.dose.toFixed(2)}U
@@ -259,7 +259,7 @@ const WhatIfTiming: React.FC<WhatIfTimingProps> = ({
                               step={0.25}
                               value={entry.dose}
                               onChange={(e) => onDoseChange('bolus', i, parseFloat(e.target.value))}
-                              style={{ flex: 1 }}
+                              className="what-if-time-slider" style={{ flex: 1 }}
                             />
                             <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 13, flexShrink: 0, minWidth: 40, textAlign: 'right' }}>
                               {entry.dose.toFixed(2)}U

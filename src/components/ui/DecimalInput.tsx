@@ -85,7 +85,7 @@ export default function DecimalInput({
     const raw = e.target.value.trim();
     if (raw === "" || raw === "-" || raw === ".") {
       onChange(0);
-      setLocalValue("");
+      setLocalValue(""); // Keep field visually empty — placeholder shows "0.00"
     } else {
       let parsed = parseFloat(raw);
       if (Number.isNaN(parsed)) {

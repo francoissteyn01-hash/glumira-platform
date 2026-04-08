@@ -9,11 +9,12 @@ import {
   ReferenceLine, ResponsiveContainer,
 } from "recharts";
 import { DISCLAIMER } from "@/lib/constants";
+import DecimalInput from "@/components/ui/DecimalInput";
 
 interface EditableDose {
   id: string;
   insulin: string;
-  dose: number;
+  dose: number | null;
   hour: number;
   type: string;
 }
@@ -64,6 +65,7 @@ export default function WhatIfPage() {
       let basal = 0;
       let bolus = 0;
       for (const d of doses) {
+        if (!d.dose) continue;
         const elapsed = hour - d.hour;
         const isBasal = BASAL_NAMES.includes(d.insulin);
         const iob = simpleIOB(d.dose, elapsed, isBasal);
@@ -74,7 +76,7 @@ export default function WhatIfPage() {
     return points;
   }, [doses]);
 
-  const updateDose = (id: string, field: keyof EditableDose, value: string | number) => {
+  const updateDose = (id: string, field: keyof EditableDose, value: string | number | null) => {
     setDoses((prev) => prev.map((d) => d.id === id ? { ...d, [field]: value } : d));
   };
 
@@ -114,19 +116,22 @@ export default function WhatIfPage() {
               >
                 {INSULIN_OPTIONS.map((ins) => <option key={ins} value={ins}>{ins}</option>)}
               </select>
+              {/* FIX 2: Clearable dose input — no forced minimum while typing */}
               <div className="flex items-center gap-1">
-                <input
-                  type="number"
+                <DecimalInput
                   value={d.dose}
-                  onChange={(e) => updateDose(d.id, "dose", Math.max(0.25, Number(e.target.value)))}
-                  step={0.25}
-                  min={0.25}
+                  onChange={(v) => updateDose(d.id, "dose", v || null)}
+                  placeholder="0.00"
                   max={100}
+                  step={0.25}
                   className="w-16 rounded border border-[#e2e8f0] px-2 py-1.5 text-xs text-[#1a2a5e] text-center"
+                  style={{ fontFamily: "'JetBrains Mono', monospace" }}
+                  aria-label={`Dose for ${d.insulin}`}
                 />
                 <span className="text-[10px] text-[#718096]">U</span>
               </div>
-              <div className="flex items-center gap-1">
+              {/* FIX 1: Large touch-friendly time slider + editable time input */}
+              <div className="flex items-center gap-2">
                 <input
                   type="range"
                   value={d.hour}
@@ -134,11 +139,35 @@ export default function WhatIfPage() {
                   min={0}
                   max={23.75}
                   step={0.25}
-                  className="w-24"
+                  className="what-if-time-slider"
+                  aria-label={`Time for ${d.insulin}`}
                 />
-                <span className="text-xs text-[#1a2a5e] w-12 text-center" style={{ fontFamily: "'JetBrains Mono', monospace" }}>{formatHour(d.hour)}</span>
+                <input
+                  type="time"
+                  value={formatHour(d.hour)}
+                  onChange={(e) => {
+                    const [h, m] = e.target.value.split(":").map(Number);
+                    if (!Number.isNaN(h) && !Number.isNaN(m)) {
+                      const snapped = h + Math.round(m / 15) * 15 / 60;
+                      updateDose(d.id, "hour", Math.min(snapped, 23.75));
+                    }
+                  }}
+                  className="rounded border border-[#e2e8f0] px-2 py-1.5 text-xs text-[#1a2a5e]"
+                  style={{ fontFamily: "'JetBrains Mono', monospace", minWidth: 72 }}
+                />
               </div>
-              <button type="button" onClick={() => removeDose(d.id)} className="text-[#ef4444] text-xs hover:underline">&times; Remove</button>
+              {/* FIX 3: Remove with confirmation when IOB is showing */}
+              <button
+                type="button"
+                onClick={() => {
+                  const hasIOB = chartData.some((p) => p.combined > 0);
+                  if (hasIOB && !window.confirm(`Remove ${d.insulin} ${d.dose ?? 0}U at ${formatHour(d.hour)}?`)) return;
+                  removeDose(d.id);
+                }}
+                className="text-[#ef4444] text-xs hover:underline"
+              >
+                &times; Remove
+              </button>
             </div>
           ))}
         </div>
@@ -151,7 +180,7 @@ export default function WhatIfPage() {
               <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
               <XAxis dataKey="hour" type="number" domain={[0, 24]} ticks={Array.from({ length: 13 }, (_, i) => i * 2)} tickFormatter={formatHour} fontSize={10} />
               <YAxis fontSize={11} label={{ value: "IOB (Units)", angle: -90, position: "insideLeft", offset: 0 }} />
-              <Tooltip labelFormatter={(h: number) => formatHour(h)} formatter={(v: number, name: string) => [`${v.toFixed(1)}U`, name === "basal" ? "Basal" : name === "bolus" ? "Bolus" : "Combined"]} />
+              <Tooltip labelFormatter={(h) => formatHour(Number(h))} formatter={(v, name) => [`${Number(v).toFixed(1)}U`, name === "basal" ? "Basal" : name === "bolus" ? "Bolus" : "Combined"]} />
               <Area type="monotone" dataKey="basal" stackId="1" stroke="#2ab5c1" fill="#2ab5c1" fillOpacity={0.3} />
               <Area type="monotone" dataKey="bolus" stackId="1" stroke="#1a2a5e" fill="#1a2a5e" fillOpacity={0.4} />
               {/* Current time */}
@@ -162,6 +191,44 @@ export default function WhatIfPage() {
 
         <p className="text-xs text-[#a0aec0] text-center">{DISCLAIMER}</p>
       </div>
+
+      {/* FIX 1: Custom slider styles for 44px touch target */}
+      <style>{`
+        .what-if-time-slider {
+          -webkit-appearance: none;
+          appearance: none;
+          width: 120px;
+          height: 8px;
+          background: #e2e8f0;
+          border-radius: 4px;
+          outline: none;
+        }
+        .what-if-time-slider::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          appearance: none;
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          background: #2ab5c1;
+          cursor: pointer;
+          border: 3px solid #fff;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+        .what-if-time-slider::-moz-range-thumb {
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          background: #2ab5c1;
+          cursor: pointer;
+          border: 3px solid #fff;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+        .what-if-time-slider::-moz-range-track {
+          height: 8px;
+          background: #e2e8f0;
+          border-radius: 4px;
+        }
+      `}</style>
     </div>
   );
 }
