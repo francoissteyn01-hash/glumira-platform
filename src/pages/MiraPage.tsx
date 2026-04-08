@@ -123,8 +123,12 @@ export default function MiraPage() {
         body: JSON.stringify({ message: msg, history: messages.map((m) => ({ role: m.role, content: m.content })), bernsteinMode: bernstein }),
       });
       setMessages((p) => [...p, { role: "assistant", content: res.reply, timestamp: new Date() }]);
-    } catch {
-      setMessages((p) => [...p, { role: "assistant", content: "Sorry, I couldn't reach the server. Please try again.", timestamp: new Date() }]);
+    } catch (err: any) {
+      const isOffline = !navigator.onLine;
+      const fallback = isOffline
+        ? "You appear to be offline. Mira needs an internet connection to respond — please reconnect and try again."
+        : "Mira can\u2019t reach the server right now. This usually means the backend is starting up or temporarily unavailable. Please try again in a moment.";
+      setMessages((p) => [...p, { role: "assistant", content: fallback, timestamp: new Date() }]);
     } finally {
       setLoading(false);
     }

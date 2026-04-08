@@ -16,8 +16,9 @@ import type { GlucoseUnit } from "@/utils/glucose-units";
 const SOURCES = [
   { value: "fingerstick", label: "Fingerstick" },
   { value: "cgm",         label: "CGM" },
+  { value: "csv",         label: "CSV Import" },
   { value: "flash_scan",  label: "Flash Scan" },
-  { value: "lab",         label: "Lab" },
+  { value: "lab_a1c",     label: "Lab \u2014 Last A1c" },
 ] as const;
 
 const CONTEXT_TAGS = [
@@ -33,6 +34,15 @@ const CONTEXT_TAGS = [
   "Random",
 ] as const;
 
+const LOG_REASONS = [
+  { value: "sensor_calibration",  label: "Sensor Calibration" },
+  { value: "sensor_replacement",  label: "Sensor Replacement" },
+  { value: "hypo_verification",   label: "Hypo Event Verification" },
+  { value: "csv_import",          label: "Import CSV" },
+  { value: "basal_testing",       label: "Basal Testing" },
+  { value: "other",               label: "Other (Just curious)" },
+] as const;
+
 /* ─── Types ───────────────────────────────────────────────────────────────── */
 
 interface GlucoseForm {
@@ -41,6 +51,7 @@ interface GlucoseForm {
   glucose_units: GlucoseUnit;
   reading_time: string;
   context_tag: string;
+  log_reason: string;
   notes: string;
 }
 
@@ -66,6 +77,7 @@ const EMPTY_FORM: GlucoseForm = {
   glucose_units: "mmol",
   reading_time: nowLocal(),
   context_tag: "",
+  log_reason: "",
   notes: "",
 };
 
@@ -181,6 +193,7 @@ export default function GlucoseLogPage() {
             glucose_value_mmol: parsed,
             glucose_units: form.glucose_units,
             context_tag: form.context_tag || null,
+            log_reason: form.log_reason || null,
             notes: form.notes || null,
           },
         }),
@@ -216,7 +229,7 @@ export default function GlucoseLogPage() {
             Glucose Log
           </h1>
           <p style={{ fontSize: 14, color: "var(--text-secondary)", margin: 0, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
-            Record fingerstick, CGM, and lab glucose readings.
+            Record fingerstick, CGM, flash scan, CSV, and lab glucose readings.
           </p>
         </div>
 
@@ -241,6 +254,80 @@ export default function GlucoseLogPage() {
             />
           </Field>
         </div>
+
+        {/* ── Mira note: CGM timing guidance ───────────────────────────── */}
+        {form.source === "fingerstick" && (
+          <div style={{
+            background: "rgba(42,181,193,0.06)", borderRadius: 12, border: "1px solid rgba(42,181,193,0.25)",
+            padding: "16px 20px", marginBottom: 16, display: "flex", gap: 12, alignItems: "flex-start",
+          }}>
+            <span style={{ fontSize: 20, lineHeight: 1, flexShrink: 0 }}>&#x1F989;</span>
+            <div>
+              <p style={{ fontSize: 13, fontWeight: 600, color: "var(--accent-teal)", margin: "0 0 4px", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+                Note from Mira
+              </p>
+              <p style={{ fontSize: 13, color: "var(--text-secondary)", margin: 0, lineHeight: 1.55, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+                If you are not using a CGM, see the timing options below &mdash; structured fingerstick logging
+                (pre-meal, post-meal, fasting, bedtime) will upgrade your blood sugar trend dramatically and show
+                your doctor or clinician the effectiveness of your regime.
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* ── Why are you logging? ────────────────────────────────────── */}
+        <div style={{ background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)", padding: 20, marginBottom: 16 }}>
+          <Field label="Why are you logging?">
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+              {LOG_REASONS.map((reason) => {
+                const active = form.log_reason === reason.value;
+                return (
+                  <button
+                    key={reason.value} type="button"
+                    onClick={() => set("log_reason")(active ? "" : reason.value)}
+                    style={{
+                      padding: "8px 14px", borderRadius: 8, fontSize: 13, fontWeight: 500,
+                      fontFamily: "'DM Sans', system-ui, sans-serif", cursor: "pointer",
+                      border: `1px solid ${active ? "var(--accent-teal)" : "var(--border-light)"}`,
+                      background: active ? "rgba(42,181,193,0.10)" : "var(--bg-primary)",
+                      color: active ? "var(--accent-teal)" : "var(--text-secondary)",
+                      transition: "all 0.15s",
+                    }}
+                  >
+                    {reason.label}
+                  </button>
+                );
+              })}
+            </div>
+          </Field>
+        </div>
+
+        {/* ── CSV Import (when CSV source or Import CSV reason selected) ── */}
+        {(form.source === "csv" || form.log_reason === "csv_import") && (
+          <div style={{ background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)", padding: 20, marginBottom: 16 }}>
+            <Field label="Import CSV file">
+              <label style={{
+                display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+                minHeight: 80, borderRadius: 8, border: "2px dashed var(--border-light)",
+                background: "var(--bg-primary)", cursor: "pointer",
+                fontSize: 14, color: "var(--text-secondary)", fontFamily: "'DM Sans', system-ui, sans-serif",
+              }}>
+                &#x1F4C4; Tap to select CSV file
+                <input
+                  type="file" accept=".csv,.txt" style={{ display: "none" }}
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
+                    set("notes")(`CSV import: ${file.name}`);
+                  }}
+                />
+              </label>
+              <p style={{ fontSize: 11, color: "var(--text-faint)", marginTop: 8, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+                Accepts CSV exports from Clarity, LibreView, xDrip+, Nightscout, and most CGM apps.
+              </p>
+            </Field>
+          </div>
+        )}
 
         {/* ── Glucose Value & Unit ─────────────────────────────────────── */}
         <div style={{ background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)", padding: 20, marginBottom: 16 }}>
