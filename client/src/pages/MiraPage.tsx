@@ -30,7 +30,7 @@ export default function MiraPage() {
     {
       role: "assistant",
       content:
-        "Hi! I'm Mira, your GluMira™ education assistant 👋\n\nI can help you understand diabetes management concepts, explain your glucose trends, and answer questions about your medications.\n\n⚠️ I'm an educational tool — always check with your healthcare team before making changes.",
+        "Hi! I'm Mira 👋 What can I help you understand today?",
       timestamp: new Date(),
     },
   ]);
@@ -155,7 +155,7 @@ export default function MiraPage() {
         </div>
         <div>
           <p className="font-semibold text-gray-900 dark:text-[#1a2a5e] text-sm">Mira AI</p>
-          <p className="text-xs text-[#718096]">Educational assistant · Not medical advice</p>
+          <p className="text-xs text-[#718096]">Your learning companion</p>
         </div>
       </div>
 
@@ -200,15 +200,23 @@ export default function MiraPage() {
         <p className="text-xs text-[#718096] text-center">{DISCLAIMER}</p>
       </div>
 
-      {/* Feedback chip */}
-      {!feedbackMode && (
-        <div className="px-4 py-1 max-w-2xl mx-auto w-full flex justify-center">
-          <button
-            onClick={startFeedback}
-            className="rounded-full border border-[#2ab5c1] bg-[#2ab5c1]/10 text-[#1a2a5e] px-4 py-1.5 text-xs font-medium hover:bg-[#2ab5c1]/20 transition-colors"
-          >
-            Give Feedback
-          </button>
+      {/* Suggested prompts — only show when no user messages yet */}
+      {messages.length <= 1 && !feedbackMode && (
+        <div className="px-4 py-2 max-w-2xl mx-auto w-full flex flex-wrap gap-2">
+          {[
+            "How does insulin stacking work?",
+            "How many carbs in 100g basmati rice?",
+            "Explain my afternoon stacking pattern",
+            "What is the quiet tail of insulin?",
+          ].map((prompt) => (
+            <button
+              key={prompt}
+              onClick={() => { setInput(prompt); }}
+              className="rounded-full border border-gray-200 dark:border-[#e2e8f0] bg-white dark:bg-white text-[#4a5568] px-3 py-1.5 text-xs hover:bg-gray-50 dark:hover:bg-[#f0f4f8] transition-colors text-left"
+            >
+              {prompt}
+            </button>
+          ))}
         </div>
       )}
 
