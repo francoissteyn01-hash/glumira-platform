@@ -296,6 +296,15 @@ export default function MealPlanPage() {
           </p>
         </section>
       )}
+      {/* Mira flow */}
+      <div style={{ margin:"20px 0",padding:16,borderRadius:12,background:"linear-gradient(135deg,#0A2A5E08,#22AABB12)",border:"1px solid #22AABB30",display:"flex",alignItems:"center",gap:14 }}>
+        <span style={{fontSize:28}}>🦉</span>
+        <div style={{flex:1}}>
+          <p style={{margin:0,fontSize:13,fontWeight:600,color:"#1a2a5e"}}>Ready to log what you ate?</p>
+          <p style={{margin:"4px 0 0",fontSize:12,color:"#64748b"}}>Record your actual meal with carbs, protein, and fat.</p>
+        </div>
+        <a href="/log" style={{padding:"8px 16px",borderRadius:8,background:"#16a34a",color:"white",fontSize:12,fontWeight:600,textDecoration:"none",whiteSpace:"nowrap"}}>Log Meal →</a>
+      </div>
     </div>
   );
 }

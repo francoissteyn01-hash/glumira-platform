@@ -45,11 +45,14 @@ const ICONS = {
 const CLINICAL_MODULES = [
   { path: "/modules/adhd", label: "ADHD" },
   { path: "/modules/autism", label: "Autism + T1D" },
-  { path: "/modules/menstrual", label: "Menstrual" },
+  { path: "/modules/menstrual", label: "Menstrual Cycle" },
+  { path: "/modules/thyroid", label: "Thyroid" },
+];
+
+const SPECIAL_CARE_MODULES = [
   { path: "/modules/paediatric", label: "Paediatric" },
   { path: "/modules/pregnancy", label: "Pregnancy" },
-  { path: "/modules/school-care", label: "School Care" },
-  { path: "/modules/thyroid", label: "Thyroid" },
+  { path: "/modules/school-care", label: "School Care Plan" },
 ];
 
 const DIETARY_MODULES = [
@@ -216,7 +219,9 @@ function DesktopSidebar({ collapsed, setCollapsed }: { collapsed: boolean; setCo
           <div>
             <div style={{ ...sectionLabelStyle, padding: "8px 22px 2px", fontSize: 9 }}>Clinical</div>
             {CLINICAL_MODULES.map((m) => subItem(m.path, m.label))}
-            <div style={{ ...sectionLabelStyle, padding: "8px 22px 2px", fontSize: 9 }}>Dietary</div>
+            <div style={{ ...sectionLabelStyle, padding: "8px 22px 2px", fontSize: 9 }}>Special Care</div>
+            {SPECIAL_CARE_MODULES.map((m) => subItem(m.path, m.label))}
+            <div style={{ ...sectionLabelStyle, padding: "8px 22px 2px", fontSize: 9 }}>Dietary Regime</div>
             {DIETARY_MODULES.map((m) => subItem(m.path, m.label))}
           </div>
         )}
@@ -370,7 +375,9 @@ function MobileBottomBar() {
             <div style={{ flex: 1, overflowY: "auto" }}>
               <div style={sectionLabelStyle}>Modules &mdash; Clinical</div>
               {CLINICAL_MODULES.map((m) => moreItem(m.path, m.label, ICONS.modules))}
-              <div style={sectionLabelStyle}>Modules &mdash; Dietary</div>
+              <div style={sectionLabelStyle}>Modules &mdash; Special Care</div>
+              {SPECIAL_CARE_MODULES.map((m) => moreItem(m.path, m.label, ICONS.modules))}
+              <div style={sectionLabelStyle}>Modules &mdash; Dietary Regime</div>
               {DIETARY_MODULES.map((m) => moreItem(m.path, m.label, ICONS.modules))}
               <div style={sectionLabelStyle}>Tools</div>
               {moreItem("/badges", "Badges", ICONS.badges)}

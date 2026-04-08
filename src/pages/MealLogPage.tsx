@@ -458,6 +458,31 @@ export default function MealLogPage() {
           </button>
         </div>
 
+        {/* Mira flow suggestion */}
+        <div style={{
+          marginTop: 20, padding: 16, borderRadius: 12,
+          background: "linear-gradient(135deg, #0A2A5E08, #22AABB12)",
+          border: "1px solid #22AABB30",
+          display: "flex", alignItems: "center", gap: 14,
+        }}>
+          <span style={{ fontSize: 28 }}>🦉</span>
+          <div style={{ flex: 1 }}>
+            <p style={{ margin: 0, fontSize: 13, fontWeight: 600, color: "#1a2a5e" }}>
+              Want Mira to plan your meals?
+            </p>
+            <p style={{ margin: "4px 0 0", fontSize: 12, color: "#64748b" }}>
+              Get carb-matched meal suggestions based on your insulin regime and dietary preferences.
+            </p>
+          </div>
+          <a href="/meals/plan" style={{
+            padding: "8px 16px", borderRadius: 8, background: "#22AABB",
+            color: "white", fontSize: 12, fontWeight: 600, textDecoration: "none",
+            whiteSpace: "nowrap",
+          }}>
+            Meal Planner →
+          </a>
+        </div>
+
         {/* Spacer for mobile bottom nav */}
         <div style={{ height: 80 }} />
       </div>
