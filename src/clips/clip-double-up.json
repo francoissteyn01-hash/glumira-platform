@@ -1,0 +1,61 @@
+{
+  "clip_id": "double-up",
+  "title": "The Double-Up",
+  "target_age": "8-14",
+  "total_duration_ms": 39000,
+  "trick": "The Double-Up",
+  "teaching_point": "When insulin doses overlap, they stack — the combined effect is stronger than either dose alone.",
+  "scenes": [
+    {
+      "id": "doubleup_01",
+      "character": "gatiep",
+      "visual_id": "gatiep_asking",
+      "visual_note": "Gatiep is confused about a low",
+      "subtitle_text": "I had my insulin at lunch and then a snack, and now my sugar is really low. Why?",
+      "voice_text": "MiraAi, I had my insulin at lunch and then a snack, and now my sugar is really low. Why?",
+      "voice_style": "friendly_upbeat",
+      "duration_ms": 8000
+    },
+    {
+      "id": "doubleup_02",
+      "character": "miraai",
+      "visual_id": "miraai_presenting",
+      "visual_note": "MiraAi identifies the stacking pattern",
+      "subtitle_text": "That's The Double-Up! When two doses overlap, they pile on top of each other.",
+      "voice_text": "That's The Double-Up! When two doses overlap, they pile on top of each other. Look.",
+      "voice_style": "warm_reassuring",
+      "duration_ms": 7000
+    },
+    {
+      "id": "doubleup_03",
+      "character": "miraai",
+      "visual_id": "pair_graph_view",
+      "visual_note": "Stacking overlap zone — two insulin curves piling up",
+      "subtitle_text": "Both doses are active at the same time — that's why you feel it more.",
+      "voice_text": "See? He's piling up right here. Both doses are active at the same time — that's why you feel it more.",
+      "voice_style": "warm_reassuring",
+      "show_graph": "stacking_overlap_zone",
+      "duration_ms": 14000
+    },
+    {
+      "id": "doubleup_04",
+      "character": "gatiep",
+      "visual_id": "gatiep_surprised",
+      "visual_note": "Gatiep makes the connection",
+      "subtitle_text": "So it's like two waves crashing together?",
+      "voice_text": "So it's like two waves crashing together?",
+      "voice_style": "friendly_upbeat",
+      "duration_ms": 5000
+    },
+    {
+      "id": "doubleup_05",
+      "character": "miraai",
+      "visual_id": "pair_laughing",
+      "visual_note": "Both characters share the moment",
+      "subtitle_text": "Exactly! And now you can see the wave coming before it hits.",
+      "voice_text": "Exactly! And now you can see the wave coming before it hits.",
+      "voice_style": "warm_reassuring",
+      "duration_ms": 5000
+    }
+  ]
+}

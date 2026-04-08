@@ -1,0 +1,61 @@
+{
+  "clip_id": "birthday",
+  "title": "The Birthday Surprise",
+  "target_age": "6-14",
+  "total_duration_ms": 31000,
+  "trick": "The Birthday Surprise",
+  "teaching_point": "You CAN have birthday cake. You just need the right insulin timing. T1D doesn't steal your birthday.",
+  "scenes": [
+    {
+      "id": "birthday_01",
+      "character": "gatiep",
+      "visual_id": "gatiep_running",
+      "visual_note": "Gatiep bursts in with excitement",
+      "subtitle_text": "It's my birthday! Can I have cake?",
+      "voice_text": "It's my birthday! Can I have cake?",
+      "voice_style": "friendly_upbeat",
+      "duration_ms": 4000
+    },
+    {
+      "id": "birthday_02",
+      "character": "miraai",
+      "visual_id": "miraai_presenting",
+      "visual_note": "MiraAi is enthusiastic and reassuring",
+      "subtitle_text": "Of COURSE you can have cake. Let me show you what happens.",
+      "voice_text": "Of COURSE you can have cake. Let me show you what happens.",
+      "voice_style": "warm_reassuring",
+      "duration_ms": 6000
+    },
+    {
+      "id": "birthday_03",
+      "character": "miraai",
+      "visual_id": "pair_graph_view",
+      "visual_note": "Birthday cake bolus — insulin handles the cake with correct timing",
+      "subtitle_text": "Your insulin handles the cake. We just need to time it right.",
+      "voice_text": "See? Your insulin handles the cake. We just need to time it right.",
+      "voice_style": "warm_reassuring",
+      "show_graph": "birthday_cake_bolus",
+      "duration_ms": 12000
+    },
+    {
+      "id": "birthday_04",
+      "character": "gatiep",
+      "visual_id": "gatiep_surprised",
+      "visual_note": "Gatiep is relieved and hopeful",
+      "subtitle_text": "So T1D doesn't take my birthday?",
+      "voice_text": "So T1D doesn't take my birthday?",
+      "voice_style": "friendly_upbeat",
+      "duration_ms": 5000
+    },
+    {
+      "id": "birthday_05",
+      "character": "miraai",
+      "visual_id": "pair_laughing",
+      "visual_note": "Both characters laughing together — warm ending",
+      "subtitle_text": "Never. Now go eat your cake, Gatiepie.",
+      "voice_text": "Never. Now go eat your cake, Gatiepie.",
+      "voice_style": "warm_reassuring",
+      "duration_ms": 4000
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "clip_id": "vanishing-act",
+  "title": "The Vanishing Act",
+  "target_age": "10-16",
+  "total_duration_ms": 49000,
+  "trick": "The Vanishing Act",
+  "teaching_point": "If you vomit after taking meal insulin, the food is gone but the insulin stays. That's dangerous — get help fast.",
+  "scenes": [
+    {
+      "id": "vanishing_01",
+      "character": "gatiep",
+      "visual_id": "gatiep_asking",
+      "visual_note": "Gatiep asks a worried question",
+      "subtitle_text": "What happens if I take my insulin for dinner and then I throw up?",
+      "voice_text": "MiraAi, what happens if I take my insulin for dinner and then I throw up?",
+      "voice_style": "friendly_upbeat",
+      "duration_ms": 7000
+    },
+    {
+      "id": "vanishing_02",
+      "character": "miraai",
+      "visual_id": "miraai_presenting",
+      "visual_note": "MiraAi is serious but calm",
+      "subtitle_text": "That's The Vanishing Act — the food leaves, but the insulin stays.",
+      "voice_text": "That's The Vanishing Act — and it's one of Gatiep's most important tricks to understand. The food leaves, but the insulin stays.",
+      "voice_style": "warm_reassuring",
+      "duration_ms": 10000
+    },
+    {
+      "id": "vanishing_03",
+      "character": "miraai",
+      "visual_id": "pair_graph_view",
+      "visual_note": "Gastro IOB danger window — insulin active with no food to balance",
+      "subtitle_text": "The insulin is still pushing your sugar down. But there's no food to balance it. That's the danger window.",
+      "voice_text": "Look — the insulin is still active here, still pushing your sugar down. But there's no food to balance it. That's the danger window.",
+      "voice_style": "warm_reassuring",
+      "show_graph": "gastro_iob_danger_window",
+      "duration_ms": 15000
+    },
+    {
+      "id": "vanishing_04",
+      "character": "gatiep",
+      "visual_id": "gatiep_understanding",
+      "visual_note": "Gatiep understands the urgency",
+      "subtitle_text": "So I need to tell my mom straight away?",
+      "voice_text": "So I need to tell my mom straight away?",
+      "voice_style": "friendly_upbeat",
+      "duration_ms": 5000
+    },
+    {
+      "id": "vanishing_05",
+      "character": "miraai",
+      "visual_id": "pair_conversation",
+      "visual_note": "MiraAi gives clear safety instructions",
+      "subtitle_text": "Always. Tell your mom, have something sweet ready, and let your diabetes team know.",
+      "voice_text": "Always. Tell your mom, have something sweet ready, and let your diabetes team know. You can't take the insulin back — but you can fight it with glucose.",
+      "voice_style": "warm_reassuring",
+      "duration_ms": 12000
+    }
+  ]
+}

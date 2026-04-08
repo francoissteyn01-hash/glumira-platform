@@ -85,6 +85,7 @@ const CommunityPage           = lazy(() => import("@/pages/CommunityPage"));
 const MiraWaitingRoomGame     = lazy(() => import("@/pages/MiraWaitingRoomGame"));
 const PediatricGrowthModule   = lazy(() => import("@/pages/PediatricGrowthModule"));
 const PostSurgicalModule      = lazy(() => import("@/pages/PostSurgicalModule"));
+const ClipsPage               = lazy(() => import("@/pages/ClipsPage"));
 
 /* ─── V7 Portals ─────────────────────────────────────────────────────── */
 const ClinicianPortal         = lazy(() => import("@/pages/ClinicianPortal"));
@@ -204,6 +205,7 @@ export default function App() {
               <Route path="/dashboard/what-if" element={<WhatIfPage />} />
               <Route path="/education" element={<EducationPage />} />
               <Route path="/education/:id" element={<EducationTopicPage />} />
+              <Route path="/clips"       element={<ClipsPage />} />
               <Route path="/mira"      element={<MiraPage />} />
               <Route path="/badges"    element={<BadgesPage />} />
               <Route path="/faq"       element={<FAQPage />} />

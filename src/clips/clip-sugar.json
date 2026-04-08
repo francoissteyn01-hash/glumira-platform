@@ -1,0 +1,61 @@
+{
+  "clip_id": "sugar",
+  "title": "My Mom Says You Have Sugar",
+  "target_age": "6-12",
+  "total_duration_ms": 28000,
+  "trick": null,
+  "teaching_point": "What T1D is — sugar goes up with food, insulin brings it down. Simple. No big deal.",
+  "scenes": [
+    {
+      "id": "sugar_01",
+      "character": "gatiep",
+      "visual_id": "gatiep_running",
+      "visual_note": "Gatiep runs in excitedly",
+      "subtitle_text": "Miraai! Miraai! My mom says you have sugar!",
+      "voice_text": "Miraai! Miraai! My mom says you have sugar!",
+      "voice_style": "friendly_upbeat",
+      "duration_ms": 5000
+    },
+    {
+      "id": "sugar_02",
+      "character": "miraai",
+      "visual_id": "miraai_presenting",
+      "visual_note": "MiraAi stands ready to explain",
+      "subtitle_text": "Yes, Gatiepie! Let me show you.",
+      "voice_text": "Yes, Gatiepie! Let me show you.",
+      "voice_style": "warm_reassuring",
+      "duration_ms": 4000
+    },
+    {
+      "id": "sugar_03",
+      "character": "miraai",
+      "visual_id": "pair_graph_view",
+      "visual_note": "Simple glucose curve — sugar rises with food, insulin brings it down",
+      "subtitle_text": "Sugar goes up when I eat. Insulin brings it down. My body just needs a little help.",
+      "voice_text": "See? Sugar goes up when I eat. Insulin brings it down. My body just needs a little help.",
+      "voice_style": "warm_reassuring",
+      "show_graph": "simple_glucose_curve",
+      "duration_ms": 12000
+    },
+    {
+      "id": "sugar_04",
+      "character": "gatiep",
+      "visual_id": "gatiep_surprised",
+      "visual_note": "Gatiep looks pleasantly surprised",
+      "subtitle_text": "That's it?",
+      "voice_text": "That's it?",
+      "voice_style": "friendly_upbeat",
+      "duration_ms": 3000
+    },
+    {
+      "id": "sugar_05",
+      "character": "miraai",
+      "visual_id": "pair_laughing",
+      "visual_note": "Both characters laugh together",
+      "subtitle_text": "That's it. No big deal.",
+      "voice_text": "That's it. No big deal.",
+      "voice_style": "warm_reassuring",
+      "duration_ms": 4000
+    }
+  ]
+}

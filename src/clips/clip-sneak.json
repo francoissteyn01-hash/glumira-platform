@@ -1,0 +1,61 @@
+{
+  "clip_id": "sneak",
+  "title": "The Sneak",
+  "target_age": "8-14",
+  "total_duration_ms": 32000,
+  "trick": "The Sneak",
+  "teaching_point": "Long-acting insulin has a quiet tail — it's still working hours after injection even when you can't feel it.",
+  "scenes": [
+    {
+      "id": "sneak_01",
+      "character": "gatiep",
+      "visual_id": "gatiep_asking",
+      "visual_note": "Gatiep looks nervous, asking a question",
+      "subtitle_text": "MiraAi, something's making my sugar drop and I can't see what.",
+      "voice_text": "MiraAi, something's making my sugar drop and I can't see what.",
+      "voice_style": "friendly_upbeat",
+      "duration_ms": 6000
+    },
+    {
+      "id": "sneak_02",
+      "character": "miraai",
+      "visual_id": "miraai_presenting",
+      "visual_note": "MiraAi recognises the pattern",
+      "subtitle_text": "Ah, that's The Sneak. Let me show you.",
+      "voice_text": "Ah, that's The Sneak. Let me show you.",
+      "voice_style": "warm_reassuring",
+      "duration_ms": 5000
+    },
+    {
+      "id": "sneak_03",
+      "character": "miraai",
+      "visual_id": "pair_graph_view",
+      "visual_note": "IOB tail highlighted — insulin still active hours later",
+      "subtitle_text": "Your insulin is still working here, even though it's been hours. It's sneaky like that.",
+      "voice_text": "See this part? Your insulin is still working here, even though it's been hours. It's sneaky like that.",
+      "voice_style": "warm_reassuring",
+      "show_graph": "iob_tail_highlight",
+      "duration_ms": 14000
+    },
+    {
+      "id": "sneak_04",
+      "character": "gatiep",
+      "visual_id": "gatiep_understanding",
+      "visual_note": "Gatiep starts to understand",
+      "subtitle_text": "So it's not invisible?",
+      "voice_text": "So it's not invisible?",
+      "voice_style": "friendly_upbeat",
+      "duration_ms": 4000
+    },
+    {
+      "id": "sneak_05",
+      "character": "miraai",
+      "visual_id": "miraai_celebration",
+      "visual_note": "MiraAi celebrates the insight",
+      "subtitle_text": "Not anymore.",
+      "voice_text": "Not anymore.",
+      "voice_style": "warm_reassuring",
+      "duration_ms": 3000
+    }
+  ]
+}

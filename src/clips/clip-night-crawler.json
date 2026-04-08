@@ -1,0 +1,61 @@
+{
+  "clip_id": "night-crawler",
+  "title": "The Night Crawler",
+  "target_age": "8-14",
+  "total_duration_ms": 38000,
+  "trick": "The Night Crawler",
+  "teaching_point": "Basal insulin keeps working overnight while you fast — that's why lows can happen while you sleep.",
+  "scenes": [
+    {
+      "id": "nightcrawler_01",
+      "character": "gatiep",
+      "visual_id": "gatiep_asking",
+      "visual_note": "Gatiep looks sleepy and puzzled",
+      "subtitle_text": "My mom checks my sugar at night and sometimes it's really low. But I didn't eat anything!",
+      "voice_text": "MiraAi, my mom checks my sugar at night and sometimes it's really low. But I didn't eat anything!",
+      "voice_style": "friendly_upbeat",
+      "duration_ms": 8000
+    },
+    {
+      "id": "nightcrawler_02",
+      "character": "miraai",
+      "visual_id": "miraai_presenting",
+      "visual_note": "MiraAi explains the overnight pattern",
+      "subtitle_text": "That's The Night Crawler. Your long-acting insulin keeps working even while you sleep.",
+      "voice_text": "That's The Night Crawler. Your long-acting insulin keeps working even while you sleep. And because you're not eating...",
+      "voice_style": "warm_reassuring",
+      "duration_ms": 9000
+    },
+    {
+      "id": "nightcrawler_03",
+      "character": "miraai",
+      "visual_id": "pair_graph_view",
+      "visual_note": "Overnight basal pressure — insulin active, no food input",
+      "subtitle_text": "Insulin working all night, no food coming in. That's why your mom checks.",
+      "voice_text": "See this? Insulin working all night, no food coming in. That's why your mom checks.",
+      "voice_style": "warm_reassuring",
+      "show_graph": "overnight_basal_pressure",
+      "duration_ms": 12000
+    },
+    {
+      "id": "nightcrawler_04",
+      "character": "gatiep",
+      "visual_id": "gatiep_understanding",
+      "visual_note": "Gatiep personifies the insulin with humour",
+      "subtitle_text": "He thinks he can sneak around while I sleep.",
+      "voice_text": "He thinks he can sneak around while I sleep.",
+      "voice_style": "friendly_upbeat",
+      "duration_ms": 5000
+    },
+    {
+      "id": "nightcrawler_05",
+      "character": "miraai",
+      "visual_id": "pair_conversation",
+      "visual_note": "Both characters share a reassuring moment",
+      "subtitle_text": "Not on our watch, Gatiepie.",
+      "voice_text": "Not on our watch, Gatiepie.",
+      "voice_style": "warm_reassuring",
+      "duration_ms": 4000
+    }
+  ]
+}
