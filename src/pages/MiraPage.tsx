@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
-import { usePatientName } from "@/hooks/usePatientName";
 import { API, apiFetch } from "@/lib/api";
 import { cn } from "@/lib/utils";
 import { DISCLAIMER } from "@/lib/constants";
@@ -8,7 +7,7 @@ import { DISCLAIMER } from "@/lib/constants";
 interface Message { role: "user" | "assistant"; content: string; timestamp: Date }
 
 const SUGGESTED_PROMPTS = [
-  "What would Dr. Bernstein say about my numbers today?",
+  "How does insulin stacking work?",
   "How many carbs in 100g basmati rice?",
   "Explain my afternoon stacking pattern",
   "What is the quiet tail of insulin?",
@@ -47,10 +46,7 @@ async function submitFeedback(answers: string[]) {
 
 export default function MiraPage() {
   const { session } = useAuth();
-  const { patientName, isCaregiver } = usePatientName();
-  const greeting = isCaregiver && patientName
-    ? `Hi! I'm Mira, ${patientName}\u2019s GluMira\u2122 education assistant \u{1F44B}\n\nI can help you understand ${patientName}\u2019s diabetes management.\n\n\u26A0\uFE0F I'm an educational tool \u2014 always check with your healthcare team before making changes.`
-    : "Hi! I'm Mira, your GluMira\u2122 education assistant \u{1F44B}\n\nI can help you understand diabetes management concepts.\n\n\u26A0\uFE0F I'm an educational tool \u2014 always check with your healthcare team before making changes.";
+  const greeting = "Hi! I\u2019m Mira \u{1F44B} What can I help you understand today?";
   const [messages, setMessages] = useState<Message[]>([{ role: "assistant", content: greeting, timestamp: new Date() }]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -192,23 +188,9 @@ export default function MiraPage() {
                 {p}
               </button>
             ))}
-            {feedbackStep < 0 && (
-              <button type="button" onClick={startFeedback} className="text-xs bg-amber-900/30 border border-amber-700/50 text-amber-400 rounded-lg px-3 py-1.5 hover:bg-amber-900/50 transition-colors">
-                Give Feedback
-              </button>
-            )}
           </div>
         </div>
       )}
-      {/* Persistent feedback chip */}
-      {messages.length > 2 && feedbackStep < 0 && (
-        <div className="px-4 pb-1 max-w-2xl mx-auto w-full">
-          <button type="button" onClick={startFeedback} className="text-xs bg-amber-900/30 border border-amber-700/50 text-amber-400 rounded-lg px-3 py-1.5 hover:bg-amber-900/50 transition-colors">
-            Give Feedback
-          </button>
-        </div>
-      )}
-
       <p className="text-xs text-[var(--text-muted)] text-center px-4 pb-1 max-w-2xl mx-auto w-full">{DISCLAIMER}</p>
 
       {/* Input */}
