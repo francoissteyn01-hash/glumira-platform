@@ -28,3 +28,4 @@ drizzle/meta/
 
 # Coverage
 coverage/
+package-lock.json
