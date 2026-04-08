@@ -193,11 +193,16 @@ function DesktopSidebar({ collapsed, setCollapsed }: { collapsed: boolean; setCo
 
       {/* Scroll area */}
       <nav style={{ flex: 1, overflowY: "auto", padding: "8px 0" }}>
-        {/* Insulin & Monitoring */}
-        {!collapsed && <div style={sectionLabelStyle}>Insulin & Monitoring</div>}
+        {/* My Profile */}
+        {!collapsed && <div style={sectionLabelStyle}>My Profile</div>}
+        {navItem("/profile", "User Profile", ICONS.settings)}
+        {navItem("/settings", "Insulin Profile", ICONS.modules)}
+
+        {/* Insulin & Logging */}
+        {!collapsed && <div style={sectionLabelStyle}>Insulin & Logging</div>}
         {navItem("/dashboard", "Dashboard", ICONS.dashboard)}
-        {navItem("/log", "Log Meal", ICONS.meal)}
         {navItem("/insulin", "Log Insulin", ICONS.modules)}
+        {navItem("/log", "Log Meal", ICONS.meal)}
         {navItem("/conditions", "Log Conditions", ICONS.modules)}
 
         {/* Modules (expandable) */}
