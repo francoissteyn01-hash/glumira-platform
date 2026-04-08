@@ -1,13 +1,18 @@
 import React from 'react';
 
 interface SixtySecondInsightProps {
-  view: 'clinical' | 'kids';
+  view: 'clinical' | 'kids' | 'mountains';
   content: {
     basalCoverage: string;
     dangerText?: string;
     bolusStacking: string;
     keyObservation: string;
     disclaimer: string;
+    peakPressure?: string;
+    stackingRisk?: string;
+    basalContribution?: string;
+    lastBolusClear?: string;
+    overnightNote?: string;
   };
   pressureClass: 'light' | 'moderate' | 'strong' | 'overlap';
 }
@@ -20,9 +25,12 @@ const borderColors: Record<SixtySecondInsightProps['pressureClass'], string> = {
 };
 
 const SixtySecondInsight: React.FC<SixtySecondInsightProps> = ({ view, content, pressureClass }) => {
-  const isKids = view === 'kids';
+  const isKids = view === 'kids' || view === 'mountains';
+  const isMountains = view === 'mountains';
 
-  const labels = isKids
+  const labels = isMountains
+    ? { basal: 'THE ROLLING HILLS', danger: 'STORMY SKY!', bolus: 'THE TALL PEAKS', observation: 'WHAT THE MOUNTAINS MEAN' }
+    : isKids
     ? { basal: 'THE BIG WAVE', danger: 'WATCH HERE!', bolus: 'MEAL MOUNTAINS', observation: 'WHAT MIRA NOTICED' }
     : { basal: 'BASAL COVERAGE', danger: 'DANGER WINDOWS', bolus: 'BOLUS STACKING', observation: 'KEY OBSERVATION' };
 
@@ -96,7 +104,7 @@ const SixtySecondInsight: React.FC<SixtySecondInsightProps> = ({ view, content, 
                   color: '#2AB5C1',
                 }}
               >
-                🦉 Mira says...
+                {isMountains ? '⛰️ What the mountains mean' : '🦉 Mira says...'}
               </span>
             </>
           ) : (
@@ -165,7 +173,9 @@ const SixtySecondInsight: React.FC<SixtySecondInsightProps> = ({ view, content, 
             <p style={bodyStyle}>{content.dangerText}</p>
           ) : (
             <p style={{ ...bodyStyle, color: '#4CAF50' }}>
-              No danger windows detected. Steady basal coverage with well-separated bolus peaks.
+              {isMountains
+                ? 'Clear skies! The mountains are calm and well-spaced — no storms today.'
+                : 'No danger windows detected. Steady basal coverage with well-separated bolus peaks.'}
             </p>
           )}
         </div>
@@ -181,6 +191,22 @@ const SixtySecondInsight: React.FC<SixtySecondInsightProps> = ({ view, content, 
           <div style={labelStyle}>{labels.observation}</div>
           <p style={bodyStyle}>{content.keyObservation}</p>
         </div>
+
+        {/* Pressure Map Details (clinical only) */}
+        {!isKids && (content.peakPressure || content.stackingRisk || content.basalContribution || content.lastBolusClear || content.overnightNote) && (
+          <div style={{ marginBottom: '14px', borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '14px' }}>
+            <div style={labelStyle}>PRESSURE MAP DETAIL</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+              {content.peakPressure && <p style={bodyStyle}>{content.peakPressure}</p>}
+              {content.stackingRisk && <p style={bodyStyle}>{content.stackingRisk}</p>}
+              {content.basalContribution && <p style={bodyStyle}>{content.basalContribution}</p>}
+              {content.lastBolusClear && <p style={bodyStyle}>{content.lastBolusClear}</p>}
+              {content.overnightNote && (
+                <p style={{ ...bodyStyle, color: '#FFC107' }}>{content.overnightNote}</p>
+              )}
+            </div>
+          </div>
+        )}
 
         {/* Disclaimer */}
         <p

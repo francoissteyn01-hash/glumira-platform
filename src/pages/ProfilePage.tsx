@@ -4,7 +4,7 @@
  * Mobile-first, single column, collapsible card sections.
  */
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useAuth, supabase } from "@/hooks/useAuth";
 import { DISCLAIMER } from "@/lib/constants";
 import { API } from "@/lib/api";
@@ -126,10 +126,15 @@ function isUnder18(dob: string): boolean {
 
 /* ─── Collapsible Card ────────────────────────────────────────────────────── */
 
-function Card({ title, defaultOpen = false, children }: { title: string; defaultOpen?: boolean; children: React.ReactNode }) {
-  const [open, setOpen] = useState(defaultOpen);
+function Card({ id, title, defaultOpen = false, children }: { id?: string; title: string; defaultOpen?: boolean; children: React.ReactNode }) {
+  const isTarget = id && typeof window !== "undefined" && window.location.hash === `#${id}`;
+  const [open, setOpen] = useState(defaultOpen || !!isTarget);
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (isTarget && ref.current) ref.current.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [isTarget]);
   return (
-    <div style={{ background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)", overflow: "hidden" }}>
+    <div ref={ref} id={id} style={{ background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)", overflow: "hidden" }}>
       <button
         type="button"
         onClick={() => setOpen(!open)}
@@ -493,7 +498,7 @@ export default function ProfilePage() {
           </Card>
 
           {/* ── Section 2: Insulin & Management ─────────────────────────── */}
-          <Card title="Insulin & Management">
+          <Card id="insulin" title="Insulin & Management">
             <Field label="Insulin type(s) — select all that apply">
               <MultiSelectPills options={INSULIN_TYPES} selected={form.insulin_types} onToggle={toggleArray("insulin_types")} />
             </Field>

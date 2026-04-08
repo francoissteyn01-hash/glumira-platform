@@ -461,6 +461,11 @@ export interface InsightContent {
   bolusStacking: string;
   keyObservation: string;
   disclaimer: string;
+  peakPressure?: string;
+  stackingRisk?: string;
+  basalContribution?: string;
+  lastBolusClear?: string;
+  overnightNote?: string;
 }
 
 export function generateInsight(
@@ -518,11 +523,107 @@ export function generateInsight(
     keyObservation = `${totalDoses} dose${totalDoses !== 1 ? "s" : ""}, TDD ${tdd.toFixed(1)}U (basal ${basalPct.toFixed(0)}%). The pressure map shows well-managed insulin activity with no immediate timing concerns.`;
   }
 
+  // Peak pressure detail
+  const peakPoint = entries.length > 0 ? (() => {
+    // Find the minute of peak IOB from a quick scan
+    const totalMin = 2 * 1440;
+    let bestMin = 0; let bestIOB = 0;
+    for (let min = 0; min <= totalMin; min += 15) {
+      let iobSum = 0;
+      for (let c = 0; c < 2; c++) {
+        for (const e of entries) {
+          const [h, m] = e.time.split(":").map(Number);
+          iobSum += calculateIOB(e.dose, (min - (h * 60 + m + c * 1440)) / 60, e.pharmacology);
+        }
+      }
+      if (iobSum > bestIOB) { bestIOB = iobSum; bestMin = min; }
+    }
+    return { minute: bestMin % 1440, iob: bestIOB };
+  })() : null;
+
+  const peakPressure = peakPoint
+    ? `Peak insulin pressure: ${worstPressure.toUpperCase()} at ${String(Math.floor(peakPoint.minute / 60)).padStart(2, "0")}:${String(peakPoint.minute % 60).padStart(2, "0")} (${peakPoint.iob.toFixed(1)}U active)`
+    : undefined;
+
+  // Stacking risk — find overlapping pairs
+  let stackingRisk: string | undefined;
+  if (dangerWindows.length > 0 && entries.length >= 2) {
+    const fmt = (m: number) => `${String(Math.floor((m % 1440) / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`;
+    // Identify which entries contribute most during danger windows
+    const dw = dangerWindows[0];
+    const midMin = Math.floor((dw.startMinute + dw.endMinute) / 2);
+    const contributors: { name: string; iob: number }[] = [];
+    for (const e of entries) {
+      const [h, m] = e.time.split(":").map(Number);
+      const doseMin = h * 60 + m;
+      const iob = calculateIOB(e.dose, (midMin - doseMin) / 60, e.pharmacology);
+      if (iob > 0.05) contributors.push({ name: `${e.insulinName} (${e.time})`, iob });
+    }
+    contributors.sort((a, b) => b.iob - a.iob);
+    if (contributors.length >= 2) {
+      stackingRisk = `Stacking risk: ${contributors[0].name} and ${contributors[1].name} overlap between ${fmt(dw.startMinute)}–${fmt(dw.endMinute)}`;
+    }
+  }
+
+  // Basal contribution at peak
+  const basalDose = basalEntries.reduce((s, e) => s + e.dose, 0);
+  const basalContribution = peakPoint && peakTotalIOB > 0
+    ? (() => {
+        let basalAtPeak = 0;
+        for (let c = 0; c < 2; c++) {
+          for (const e of basalEntries) {
+            const [h, m] = e.time.split(":").map(Number);
+            basalAtPeak += calculateIOB(e.dose, (peakPoint.minute - (h * 60 + m + c * 1440)) / 60, e.pharmacology);
+          }
+        }
+        const pct = (basalAtPeak / peakPoint.iob * 100);
+        return `Basal contribution: ${basalAtPeak.toFixed(1)}U (${pct.toFixed(0)}% of total) at peak`;
+      })()
+    : undefined;
+
+  // Last bolus clear time
+  let lastBolusClear: string | undefined;
+  if (bolusEntries.length > 0) {
+    let latestClear = 0;
+    for (const e of bolusEntries) {
+      const [h, m] = e.time.split(":").map(Number);
+      const clearMin = h * 60 + m + e.pharmacology.durationMinutes;
+      if (clearMin > latestClear) latestClear = clearMin;
+    }
+    const clearDay = latestClear >= 1440 ? latestClear - 1440 : latestClear;
+    lastBolusClear = `Last bolus fully clears by approximately ${String(Math.floor(clearDay / 60)).padStart(2, "0")}:${String(clearDay % 60).padStart(2, "0")}`;
+  }
+
+  // Overnight note
+  let overnightNote: string | undefined;
+  {
+    // Check IOB between 00:00–06:00
+    let maxOvernightIOB = 0;
+    for (let min = 0; min <= 360; min += 15) {
+      let iobSum = 0;
+      for (let c = 0; c < 2; c++) {
+        for (const e of entries) {
+          const [h, m] = e.time.split(":").map(Number);
+          iobSum += calculateIOB(e.dose, (min - (h * 60 + m + c * 1440)) / 60, e.pharmacology);
+        }
+      }
+      maxOvernightIOB = Math.max(maxOvernightIOB, iobSum);
+    }
+    if (maxOvernightIOB > 0.5) {
+      overnightNote = `Between 00:00 and 06:00, up to ${maxOvernightIOB.toFixed(1)}U remains active against 6 hours of likely fasting`;
+    }
+  }
+
   return {
     basalCoverage,
     dangerText,
     bolusStacking,
     keyObservation,
+    peakPressure,
+    stackingRisk,
+    basalContribution,
+    lastBolusClear,
+    overnightNote,
     disclaimer: "Educational only — based on published pharmacological data. Not a prescription. Discuss all changes with your care team. GluMira™ is not a medical device.",
   };
 }
@@ -566,6 +667,86 @@ export function generateKidsInsight(
     keyObservation: worstPressure === "light" || worstPressure === "moderate"
       ? `${name}'s insulin pattern looks good today! The waves are spread out nicely.`
       : `Some insulin waves are piling up — that's a timing question to talk about with your doctor.`,
+    disclaimer: "This is for learning only — always talk to your doctor before making changes.",
+  };
+}
+
+/**
+ * Generate mountain-themed insight text (Kids "Mountains" mode).
+ * Same data, framed as a landscape: mountains, hills, valleys, weather.
+ * NO scary language — nature metaphors only.
+ */
+export function generateMountainInsight(
+  entries: InsulinEntry[],
+  dangerWindows: DangerWindow[],
+  worstPressure: PressureClass,
+  patientName?: string,
+): InsightContent {
+  const name = patientName || "your child";
+  const basalEntries = entries.filter((e) => e.type === "basal");
+  const bolusEntries = entries.filter((e) => e.type === "bolus");
+
+  const fmt = (m: number) => `${String(Math.floor((m % 1440) / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`;
+
+  // Basal = rolling hills
+  let basalCoverage: string;
+  if (basalEntries.length === 0) {
+    basalCoverage = "No rolling hills right now — only peaks from meal-time insulin.";
+  } else {
+    const names = [...new Set(basalEntries.map((e) => e.insulinName))];
+    basalCoverage = `${name}'s ${names.join(" and ")} make${names.length === 1 ? "s" : ""} the wide rolling hills. They stretch all day and night like a gentle mountain range — always there, keeping things steady even while you sleep.`;
+  }
+
+  // Danger = stormy sky
+  let dangerText: string | undefined;
+  if (dangerWindows.length > 0) {
+    const windows = dangerWindows.map((w) => `${fmt(w.startMinute)} and ${fmt(w.endMinute)}`);
+    dangerText = `Between ${windows.join(", and between ")} the mountains are really big — that means lots of insulin is working. Make sure you've eaten enough!`;
+  }
+
+  // Bolus = tall pointy peaks
+  let bolusStacking: string;
+  if (bolusEntries.length === 0) {
+    bolusStacking = "No tall peaks today — just the rolling hills from background insulin.";
+  } else {
+    const names = [...new Set(bolusEntries.map((e) => e.insulinName))];
+    bolusStacking = `${name}'s ${names.join(" and ")} make${names.length === 1 ? "s" : ""} the tall pointy mountains. Each one shoots up fast when medicine is given, then slowly gets smaller. ${worstPressure === "light" ? "They're nicely spaced apart — like separate mountain peaks!" : "Some peaks are close together, so the mountains overlap a bit."}`;
+  }
+
+  // Find quiet valleys
+  let quietNote = "";
+  if (entries.length > 0) {
+    // Simple: find the lowest-IOB stretch
+    const allTimes = entries.map((e) => {
+      const [h, m] = e.time.split(":").map(Number);
+      return h * 60 + m;
+    }).sort((a, b) => a - b);
+    if (allTimes.length >= 2) {
+      let longestGap = 0; let gapStart = 0; let gapEnd = 0;
+      for (let i = 1; i < allTimes.length; i++) {
+        const gap = allTimes[i] - allTimes[i - 1];
+        if (gap > longestGap) { longestGap = gap; gapStart = allTimes[i - 1]; gapEnd = allTimes[i]; }
+      }
+      // Wrap-around gap
+      const wrapGap = 1440 - allTimes[allTimes.length - 1] + allTimes[0];
+      if (wrapGap > longestGap) { gapStart = allTimes[allTimes.length - 1]; gapEnd = allTimes[0]; }
+      quietNote = ` The mountains are quiet between ${fmt(gapStart)} and ${fmt(gapEnd)} — your insulin is resting in a peaceful valley.`;
+    }
+  }
+
+  // Overnight note for basal
+  let overnightNote = "";
+  if (basalEntries.length > 0) {
+    overnightNote = " While you sleep, the hills are still there. Your long-acting insulin keeps working like a gentle hill all night.";
+  }
+
+  return {
+    basalCoverage,
+    dangerText,
+    bolusStacking,
+    keyObservation: worstPressure === "light" || worstPressure === "moderate"
+      ? `Your biggest mountain is when your insulin is working the hardest.${quietNote}${overnightNote}`
+      : `Some mountains are really big right now — that's a timing question to talk about with your doctor.${quietNote}${overnightNote}`,
     disclaimer: "This is for learning only — always talk to your doctor before making changes.",
   };
 }

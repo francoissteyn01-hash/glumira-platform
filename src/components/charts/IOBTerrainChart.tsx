@@ -2,16 +2,15 @@
  * GluMira™ V7 — IOB Terrain Chart (Master Chart Component)
  *
  * Renders multi-cycle insulin terrain with:
- * - Individual mountain shapes per insulin with gradient fills
- * - Combined IOB pressure line
- * - Pressure zone colouring (green/amber/orange/red)
- * - Danger window highlighting
- * - Peak labels per mountain
- * - Dose markers at injection times
- * - Clinical/Kids toggle
- * - Density bar
- * - 60-second insight panel
- * - What-if panel (optional)
+ * - Pressure map background shading (light/moderate/strong/overlap)
+ * - Stacked area chart: per-insulin layers with combined IOB outline
+ * - Danger/Watch window brackets above graph
+ * - Upgraded dose markers with arrow + abbreviation
+ * - Current time marker
+ * - Dynamic subtitle with live stats
+ * - G4 individual curves density view (tab)
+ * - Clinical/Kids/Mountains toggle
+ * - Density bar + 60-second insight panel + What-if panel
  *
  * Uses Recharts for rendering (Canvas upgrade planned for Phase 2).
  */
@@ -30,6 +29,7 @@ import {
   type InsulinEntry,
   type PressureClass,
   type TerrainPoint,
+  type DangerWindow,
 } from "@/lib/pharmacokinetics";
 
 import IOBDensityBar from "@/components/charts/IOBDensityBar";
@@ -66,13 +66,42 @@ export interface IOBTerrainChartProps {
 const MINUTES_PER_DAY = 1440;
 
 const PRESSURE_COLOURS: Record<PressureClass, string> = {
-  light: "#4CAF50", moderate: "#FFC107", strong: "#FF9800", overlap: "#F44336",
+  light: "#4CAF50", moderate: "#F59E0B", strong: "#F87171", overlap: "#EF4444",
 };
 
-// Per-insulin colours: cool for basal, warm for bolus
+const PRESSURE_OPACITY: Record<PressureClass, number> = {
+  light: 0, moderate: 0.08, strong: 0.12, overlap: 0.18,
+};
+
+// Stacked layer colours
+const BASAL_STACK_COLOURS = ["#1A2A5E", "#2A3A6E", "#3A4A7E", "#4A5A8E"];
+const BOLUS_STACK_COLOURS: Record<string, string> = {
+  "ultra-rapid": "#2AB5C1",
+  "rapid": "#2AB5C1",
+  "short": "#4A7FB5",
+};
+const BOLUS_STACK_DEFAULT = "#2AB5C1";
+
+// Per-insulin colours for individual view / legend
 const BASAL_COLOURS = ["#2ab5c1", "#7F77DD", "#378ADD", "#5BA3CF"];
 const BOLUS_COLOURS = ["#D85A30", "#D4537E", "#EF9F27", "#E06B55"];
 const GLUCOSE_COLOUR = "#f59e0b";
+
+// Abbreviations for dose markers
+const INSULIN_ABBREV: Record<string, string> = {
+  "Levemir": "Lev", "Detemir": "Lev", "Lantus": "Lan", "Basaglar": "Lan",
+  "Tresiba": "Tre", "Degludec": "Tre", "Toujeo": "Tou", "NPH": "NPH",
+  "Fiasp": "Fia", "Lyumjev": "Lyu", "NovoRapid": "NR", "Aspart": "NR",
+  "Humalog": "Hum", "Lispro": "Hum", "Apidra": "Api", "Glulisine": "Api",
+  "Actrapid": "Act", "Regular": "Act", "Humulin": "Hum",
+};
+
+function getAbbrev(name: string): string {
+  for (const [key, abbr] of Object.entries(INSULIN_ABBREV)) {
+    if (name.toLowerCase().includes(key.toLowerCase())) return abbr;
+  }
+  return name.slice(0, 3);
+}
 
 /* ═══════════════════════════════════════════════════════════════════════════ */
 /*  Helpers                                                                   */
@@ -89,6 +118,11 @@ function minutesToLabel(min: number): string {
   const hh = String(Math.floor(dm / 60)).padStart(2, "0");
   const mm = String(dm % 60).padStart(2, "0");
   return day > 1 ? `D${day} ${hh}:${mm}` : `${hh}:${mm}`;
+}
+
+function minutesToTime(min: number): string {
+  const dm = ((min % MINUTES_PER_DAY) + MINUTES_PER_DAY) % MINUTES_PER_DAY;
+  return `${String(Math.floor(dm / 60)).padStart(2, "0")}:${String(dm % 60).padStart(2, "0")}`;
 }
 
 function toInsulinEntries(basalEntries: BasalEntry[], bolusEntries: BolusEntry[]): InsulinEntry[] {
@@ -115,29 +149,67 @@ function attachGlucose(points: TerrainPoint[], glucoseData: GlucosePoint[] | und
   return points.map((pt) => ({ ...pt, glucose: glucoseMap.get(pt.minute) }));
 }
 
+/** Merge adjacent timepoints with same pressure into contiguous bands */
+function buildPressureBands(points: TerrainPoint[]): Array<{ start: number; end: number; pressure: PressureClass }> {
+  if (points.length === 0) return [];
+  const bands: Array<{ start: number; end: number; pressure: PressureClass }> = [];
+  let current = { start: points[0].minute, end: points[0].minute, pressure: points[0].pressure };
+  for (let i = 1; i < points.length; i++) {
+    if (points[i].pressure === current.pressure) {
+      current.end = points[i].minute;
+    } else {
+      bands.push({ ...current });
+      current = { start: points[i].minute, end: points[i].minute, pressure: points[i].pressure };
+    }
+  }
+  bands.push(current);
+  return bands;
+}
+
+function getCurrentMinute(): number {
+  const now = new Date();
+  return now.getHours() * 60 + now.getMinutes();
+}
+
 /* ═══════════════════════════════════════════════════════════════════════════ */
 /*  Sub-components                                                            */
 /* ═══════════════════════════════════════════════════════════════════════════ */
 
-function TerrainTooltip({ active, payload }: any) {
+function StackedTooltip({ active, payload, entryCurves }: any) {
   if (!active || !payload?.[0]) return null;
   const d = payload[0].payload as ChartPoint;
+  const breakdown: { name: string; time: string; iob: number; colour: string }[] = [];
+  if (entryCurves) {
+    for (const { entry, colour } of entryCurves) {
+      const iob = d[entry.id];
+      if (iob !== undefined && iob > 0.005) {
+        breakdown.push({ name: entry.insulinName, time: entry.time, iob, colour });
+      }
+    }
+  }
+  breakdown.sort((a, b) => b.iob - a.iob);
+
   return (
-    <div style={{ background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 10, padding: "12px 16px", boxShadow: "0 4px 16px rgba(0,0,0,0.12)", fontFamily: "'DM Sans', system-ui, sans-serif", minWidth: 200 }}>
-      <p style={{ fontSize: 11, color: "var(--text-muted)", margin: "0 0 6px", fontWeight: 600 }}>{d.label}</p>
-      <div style={{ display: "flex", gap: 16 }}>
-        <div>
-          <p style={{ fontSize: 9, color: "var(--text-muted)", margin: 0, textTransform: "uppercase", letterSpacing: "0.05em" }}>Total IOB</p>
-          <p style={{ fontSize: 18, fontWeight: 700, color: "var(--text-primary)", margin: "2px 0 0", fontFamily: "'JetBrains Mono', monospace" }}>{d.totalIOB.toFixed(2)}U</p>
+    <div style={{ background: "var(--bg-card, #fff)", border: "1px solid var(--border, #e2e8f0)", borderRadius: 10, padding: "12px 16px", boxShadow: "0 4px 16px rgba(0,0,0,0.12)", fontFamily: "'DM Sans', system-ui, sans-serif", minWidth: 220, maxWidth: 300 }}>
+      <p style={{ fontSize: 13, color: "var(--text-primary)", margin: "0 0 8px", fontWeight: 700, fontFamily: "'JetBrains Mono', monospace" }}>
+        {d.label} — Total IOB: {d.totalIOB.toFixed(2)}U
+      </p>
+      {breakdown.length > 0 && (
+        <div style={{ display: "flex", flexDirection: "column", gap: 3, marginBottom: 8 }}>
+          {breakdown.map((b, i) => (
+            <div key={i} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 11, color: "var(--text-secondary)" }}>
+              <span style={{ width: 8, height: 8, borderRadius: 2, background: b.colour, flexShrink: 0 }} />
+              <span style={{ fontFamily: "'JetBrains Mono', monospace" }}>
+                {b.name} ({b.time}): {b.iob.toFixed(2)}U
+              </span>
+            </div>
+          ))}
         </div>
-        <div>
-          <p style={{ fontSize: 9, color: "var(--text-muted)", margin: 0, textTransform: "uppercase", letterSpacing: "0.05em" }}>Pressure</p>
-          <p style={{ fontSize: 14, fontWeight: 600, color: PRESSURE_COLOURS[d.pressure], margin: "4px 0 0", textTransform: "capitalize" }}>{d.pressure === "overlap" ? "Overlap Risk" : d.pressure}</p>
-        </div>
-      </div>
-      <div style={{ display: "flex", gap: 12, marginTop: 8, fontSize: 11, color: "var(--text-secondary)" }}>
-        <span>Basal: {d.basalIOB.toFixed(2)}U</span>
-        <span>Bolus: {d.bolusIOB.toFixed(2)}U</span>
+      )}
+      <div style={{ display: "flex", gap: 12, fontSize: 11 }}>
+        <span style={{ color: PRESSURE_COLOURS[d.pressure], fontWeight: 600 }}>
+          Pressure: {d.pressure === "overlap" ? "OVERLAP" : d.pressure.toUpperCase()}
+        </span>
       </div>
       {d.glucose !== undefined && (
         <p style={{ fontSize: 12, color: GLUCOSE_COLOUR, margin: "6px 0 0", fontWeight: 600 }}>Glucose: {d.glucose.toFixed(1)}</p>
@@ -154,6 +226,118 @@ function LegendDot({ colour, label }: { colour: string; label: string }) {
   );
 }
 
+function PressureLegend() {
+  return (
+    <div style={{ display: "flex", gap: 12, justifyContent: "center", padding: "6px 0 2px", fontSize: 10, color: "var(--text-secondary)", fontFamily: "'DM Sans', sans-serif" }}>
+      <span style={{ display: "flex", alignItems: "center", gap: 3 }}><span style={{ width: 10, height: 10, borderRadius: 2, background: "transparent", border: "1px solid var(--border)" }} /> Light</span>
+      <span style={{ display: "flex", alignItems: "center", gap: 3 }}><span style={{ width: 10, height: 10, borderRadius: 2, background: "#F59E0B", opacity: 0.3 }} /> Moderate</span>
+      <span style={{ display: "flex", alignItems: "center", gap: 3 }}><span style={{ width: 10, height: 10, borderRadius: 2, background: "#F87171", opacity: 0.4 }} /> Strong</span>
+      <span style={{ display: "flex", alignItems: "center", gap: 3 }}><span style={{ width: 10, height: 10, borderRadius: 2, background: "#EF4444", opacity: 0.5 }} /> Overlap</span>
+    </div>
+  );
+}
+
+function DangerBrackets({ dangerWindows, totalMinutes, chartWidth, marginLeft, view }: {
+  dangerWindows: DangerWindow[]; totalMinutes: number; chartWidth: number; marginLeft: number; view: string;
+}) {
+  if (dangerWindows.length === 0) return null;
+  const dataWidth = chartWidth - marginLeft - 8;
+  const toX = (min: number) => marginLeft + (min / totalMinutes) * dataWidth;
+
+  return (
+    <svg width="100%" height={28} style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none", overflow: "visible" }} viewBox={`0 0 ${chartWidth} 28`} preserveAspectRatio="xMidYMid meet">
+      {dangerWindows.map((w, i) => {
+        const isOverlap = w.pressure === "overlap";
+        const colour = isOverlap ? "#EF4444" : "#F87171";
+        const thickness = isOverlap ? 3 : 2;
+        const isKidsView = view === "kids" || view === "mountains";
+        const label = isKidsView
+          ? (isOverlap ? "Watch here!" : "Careful here")
+          : (isOverlap ? `⚠ Danger Window: ${minutesToTime(w.startMinute)} – ${minutesToTime(w.endMinute)}` : `Watch Window: ${minutesToTime(w.startMinute)} – ${minutesToTime(w.endMinute)}`);
+        const x1 = toX(w.startMinute);
+        const x2 = toX(w.endMinute);
+        const midX = (x1 + x2) / 2;
+
+        return (
+          <g key={`bracket-${i}`}>
+            <line x1={x1} y1={16} x2={x2} y2={16} stroke={colour} strokeWidth={thickness} />
+            <polygon points={`${x1 - 3},16 ${x1 + 3},16 ${x1},22`} fill={colour} />
+            <polygon points={`${x2 - 3},16 ${x2 + 3},16 ${x2},22`} fill={colour} />
+            <text x={midX} y={11} textAnchor="middle" fill={colour} fontSize={9} fontWeight={600} fontFamily="'DM Sans', sans-serif">
+              {label}
+            </text>
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/*  G4 Individual Curves View                                                 */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+
+function G4DensityView({ entryCurves, enrichedPoints, totalMinutes, xTicks, compact }: {
+  entryCurves: Array<{ entry: InsulinEntry; idx: number; colour: string; stackColour: string; curve: Array<{ minute: number; iob: number }> }>;
+  enrichedPoints: ChartPoint[];
+  totalMinutes: number;
+  xTicks: number[];
+  compact: boolean;
+}) {
+  const [highlighted, setHighlighted] = useState<string | null>(null);
+  const chartHeight = compact ? 200 : 260;
+
+  return (
+    <div>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8, padding: "0 4px" }}>
+        <h4 style={{ margin: 0, fontSize: 14, fontWeight: 600, color: "var(--text-primary)", fontFamily: "'DM Sans', sans-serif" }}>
+          Individual Curves
+        </h4>
+        <span style={{ fontSize: 10, color: "var(--text-muted)" }}>Tap a curve to highlight</span>
+      </div>
+      <div style={{ display: "flex", gap: 6, flexWrap: "wrap", padding: "0 4px", marginBottom: 8 }}>
+        {entryCurves.map(({ entry, colour }) => (
+          <button key={entry.id} onClick={() => setHighlighted(highlighted === entry.id ? null : entry.id)}
+            style={{
+              display: "flex", alignItems: "center", gap: 4, padding: "3px 8px", borderRadius: 4, border: "1px solid",
+              borderColor: highlighted === entry.id ? colour : "var(--border)",
+              background: highlighted === entry.id ? colour + "20" : "transparent",
+              fontSize: 10, fontWeight: 500, color: highlighted === entry.id ? colour : "var(--text-secondary)",
+              cursor: "pointer", fontFamily: "'DM Sans', sans-serif",
+            }}>
+            <span style={{ width: 6, height: 6, borderRadius: "50%", background: colour }} />
+            {entry.insulinName} {entry.dose}U
+          </button>
+        ))}
+      </div>
+
+      <ResponsiveContainer width="100%" height={chartHeight}>
+        <ComposedChart data={enrichedPoints} margin={{ top: 4, right: 8, left: compact ? -12 : 0, bottom: 0 }}>
+          <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" strokeOpacity={0.5} strokeWidth={0.75} vertical={false} />
+          <XAxis dataKey="minute" type="number" domain={[0, totalMinutes]} ticks={xTicks} tickFormatter={minutesToLabel}
+            tick={{ fontSize: 10, fill: "var(--text-secondary)", fontFamily: "'DM Sans', sans-serif" }}
+            axisLine={{ stroke: "var(--border)" }} tickLine={{ stroke: "var(--border)" }} />
+          <YAxis tick={{ fontSize: 10, fill: "var(--text-secondary)", fontFamily: "'DM Sans', sans-serif" }}
+            tickFormatter={(v: number) => `${v.toFixed(1)}`}
+            axisLine={{ stroke: "var(--border)" }} tickLine={{ stroke: "var(--border)" }} />
+
+          {entryCurves.map(({ entry, colour }) => {
+            const isHighlighted = highlighted === null || highlighted === entry.id;
+            return (
+              <Area key={entry.id} type="natural" dataKey={entry.id}
+                stroke={colour} strokeWidth={isHighlighted ? 1.5 : 1}
+                strokeOpacity={isHighlighted ? 0.9 : 0.15}
+                fill={colour} fillOpacity={isHighlighted ? 0.15 : 0.02}
+                dot={false} animationDuration={0}
+                name={`${entry.insulinName} ${entry.dose}U`} />
+            );
+          })}
+        </ComposedChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}
+
 /* ═══════════════════════════════════════════════════════════════════════════ */
 /*  Main Component                                                            */
 /* ═══════════════════════════════════════════════════════════════════════════ */
@@ -164,16 +348,16 @@ export default function IOBTerrainChart({
 }: IOBTerrainChartProps) {
   const safeCycles = Math.max(2, cycles);
 
-  // Chart view toggle
-  const [view, setView] = useState<"clinical" | "kids">(() => {
+  const [view, setView] = useState<"clinical" | "kids" | "mountains">(() => {
     try { return (localStorage.getItem("glumira-chart-view") as any) || "clinical"; } catch { return "clinical"; }
   });
-  const handleViewChange = useCallback((v: "clinical" | "kids") => {
+  const handleViewChange = useCallback((v: "clinical" | "kids" | "mountains") => {
     setView(v);
     try { localStorage.setItem("glumira-chart-view", v); } catch {}
   }, []);
 
-  // What-if state
+  const [activeTab, setActiveTab] = useState<"stacked" | "individual">("stacked");
+
   const [whatIfBasal, setWhatIfBasal] = useState(basalEntries);
   const [whatIfBolus, setWhatIfBolus] = useState(bolusEntries);
   const isModified = JSON.stringify(whatIfBasal) !== JSON.stringify(basalEntries) || JSON.stringify(whatIfBolus) !== JSON.stringify(bolusEntries);
@@ -184,17 +368,26 @@ export default function IOBTerrainChart({
   const { points: rawPoints, peakIOB, dangerWindows, worstPressure } = useMemo(() => buildTerrainTimeline(entries, safeCycles), [entries, safeCycles]);
   const points = useMemo(() => attachGlucose(rawPoints, glucoseData, safeCycles), [rawPoints, glucoseData, safeCycles]);
 
-  // Per-entry curves for individual mountains
   const entryCurves = useMemo(() => {
     const totalMinutes = safeCycles * MINUTES_PER_DAY;
-    return entries.map((entry, idx) => ({
-      entry, idx,
-      colour: entry.type === "basal" ? BASAL_COLOURS[idx % BASAL_COLOURS.length] : BOLUS_COLOURS[idx % BOLUS_COLOURS.length],
-      curve: computeEntryCurve(entry, totalMinutes, safeCycles),
-    }));
+    let basalIdx = 0;
+    let bolusIdx = 0;
+    return entries.map((entry, idx) => {
+      let colour: string;
+      let stackColour: string;
+      if (entry.type === "basal") {
+        colour = BASAL_COLOURS[idx % BASAL_COLOURS.length];
+        stackColour = BASAL_STACK_COLOURS[basalIdx % BASAL_STACK_COLOURS.length];
+        basalIdx++;
+      } else {
+        colour = BOLUS_COLOURS[idx % BOLUS_COLOURS.length];
+        stackColour = BOLUS_STACK_COLOURS[entry.pharmacology.category] || BOLUS_STACK_DEFAULT;
+        bolusIdx++;
+      }
+      return { entry, idx, colour, stackColour, curve: computeEntryCurve(entry, totalMinutes, safeCycles) };
+    });
   }, [entries, safeCycles]);
 
-  // Merge individual curves into chart data
   const enrichedPoints = useMemo(() => {
     const lookup = new Map<number, Record<string, number>>();
     for (const { entry, curve } of entryCurves) {
@@ -209,8 +402,15 @@ export default function IOBTerrainChart({
     });
   }, [points, entryCurves]);
 
-  // Insight content
-  const insight = useMemo(() => view === "kids"
+  const pressureBands = useMemo(() => buildPressureBands(rawPoints), [rawPoints]);
+
+  const peakPoint = useMemo(() => {
+    let best = rawPoints[0];
+    for (const pt of rawPoints) { if (pt.totalIOB > best.totalIOB) best = pt; }
+    return best;
+  }, [rawPoints]);
+
+  const insight = useMemo(() => view === "kids" || view === "mountains"
     ? generateKidsInsight(entries, dangerWindows, worstPressure, profile.name)
     : generateInsight(entries, dangerWindows, peakIOB, worstPressure),
   [entries, dangerWindows, peakIOB, worstPressure, view, profile.name]);
@@ -219,13 +419,24 @@ export default function IOBTerrainChart({
   const chartHeight = compact ? 260 : 340;
   const hasGlucose = points.some((p) => (p as any).glucose !== undefined);
   const totalDoses = entries.length;
+  const currentMinute = getCurrentMinute();
 
-  // X-axis ticks
   const totalMinutes = safeCycles * MINUTES_PER_DAY;
   const xTicks: number[] = [];
   for (let m = 0; m <= totalMinutes; m += 180) xTicks.push(m);
   const dayBoundaries: number[] = [];
   for (let d = 1; d < safeCycles; d++) dayBoundaries.push(d * MINUTES_PER_DAY);
+
+  const subtitleText = useMemo(() => {
+    const activeCount = entries.length;
+    const peakTime = minutesToTime(peakPoint?.minute || 0);
+    const peakVal = peakIOB.toFixed(1);
+    const currentPressure = (() => {
+      const cp = rawPoints.find((p) => p.minute >= currentMinute);
+      return cp?.pressure || "light";
+    })();
+    return `${activeCount} insulin${activeCount !== 1 ? "s" : ""} active | Peak at ${peakTime} (${peakVal}U) | ${currentPressure.toUpperCase()} pressure now`;
+  }, [entries.length, peakPoint, peakIOB, rawPoints, currentMinute]);
 
   if (totalDoses === 0) {
     return (
@@ -236,7 +447,6 @@ export default function IOBTerrainChart({
     );
   }
 
-  // What-if handlers
   const handleTimingChange = (type: "basal" | "bolus", index: number, newTime: string) => {
     if (type === "basal") {
       const updated = [...whatIfBasal];
@@ -261,9 +471,33 @@ export default function IOBTerrainChart({
   };
   const handleReset = () => { setWhatIfBasal(basalEntries); setWhatIfBolus(bolusEntries); };
 
+  const doseMarkers = useMemo(() => {
+    const markers = entries.flatMap((entry, idx) => {
+      const colour = entry.type === "basal" ? BASAL_COLOURS[idx % BASAL_COLOURS.length] : BOLUS_COLOURS[idx % BOLUS_COLOURS.length];
+      const result = [];
+      for (let c = 0; c < safeCycles; c++) {
+        result.push({ entry, min: timeToMinutes(entry.time) + c * MINUTES_PER_DAY, colour, offset: 0 });
+      }
+      return result;
+    });
+    markers.sort((a, b) => a.min - b.min);
+    for (let i = 1; i < markers.length; i++) {
+      if (markers[i].min - markers[i - 1].min < 30) {
+        markers[i - 1].offset = -1;
+        markers[i].offset = 1;
+      }
+    }
+    return markers;
+  }, [entries, safeCycles]);
+
+  const tooltipContent = useCallback((props: any) => (
+    <StackedTooltip {...props} entryCurves={entryCurves} />
+  ), [entryCurves]);
+
+  const marginLeft = compact ? 36 : 48;
+
   return (
     <div className="page-transition">
-      {/* What-if watermark */}
       {isModified && (
         <div style={{ position: "relative" }}>
           <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%) rotate(-15deg)", fontSize: 48, fontWeight: 800, color: "var(--text-primary)", opacity: 0.04, pointerEvents: "none", whiteSpace: "nowrap", zIndex: 1 }}>
@@ -272,24 +506,35 @@ export default function IOBTerrainChart({
         </div>
       )}
 
-      {/* Chart card */}
       <div style={{ background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border)", padding: compact ? "12px 12px 4px" : "16px 16px 8px", position: "relative" }}>
-        {/* Title row */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: compact ? 8 : 14, padding: "0 4px", flexWrap: "wrap", gap: 8 }}>
+        {/* Title + dynamic subtitle */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 4, padding: "0 4px", flexWrap: "wrap", gap: 8 }}>
           <div>
             <h3 style={{ margin: 0, fontSize: compact ? 14 : 18, fontWeight: 700, color: "var(--text-primary)", fontFamily: "'Playfair Display', serif" }}>
-              IOB Terrain — {safeCycles}-Cycle View
+              Live IOB Curve
             </h3>
-            <p style={{ margin: "2px 0 0", fontSize: 11, color: "var(--text-muted)", fontFamily: "'DM Sans', sans-serif" }}>
-              {profile.name}{profile.caregiver ? ` (managed by ${profile.caregiver})` : ""} · {activeBasal.length} basal · {activeBolus.length} bolus
-              {profile.age ? ` · age ${profile.age}` : ""}
+            <p style={{ margin: "2px 0 0", fontSize: 11, color: "#52667A", fontFamily: "'DM Sans', sans-serif" }}>
+              {subtitleText}
+            </p>
+            <p style={{ margin: "1px 0 0", fontSize: 10, color: "var(--text-muted)", fontFamily: "'DM Sans', sans-serif" }}>
+              {profile.name}{profile.caregiver ? ` (managed by ${profile.caregiver})` : ""} · {safeCycles}-cycle view
               {isModified && <span style={{ color: "#FFC107", fontWeight: 600 }}> · WHAT-IF MODE</span>}
             </p>
           </div>
           <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
-            {/* View toggle */}
-            {<ChartViewToggle view={view} onChange={handleViewChange} />}
-            {/* Pressure badge */}
+            <ChartViewToggle view={view} onChange={handleViewChange} />
+            <div style={{ display: "flex", borderRadius: 6, border: "1px solid var(--border)", overflow: "hidden" }}>
+              {(["stacked", "individual"] as const).map((tab) => (
+                <button key={tab} onClick={() => setActiveTab(tab)} style={{
+                  padding: "4px 10px", fontSize: 10, fontWeight: 500, border: "none", cursor: "pointer",
+                  background: activeTab === tab ? "var(--text-primary)" : "transparent",
+                  color: activeTab === tab ? "var(--bg-card)" : "var(--text-secondary)",
+                  fontFamily: "'DM Sans', sans-serif",
+                }}>
+                  {tab === "stacked" ? "Stacked" : "G4 Individual"}
+                </button>
+              ))}
+            </div>
             <span style={{ display: "inline-flex", alignItems: "center", gap: 5, padding: "4px 10px", borderRadius: 6, background: PRESSURE_COLOURS[worstPressure] + "18", fontSize: 11, fontWeight: 600, color: PRESSURE_COLOURS[worstPressure], fontFamily: "'DM Sans', sans-serif", textTransform: "capitalize" }}>
               <span style={{ width: 6, height: 6, borderRadius: "50%", background: PRESSURE_COLOURS[worstPressure] }} />
               {worstPressure === "overlap" ? "Overlap Risk" : worstPressure} · Peak {peakIOB.toFixed(1)}U
@@ -297,10 +542,9 @@ export default function IOBTerrainChart({
           </div>
         </div>
 
-        {/* No-stacking banner */}
         {dangerWindows.length === 0 && (
-          <div style={{ margin: "0 4px 12px", padding: "8px 14px", borderRadius: 8, background: "rgba(76,175,80,0.08)", border: "1px solid rgba(76,175,80,0.2)", fontSize: 12, fontWeight: 500, color: "#4CAF50", fontFamily: "'DM Sans', sans-serif" }}>
-            {view === "kids" ? "Looking good! No waves overlap today." : "No insulin stacking detected — steady coverage"}
+          <div style={{ margin: "0 4px 8px", padding: "8px 14px", borderRadius: 8, background: "rgba(76,175,80,0.08)", border: "1px solid rgba(76,175,80,0.2)", fontSize: 12, fontWeight: 500, color: "#4CAF50", fontFamily: "'DM Sans', sans-serif" }}>
+            {view === "kids" || view === "mountains" ? "Looking good! No waves overlap today." : "No insulin stacking detected — steady coverage"}
           </div>
         )}
 
@@ -312,93 +556,109 @@ export default function IOBTerrainChart({
           {hasGlucose && <LegendDot colour={GLUCOSE_COLOUR} label="Glucose" />}
         </div>
 
-        {/* Recharts terrain */}
-        <ResponsiveContainer width="100%" height={chartHeight}>
-          <ComposedChart data={enrichedPoints} margin={{ top: 4, right: 8, left: compact ? -12 : 0, bottom: 0 }}>
-            <defs>
-              {entryCurves.map(({ entry, colour }) => (
-                <linearGradient key={`grad_${entry.id}`} id={`grad_${entry.id}`} x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor={colour} stopOpacity={entry.type === "basal" ? 0.5 : 0.45} />
-                  <stop offset="100%" stopColor={colour} stopOpacity={0.05} />
-                </linearGradient>
-              ))}
-            </defs>
+        {activeTab === "stacked" ? (
+          <>
+            {/* Danger/Watch brackets above chart */}
+            <div style={{ position: "relative", height: dangerWindows.length > 0 ? 28 : 0 }}>
+              <DangerBrackets dangerWindows={dangerWindows} totalMinutes={totalMinutes} chartWidth={800} marginLeft={marginLeft} view={view} />
+            </div>
 
-            <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" strokeOpacity={0.5} strokeWidth={0.75} vertical={false} />
+            <ResponsiveContainer width="100%" height={chartHeight}>
+              <ComposedChart data={enrichedPoints} margin={{ top: 4, right: 8, left: compact ? -12 : 0, bottom: 0 }}>
+                <defs>
+                  {entryCurves.map(({ entry, stackColour }) => (
+                    <linearGradient key={`sgrad_${entry.id}`} id={`sgrad_${entry.id}`} x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor={stackColour} stopOpacity={entry.type === "basal" ? 0.25 : 0.30} />
+                      <stop offset="100%" stopColor={stackColour} stopOpacity={0.05} />
+                    </linearGradient>
+                  ))}
+                </defs>
 
-            {/* Day boundaries */}
-            {dayBoundaries.map((m) => (
-              <ReferenceLine key={`day-${m}`} x={m} stroke="var(--text-muted)" strokeDasharray="8 4" strokeOpacity={0.4}
-                label={{ value: `Day ${Math.floor(m / MINUTES_PER_DAY) + 1}`, position: "top", fill: "var(--text-secondary)", fontSize: 11, fontWeight: 500 }} />
-            ))}
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" strokeOpacity={0.5} strokeWidth={0.75} vertical={false} />
 
-            {/* Danger window areas */}
-            {dangerWindows.map((w, i) => (
-              <ReferenceArea key={`danger-${i}`} x1={w.startMinute} x2={w.endMinute}
-                fill={PRESSURE_COLOURS[w.pressure]} fillOpacity={0.08}
-                stroke={PRESSURE_COLOURS[w.pressure]} strokeOpacity={0.4} strokeDasharray="4 2"
-                label={{ value: view === "kids" ? "Watch here!" : `Danger ${minutesToLabel(w.startMinute)}`, position: "insideTop", fill: PRESSURE_COLOURS[w.pressure], fontSize: 10, fontWeight: 500 }} />
-            ))}
+                {/* Pressure map background bands */}
+                {pressureBands.filter((b) => b.pressure !== "light").map((band, i) => (
+                  <ReferenceArea key={`pband-${i}`} x1={band.start} x2={band.end}
+                    fill={PRESSURE_COLOURS[band.pressure]} fillOpacity={PRESSURE_OPACITY[band.pressure]}
+                    stroke={PRESSURE_COLOURS[band.pressure]} strokeOpacity={0.4} strokeDasharray="2 4" strokeWidth={1}
+                    ifOverflow="hidden" />
+                ))}
 
-            {/* Dose marker lines */}
-            {entries.map((entry, idx) => {
-              const colour = entry.type === "basal" ? BASAL_COLOURS[idx % BASAL_COLOURS.length] : BOLUS_COLOURS[idx % BOLUS_COLOURS.length];
-              const markers: any[] = [];
-              for (let c = 0; c < safeCycles; c++) {
-                const min = timeToMinutes(entry.time) + c * MINUTES_PER_DAY;
-                markers.push(
-                  <ReferenceLine key={`dose-${entry.id}-c${c}`} x={min} stroke={colour} strokeDasharray="2 4" strokeOpacity={0.6}
-                    label={{ value: `${entry.insulinName} ${entry.dose}U ${entry.time}`, position: "top", fill: colour, fontSize: 9, fontWeight: 500, angle: -90, offset: 10 }} />
-                );
-              }
-              return markers;
-            })}
+                {dayBoundaries.map((m) => (
+                  <ReferenceLine key={`day-${m}`} x={m} stroke="var(--text-muted)" strokeDasharray="8 4" strokeOpacity={0.4}
+                    label={{ value: `Day ${Math.floor(m / MINUTES_PER_DAY) + 1}`, position: "top", fill: "var(--text-secondary)", fontSize: 11, fontWeight: 500 }} />
+                ))}
 
-            <XAxis dataKey="minute" type="number" domain={[0, totalMinutes]} ticks={xTicks} tickFormatter={minutesToLabel}
-              tick={{ fontSize: 11, fill: "var(--text-secondary)", fontWeight: 400, fontFamily: "'DM Sans', sans-serif" }}
-              axisLine={{ stroke: "var(--border)" }} tickLine={{ stroke: "var(--border)" }} />
-            <YAxis yAxisId="iob"
-              tick={{ fontSize: 11, fill: "var(--text-secondary)", fontWeight: 500, fontFamily: "'DM Sans', sans-serif" }}
-              tickFormatter={(v: number) => `${v.toFixed(1)}`}
-              axisLine={{ stroke: "var(--border)" }} tickLine={{ stroke: "var(--border)" }}
-              label={{ value: "IOB (Units)", angle: -90, position: "insideLeft", offset: 16, style: { fontSize: 10, fill: "var(--text-secondary)", fontWeight: 500, fontFamily: "'DM Sans', sans-serif" } }} />
-            {hasGlucose && (
-              <YAxis yAxisId="glucose" orientation="right"
-                tick={{ fontSize: 11, fill: GLUCOSE_COLOUR, fontFamily: "'DM Sans', sans-serif" }}
-                tickFormatter={(v: number) => `${v.toFixed(1)}`}
-                axisLine={{ stroke: GLUCOSE_COLOUR, strokeOpacity: 0.3 }} tickLine={{ stroke: GLUCOSE_COLOUR, strokeOpacity: 0.3 }}
-                label={{ value: `Glucose (${profile.glucoseUnit})`, angle: 90, position: "insideRight", offset: 16, style: { fontSize: 10, fill: GLUCOSE_COLOUR } }} />
-            )}
+                {/* Current time marker */}
+                <ReferenceLine x={currentMinute} stroke="#F59E0B" strokeWidth={2}
+                  label={{ value: "Now", position: "top", fill: "#F59E0B", fontSize: 10, fontWeight: 700 }} />
 
-            <Tooltip content={<TerrainTooltip />} />
+                {/* Dose markers with arrows + abbreviations */}
+                {doseMarkers.map((dm, i) => (
+                  <ReferenceLine key={`dose-${i}`} x={dm.min} stroke={dm.colour} strokeDasharray="3 5" strokeOpacity={0.7} strokeWidth={1}
+                    label={{
+                      value: `▲ ${dm.entry.time} — ${dm.entry.dose}U  ${getAbbrev(dm.entry.insulinName)}`,
+                      position: "top",
+                      fill: dm.colour,
+                      fontSize: 9,
+                      fontWeight: 600,
+                      fontFamily: "'JetBrains Mono', monospace",
+                      offset: 8 + dm.offset * 20,
+                    }} />
+                ))}
 
-            {/* Individual insulin mountains */}
-            {entryCurves.map(({ entry, colour }) => (
-              <Area key={entry.id} yAxisId="iob" type="natural" dataKey={entry.id}
-                stroke={colour} strokeWidth={2} strokeOpacity={0.9}
-                fill={`url(#grad_${entry.id})`}
-                animationDuration={prefersReduced ? 0 : 800} dot={false}
-                activeDot={{ r: 3, stroke: colour, strokeWidth: 2, fill: "var(--bg-card)" }}
-                name={`${entry.insulinName} ${entry.dose}U`} />
-            ))}
+                <XAxis dataKey="minute" type="number" domain={[0, totalMinutes]} ticks={xTicks} tickFormatter={minutesToLabel}
+                  tick={{ fontSize: 11, fill: "var(--text-secondary)", fontWeight: 400, fontFamily: "'DM Sans', sans-serif" }}
+                  axisLine={{ stroke: "var(--border)" }} tickLine={{ stroke: "var(--border)" }} />
+                <YAxis yAxisId="iob"
+                  tick={{ fontSize: 11, fill: "var(--text-secondary)", fontWeight: 500, fontFamily: "'DM Sans', sans-serif" }}
+                  tickFormatter={(v: number) => `${v.toFixed(1)}`}
+                  axisLine={{ stroke: "var(--border)" }} tickLine={{ stroke: "var(--border)" }}
+                  label={{ value: "IOB (Units)", angle: -90, position: "insideLeft", offset: 16, style: { fontSize: 10, fill: "var(--text-secondary)", fontWeight: 500, fontFamily: "'DM Sans', sans-serif" } }} />
+                {hasGlucose && (
+                  <YAxis yAxisId="glucose" orientation="right"
+                    tick={{ fontSize: 11, fill: GLUCOSE_COLOUR, fontFamily: "'DM Sans', sans-serif" }}
+                    tickFormatter={(v: number) => `${v.toFixed(1)}`}
+                    axisLine={{ stroke: GLUCOSE_COLOUR, strokeOpacity: 0.3 }} tickLine={{ stroke: GLUCOSE_COLOUR, strokeOpacity: 0.3 }}
+                    label={{ value: `Glucose (${profile.glucoseUnit})`, angle: 90, position: "insideRight", offset: 16, style: { fontSize: 10, fill: GLUCOSE_COLOUR } }} />
+                )}
 
-            {/* Combined IOB line on top */}
-            <Line yAxisId="iob" type="natural" dataKey="totalIOB"
-              stroke="var(--text-primary)" strokeWidth={2.5}
-              dot={false} animationDuration={prefersReduced ? 0 : 800}
-              name="Combined IOB" />
+                <Tooltip content={tooltipContent} />
 
-            {/* Glucose overlay */}
-            {hasGlucose && (
-              <Line yAxisId="glucose" type="natural" dataKey="glucose"
-                stroke={GLUCOSE_COLOUR} strokeWidth={2} dot={false} connectNulls
-                animationDuration={prefersReduced ? 0 : 800} name="Glucose"
-                activeDot={{ r: 3, stroke: GLUCOSE_COLOUR, strokeWidth: 2, fill: "var(--bg-card)" }} />
-            )}
-          </ComposedChart>
-        </ResponsiveContainer>
+                {/* Stacked area layers — basal first, then bolus on top */}
+                {entryCurves.map(({ entry, stackColour }) => (
+                  <Area key={entry.id} yAxisId="iob" type="natural" dataKey={entry.id}
+                    stackId="insulin"
+                    stroke={stackColour} strokeWidth={0.5} strokeOpacity={0.4}
+                    fill={`url(#sgrad_${entry.id})`}
+                    animationDuration={prefersReduced ? 0 : 800} dot={false}
+                    name={`${entry.insulinName} ${entry.dose}U`} />
+                ))}
 
-        {/* Density bar */}
+                {/* Combined IOB dark outline */}
+                <Line yAxisId="iob" type="natural" dataKey="totalIOB"
+                  stroke="#1A2A5E" strokeWidth={2.5}
+                  dot={false} animationDuration={prefersReduced ? 0 : 800}
+                  name="Combined IOB" />
+
+                {hasGlucose && (
+                  <Line yAxisId="glucose" type="natural" dataKey="glucose"
+                    stroke={GLUCOSE_COLOUR} strokeWidth={2} dot={false} connectNulls
+                    animationDuration={prefersReduced ? 0 : 800} name="Glucose"
+                    activeDot={{ r: 3, stroke: GLUCOSE_COLOUR, strokeWidth: 2, fill: "var(--bg-card)" }} />
+                )}
+              </ComposedChart>
+            </ResponsiveContainer>
+
+            {/* Pressure legend */}
+            <PressureLegend />
+          </>
+        ) : (
+          /* G4 Individual Curves View */
+          <G4DensityView entryCurves={entryCurves} enrichedPoints={enrichedPoints}
+            totalMinutes={totalMinutes} xTicks={xTicks} compact={compact} />
+        )}
+
         {showDensityBar && (
           <div style={{ marginTop: 8 }}>
             <IOBDensityBar points={rawPoints.map((p: any) => ({ minute: p.minute, pressure: p.pressure }))} totalMinutes={totalMinutes} />
@@ -406,15 +666,12 @@ export default function IOBTerrainChart({
         )}
       </div>
 
-      {/* 60-Second Insight */}
       {showInsight && (
         <div style={{ marginTop: 12 }}>
           <SixtySecondInsight view={view} content={insight} pressureClass={worstPressure} />
         </div>
       )}
 
-
-      {/* What-If Panel */}
       {showWhatIf && (
         <div style={{ marginTop: 12 }}>
           <WhatIfTiming

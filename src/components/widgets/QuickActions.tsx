@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
 
 const ACTIONS = [
-  { icon: "\uD83D\uDC89", label: "Log Insulin", route: "/insulin", amber: false },
+  { icon: "\uD83D\uDC64", label: "Patient Profile", route: "/profile", amber: false },
+  { icon: "\uD83D\uDC89", label: "Insulin Profile", route: "/profile#insulin", amber: false },
   { icon: "\uD83E\uDE78", label: "Log Glucose", route: "/glucose", amber: false },
   { icon: "\uD83C\uDF5E", label: "Log Meal", route: "/log", amber: false },
   { icon: "\u26A1", label: "What-If", route: "/dashboard/what-if", amber: true },

@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 
-type ChartView = 'clinical' | 'kids';
+export type ChartView = 'clinical' | 'kids' | 'mountains';
 
 interface ChartViewToggleProps {
   view: ChartView;
@@ -8,6 +8,11 @@ interface ChartViewToggleProps {
 }
 
 const STORAGE_KEY = 'glumira-chart-view';
+
+const VIEWS: { key: ChartView; label: string }[] = [
+  { key: 'clinical', label: '📊 Clinical' },
+  { key: 'mountains', label: '⛰️ Mountains' },
+];
 
 const ChartViewToggle: React.FC<ChartViewToggleProps> = ({ view, onChange }) => {
   const handleClick = (v: ChartView) => {
@@ -24,6 +29,7 @@ const ChartViewToggle: React.FC<ChartViewToggleProps> = ({ view, onChange }) => 
     fontWeight: 600,
     fontFamily: "'DM Sans', sans-serif",
     borderRadius: 8,
+    padding: '0 14px',
     transition: 'background-color 0.2s, color 0.2s',
     backgroundColor: active ? 'var(--accent-teal)' : 'transparent',
     color: active ? '#ffffff' : 'var(--text-secondary)',
@@ -39,21 +45,22 @@ const ChartViewToggle: React.FC<ChartViewToggleProps> = ({ view, onChange }) => 
         fontFamily: "'DM Sans', sans-serif",
       }}
     >
-      <button style={buttonStyle(view === 'clinical')} onClick={() => handleClick('clinical')}>
-        Clinical
-      </button>
-      <button style={buttonStyle(view === 'kids')} onClick={() => handleClick('kids')}>
-        Kids view
-      </button>
+      {VIEWS.map(({ key, label }) => (
+        <button key={key} style={buttonStyle(view === key)} onClick={() => handleClick(key)}>
+          {label}
+        </button>
+      ))}
     </div>
   );
 };
 
+const VALID_VIEWS: ChartView[] = ['clinical', 'kids', 'mountains'];
+
 export function useChartView(defaultView: ChartView = 'clinical'): [ChartView, (v: ChartView) => void] {
   const [view, setView] = useState<ChartView>(() => {
     try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored === 'clinical' || stored === 'kids') return stored;
+      const stored = localStorage.getItem(STORAGE_KEY) as ChartView;
+      if (VALID_VIEWS.includes(stored)) return stored;
     } catch {
       // SSR or unavailable
     }
