@@ -51,6 +51,7 @@ const ALLOWED_ORIGINS = [
   "https://www.glumira.ai",
   process.env.CLIENT_URL,
   "http://localhost:5173",
+  process.env.RAILWAY_PUBLIC_DOMAIN ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}` : "",
 ].filter(Boolean) as string[];
 
 app.use(cors({
