@@ -237,7 +237,7 @@ export default function RegisterPage() {
               </label>
               <div className="au-roles">
                 {roles.map(r => (
-                  <button type="button" key={r.id} className={`au-role${role === r.id ? " on" : ""}`} onClick={() => setRole(r.id)} type="button">
+                  <button type="button" key={r.id} className={`au-role${role === r.id ? " on" : ""}`} onClick={() => setRole(r.id)}>
                     {r.label}
                   </button>
                 ))}

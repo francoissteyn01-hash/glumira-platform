@@ -9,7 +9,7 @@ import { API } from "@/lib/api";
 
 const inputStyle: React.CSSProperties = {
   width: "100%", minHeight: 44, padding: "10px 14px", borderRadius: 8,
-  border: "1px solid #dee2e6", background: "#ffffff", color: "#1a2a5e",
+  border: "1px solid var(--border)", background: "var(--bg-input)", color: "var(--text-primary)",
   fontSize: 13, fontFamily: "'DM Sans', system-ui, sans-serif",
   outline: "none", boxSizing: "border-box",
 };
@@ -67,9 +67,9 @@ export default function NightscoutSetup() {
   const statusLabel = status === "connected" ? "Connected" : status === "error" ? "Error" : status === "testing" ? "Testing\u2026" : "Not configured";
 
   return (
-    <div style={{ background: "#ffffff", borderRadius: 12, border: "1px solid #dee2e6", padding: 20 }}>
+    <div style={{ background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border)", padding: 20 }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
-        <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: "#1a2a5e", fontFamily: "'Playfair Display', serif" }}>
+        <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: "var(--text-primary)", fontFamily: "'Playfair Display', serif" }}>
           Nightscout Integration
         </h3>
         <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 11, fontWeight: 600, color: statusColour, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
@@ -82,10 +82,10 @@ export default function NightscoutSetup() {
         <input type="password" value={secret} onChange={(e) => setSecret(e.target.value)} placeholder="API Secret (optional)" style={inputStyle} />
       </div>
       <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
-        <button type="button" onClick={testConnection} disabled={!url || status === "testing"} style={{ padding: "8px 18px", borderRadius: 8, border: "1px solid #dee2e6", background: "#f8f9fa", color: "#1a2a5e", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+        <button type="button" onClick={testConnection} disabled={!url || status === "testing"} style={{ padding: "8px 18px", borderRadius: 8, border: "1px solid var(--border)", background: "var(--bg-primary)", color: "var(--text-primary)", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
           Test Connection
         </button>
-        <label style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "#1a2a5e", cursor: "pointer", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+        <label style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "var(--text-primary)", cursor: "pointer", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
           <input type="checkbox" checked={syncEnabled} onChange={(e) => setSyncEnabled(e.target.checked)} style={{ accentColor: "#2ab5c1", width: 18, height: 18 }} />
           Enable Sync
         </label>

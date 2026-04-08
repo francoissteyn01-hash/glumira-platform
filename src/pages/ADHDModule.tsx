@@ -14,12 +14,12 @@ import {
 } from "@/lib/adhd-impact";
 
 const STIMULANT_OPTIONS = [
-  { value: "methylphenidate", label: "Methylphenidate (Ritalin)" },
-  { value: "methylphenidate-er", label: "Methylphenidate ER (Concerta)" },
   { value: "amphetamine", label: "Amphetamine (Adderall IR)" },
   { value: "amphetamine-er", label: "Amphetamine ER (Adderall XR)" },
-  { value: "lisdexamfetamine", label: "Lisdexamfetamine (Vyvanse)" },
   { value: "atomoxetine", label: "Atomoxetine (Strattera)" },
+  { value: "lisdexamfetamine", label: "Lisdexamfetamine (Vyvanse)" },
+  { value: "methylphenidate", label: "Methylphenidate (Ritalin)" },
+  { value: "methylphenidate-er", label: "Methylphenidate ER (Concerta)" },
 ];
 
 const HOURS = Array.from({ length: 24 }, (_, i) => i);

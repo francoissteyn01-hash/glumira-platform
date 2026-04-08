@@ -1,0 +1,57 @@
+{
+  "id": "CASE-BETA-003",
+  "name": "Adult Shift Worker (Stacking Patterns)",
+  "profileType": "adult",
+  "glucoseUnits": "mmol/L",
+  "regimen": {
+    "basal": [{ "insulin": "Glargine U100 (Lantus)", "dose": 22, "time": "22:00", "type": "long-acting" }],
+    "bolus": [
+      { "insulin": "Novorapid", "dose": 6, "time": "06:00", "type": "rapid" },
+      { "insulin": "Novorapid", "dose": 8, "time": "13:00", "type": "rapid" },
+      { "insulin": "Novorapid", "dose": 5, "time": "16:30", "type": "rapid" },
+      { "insulin": "Novorapid", "dose": 7, "time": "21:00", "type": "rapid" }
+    ]
+  },
+  "iobTimeline": [
+    { "time": "00:00", "hour": 0, "basal": 18.5, "bolus": 0.0, "combined": 18.5, "pressure": "moderate" },
+    { "time": "02:00", "hour": 2, "basal": 17.8, "bolus": 0.0, "combined": 17.8, "pressure": "moderate" },
+    { "time": "04:00", "hour": 4, "basal": 17.0, "bolus": 0.0, "combined": 17.0, "pressure": "moderate" },
+    { "time": "06:00", "hour": 6, "basal": 16.2, "bolus": 0.0, "combined": 16.2, "pressure": "moderate" },
+    { "time": "07:00", "hour": 7, "basal": 15.8, "bolus": 4.2, "combined": 20.0, "pressure": "strong" },
+    { "time": "08:00", "hour": 8, "basal": 15.5, "bolus": 6.0, "combined": 21.5, "pressure": "strong" },
+    { "time": "10:00", "hour": 10, "basal": 14.8, "bolus": 1.1, "combined": 15.9, "pressure": "moderate" },
+    { "time": "13:00", "hour": 13, "basal": 13.5, "bolus": 0.0, "combined": 13.5, "pressure": "moderate" },
+    { "time": "14:00", "hour": 14, "basal": 13.1, "bolus": 5.6, "combined": 18.7, "pressure": "strong" },
+    { "time": "15:00", "hour": 15, "basal": 12.7, "bolus": 8.0, "combined": 20.7, "pressure": "strong" },
+    { "time": "16:30", "hour": 16.5, "basal": 12.1, "bolus": 3.2, "combined": 15.3, "pressure": "moderate" },
+    { "time": "17:30", "hour": 17.5, "basal": 11.7, "bolus": 7.8, "combined": 19.5, "pressure": "strong" },
+    { "time": "18:30", "hour": 18.5, "basal": 11.3, "bolus": 9.4, "combined": 20.7, "pressure": "overlap" },
+    { "time": "20:00", "hour": 20, "basal": 10.6, "bolus": 2.1, "combined": 12.7, "pressure": "moderate" },
+    { "time": "21:00", "hour": 21, "basal": 10.1, "bolus": 0.0, "combined": 10.1, "pressure": "light" },
+    { "time": "22:00", "hour": 22, "basal": 9.6, "bolus": 4.9, "combined": 14.5, "pressure": "moderate" },
+    { "time": "23:00", "hour": 23, "basal": 18.2, "bolus": 7.0, "combined": 25.2, "pressure": "overlap" }
+  ],
+  "interpretation": [
+    "Lantus 22U provides a flat basal of ~15\u201318U across the day.",
+    "Shift pattern creates stacking: the 16:30 snack bolus overlaps the 13:00 lunch tail.",
+    "DANGER WINDOW: 17:00\u201319:00. Three bolus tails overlap (lunch + snack + pre-shift meal). Combined IOB peaks at 20.7U.",
+    "Late-night bolus (21:00) stacks on fresh Lantus dose (22:00), creating a second overlap zone.",
+    "Shift workers need individualised timing strategies \u2014 discuss with your care team."
+  ],
+  "dangerWindows": [
+    { "start": "17:00", "end": "19:00", "severity": "overlap" },
+    { "start": "22:30", "end": "01:00", "severity": "strong" }
+  ],
+  "quietTails": [{ "insulin": "Novorapid", "meal": "snack (16:30)", "residual": 0.6, "hoursPastDOA": 2 }],
+  "glucoseReadings": [
+    { "time": "00:00", "hour": 0, "value": 6.8 },
+    { "time": "03:00", "hour": 3, "value": 5.4 },
+    { "time": "06:00", "hour": 6, "value": 7.1 },
+    { "time": "09:00", "hour": 9, "value": 10.5 },
+    { "time": "12:00", "hour": 12, "value": 6.2 },
+    { "time": "15:00", "hour": 15, "value": 11.8 },
+    { "time": "18:00", "hour": 18, "value": 4.2 },
+    { "time": "21:00", "hour": 21, "value": 8.9 },
+    { "time": "23:00", "hour": 23, "value": 5.6 }
+  ]
+}

@@ -17,32 +17,6 @@ type Section = { label: string; routes: Route[] };
 
 const SECTIONS: Section[] = [
   {
-    label: "CORE",
-    routes: [
-      { path: "/", name: "Landing" },
-      { path: "/auth", name: "Auth" },
-      { path: "/dashboard", name: "Dashboard" },
-      { path: "/settings", name: "Settings" },
-      { path: "/settings/caregivers", name: "Caregivers" },
-      { path: "/faq", name: "FAQ" },
-    ],
-  },
-  {
-    label: "EDUCATION & AI",
-    routes: [
-      { path: "/education", name: "Education Hub" },
-      { path: "/mira", name: "Mira AI" },
-      { path: "/badges", name: "Badges" },
-    ],
-  },
-  {
-    label: "ONBOARDING",
-    routes: [
-      { path: "/onboarding/story", name: "Story Engine" },
-      { path: "/meals/plan", name: "Meal Plan" },
-    ],
-  },
-  {
     label: "CLINICAL MODULES",
     routes: [
       { path: "/modules/adhd", name: "ADHD" },
@@ -52,6 +26,17 @@ const SECTIONS: Section[] = [
       { path: "/modules/pregnancy", name: "Pregnancy" },
       { path: "/modules/school-care", name: "School Care Plan" },
       { path: "/modules/thyroid", name: "Thyroid" },
+    ],
+  },
+  {
+    label: "CORE",
+    routes: [
+      { path: "/auth", name: "Auth" },
+      { path: "/settings/caregivers", name: "Caregivers" },
+      { path: "/dashboard", name: "Dashboard" },
+      { path: "/faq", name: "FAQ" },
+      { path: "/", name: "Landing" },
+      { path: "/settings", name: "Settings" },
     ],
   },
   {
@@ -77,6 +62,39 @@ const SECTIONS: Section[] = [
       { path: "/modules/sick-day", name: "Sick Day" },
       { path: "/modules/vegetarian", name: "Vegetarian" },
       { path: "/modules/zone", name: "Zone" },
+    ],
+  },
+  {
+    label: "EDUCATION & AI",
+    routes: [
+      { path: "/badges", name: "Badges" },
+      { path: "/education", name: "Education Hub" },
+      { path: "/mira", name: "Mira AI" },
+    ],
+  },
+  {
+    label: "LOGGING",
+    routes: [
+      { path: "/conditions", name: "Condition Log" },
+      { path: "/insulin", name: "Insulin Log" },
+      { path: "/log", name: "Meal Log" },
+    ],
+  },
+  {
+    label: "ONBOARDING",
+    routes: [
+      { path: "/import/handwritten", name: "Handwritten Import" },
+      { path: "/meals/plan", name: "Meal Plan" },
+      { path: "/onboarding", name: "Onboarding Wizard" },
+      { path: "/onboarding/story", name: "Story Engine" },
+    ],
+  },
+  {
+    label: "USER",
+    routes: [
+      { path: "/profile", name: "Profile" },
+      { path: "/register", name: "Register" },
+      { path: "/tutorial", name: "Tutorial" },
     ],
   },
 ];

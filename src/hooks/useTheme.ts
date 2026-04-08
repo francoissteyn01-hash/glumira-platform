@@ -1,18 +1,27 @@
 /**
  * GluMira™ V7 — Theme Hook
  * Manages light/dark theme with localStorage persistence.
+ * Priority: localStorage → system preference → light default.
+ * Also syncs to Supabase user preferences when available.
  */
 
 import { useState, useEffect, useCallback } from "react";
 
 export type Theme = "light" | "dark";
 
+function getSystemPreference(): Theme {
+  try {
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches) return "dark";
+  } catch {}
+  return "light";
+}
+
 function getInitialTheme(): Theme {
   try {
     const stored = localStorage.getItem("glumira-theme");
     if (stored === "dark" || stored === "light") return stored;
   } catch {}
-  return "light";
+  return getSystemPreference();
 }
 
 function applyTheme(theme: Theme) {
@@ -31,6 +40,22 @@ export function useTheme() {
   useEffect(() => {
     applyTheme(theme);
   }, [theme]);
+
+  // Listen for system preference changes
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-color-scheme: dark)");
+    const handler = (e: MediaQueryListEvent) => {
+      // Only auto-switch if user hasn't explicitly set a preference
+      const stored = localStorage.getItem("glumira-theme");
+      if (!stored) {
+        const next = e.matches ? "dark" : "light";
+        setThemeState(next);
+        applyTheme(next);
+      }
+    };
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
 
   const setTheme = useCallback((t: Theme) => {
     setThemeState(t);

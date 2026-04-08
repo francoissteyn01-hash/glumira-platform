@@ -54,7 +54,7 @@ export function PresentationModeProvider({ children }: { children: ReactNode }) 
           onClick={() => setActive(false)}
           style={{
             position: "fixed", top: 0, left: 0, right: 0, zIndex: 200,
-            background: "#1a2a5e", padding: "8px 20px", textAlign: "center",
+            background: "var(--text-primary)", padding: "8px 20px", textAlign: "center",
             cursor: "pointer",
           }}
         >

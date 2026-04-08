@@ -1,0 +1,54 @@
+{
+  "id": "CASE-BETA-004",
+  "name": "Teen Newly Diagnosed (Simple Regimen)",
+  "profileType": "teen",
+  "glucoseUnits": "mg/dL",
+  "regimen": {
+    "basal": [{ "insulin": "Glargine U100 (Lantus)", "dose": 16, "time": "21:00", "type": "long-acting" }],
+    "bolus": [
+      { "insulin": "Novorapid", "dose": 4, "time": "07:30", "type": "rapid" },
+      { "insulin": "Novorapid", "dose": 5, "time": "12:30", "type": "rapid" },
+      { "insulin": "Novorapid", "dose": 4, "time": "18:30", "type": "rapid" }
+    ]
+  },
+  "iobTimeline": [
+    { "time": "00:00", "hour": 0, "basal": 14.2, "bolus": 0.0, "combined": 14.2, "pressure": "moderate" },
+    { "time": "03:00", "hour": 3, "basal": 13.0, "bolus": 0.0, "combined": 13.0, "pressure": "moderate" },
+    { "time": "06:00", "hour": 6, "basal": 11.8, "bolus": 0.0, "combined": 11.8, "pressure": "moderate" },
+    { "time": "07:30", "hour": 7.5, "basal": 11.2, "bolus": 0.0, "combined": 11.2, "pressure": "moderate" },
+    { "time": "08:30", "hour": 8.5, "basal": 10.8, "bolus": 2.8, "combined": 13.6, "pressure": "moderate" },
+    { "time": "09:30", "hour": 9.5, "basal": 10.4, "bolus": 4.0, "combined": 14.4, "pressure": "strong" },
+    { "time": "11:00", "hour": 11, "basal": 9.8, "bolus": 0.6, "combined": 10.4, "pressure": "moderate" },
+    { "time": "12:30", "hour": 12.5, "basal": 9.2, "bolus": 0.0, "combined": 9.2, "pressure": "light" },
+    { "time": "13:30", "hour": 13.5, "basal": 8.8, "bolus": 3.5, "combined": 12.3, "pressure": "moderate" },
+    { "time": "14:30", "hour": 14.5, "basal": 8.4, "bolus": 5.0, "combined": 13.4, "pressure": "moderate" },
+    { "time": "16:00", "hour": 16, "basal": 7.8, "bolus": 0.8, "combined": 8.6, "pressure": "light" },
+    { "time": "18:30", "hour": 18.5, "basal": 6.8, "bolus": 0.0, "combined": 6.8, "pressure": "light" },
+    { "time": "19:30", "hour": 19.5, "basal": 6.4, "bolus": 2.8, "combined": 9.2, "pressure": "light" },
+    { "time": "20:30", "hour": 20.5, "basal": 6.0, "bolus": 4.0, "combined": 10.0, "pressure": "moderate" },
+    { "time": "21:00", "hour": 21, "basal": 5.8, "bolus": 3.2, "combined": 9.0, "pressure": "light" },
+    { "time": "22:00", "hour": 22, "basal": 14.8, "bolus": 1.6, "combined": 16.4, "pressure": "strong" }
+  ],
+  "interpretation": [
+    "Simple 3-bolus + Lantus regimen. Predictable pattern ideal for newly diagnosed learning.",
+    "Lantus 16U at 21:00 provides ~12\u201314U basal coverage across 24 hours.",
+    "No significant bolus stacking \u2014 meals are well spaced (5\u20136 hours apart).",
+    "CAUTION: 21:00\u201322:00. Fresh Lantus dose stacks on dinner bolus tail. Moderate pressure spike.",
+    "This is a textbook MDI pattern \u2014 good starting point for dose titration education."
+  ],
+  "dangerWindows": [{ "start": "21:00", "end": "23:00", "severity": "moderate" }],
+  "quietTails": [],
+  "glucoseReadings": [
+    { "time": "00:00", "hour": 0, "value": 135 },
+    { "time": "03:00", "hour": 3, "value": 118 },
+    { "time": "06:00", "hour": 6, "value": 102 },
+    { "time": "08:00", "hour": 8, "value": 165 },
+    { "time": "10:00", "hour": 10, "value": 142 },
+    { "time": "12:00", "hour": 12, "value": 110 },
+    { "time": "14:00", "hour": 14, "value": 178 },
+    { "time": "16:00", "hour": 16, "value": 125 },
+    { "time": "18:00", "hour": 18, "value": 98 },
+    { "time": "20:00", "hour": 20, "value": 156 },
+    { "time": "22:00", "hour": 22, "value": 130 }
+  ]
+}

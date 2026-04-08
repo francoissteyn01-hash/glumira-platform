@@ -29,6 +29,7 @@ import PresentationToggle from "@/components/PresentationMode";
 import ShareButton from "@/components/ShareButton";
 import ThemeToggle from "@/components/ThemeToggle";
 import { usePatientName } from "@/hooks/usePatientName";
+import QuickActions from "@/components/widgets/QuickActions";
 
 /* ─── Types ───────────────────────────────────────────────────────────────── */
 
@@ -261,6 +262,9 @@ export default function DashboardPage() {
           ))}
         </div>
 
+        {/* Quick Actions */}
+        <QuickActions />
+
         {/* Disclaimer */}
         <div style={{
           borderRadius: 8, background: "var(--disclaimer-bg)", border: "1px solid var(--disclaimer-border)",
@@ -373,10 +377,15 @@ export default function DashboardPage() {
           <TimeInRangeDonut readings={glucoseData.map((g) => ({ value: g.value }))} />
         </div>
 
-        {/* ── Simulation Panel (placeholder) ─────────────────────────── */}
-        <div style={{ background: "var(--bg-card)", borderRadius: 12, border: "1px dashed var(--simulation-border)", padding: 32, textAlign: "center", marginBottom: 20 }}>
-          <p style={{ fontSize: 14, fontWeight: 600, color: "var(--text-faint)", margin: 0, fontFamily: "'DM Sans', system-ui, sans-serif" }}>Coming soon — timing simulation</p>
-          <p style={{ fontSize: 12, color: "var(--placeholder)", margin: "4px 0 0", fontFamily: "'DM Sans', system-ui, sans-serif" }}>Compare before/after timing adjustments</p>
+        {/* ── What-If Scenario Link ────────────────────────────────── */}
+        <div
+          onClick={() => window.location.href = "/dashboard/what-if"}
+          role="button"
+          tabIndex={0}
+          style={{ background: "var(--bg-card)", borderRadius: 12, border: "2px solid #f59e0b", padding: 32, textAlign: "center", marginBottom: 20, cursor: "pointer" }}
+        >
+          <p style={{ fontSize: 14, fontWeight: 600, color: "var(--text-primary)", margin: 0, fontFamily: "'DM Sans', system-ui, sans-serif" }}>&#9889; What-If Scenario Engine</p>
+          <p style={{ fontSize: 12, color: "var(--text-secondary)", margin: "4px 0 0", fontFamily: "'DM Sans', system-ui, sans-serif" }}>Adjust doses and times — watch the IOB curve reshape in real time</p>
         </div>
 
         {/* ── Event Log Table ─────────────────────────────────────────── */}

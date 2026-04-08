@@ -89,7 +89,7 @@ const ALLOWED_FOODS: Record<FoodCategory, { name: string; carbs: number; serving
   ],
 };
 
-const FOOD_CATEGORIES: FoodCategory[] = ["Proteins", "Vegetables", "Dairy", "Fats", "Avoid"];
+const FOOD_CATEGORIES: FoodCategory[] = ["Avoid", "Dairy", "Fats", "Proteins", "Vegetables"];
 
 const MEAL_TEMPLATES = [
   {

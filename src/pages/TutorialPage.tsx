@@ -1,38 +1,32 @@
 /**
  * GluMira™ V7 — Tutorial Page
  * Public tutorial at /tutorial — no auth required.
- * Scandinavian Minimalist: #f8f9fa bg, #1a2a5e navy, #2ab5c1 teal, DM Sans.
+ * Scandinavian Minimalist default: #f8f9fa bg, navy headings, teal accents.
+ * Uses CSS variables for full dark mode support.
  */
 
 import { Link } from "react-router-dom";
+import GluCard from "@/components/GluCard";
 
-const BG = "var(--bg-primary)";
-const NAVY = "var(--text-primary)";
-const TEAL = "var(--accent-teal)";
-const MUTED = "var(--text-muted)";
-const BORDER = "var(--border)";
-
-const font = "'DM Sans', system-ui, sans-serif";
+const MODULES = [
+  { name: "Pregnancy", when: "When managing gestational diabetes or T1D during pregnancy — trimester-adjusted targets." },
+  { name: "Paediatric", when: "Age-adjusted guidance for infants, toddlers, children, and teens." },
+  { name: "School Care Plan", when: "Generate a printable care plan for teachers and school nurses." },
+  { name: "Menstrual Cycle", when: "Track how hormonal cycles affect insulin sensitivity and glucose patterns." },
+  { name: "ADHD", when: "Coexisting ADHD — routines, reminders, and executive function support." },
+  { name: "Thyroid", when: "Hyper/hypothyroid interactions with insulin sensitivity." },
+  { name: "Ramadan", when: "Safer fasting during Ramadan — suhoor, iftar, and insulin timing." },
+  { name: "Kosher", when: "Kosher dietary considerations alongside carb counting." },
+  { name: "Halal", when: "Halal dietary considerations alongside carb counting." },
+  { name: "Bernstein", when: "Low-carb approach to tight glucose control (Dr. Bernstein's method)." },
+  { name: "Sick Day", when: "Illness management — stress hormones, ketones, hydration." },
+];
 
 interface Section {
   id: string;
   title: string;
   body: React.ReactNode;
 }
-
-const MODULES = [
-  { name: "Pregnancy",       when: "When managing gestational diabetes or T1D during pregnancy — trimester-adjusted targets." },
-  { name: "Paediatric",      when: "Age-adjusted guidance for infants, toddlers, children, and teens." },
-  { name: "School Care Plan", when: "Generate a printable care plan for teachers and school nurses." },
-  { name: "Menstrual Cycle", when: "Track how hormonal cycles affect insulin sensitivity and glucose patterns." },
-  { name: "ADHD",            when: "Coexisting ADHD — routines, reminders, and executive function support." },
-  { name: "Thyroid",         when: "Hyper/hypothyroid interactions with insulin sensitivity." },
-  { name: "Ramadan",         when: "Safer fasting during Ramadan — suhoor, iftar, and insulin timing." },
-  { name: "Kosher",          when: "Kosher dietary considerations alongside carb counting." },
-  { name: "Halal",           when: "Halal dietary considerations alongside carb counting." },
-  { name: "Bernstein",       when: "Low-carb approach to tight glucose control (Dr. Bernstein's method)." },
-  { name: "Sick Day",        when: "Illness management — stress hormones, ketones, hydration." },
-];
 
 const SECTIONS: Section[] = [
   {
@@ -45,7 +39,7 @@ const SECTIONS: Section[] = [
           diagnosis details.
         </p>
         <ul>
-          <li><strong>Sign up</strong> at <Link to="/register" style={{ color: TEAL }}>/register</Link> (email + password)</li>
+          <li><strong>Sign up</strong> at <Link to="/register" style={{ color: "var(--accent-teal)" }}>/register</Link> (email + password)</li>
           <li><strong>Complete onboarding</strong> — tell GluMira™ about your regimen and targets</li>
         </ul>
       </>
@@ -65,7 +59,7 @@ const SECTIONS: Section[] = [
           <li><strong>IOB Curve</strong> — how insulin activity rises and falls over 24 hours</li>
           <li><strong>Regimen Summary</strong> — your current basal and bolus schedule</li>
         </ul>
-        <p style={{ color: MUTED, fontSize: 13 }}>
+        <p className="caption">
           Each widget is educational — GluMira™ shows you <em>what insulin is doing</em>, not what to do next.
         </p>
       </>
@@ -77,22 +71,22 @@ const SECTIONS: Section[] = [
     body: (
       <>
         <p>
-          Enter doses from the <Link to="/insulin" style={{ color: TEAL }}>Insulin Log</Link> page. Select the
+          Enter doses from the <Link to="/insulin" style={{ color: "var(--accent-teal)" }}>Insulin Log</Link> page. Select the
           insulin type, dose, and time.
         </p>
         <div
           style={{
             background: "rgba(42,181,193,0.06)",
-            border: `1px solid ${TEAL}33`,
+            border: "1px solid rgba(42,181,193,0.2)",
             borderRadius: 10,
             padding: "14px 18px",
             margin: "14px 0",
           }}
         >
-          <p style={{ margin: 0, fontSize: 14, fontWeight: 600, color: NAVY }}>
+          <p style={{ margin: 0, fontSize: 14, fontWeight: 600, color: "var(--text-primary)" }}>
             Why 0.25U increments matter
           </p>
-          <p style={{ margin: "6px 0 0", fontSize: 13, color: MUTED }}>
+          <p style={{ margin: "6px 0 0", fontSize: 13, color: "var(--text-tertiary, var(--text-muted))" }}>
             For children and insulin-sensitive adults, a quarter unit can change glucose by 2 mmol/L or more.
             GluMira™ supports decimal inputs so you can model the doses you actually give — including half-unit
             pens, syringes with half markings, and pumps that deliver 0.05U increments.
@@ -145,7 +139,7 @@ const SECTIONS: Section[] = [
           <li><strong>"What if I injected 30 minutes earlier?"</strong> — see how the timing changes overlap</li>
           <li><strong>"What if I switched to a different insulin?"</strong> — compare half-lives and peaks</li>
         </ul>
-        <p style={{ color: MUTED, fontSize: 13 }}>
+        <p className="caption">
           These scenarios are for <strong>learning</strong>, not for guessing your next dose. Always check with
           your care team before making real changes.
         </p>
@@ -163,14 +157,14 @@ const SECTIONS: Section[] = [
             <div
               key={m.name}
               style={{
-                border: `1px solid ${BORDER}`,
+                border: "1px solid var(--border)",
                 background: "var(--bg-card)",
                 borderRadius: 10,
                 padding: "12px 14px",
               }}
             >
-              <p style={{ margin: 0, fontSize: 13, fontWeight: 600, color: NAVY }}>{m.name}</p>
-              <p style={{ margin: "4px 0 0", fontSize: 12, color: MUTED, lineHeight: 1.5 }}>{m.when}</p>
+              <p style={{ margin: 0, fontSize: 13, fontWeight: 600, color: "var(--text-primary)" }}>{m.name}</p>
+              <p style={{ margin: "4px 0 0", fontSize: 12, color: "var(--text-tertiary, var(--text-muted))", lineHeight: 1.5 }}>{m.when}</p>
             </div>
           ))}
         </div>
@@ -227,35 +221,34 @@ const SECTIONS: Section[] = [
 
 export default function TutorialPage() {
   return (
-    <div style={{ minHeight: "100vh", background: BG, fontFamily: font, color: NAVY }}>
+    <div
+      className="page-transition"
+      style={{
+        minHeight: "100vh",
+        background: "var(--bg-primary)",
+        fontFamily: "'DM Sans', system-ui, sans-serif",
+        color: "var(--text-primary)",
+      }}
+    >
       <div style={{ maxWidth: 760, margin: "0 auto", padding: "48px 20px 80px" }}>
 
         {/* Header */}
         <div style={{ marginBottom: 32 }}>
-          <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: TEAL, margin: 0 }}>
+          <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--accent-teal)", margin: 0 }}>
             Tutorial
           </p>
-          <h1 style={{ fontSize: 32, fontWeight: 700, letterSpacing: "-0.02em", margin: "6px 0 12px", color: NAVY }}>
+          <h1 style={{ fontSize: 32, fontWeight: 700, letterSpacing: "-0.02em", margin: "6px 0 12px", fontFamily: "'Playfair Display', serif" }}>
             How to use GluMira&trade;
           </h1>
-          <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.6, margin: 0 }}>
+          <p style={{ fontSize: 15, color: "var(--text-secondary)", lineHeight: 1.6, margin: 0 }}>
             A walkthrough of every part of the app — from logging your first dose to understanding the IOB
             curve and talking to Mira. No account required.
           </p>
         </div>
 
         {/* Table of contents */}
-        <nav
-          aria-label="Tutorial sections"
-          style={{
-            background: "var(--bg-card)",
-            border: `1px solid ${BORDER}`,
-            borderRadius: 12,
-            padding: "18px 22px",
-            marginBottom: 32,
-          }}
-        >
-          <p style={{ margin: "0 0 10px", fontSize: 11, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: MUTED }}>
+        <GluCard accent="teal" style={{ marginBottom: 32 }}>
+          <p style={{ margin: "0 0 10px", fontSize: 11, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)" }}>
             Contents
           </p>
           <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 6 }}>
@@ -263,37 +256,38 @@ export default function TutorialPage() {
               <li key={s.id}>
                 <a
                   href={`#${s.id}`}
-                  style={{ color: NAVY, fontSize: 14, textDecoration: "none", fontWeight: 500 }}
+                  style={{ color: "var(--text-primary)", fontSize: 14, textDecoration: "none", fontWeight: 500 }}
                 >
                   {s.title}
                 </a>
               </li>
             ))}
           </ul>
-        </nav>
+        </GluCard>
 
         {/* Sections */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
           {SECTIONS.map((s) => (
             <section
               key={s.id}
               id={s.id}
               style={{
                 background: "var(--bg-card)",
-                border: `1px solid ${BORDER}`,
+                border: "1px solid var(--border)",
+                borderLeft: "4px solid var(--accent-teal)",
                 borderRadius: 12,
                 padding: "24px 28px",
                 scrollMarginTop: 20,
               }}
             >
-              <h2 style={{ fontSize: 20, fontWeight: 700, margin: "0 0 14px", color: NAVY, letterSpacing: "-0.01em" }}>
+              <h2 style={{ fontSize: 24, fontWeight: 700, margin: "0 0 14px", fontFamily: "'Playfair Display', serif", letterSpacing: "-0.01em" }}>
                 {s.title}
               </h2>
               <div
                 style={{
-                  fontSize: 14,
-                  lineHeight: 1.7,
-                  color: "#4a5568",
+                  fontSize: 16,
+                  lineHeight: 1.6,
+                  color: "var(--text-secondary)",
                 }}
                 className="tutorial-body"
               >
@@ -304,28 +298,19 @@ export default function TutorialPage() {
         </div>
 
         {/* Footer CTA */}
-        <div
-          style={{
-            marginTop: 40,
-            background: "var(--bg-card)",
-            border: `1px solid ${BORDER}`,
-            borderRadius: 12,
-            padding: "24px 28px",
-            textAlign: "center",
-          }}
-        >
-          <h3 style={{ fontSize: 18, fontWeight: 700, color: NAVY, margin: "0 0 8px" }}>
+        <GluCard accent="teal" style={{ marginTop: 40, textAlign: "center" as const }}>
+          <h3 style={{ fontSize: 18, fontWeight: 700, margin: "0 0 8px", fontFamily: "'Playfair Display', serif" }}>
             Ready to explore?
           </h3>
-          <p style={{ fontSize: 13, color: MUTED, margin: "0 0 16px" }}>
+          <p style={{ fontSize: 13, color: "var(--text-muted)", margin: "0 0 16px" }}>
             Jump into your dashboard or sign up to get started.
           </p>
           <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
             <Link
               to="/dashboard"
               style={{
-                background: TEAL,
-                color: NAVY,
+                background: "var(--accent-teal)",
+                color: "#fff",
                 padding: "10px 20px",
                 borderRadius: 10,
                 fontSize: 13,
@@ -339,8 +324,8 @@ export default function TutorialPage() {
               to="/register"
               style={{
                 background: "transparent",
-                color: NAVY,
-                border: `1px solid ${BORDER}`,
+                color: "var(--text-primary)",
+                border: "1px solid var(--border)",
                 padding: "10px 20px",
                 borderRadius: 10,
                 fontSize: 13,
@@ -351,10 +336,10 @@ export default function TutorialPage() {
               Create Account
             </Link>
           </div>
-        </div>
+        </GluCard>
 
         {/* Disclaimer */}
-        <p style={{ fontSize: 11, color: MUTED, textAlign: "center", marginTop: 24, lineHeight: 1.6 }}>
+        <p style={{ fontSize: 11, color: "var(--text-muted)", textAlign: "center", marginTop: 24, lineHeight: 1.6 }}>
           GluMira&trade; is an educational platform and does not constitute medical advice.
           Always consult your healthcare team before making changes to your diabetes management.
         </p>
@@ -366,7 +351,8 @@ export default function TutorialPage() {
         .tutorial-body p:last-child { margin-bottom: 0; }
         .tutorial-body ul { margin: 0 0 12px; padding-left: 22px; }
         .tutorial-body li { margin-bottom: 6px; }
-        .tutorial-body strong { color: ${NAVY}; font-weight: 600; }
+        .tutorial-body strong { color: var(--text-primary); font-weight: 600; }
+        .tutorial-body .caption { font-size: 13px; color: var(--text-muted); }
       `}</style>
     </div>
   );

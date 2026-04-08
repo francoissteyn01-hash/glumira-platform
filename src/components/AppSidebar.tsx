@@ -8,6 +8,7 @@
 import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const BG = "var(--bg-sidebar)";
 const NAVY = "var(--text-primary)";
@@ -24,7 +25,12 @@ const Icon = ({ d, size = 18 }: { d: string; size?: number }) => (
 );
 
 const ICONS = {
+  profile: "M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8z",
+  insulin: "M19 3l-2 2M17 5l-8.5 8.5M7 14l-2.5 2.5M4.5 16.5L3 21l4.5-1.5M14 5.5l4.5 4.5M9 11l4.5 4.5",
   dashboard: "M3 3h7v9H3zM14 3h7v5h-7zM14 12h7v9h-7zM3 16h7v5H3z",
+  logInsulin: "M12 2v6M12 22v-6M4.93 4.93l4.24 4.24M14.83 14.83l4.24 4.24M2 12h6M22 12h-6M4.93 19.07l4.24-4.24M14.83 9.17l4.24-4.24",
+  logMeal: "M18 8h1a4 4 0 0 1 0 8h-1M3 8h14v10H3zM6 1v3M10 1v3M14 1v3",
+  conditions: "M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zM12 6v6l4 2",
   education: "M22 10v6M2 10l10-5 10 5-10 5z M6 12v5c3 3 9 3 12 0v-5",
   mira: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z",
   modules: "M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z",
@@ -195,15 +201,15 @@ function DesktopSidebar({ collapsed, setCollapsed }: { collapsed: boolean; setCo
       <nav style={{ flex: 1, overflowY: "auto", padding: "8px 0" }}>
         {/* My Profile */}
         {!collapsed && <div style={sectionLabelStyle}>My Profile</div>}
-        {navItem("/profile", "User Profile", ICONS.settings)}
-        {navItem("/settings", "Insulin Profile", ICONS.modules)}
+        {navItem("/profile", "User Profile", ICONS.profile)}
+        {navItem("/settings", "Insulin Profile", ICONS.settings)}
 
         {/* Insulin & Logging */}
-        {!collapsed && <div style={sectionLabelStyle}>Insulin & Logging</div>}
+        {!collapsed && <div style={sectionLabelStyle}>Insulin &amp; Logging</div>}
         {navItem("/dashboard", "Dashboard", ICONS.dashboard)}
-        {navItem("/insulin", "Log Insulin", ICONS.modules)}
-        {navItem("/log", "Log Meal", ICONS.meal)}
-        {navItem("/conditions", "Log Conditions", ICONS.modules)}
+        {navItem("/insulin", "Log Insulin", ICONS.logInsulin)}
+        {navItem("/log", "Log Meal", ICONS.logMeal)}
+        {navItem("/conditions", "Log Conditions", ICONS.conditions)}
 
         {/* Modules (expandable) */}
         {!collapsed && <div style={sectionLabelStyle}>Modules</div>}
@@ -231,20 +237,31 @@ function DesktopSidebar({ collapsed, setCollapsed }: { collapsed: boolean; setCo
           </div>
         )}
 
-        {/* Tools */}
-        {!collapsed && <div style={sectionLabelStyle}>Tools</div>}
+        {/* Education & Tools */}
+        {!collapsed && <div style={sectionLabelStyle}>Education &amp; Tools</div>}
+        {navItem("/education", "Education", ICONS.education)}
+        {navItem("/mira", "Mira AI", ICONS.mira)}
         {navItem("/meals/plan", "Meal Plan", ICONS.meal)}
         {navItem("/badges", "Badges", ICONS.badges)}
         {navItem("/tutorial", "Tutorial", ICONS.tutorial)}
 
-        {/* Account */}
-        {!collapsed && <div style={sectionLabelStyle}>Account</div>}
-        {navItem("/settings", "Settings", ICONS.settings)}
+        {/* Help */}
+        {!collapsed && <div style={sectionLabelStyle}>Help</div>}
         {navItem("/faq", "FAQ", ICONS.faq)}
       </nav>
 
-      {/* Sign out — red, bottom */}
-      <div style={{ borderTop: `1px solid ${BORDER}`, padding: "8px 0" }}>
+      {/* Night mode + Sign out — bottom */}
+      <div style={{ borderTop: `1px solid ${BORDER}`, padding: "8px 8px" }}>
+        {!collapsed && (
+          <div style={{ margin: "4px 0 8px" }}>
+            <ThemeToggle showLabel />
+          </div>
+        )}
+        {collapsed && (
+          <div style={{ display: "flex", justifyContent: "center", margin: "4px 0 8px" }}>
+            <ThemeToggle />
+          </div>
+        )}
         <button type="button"
           onClick={signOut}
           title={collapsed ? "Sign out" : undefined}
@@ -322,14 +339,14 @@ function MobileBottomBar() {
         <NavLink to="/dashboard" style={({ isActive }) => tabStyle(isActive)}>
           <Icon d={ICONS.dashboard} size={20} /><span>Dashboard</span>
         </NavLink>
-        <NavLink to="/education" style={({ isActive }) => tabStyle(isActive)}>
-          <Icon d={ICONS.education} size={20} /><span>Learn</span>
+        <NavLink to="/insulin" style={({ isActive }) => tabStyle(isActive)}>
+          <Icon d={ICONS.logInsulin} size={20} /><span>Insulin</span>
+        </NavLink>
+        <NavLink to="/log" style={({ isActive }) => tabStyle(isActive)}>
+          <Icon d={ICONS.logMeal} size={20} /><span>Log</span>
         </NavLink>
         <NavLink to="/mira" style={({ isActive }) => tabStyle(isActive)}>
           <Icon d={ICONS.mira} size={20} /><span>Mira</span>
-        </NavLink>
-        <NavLink to="/meals/plan" style={({ isActive }) => tabStyle(isActive)}>
-          <Icon d={ICONS.meal} size={20} /><span>Meals</span>
         </NavLink>
         <button type="button" onClick={() => setSheetOpen(true)} style={tabStyle(sheetOpen)}>
           <Icon d={ICONS.more} size={20} /><span>More</span>
@@ -378,18 +395,27 @@ function MobileBottomBar() {
               </button>
             </div>
             <div style={{ flex: 1, overflowY: "auto" }}>
+              <div style={sectionLabelStyle}>My Profile</div>
+              {moreItem("/profile", "User Profile", ICONS.profile)}
+              {moreItem("/settings", "Insulin Profile", ICONS.settings)}
+              <div style={sectionLabelStyle}>Insulin &amp; Logging</div>
+              {moreItem("/conditions", "Log Conditions", ICONS.conditions)}
               <div style={sectionLabelStyle}>Modules &mdash; Clinical</div>
               {CLINICAL_MODULES.map((m) => moreItem(m.path, m.label, ICONS.modules))}
               <div style={sectionLabelStyle}>Modules &mdash; Special Care</div>
               {SPECIAL_CARE_MODULES.map((m) => moreItem(m.path, m.label, ICONS.modules))}
               <div style={sectionLabelStyle}>Modules &mdash; Dietary Regime</div>
               {DIETARY_MODULES.map((m) => moreItem(m.path, m.label, ICONS.modules))}
-              <div style={sectionLabelStyle}>Tools</div>
+              <div style={sectionLabelStyle}>Education &amp; Tools</div>
+              {moreItem("/education", "Education", ICONS.education)}
+              {moreItem("/meals/plan", "Meal Plan", ICONS.meal)}
               {moreItem("/badges", "Badges", ICONS.badges)}
               {moreItem("/tutorial", "Tutorial", ICONS.tutorial)}
-              <div style={sectionLabelStyle}>Account</div>
-              {moreItem("/settings", "Settings", ICONS.settings)}
+              <div style={sectionLabelStyle}>Help</div>
               {moreItem("/faq", "FAQ", ICONS.faq)}
+              <div style={{ padding: "10px 20px" }}>
+                <ThemeToggle showLabel />
+              </div>
               <button type="button"
                 onClick={() => { setSheetOpen(false); signOut(); }}
                 style={{

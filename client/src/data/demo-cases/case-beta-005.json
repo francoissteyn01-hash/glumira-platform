@@ -1,0 +1,50 @@
+{
+  "id": "CASE-BETA-005",
+  "name": "Clinician Multi-Patient View",
+  "profileType": "clinician",
+  "glucoseUnits": "mmol/L",
+  "regimen": {
+    "basal": [{ "insulin": "Glargine U100 (Lantus)", "dose": 20, "time": "22:00", "type": "long-acting" }],
+    "bolus": [
+      { "insulin": "Novorapid", "dose": 6, "time": "07:00", "type": "rapid" },
+      { "insulin": "Novorapid", "dose": 7, "time": "12:00", "type": "rapid" },
+      { "insulin": "Novorapid", "dose": 5, "time": "18:00", "type": "rapid" }
+    ]
+  },
+  "iobTimeline": [
+    { "time": "00:00", "hour": 0, "basal": 17.0, "bolus": 0.0, "combined": 17.0, "pressure": "moderate" },
+    { "time": "03:00", "hour": 3, "basal": 15.5, "bolus": 0.0, "combined": 15.5, "pressure": "moderate" },
+    { "time": "06:00", "hour": 6, "basal": 14.0, "bolus": 0.0, "combined": 14.0, "pressure": "moderate" },
+    { "time": "07:00", "hour": 7, "basal": 13.5, "bolus": 0.0, "combined": 13.5, "pressure": "moderate" },
+    { "time": "08:00", "hour": 8, "basal": 13.0, "bolus": 4.2, "combined": 17.2, "pressure": "moderate" },
+    { "time": "09:00", "hour": 9, "basal": 12.5, "bolus": 6.0, "combined": 18.5, "pressure": "strong" },
+    { "time": "11:00", "hour": 11, "basal": 11.5, "bolus": 0.9, "combined": 12.4, "pressure": "moderate" },
+    { "time": "12:00", "hour": 12, "basal": 11.0, "bolus": 0.0, "combined": 11.0, "pressure": "light" },
+    { "time": "13:00", "hour": 13, "basal": 10.5, "bolus": 4.9, "combined": 15.4, "pressure": "moderate" },
+    { "time": "14:00", "hour": 14, "basal": 10.0, "bolus": 7.0, "combined": 17.0, "pressure": "moderate" },
+    { "time": "16:00", "hour": 16, "basal": 9.0, "bolus": 1.1, "combined": 10.1, "pressure": "light" },
+    { "time": "18:00", "hour": 18, "basal": 8.0, "bolus": 0.0, "combined": 8.0, "pressure": "light" },
+    { "time": "19:00", "hour": 19, "basal": 7.5, "bolus": 3.5, "combined": 11.0, "pressure": "moderate" },
+    { "time": "20:00", "hour": 20, "basal": 7.0, "bolus": 5.0, "combined": 12.0, "pressure": "moderate" },
+    { "time": "22:00", "hour": 22, "basal": 6.0, "bolus": 0.8, "combined": 6.8, "pressure": "light" },
+    { "time": "23:00", "hour": 23, "basal": 16.5, "bolus": 0.0, "combined": 16.5, "pressure": "moderate" }
+  ],
+  "interpretation": [
+    "Standard adult MDI regimen. Lantus 20U + Novorapid 3\u00d7 daily.",
+    "Well-spaced bolus timing minimises stacking risk.",
+    "Morning peak (09:00) reaches 18.5U combined \u2014 STRONG pressure classification.",
+    "Report generation: this profile demonstrates the clinical export workflow.",
+    "Clinician view aggregates multiple patient IOB curves for comparative analysis."
+  ],
+  "dangerWindows": [{ "start": "08:30", "end": "10:00", "severity": "strong" }],
+  "quietTails": [],
+  "glucoseReadings": [
+    { "time": "00:00", "hour": 0, "value": 6.5 },
+    { "time": "04:00", "hour": 4, "value": 5.8 },
+    { "time": "08:00", "hour": 8, "value": 9.2 },
+    { "time": "12:00", "hour": 12, "value": 6.1 },
+    { "time": "16:00", "hour": 16, "value": 7.8 },
+    { "time": "20:00", "hour": 20, "value": 8.4 },
+    { "time": "23:00", "hour": 23, "value": 6.9 }
+  ]
+}

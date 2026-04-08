@@ -132,7 +132,7 @@ export default function HandwrittenImportPage() {
               </tbody>
             </table>
           </div>
-          <button type="button" onClick={addRow} style={{ marginTop: 10, padding: "8px 18px", borderRadius: 8, border: "1px solid var(--border-light)", background: "var(--bg-primary)", color: "#1a2a5e", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+          <button type="button" onClick={addRow} style={{ marginTop: 10, padding: "8px 18px", borderRadius: 8, border: "1px solid var(--border-light)", background: "var(--bg-primary)", color: "var(--text-primary)", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
             + Add Row
           </button>
         </div>

@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GluMira™ — The Glass</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    background: linear-gradient(155deg, #0d1b3e 0%, #1a2a5e 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Sans', sans-serif;
+    color: #ffffff;
+    overflow-x: hidden;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 8vw, 56px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: 4px;
+  }
+  .header h1 sup { font-size: 0.35em; vertical-align: super; }
+  .header .tagline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(16px, 3.5vw, 22px);
+    color: #f59e0b;
+    text-shadow: 0 0 20px rgba(245,158,11,0.3);
+  }
+  .header .engine {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-top: 8px;
+  }
+
+  .glass-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+
+  /* The glass SVG */
+  .glass-svg {
+    width: clamp(160px, 30vw, 220px);
+    height: auto;
+    filter: drop-shadow(0 8px 32px rgba(42,181,193,0.15));
+  }
+
+  /* Percentage display */
+  .percentage {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(48px, 10vw, 72px);
+    font-weight: 600;
+    color: #ffffff;
+    margin: 20px 0 4px;
+    text-shadow: 0 0 30px rgba(42,181,193,0.3);
+  }
+  .fraction {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(16px, 3vw, 20px);
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 24px;
+  }
+
+  /* Tier progress bars */
+  .tiers {
+    width: clamp(300px, 80vw, 560px);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+  .tier-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .tier-label {
+    width: 140px;
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.7);
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .tier-bar-bg {
+    flex: 1;
+    height: 20px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+  }
+  .tier-bar-fill {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .tier-pct {
+    width: 48px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.6);
+    text-align: left;
+    flex-shrink: 0;
+  }
+
+  /* Tier colours */
+  .tier-foundation .tier-bar-fill { background: linear-gradient(90deg, #22c55e, #16a34a); }
+  .tier-free .tier-bar-fill { background: linear-gradient(90deg, #2ab5c1, #0e8a93); }
+  .tier-pro .tier-bar-fill { background: linear-gradient(90deg, #3b82f6, #2563eb); }
+  .tier-ai .tier-bar-fill { background: linear-gradient(90deg, #8b5cf6, #7c3aed); }
+  .tier-credits .tier-bar-fill { background: linear-gradient(90deg, #f59e0b, #d97706); }
+
+  /* Drops legend */
+  .drops-grid {
+    width: clamp(300px, 80vw, 560px);
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 4px;
+    margin-bottom: 32px;
+  }
+  .drop {
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: rgba(255,255,255,0.3);
+    transition: all 0.3s ease;
+    cursor: default;
+    position: relative;
+  }
+  .drop.filled {
+    border-color: transparent;
+    color: #ffffff;
+    font-weight: 600;
+  }
+  .drop.filled.t1 { background: rgba(34,197,94,0.6); }
+  .drop.filled.t2 { background: rgba(42,181,193,0.6); }
+  .drop.filled.t3 { background: rgba(59,130,246,0.6); }
+  .drop.filled.t4 { background: rgba(139,92,246,0.6); }
+  .drop.filled.t5 { background: rgba(245,158,11,0.6); }
+  .drop:hover { transform: scale(1.3); z-index: 2; }
+  .drop.filled:hover { box-shadow: 0 0 12px rgba(255,255,255,0.2); }
+
+  .footer {
+    text-align: center;
+    padding: 20px;
+  }
+  .footer p {
+    font-size: 10px;
+    color: rgba(255,255,255,0.3);
+    line-height: 1.6;
+  }
+  .footer .disclaimer {
+    font-size: 9px;
+    color: rgba(255,255,255,0.2);
+    margin-top: 8px;
+  }
+
+  /* Liquid animation */
+  @keyframes liquidWave {
+    0% { d: path("M0,8 Q13,4 26,8 T52,8 L52,52 L0,52 Z"); }
+    50% { d: path("M0,8 Q13,12 26,8 T52,8 L52,52 L0,52 Z"); }
+    100% { d: path("M0,8 Q13,4 26,8 T52,8 L52,52 L0,52 Z"); }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>GluMira<sup>™</sup></h1>
+  <div class="tagline">The science of insulin, made visible</div>
+  <div class="engine">Powered by IOB Hunter™</div>
+</div>
+
+<div class="glass-container">
+  <!-- SVG Glass -->
+  <svg class="glass-svg" viewBox="0 0 120 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Glass body -->
+    <path d="M20,30 L15,180 Q15,190 25,190 L95,190 Q105,190 105,180 L100,30"
+          stroke="rgba(255,255,255,0.25)" stroke-width="2" fill="rgba(255,255,255,0.03)" />
+    <!-- Glass rim -->
+    <ellipse cx="60" cy="30" rx="41" ry="6" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" fill="none" />
+    <!-- Liquid clip area -->
+    <defs>
+      <clipPath id="glassClip">
+        <path d="M17,34 L15,180 Q15,190 25,190 L95,190 Q105,190 105,180 L103,34 Z" />
+      </clipPath>
+    </defs>
+    <!-- Liquid fill -->
+    <g clip-path="url(#glassClip)">
+      <rect id="liquidRect" x="10" width="100" height="160" fill="url(#liquidGrad)" y="190">
+        <animate attributeName="y" from="190" to="190" dur="2s" fill="freeze" id="liquidAnim" />
+      </rect>
+      <!-- Wave surface -->
+      <g id="waveGroup" transform="translate(10, 190)">
+        <path d="M0,0 Q12,-4 25,0 T50,0 T75,0 T100,0 L100,6 L0,6 Z" fill="rgba(42,181,193,0.3)">
+          <animate attributeName="d"
+            values="M0,0 Q12,-4 25,0 T50,0 T75,0 T100,0 L100,6 L0,6 Z;
+                    M0,0 Q12,4 25,0 T50,0 T75,0 T100,0 L100,6 L0,6 Z;
+                    M0,0 Q12,-4 25,0 T50,0 T75,0 T100,0 L100,6 L0,6 Z"
+            dur="3s" repeatCount="indefinite" />
+        </path>
+      </g>
+    </g>
+    <!-- Liquid gradient -->
+    <defs>
+      <linearGradient id="liquidGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#2ab5c1" stop-opacity="0.7" />
+        <stop offset="30%" stop-color="#1a6b9a" stop-opacity="0.85" />
+        <stop offset="100%" stop-color="#1a2a5e" stop-opacity="0.95" />
+      </linearGradient>
+    </defs>
+    <!-- Glass highlight -->
+    <path d="M28,40 L25,170 Q30,172 30,170 L33,40" fill="rgba(255,255,255,0.06)" />
+    <!-- Measurement marks -->
+    <line x1="103" y1="150" x2="108" y2="150" stroke="rgba(255,255,255,0.15)" stroke-width="1" />
+    <text x="111" y="153" fill="rgba(255,255,255,0.15)" font-size="7" font-family="JetBrains Mono">25%</text>
+    <line x1="101" y1="110" x2="108" y2="110" stroke="rgba(255,255,255,0.15)" stroke-width="1" />
+    <text x="111" y="113" fill="rgba(255,255,255,0.15)" font-size="7" font-family="JetBrains Mono">50%</text>
+    <line x1="100" y1="70" x2="108" y2="70" stroke="rgba(255,255,255,0.15)" stroke-width="1" />
+    <text x="111" y="73" fill="rgba(255,255,255,0.15)" font-size="7" font-family="JetBrains Mono">75%</text>
+    <line x1="100" y1="38" x2="108" y2="38" stroke="rgba(255,255,255,0.15)" stroke-width="1" />
+    <text x="111" y="41" fill="rgba(255,255,255,0.15)" font-size="7" font-family="JetBrains Mono">100</text>
+  </svg>
+
+  <div class="percentage" id="pctDisplay">0%</div>
+  <div class="fraction" id="fracDisplay">0 / 100</div>
+</div>
+
+<!-- Tier progress bars -->
+<div class="tiers">
+  <div class="tier-row tier-foundation">
+    <div class="tier-label">Foundation</div>
+    <div class="tier-bar-bg"><div class="tier-bar-fill" id="bar1" style="width:0%"></div></div>
+    <div class="tier-pct" id="pct1">0%</div>
+  </div>
+  <div class="tier-row tier-free">
+    <div class="tier-label">GluMira Free</div>
+    <div class="tier-bar-bg"><div class="tier-bar-fill" id="bar2" style="width:0%"></div></div>
+    <div class="tier-pct" id="pct2">0%</div>
+  </div>
+  <div class="tier-row tier-pro">
+    <div class="tier-label">GluMira Pro</div>
+    <div class="tier-bar-bg"><div class="tier-bar-fill" id="bar3" style="width:0%"></div></div>
+    <div class="tier-pct" id="pct3">0%</div>
+  </div>
+  <div class="tier-row tier-ai">
+    <div class="tier-label">GluMira AI</div>
+    <div class="tier-bar-bg"><div class="tier-bar-fill" id="bar4" style="width:0%"></div></div>
+    <div class="tier-pct" id="pct4">0%</div>
+  </div>
+  <div class="tier-row tier-credits">
+    <div class="tier-label">Credits Roll</div>
+    <div class="tier-bar-bg"><div class="tier-bar-fill" id="bar5" style="width:0%"></div></div>
+    <div class="tier-pct" id="pct5">0%</div>
+  </div>
+</div>
+
+<!-- 100 drops grid -->
+<div class="drops-grid" id="dropsGrid"></div>
+
+<div class="footer">
+  <p>GluMira™ powered by IOB Hunter™<br>The science of insulin, made visible.</p>
+  <p class="disclaimer">GluMira™ is an educational platform, not a medical device. © 2026 GluMira™</p>
+</div>
+
+<script>
+// Block completion data — 1 = done, 0 = not done
+const BLOCKS = [
+  // Tier 1: Foundation (1-10)
+  1,1,1,1,1,1,1,1,1,1,
+  // Tier 2: Free (11-25)
+  1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+  // Tier 3: Pro (26-50)
+  1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,
+  // Tier 4: AI (51-85)
+  1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,0,0,1,1,1,0,1,0,0,0,
+  // Tier 5: Credits (86-100)
+  1,1,1,1,0,0,0,0,0,0,0,0,1,1,0
+];
+
+const TIER_RANGES = [
+  { name: "Foundation", start: 0, end: 10, color: "t1" },
+  { name: "Free",       start: 10, end: 25, color: "t2" },
+  { name: "Pro",        start: 25, end: 50, color: "t3" },
+  { name: "AI",         start: 50, end: 85, color: "t4" },
+  { name: "Credits",    start: 85, end: 100, color: "t5" },
+];
+
+const BLOCK_NAMES = [
+  "Project Root","Design Tokens","Landing Page","Day/Night Mode","Supabase","Auth System","Profile Schema","Region Lock","Language Selector","Privacy & Consent",
+  "Glucose Log","Bolus Log","Injection Sites","Basal Log","Meal Log","20 Meal Regimes","Glucose Chart","Hypo Alerts","School Care Plan","Streak System","Beta Program","Dashboard","Mobile Responsive","Offline Mode","Free Tier Complete",
+  "IOB Hunter™","ISF/ICR Calc","Pattern Intelligence","Basal Density","Nightscout","CGM Live 5min","APS Integration","Pump Integration","Wearables","Comorbidity Engine","Pregnancy Module","Ramadan Engine","Kosher Engine","Exercise Engine","Sleep Engine","Mental Health","Nutrition Intelligence","Environmental","PDF Reports","Clinician View","Researcher View","Organisation View","Africa PPP","Pro Dashboard","Pro Tier Complete",
+  "AI Engine Core","Predictive Glucose","Bolus Advisor","Hypo Prediction","Hyper Alert","Basal Optimiser","IOB Hunter AI","Comorbidity AI","Ramadan AI","Pregnancy AI","Mira Education","Stories Ch.1","Stories Ch.2","Stories Ch.3","Badge System","Waiting Room Game","Pediatric Growth","Post-Surgical","Psychological","Community","Dexcom G7","Nightscout Discord","Clinical AI Reports","Grant Evidence","ISPAD Compliance","Security Audit","Trademark","Series A Data","API Docs","Social Media","Beta Migration","glumira.ai DNS","glumira.app DNS","E2E Tests","AI Complete",
+  "Performance Audit","Accessibility Audit","Legal & Compliance","Launch Announcement","App Store","First 100 Users","First Clinician","First School","First Grant","First Researcher","Africa Expansion","Middle East","Series A Deck","Mira Education Complete","Credits Roll"
+];
+
+// Calculate
+const total = BLOCKS.reduce((a,b) => a+b, 0);
+const pct = Math.round(total / 100 * 100);
+
+// Animate glass liquid
+function animateGlass() {
+  const glassHeight = 156; // pixels from bottom (190) to top (34)
+  const fillHeight = glassHeight * (pct / 100);
+  const targetY = 190 - fillHeight;
+
+  const liquidRect = document.getElementById('liquidRect');
+  const liquidAnim = document.getElementById('liquidAnim');
+  const waveGroup = document.getElementById('waveGroup');
+
+  liquidRect.setAttribute('height', String(fillHeight + 10));
+  liquidAnim.setAttribute('to', String(targetY));
+  liquidAnim.setAttribute('from', '190');
+
+  // Restart animation
+  liquidAnim.beginElement();
+
+  // Animate wave position
+  setTimeout(() => {
+    waveGroup.setAttribute('transform', `translate(10, ${targetY})`);
+  }, 2000);
+}
+
+// Animate percentage counter
+function animateCounter() {
+  const el = document.getElementById('pctDisplay');
+  const fracEl = document.getElementById('fracDisplay');
+  let current = 0;
+  const interval = setInterval(() => {
+    current++;
+    if (current > pct) { clearInterval(interval); return; }
+    el.textContent = current + '%';
+    fracEl.textContent = Math.round(current) + ' / 100';
+  }, 25);
+}
+
+// Animate tier bars
+function animateTiers() {
+  TIER_RANGES.forEach((tier, i) => {
+    const slice = BLOCKS.slice(tier.start, tier.end);
+    const done = slice.reduce((a,b) => a+b, 0);
+    const tierPct = Math.round(done / slice.length * 100);
+
+    setTimeout(() => {
+      document.getElementById('bar' + (i+1)).style.width = tierPct + '%';
+      document.getElementById('pct' + (i+1)).textContent = tierPct + '%';
+    }, 300 + i * 200);
+  });
+}
+
+// Build drops grid
+function buildDrops() {
+  const grid = document.getElementById('dropsGrid');
+  BLOCKS.forEach((done, i) => {
+    const tier = TIER_RANGES.find(t => i >= t.start && i < t.end);
+    const div = document.createElement('div');
+    div.className = 'drop' + (done ? ` filled ${tier.color}` : '');
+    div.textContent = i + 1;
+    div.title = `#${i+1}: ${BLOCK_NAMES[i] || 'Block ' + (i+1)}${done ? ' ✓' : ' ○'}`;
+    grid.appendChild(div);
+  });
+}
+
+// Init
+buildDrops();
+setTimeout(animateGlass, 300);
+setTimeout(animateCounter, 500);
+setTimeout(animateTiers, 400);
+</script>
+
+</body>
+</html>

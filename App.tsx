@@ -17,6 +17,7 @@ import { useSessionTimeout, SessionWarningModal } from "@/hooks/useSessionTimeou
 const LandingPage   = lazy(() => import("@/pages/LandingPage"));
 const AuthPage      = lazy(() => import("@/pages/RegisterPage"));
 const DashboardPage = lazy(() => import("@/pages/DashboardPage"));
+const WhatIfPage    = lazy(() => import("@/pages/WhatIfPage"));
 const EducationPage = lazy(() => import("@/pages/EducationPage"));
 const MiraPage      = lazy(() => import("@/pages/MiraPage"));
 const BadgesPage    = lazy(() => import("@/pages/BadgesPage"));
@@ -46,7 +47,7 @@ const KosherModule            = lazy(() => import("@/pages/KosherModule"));
 const HalalModule             = lazy(() => import("@/pages/HalalModule"));
 const BernsteinModule         = lazy(() => import("@/pages/BernsteinModule"));
 const SickDayModule           = lazy(() => import("@/pages/SickDayModule"));
-const CarnivoreModule        = lazy(() => import("@/pages/CarnivoreModule"));
+const CarnivoreModule         = lazy(() => import("@/pages/CarnivoreModule"));
 const DASHModule              = lazy(() => import("@/pages/DASHModule"));
 const FullCarbModule          = lazy(() => import("@/pages/FullCarbModule"));
 const GlutenFreeModule        = lazy(() => import("@/pages/GlutenFreeModule"));
@@ -64,21 +65,77 @@ const ZoneModule              = lazy(() => import("@/pages/ZoneModule"));
 const MealPlanPage            = lazy(() => import("@/pages/MealPlanPage"));
 const EducationTopicPage      = lazy(() => import("@/pages/EducationTopicPage"));
 
+/* ─── V7 New Modules — Free Tier ──────────────────────────────────────── */
+const GlucoseLogPage          = lazy(() => import("@/pages/GlucoseLogPage"));
+const GlucoseChartPage        = lazy(() => import("@/pages/GlucoseChartPage"));
+const InjectionSitePage       = lazy(() => import("@/pages/InjectionSitePage"));
+const StreakPage              = lazy(() => import("@/pages/StreakPage"));
+const BetaProgramPage         = lazy(() => import("@/pages/BetaProgramPage"));
+
+/* ─── V7 New Modules — Pro Tier ──────────────────────────────────────── */
+const ExerciseModule          = lazy(() => import("@/pages/ExerciseModule"));
+const SleepModule             = lazy(() => import("@/pages/SleepModule"));
+const EnvironmentalModule     = lazy(() => import("@/pages/EnvironmentalModule"));
+const MentalHealthModule      = lazy(() => import("@/pages/MentalHealthModule"));
+
+/* ─── V7 New Modules — AI Tier ───────────────────────────────────────── */
+const PredictionPage          = lazy(() => import("@/pages/PredictionPage"));
+const BolusAdvisorPage        = lazy(() => import("@/pages/BolusAdvisorPage"));
+const CommunityPage           = lazy(() => import("@/pages/CommunityPage"));
+const MiraWaitingRoomGame     = lazy(() => import("@/pages/MiraWaitingRoomGame"));
+const PediatricGrowthModule   = lazy(() => import("@/pages/PediatricGrowthModule"));
+const PostSurgicalModule      = lazy(() => import("@/pages/PostSurgicalModule"));
+
+/* ─── V7 Portals ─────────────────────────────────────────────────────── */
+const ClinicianPortal         = lazy(() => import("@/pages/ClinicianPortal"));
+const ResearcherPortal        = lazy(() => import("@/pages/ResearcherPortal"));
+const OrganisationPortal      = lazy(() => import("@/pages/OrganisationPortal"));
+
+/* ─── V7 Reports & Compliance ────────────────────────────────────────── */
+const ClinicalReportPage      = lazy(() => import("@/pages/ClinicalReportPage"));
+const GrantEvidencePage       = lazy(() => import("@/pages/GrantEvidencePage"));
+const ISPADCompliancePage     = lazy(() => import("@/pages/ISPADCompliancePage"));
+
+/* ─── V7 Legal & Privacy ─────────────────────────────────────────────── */
+const ConsentPage             = lazy(() => import("@/pages/ConsentPage"));
+const PrivacyPolicyPage       = lazy(() => import("@/pages/PrivacyPolicyPage"));
+const TermsOfUsePage          = lazy(() => import("@/pages/TermsOfUsePage"));
+
+/* ─── V7 Business & Developer ────────────────────────────────────────── */
+const InvestorDashboard       = lazy(() => import("@/pages/InvestorDashboard"));
+const APIDocumentationPage    = lazy(() => import("@/pages/APIDocumentationPage"));
+
+/* ─── V7 Onboarding & Setup ─────────────────────────────────────────── */
+const RegionSetupPage         = lazy(() => import("@/pages/RegionSetupPage"));
+
+/* ─── V7 Audit ───────────────────────────────────────────────────────── */
+const PerformanceAuditPage    = lazy(() => import("@/pages/PerformanceAuditPage"));
+const AccessibilityAuditPage  = lazy(() => import("@/pages/AccessibilityAuditPage"));
+
+/* ─── V7 Wave 3 — Final blocks ──────────────────────────────────────── */
+const CGMLiveMonitorPage      = lazy(() => import("@/pages/CGMLiveMonitorPage"));
+const SocialSharePage         = lazy(() => import("@/pages/SocialSharePage"));
+const LaunchAnnouncementPage  = lazy(() => import("@/pages/LaunchAnnouncementPage"));
+
 const DevPanel                = lazy(() => import("@/pages/DevPanel"));
 const RegisterPage            = lazy(() => import("@/pages/RegisterPage"));
 const TutorialPage            = lazy(() => import("@/pages/TutorialPage"));
+const ReportPage              = lazy(() => import("@/pages/ReportPage"));
 
 /* ─── Loading fallback ───────────────────────────────────────────────────── */
 function LoadingFallback() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[var(--bg-primary)]">
-      <p className="text-gray-400 animate-pulse text-sm">Loading…</p>
+    <div className="min-h-screen flex items-center justify-center" style={{ background: "var(--bg-primary)" }}>
+      <div style={{ textAlign: "center" }}>
+        <div className="skeleton" style={{ width: 120, height: 16, margin: "0 auto 12px", borderRadius: 8 }} />
+        <div className="skeleton" style={{ width: 80, height: 12, margin: "0 auto", borderRadius: 6 }} />
+      </div>
     </div>
   );
 }
 
 /* ─── Paths with no sidebar chrome ───────────────────────────────────────── */
-const CHROMELESS = ["/", "/auth", "/auth/callback", "/dev", "/tutorial"];
+const CHROMELESS = ["/", "/auth", "/auth/callback", "/dev", "/tutorial", "/onboarding/region", "/onboarding/consent", "/privacy", "/terms", "/launch"];
 function isChromeless(pathname: string): boolean {
   if (CHROMELESS.includes(pathname)) return true;
   if (pathname === "/register") return true;
@@ -107,10 +164,12 @@ function AppShell({ children }: { children: React.ReactNode }) {
           paddingBottom: isMobile ? 72 : 0,
           minHeight: "100vh",
           transition: "margin-left 0.2s ease",
-          background: "#f8f9fa",
+          background: "var(--bg-primary)",
         }}
       >
+        <div className="page-transition" key={location.pathname}>
         {children}
+        </div>
       </div>
       <SessionWarningModal open={showWarning} onStay={stayActive} onLogout={logout} />
     </>
@@ -131,7 +190,7 @@ export default function App() {
       <GlucoseUnitsProvider>
         <SensoryProvider>
         <PresentationModeProvider>
-        <div className="min-h-screen" style={{ background: "#f8f9fa", color: "#1a2a5e" }}>
+        <div className="min-h-screen" style={{ background: "var(--bg-primary)", color: "var(--text-primary)" }}>
           <a href="#main-content" className="skip-link">Skip to content</a>
           <AppShell>
           <main id="main-content">
@@ -142,6 +201,7 @@ export default function App() {
               <Route path="/auth/callback" element={<Navigate to="/dashboard" replace />} />
               {/* Dev phase: all routes bypass auth */}
               <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/dashboard/what-if" element={<WhatIfPage />} />
               <Route path="/education" element={<EducationPage />} />
               <Route path="/education/:id" element={<EducationTopicPage />} />
               <Route path="/mira"      element={<MiraPage />} />
@@ -192,6 +252,49 @@ export default function App() {
               <Route path="/modules/vegetarian"          element={<VegetarianModule />} />
               <Route path="/modules/zone"                element={<ZoneModule />} />
               <Route path="/meals/plan"         element={<MealPlanPage />} />
+              <Route path="/report"                 element={<ReportPage />} />
+              {/* ─── V7 Free Tier Routes ──────────────────────────────── */}
+              <Route path="/glucose"               element={<GlucoseLogPage />} />
+              <Route path="/glucose/chart"         element={<GlucoseChartPage />} />
+              <Route path="/injection-sites"       element={<InjectionSitePage />} />
+              <Route path="/streak"                element={<StreakPage />} />
+              <Route path="/beta"                  element={<BetaProgramPage />} />
+              {/* ─── V7 Pro Tier Routes ───────────────────────────────── */}
+              <Route path="/modules/exercise"      element={<ExerciseModule />} />
+              <Route path="/modules/sleep"         element={<SleepModule />} />
+              <Route path="/modules/environmental" element={<EnvironmentalModule />} />
+              <Route path="/modules/mental-health" element={<MentalHealthModule />} />
+              {/* ─── V7 AI Tier Routes ────────────────────────────────── */}
+              <Route path="/prediction"            element={<PredictionPage />} />
+              <Route path="/bolus-advisor"         element={<BolusAdvisorPage />} />
+              <Route path="/community"             element={<CommunityPage />} />
+              <Route path="/mira/game"             element={<MiraWaitingRoomGame />} />
+              <Route path="/modules/growth"        element={<PediatricGrowthModule />} />
+              <Route path="/modules/post-surgical" element={<PostSurgicalModule />} />
+              {/* ─── V7 Portal Routes ─────────────────────────────────── */}
+              <Route path="/clinician"             element={<ClinicianPortal />} />
+              <Route path="/researcher"            element={<ResearcherPortal />} />
+              <Route path="/organisation"          element={<OrganisationPortal />} />
+              {/* ─── V7 Reports & Compliance ──────────────────────────── */}
+              <Route path="/clinical-report"       element={<ClinicalReportPage />} />
+              <Route path="/grant-evidence"        element={<GrantEvidencePage />} />
+              <Route path="/ispad"                 element={<ISPADCompliancePage />} />
+              {/* ─── V7 Legal & Privacy ───────────────────────────────── */}
+              <Route path="/onboarding/consent"    element={<ConsentPage />} />
+              <Route path="/onboarding/region"     element={<RegionSetupPage />} />
+              <Route path="/privacy"               element={<PrivacyPolicyPage />} />
+              <Route path="/terms"                 element={<TermsOfUsePage />} />
+              {/* ─── V7 Business & Developer ──────────────────────────── */}
+              <Route path="/investors"             element={<InvestorDashboard />} />
+              <Route path="/api-docs"              element={<APIDocumentationPage />} />
+              {/* ─── V7 Audit ─────────────────────────────────────────── */}
+              <Route path="/audit/performance"     element={<PerformanceAuditPage />} />
+              <Route path="/audit/accessibility"   element={<AccessibilityAuditPage />} />
+              {/* ─── V7 Wave 3 — Final blocks ─────────────────────────── */}
+              <Route path="/cgm-live"              element={<CGMLiveMonitorPage />} />
+              <Route path="/share"                 element={<SocialSharePage />} />
+              <Route path="/launch"                element={<LaunchAnnouncementPage />} />
+              {/* ─── Existing ─────────────────────────────────────────── */}
               <Route path="/dev"                   element={<DevPanel />} />
               <Route path="/register"              element={<RegisterPage />} />
               <Route path="/tutorial"              element={<TutorialPage />} />

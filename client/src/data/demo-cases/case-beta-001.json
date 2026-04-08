@@ -1,0 +1,56 @@
+{
+  "id": "CASE-BETA-001",
+  "name": "Paediatric Basal-Bolus (Overnight Lows)",
+  "profileType": "paediatric",
+  "glucoseUnits": "mmol/L",
+  "regimen": {
+    "basal": [{ "insulin": "Degludec (Tresiba)", "dose": 12, "time": "18:30", "type": "ultra-long-peakless" }],
+    "bolus": [
+      { "insulin": "Fiasp", "dose": 3, "time": "07:00", "type": "ultra-rapid" },
+      { "insulin": "Fiasp", "dose": 2.5, "time": "12:30", "type": "ultra-rapid" },
+      { "insulin": "Humulin R", "dose": 3.5, "time": "18:00", "type": "short-acting" }
+    ]
+  },
+  "iobTimeline": [
+    { "time": "00:00", "hour": 0, "basal": 10.3, "bolus": 0.0, "combined": 10.3, "pressure": "moderate" },
+    { "time": "02:00", "hour": 2, "basal": 11.0, "bolus": 0.0, "combined": 11.0, "pressure": "moderate" },
+    { "time": "04:00", "hour": 4, "basal": 11.5, "bolus": 0.0, "combined": 11.5, "pressure": "moderate" },
+    { "time": "06:00", "hour": 6, "basal": 11.8, "bolus": 0.0, "combined": 11.8, "pressure": "moderate" },
+    { "time": "07:30", "hour": 7.5, "basal": 11.9, "bolus": 1.62, "combined": 13.6, "pressure": "strong" },
+    { "time": "08:30", "hour": 8.5, "basal": 12.0, "bolus": 3.0, "combined": 15.0, "pressure": "overlap" },
+    { "time": "10:00", "hour": 10, "basal": 12.0, "bolus": 0.29, "combined": 12.3, "pressure": "moderate" },
+    { "time": "12:30", "hour": 12.5, "basal": 11.9, "bolus": 0.0, "combined": 11.9, "pressure": "moderate" },
+    { "time": "14:00", "hour": 14, "basal": 6.8, "bolus": 2.5, "combined": 9.3, "pressure": "moderate" },
+    { "time": "15:00", "hour": 15, "basal": 6.8, "bolus": 0.72, "combined": 7.6, "pressure": "light" },
+    { "time": "17:00", "hour": 17, "basal": 6.8, "bolus": 0.0, "combined": 6.8, "pressure": "light" },
+    { "time": "18:00", "hour": 18, "basal": 6.8, "bolus": 0.0, "combined": 6.8, "pressure": "light" },
+    { "time": "18:30", "hour": 18.5, "basal": 6.8, "bolus": 1.44, "combined": 8.2, "pressure": "moderate" },
+    { "time": "19:30", "hour": 19.5, "basal": 7.6, "bolus": 2.8, "combined": 10.4, "pressure": "moderate" },
+    { "time": "20:30", "hour": 20.5, "basal": 8.4, "bolus": 3.5, "combined": 11.9, "pressure": "strong" },
+    { "time": "22:00", "hour": 22, "basal": 9.3, "bolus": 1.06, "combined": 10.4, "pressure": "moderate" }
+  ],
+  "interpretation": [
+    "Tresiba base provides continuous coverage of ~10\u201312U throughout the day.",
+    "Humulin R dinner dose (3.5U at 18:00) has a tail extending past midnight. Residual activity detected at 02:00.",
+    "DANGER WINDOW: 02:00\u201306:00. Combined IOB pressure is MODERATE to STRONG during fasting hours.",
+    "The 12-hour fasting gap (dinner to breakfast) faces continuous insulin pressure with no carbohydrate counterbalance.",
+    "Consider discussing dinner bolus timing with your care team."
+  ],
+  "dangerWindows": [{ "start": "02:00", "end": "06:00", "severity": "strong" }],
+  "quietTails": [{ "insulin": "Humulin R", "meal": "dinner", "residual": 0.4, "hoursPastDOA": 4 }],
+  "glucoseReadings": [
+    { "time": "00:00", "hour": 0, "value": 7.2 },
+    { "time": "02:00", "hour": 2, "value": 5.8 },
+    { "time": "04:00", "hour": 4, "value": 4.1 },
+    { "time": "06:00", "hour": 6, "value": 3.9 },
+    { "time": "07:00", "hour": 7, "value": 5.6 },
+    { "time": "08:30", "hour": 8.5, "value": 8.3 },
+    { "time": "10:00", "hour": 10, "value": 6.5 },
+    { "time": "12:00", "hour": 12, "value": 5.9 },
+    { "time": "14:00", "hour": 14, "value": 9.1 },
+    { "time": "16:00", "hour": 16, "value": 7.4 },
+    { "time": "18:00", "hour": 18, "value": 6.2 },
+    { "time": "20:00", "hour": 20, "value": 8.8 },
+    { "time": "22:00", "hour": 22, "value": 7.1 }
+  ]
+}

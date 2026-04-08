@@ -1,21 +1,20 @@
 /**
  * GluMira™ V7 — Insulin Activity Curve
- * Individual bell curves per dose.
- * Basal: teal (#2ab5c1), wide and flat.
- * Bolus: orange (#f59e0b), tall and narrow.
- * Overlap zones: navy (#1a2a5e).
+ * Individual bell curves per dose with gradient fills, smooth bezier interpolation.
+ * Basal: teal (#2ab5c1) with gradient fill.
+ * Bolus: navy (#1a2a5e) stroke, lighter fill.
+ * Overlap/danger zones: red gradient fill.
  */
 
 import {
   ComposedChart, Area, XAxis, YAxis, Tooltip,
-  ResponsiveContainer, CartesianGrid, Legend,
+  ResponsiveContainer, CartesianGrid,
 } from "recharts";
 
 export interface DoseCurve {
   id: string;
-  label: string; // e.g. "08:00 NovoRapid 5U"
+  label: string;
   type: "basal" | "bolus";
-  /** Array of { time, iob } at 5-min intervals */
   points: { time: string; iob: number }[];
 }
 
@@ -29,8 +28,8 @@ interface Props {
 }
 
 const BASAL_COLOUR = "#2ab5c1";
-const BOLUS_COLOUR = "#f59e0b";
-const OVERLAP_COLOUR = "#1a2a5e";
+const BOLUS_COLOUR = "#1a2a5e";
+const DANGER_COLOUR = "#EF4444";
 
 function formatTime(iso: string): string {
   return new Date(iso).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
@@ -48,7 +47,6 @@ function mergeData(curves: DoseCurve[]): ActivityPoint[] {
     }
   }
 
-  // Add overlap computation
   const entries = Array.from(map.values()).sort((a, b) => a.time.localeCompare(b.time));
   for (const entry of entries) {
     let basalTotal = 0;
@@ -64,14 +62,34 @@ function mergeData(curves: DoseCurve[]): ActivityPoint[] {
   return entries;
 }
 
+function ChartSkeleton() {
+  return (
+    <div style={{
+      background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border)",
+      padding: 16, minHeight: 300,
+    }}>
+      <div className="skeleton" style={{ width: 180, height: 20, marginBottom: 16 }} />
+      <div style={{ position: "relative", height: 240 }}>
+        <div className="skeleton" style={{ width: "100%", height: "100%", borderRadius: 8 }} />
+        {/* Faint grid lines */}
+        {[0.25, 0.5, 0.75].map(pct => (
+          <div key={pct} style={{ position: "absolute", top: `${pct * 100}%`, left: 0, right: 0, height: 1, background: "var(--border)", opacity: 0.3 }} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export { ChartSkeleton };
+
 export default function InsulinActivityCurve({ curves }: Props) {
   const data = mergeData(curves);
 
   if (curves.length === 0) {
     return (
       <div style={{
-        background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)",
-        padding: 32, textAlign: "center",
+        background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border)",
+        padding: 32, textAlign: "center", minHeight: 300, display: "flex", alignItems: "center", justifyContent: "center",
       }}>
         <p style={{ fontSize: 14, color: "var(--text-secondary)", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
           No insulin activity to display.
@@ -80,8 +98,13 @@ export default function InsulinActivityCurve({ curves }: Props) {
     );
   }
 
+  const prefersReduced = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
   return (
-    <div style={{ background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)", padding: "16px 16px 8px" }}>
+    <div style={{
+      background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border)",
+      padding: "16px 16px 8px", minHeight: 300,
+    }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12, padding: "0 4px" }}>
         <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: "var(--text-primary)", fontFamily: "'Playfair Display', serif" }}>
           Insulin Activity Curves
@@ -94,54 +117,93 @@ export default function InsulinActivityCurve({ curves }: Props) {
             <span style={{ width: 10, height: 10, borderRadius: 2, background: BOLUS_COLOUR, display: "inline-block" }} />Bolus
           </span>
           <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 11, color: "var(--text-secondary)" }}>
-            <span style={{ width: 10, height: 10, borderRadius: 2, background: OVERLAP_COLOUR, display: "inline-block" }} />Overlap
+            <span style={{ width: 10, height: 10, borderRadius: 2, background: DANGER_COLOUR, display: "inline-block" }} />Overlap
           </span>
         </div>
       </div>
-      <ResponsiveContainer width="100%" height={240}>
-        <ComposedChart data={data} margin={{ top: 4, right: 8, left: -16, bottom: 0 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="var(--border-divider)" />
+      <ResponsiveContainer width="100%" height={280}>
+        <ComposedChart data={data} margin={{ top: 4, right: 8, left: -8, bottom: 0 }}>
+          <defs>
+            <linearGradient id="basalGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={BASAL_COLOUR} stopOpacity={0.3} />
+              <stop offset="100%" stopColor={BASAL_COLOUR} stopOpacity={0.02} />
+            </linearGradient>
+            <linearGradient id="bolusGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={BOLUS_COLOUR} stopOpacity={0.2} />
+              <stop offset="100%" stopColor={BOLUS_COLOUR} stopOpacity={0.02} />
+            </linearGradient>
+            <linearGradient id="overlapGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={DANGER_COLOUR} stopOpacity={0.2} />
+              <stop offset="100%" stopColor={DANGER_COLOUR} stopOpacity={0.02} />
+            </linearGradient>
+          </defs>
+          <CartesianGrid
+            strokeDasharray="3 3"
+            stroke="var(--border)"
+            strokeOpacity={0.5}
+            vertical={false}
+          />
           <XAxis
             dataKey="time"
             tickFormatter={formatTime}
-            tick={{ fontSize: 11, fill: "var(--text-secondary)" }}
+            tick={{ fontSize: 12, fill: "var(--text-muted)", fontFamily: "'DM Sans', sans-serif" }}
             interval="preserveStartEnd"
             minTickGap={60}
+            axisLine={{ stroke: "var(--border)" }}
+            tickLine={{ stroke: "var(--border)" }}
           />
           <YAxis
-            tick={{ fontSize: 11, fill: "var(--text-secondary)" }}
+            tick={{ fontSize: 12, fill: "var(--text-muted)", fontFamily: "'DM Sans', sans-serif" }}
             tickFormatter={(v: number) => `${v.toFixed(1)}`}
+            axisLine={{ stroke: "var(--border)" }}
+            tickLine={{ stroke: "var(--border)" }}
+            label={{
+              value: "IOB (Units)",
+              angle: -90,
+              position: "insideLeft",
+              offset: 12,
+              style: { fontSize: 11, fill: "var(--text-muted)", fontFamily: "'DM Sans', sans-serif" },
+            }}
           />
           <Tooltip
             labelFormatter={(label: any) => formatTime(String(label))}
             formatter={(value: any, name: any) => [`${Number(value).toFixed(2)} U`, name]}
             contentStyle={{
-              background: "var(--bg-card)", border: "1px solid var(--border-light)", borderRadius: 8,
+              background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 8,
               fontSize: 12, fontFamily: "'DM Sans', system-ui, sans-serif",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
             }}
           />
-          {/* Overlap zone (rendered first, behind) */}
+          {/* Overlap/danger zone */}
           <Area
-            type="monotone"
+            type="natural"
             dataKey="_overlap"
-            stroke="none"
-            fill={OVERLAP_COLOUR}
-            fillOpacity={0.25}
+            stroke={DANGER_COLOUR}
+            strokeWidth={1}
+            strokeOpacity={0.4}
+            fill="url(#overlapGradient)"
             name="Overlap"
-            animationDuration={400}
+            animationDuration={prefersReduced ? 0 : 800}
+            dot={false}
           />
           {/* Individual dose curves */}
           {curves.map((curve) => (
             <Area
               key={curve.id}
-              type="monotone"
+              type="natural"
               dataKey={curve.id}
               stroke={curve.type === "basal" ? BASAL_COLOUR : BOLUS_COLOUR}
-              strokeWidth={curve.type === "basal" ? 1.5 : 2}
-              fill={curve.type === "basal" ? BASAL_COLOUR : BOLUS_COLOUR}
-              fillOpacity={0.12}
+              strokeWidth={curve.type === "basal" ? 2 : 2.5}
+              fill={curve.type === "basal" ? "url(#basalGradient)" : "url(#bolusGradient)"}
               name={curve.label}
-              animationDuration={400}
+              animationDuration={prefersReduced ? 0 : 800}
+              dot={false}
+              activeDot={{
+                r: 4,
+                stroke: curve.type === "basal" ? BASAL_COLOUR : BOLUS_COLOUR,
+                strokeWidth: 2,
+                fill: "var(--bg-card)",
+              }}
             />
           ))}
         </ComposedChart>

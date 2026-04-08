@@ -1,0 +1,54 @@
+{
+  "id": "CASE-BETA-002",
+  "name": "Paediatric Gastro Emergency (Levemir 3\u00d7)",
+  "profileType": "paediatric",
+  "glucoseUnits": "mmol/L",
+  "regimen": {
+    "basal": [
+      { "insulin": "Detemir (Levemir)", "dose": 7, "time": "06:00", "type": "intermediate" },
+      { "insulin": "Detemir (Levemir)", "dose": 6.5, "time": "13:30", "type": "intermediate" },
+      { "insulin": "Detemir (Levemir)", "dose": 7.5, "time": "20:35", "type": "intermediate" }
+    ],
+    "bolus": [
+      { "insulin": "Fiasp", "dose": 1, "time": "18:00", "type": "ultra-rapid" },
+      { "insulin": "Actrapid", "dose": 1.5, "time": "18:00", "type": "short-acting" }
+    ]
+  },
+  "iobTimeline": [
+    { "time": "00:00", "hour": 0, "basal": 4.2, "bolus": 0.0, "combined": 4.2, "pressure": "light" },
+    { "time": "02:00", "hour": 2, "basal": 3.1, "bolus": 0.0, "combined": 3.1, "pressure": "light" },
+    { "time": "04:00", "hour": 4, "basal": 2.0, "bolus": 0.0, "combined": 2.0, "pressure": "light" },
+    { "time": "06:00", "hour": 6, "basal": 1.2, "bolus": 0.0, "combined": 1.2, "pressure": "light" },
+    { "time": "07:00", "hour": 7, "basal": 5.8, "bolus": 0.0, "combined": 5.8, "pressure": "moderate" },
+    { "time": "09:00", "hour": 9, "basal": 6.4, "bolus": 0.0, "combined": 6.4, "pressure": "moderate" },
+    { "time": "11:00", "hour": 11, "basal": 4.8, "bolus": 0.0, "combined": 4.8, "pressure": "light" },
+    { "time": "13:30", "hour": 13.5, "basal": 3.2, "bolus": 0.0, "combined": 3.2, "pressure": "light" },
+    { "time": "15:00", "hour": 15, "basal": 7.1, "bolus": 0.0, "combined": 7.1, "pressure": "moderate" },
+    { "time": "17:00", "hour": 17, "basal": 5.9, "bolus": 0.0, "combined": 5.9, "pressure": "moderate" },
+    { "time": "18:00", "hour": 18, "basal": 5.2, "bolus": 2.5, "combined": 7.7, "pressure": "moderate" },
+    { "time": "19:00", "hour": 19, "basal": 4.8, "bolus": 1.8, "combined": 6.6, "pressure": "moderate" },
+    { "time": "20:35", "hour": 20.583, "basal": 4.0, "bolus": 0.3, "combined": 4.3, "pressure": "light" },
+    { "time": "22:00", "hour": 22, "basal": 8.2, "bolus": 0.0, "combined": 8.2, "pressure": "moderate" },
+    { "time": "23:00", "hour": 23, "basal": 7.8, "bolus": 0.0, "combined": 7.8, "pressure": "moderate" }
+  ],
+  "interpretation": [
+    "Levemir 3\u00d7 daily creates a rolling wave pattern with peaks at 07:00, 15:00, and 22:00.",
+    "During gastro episode: vomiting prevents carb absorption but insulin continues acting.",
+    "DANGER WINDOW: 18:00\u201321:00. Bolus stack (Fiasp + Actrapid) overlaps evening Levemir peak.",
+    "Survival window strategy: maintain basal coverage, withhold bolus during acute vomiting.",
+    "This case demonstrates why understanding insulin tails is critical during illness."
+  ],
+  "dangerWindows": [{ "start": "18:00", "end": "21:00", "severity": "strong" }],
+  "quietTails": [{ "insulin": "Actrapid", "meal": "dinner", "residual": 0.3, "hoursPastDOA": 2 }],
+  "glucoseReadings": [
+    { "time": "00:00", "hour": 0, "value": 8.4 },
+    { "time": "03:00", "hour": 3, "value": 6.1 },
+    { "time": "06:00", "hour": 6, "value": 4.8 },
+    { "time": "09:00", "hour": 9, "value": 11.2 },
+    { "time": "12:00", "hour": 12, "value": 9.3 },
+    { "time": "15:00", "hour": 15, "value": 7.6 },
+    { "time": "18:00", "hour": 18, "value": 5.1 },
+    { "time": "21:00", "hour": 21, "value": 3.8 },
+    { "time": "23:00", "hour": 23, "value": 6.9 }
+  ]
+}

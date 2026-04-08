@@ -102,8 +102,8 @@ const EMPTY_PROFILE: ProfileData = {
   comorbidities: [], special_conditions: [], is_caregiver: false, patient_name: "", relationship: "",
 };
 
-const SEX_OPTIONS = ["Male", "Female", "Other", "Prefer not to say"] as const;
-const LANGUAGE_OPTIONS = ["English", "Afrikaans", "French", "German", "Spanish", "Portuguese", "Arabic", "Other"] as const;
+const SEX_OPTIONS = ["Female", "Male", "Other", "Prefer not to say"] as const;
+const LANGUAGE_OPTIONS = ["Afrikaans", "Arabic", "English", "French", "German", "Other", "Portuguese", "Spanish"] as const;
 const GLUCOSE_UNIT_OPTIONS = ["mmol", "mg/dL"] as const;
 const BASAL_FREQUENCY_OPTIONS = ["Once daily", "Twice daily", "Pump (continuous)", "Other (split doses)"] as const;
 
@@ -173,13 +173,13 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   );
 }
 
-function TextInput({ value, onChange, placeholder, type = "text" }: {
-  value: string; onChange: (v: string) => void; placeholder?: string; type?: string;
+function TextInput({ value, onChange, placeholder, type = "text", inputMode, pattern }: {
+  value: string; onChange: (v: string) => void; placeholder?: string; type?: string; inputMode?: string; pattern?: string;
 }) {
   return (
     <input
       type={type} value={value} onChange={(e) => onChange(e.target.value)}
-      placeholder={placeholder}
+      placeholder={placeholder} inputMode={inputMode as any} pattern={pattern}
       style={inputStyle}
       onFocus={(e) => { e.currentTarget.style.borderColor = "#2ab5c1"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(42,181,193,0.15)"; }}
       onBlur={(e) => { e.currentTarget.style.borderColor = "#dee2e6"; e.currentTarget.style.boxShadow = "none"; }}

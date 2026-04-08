@@ -8,7 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { EDUCATION_TOPICS, GROUPS, type EducationTopic } from "@/data/education-topics";
 
 const AGE_RANGES = ["All", "0-5", "5-10", "10-13", "13-18", "Adult"] as const;
-const AUDIENCES = ["All", "Parent", "Child", "Teen", "Clinician"] as const;
+const AUDIENCES = ["All", "Child", "Clinician", "Parent", "Teen"] as const;
 
 function highlightMatch(text: string, query: string) {
   if (!query.trim()) return text;

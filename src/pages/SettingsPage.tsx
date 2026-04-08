@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { useAuth, supabase } from "@/hooks/useAuth";
 import UnitToggle from "@/components/UnitToggle";
 import NightscoutSetup from "@/components/NightscoutSetup";
+import ThemeToggle from "@/components/ThemeToggle";
 import { useAutoSave, SavedIndicator } from "@/hooks/useAutoSave";
 
 const NAVY = "var(--text-primary)";
@@ -105,6 +106,13 @@ export default function SettingsPage() {
         </Section>
 
         <NightscoutSetup />
+
+        <Section title="Night Mode">
+          <p style={{ fontSize: 12, color: MUTED, marginBottom: 8 }}>
+            Designed for caregivers at 2am who don&apos;t want to wake sleeping companions.
+          </p>
+          <ThemeToggle showLabel />
+        </Section>
 
         <Section title="Glucose Units">
           <p style={{ fontSize: 12, color: MUTED, marginBottom: 8 }}>
