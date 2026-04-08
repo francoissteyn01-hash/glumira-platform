@@ -319,7 +319,7 @@ export default function MealLogPage() {
                 <label style={{ minWidth: 48, minHeight: 48, borderRadius: 8, border: "1px solid var(--border-light)", background: "var(--bg-primary)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", fontSize: 20, flexShrink: 0 }}>
                   {photoUploading ? "\u23F3" : "\u{1F4F7}"}
                   <input
-                    type="file" accept="image/*" capture="environment"
+                    type="file" accept="image/*,.heic"
                     style={{ display: "none" }}
                     onChange={async (e) => {
                       const file = e.target.files?.[0];

@@ -97,7 +97,7 @@ export default function HandwrittenImportPage() {
                 <span style={{ fontSize: 14, color: "var(--text-faint)", fontFamily: "'DM Sans', system-ui, sans-serif" }}>{"\u{1F4F7}"} Tap to capture logbook page</span>
               </div>
             )}
-            <input type="file" accept="image/*" capture="environment" style={{ display: "none" }} onChange={(e) => {
+            <input type="file" accept="image/*,.pdf,.heic" style={{ display: "none" }} onChange={(e) => {
               const file = e.target.files?.[0];
               if (!file) return;
               const reader = new FileReader();

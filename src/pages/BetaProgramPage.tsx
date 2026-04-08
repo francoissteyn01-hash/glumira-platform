@@ -192,7 +192,6 @@ export default function BetaProgramPage() {
           <label style={label}>Screenshot (optional)</label>
           <input
             type="file"
-            accept="image/*"
             onChange={(e) => setFile(e.target.files?.[0] ?? null)}
             style={{ ...inputBase, marginBottom: 16, padding: 8 }}
           />
