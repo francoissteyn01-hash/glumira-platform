@@ -13,6 +13,23 @@ const T = {
   body: "'DM Sans', system-ui, sans-serif",
 };
 
+type DiabetesType = "type1" | "type2" | "gestational" | "lada" | "other";
+
+interface DiabetesOption {
+  id: DiabetesType;
+  icon: string;
+  title: string;
+  subtitle: string;
+}
+
+const DIABETES_TYPES: DiabetesOption[] = [
+  { id: "type1", icon: "🔵", title: "Type 1", subtitle: "Autoimmune — insulin dependent" },
+  { id: "type2", icon: "🟠", title: "Type 2", subtitle: "Insulin resistance — may use oral meds or insulin" },
+  { id: "gestational", icon: "🤰", title: "Gestational", subtitle: "Pregnancy-related diabetes" },
+  { id: "lada", icon: "🔷", title: "LADA", subtitle: "Latent autoimmune diabetes in adults" },
+  { id: "other", icon: "⚪", title: "Other / Unsure", subtitle: "MODY, secondary, or not yet diagnosed" },
+];
+
 type ProfileType = "caregiver" | "adult_patient" | "newly_diagnosed" | "clinician" | "teen";
 
 interface ProfileOption {
@@ -23,10 +40,10 @@ interface ProfileOption {
 }
 
 const PROFILES: ProfileOption[] = [
-  { id: "caregiver", icon: "🤱", title: "Caregiver", subtitle: "Parent or guardian of someone with T1D" },
-  { id: "adult_patient", icon: "🩺", title: "Patient", subtitle: "Living with Type 1 Diabetes" },
+  { id: "caregiver", icon: "🤱", title: "Caregiver", subtitle: "Parent or guardian of someone with diabetes" },
+  { id: "adult_patient", icon: "🩺", title: "Patient", subtitle: "Living with diabetes" },
   { id: "newly_diagnosed", icon: "🌱", title: "Newly Diagnosed", subtitle: "Diagnosed in the last 3 months" },
-  { id: "teen", icon: "⚡", title: "Teen / Young Adult", subtitle: "13-18, managing my own T1D" },
+  { id: "teen", icon: "⚡", title: "Teen / Young Adult", subtitle: "13-18, managing my own diabetes" },
   { id: "clinician", icon: "🧑‍⚕️", title: "Clinician", subtitle: "Healthcare professional" },
 ];
 
@@ -41,6 +58,16 @@ const INSULIN_TYPES = [
   "Not sure yet",
 ];
 
+const T2_MED_TYPES = [
+  "Metformin",
+  "Sulfonylurea",
+  "GLP-1 (Ozempic, etc.)",
+  "SGLT2 inhibitor",
+  "Insulin (any)",
+  "Diet & exercise only",
+  "Not sure yet",
+];
+
 interface ModuleRec {
   id: string;
   label: string;
@@ -48,10 +75,31 @@ interface ModuleRec {
   reason: string;
 }
 
-// Auto-recommend modules based on profile
-function getRecommendedModules(profile: ProfileType, age: string): ModuleRec[] {
+// Auto-recommend modules based on profile and diabetes type
+function getRecommendedModules(profile: ProfileType, age: string, diabetesType: DiabetesType): ModuleRec[] {
   const all: ModuleRec[] = [];
 
+  // Type 2 specific recommendations
+  if (diabetesType === "type2") {
+    all.push({ id: "education", label: "Education Library", href: "/education", reason: "100 topics — including T2-specific content" });
+    all.push({ id: "meal-plan", label: "Meal Planning", href: "/meals/plan", reason: "Nutrition is central to T2 management" });
+    all.push({ id: "exercise", label: "Exercise Module", href: "/modules/exercise", reason: "Activity directly improves insulin sensitivity" });
+    all.push({ id: "dash", label: "DASH Diet", href: "/modules/dash", reason: "Evidence-based for T2 + cardiovascular health" });
+    all.push({ id: "low-gi", label: "Low GI Module", href: "/modules/low-gi", reason: "Slow-release carbs for stable glucose" });
+    all.push({ id: "mira", label: "Meet Mira AI", href: "/mira", reason: "Your 24/7 education companion" });
+    return all.slice(0, 5);
+  }
+
+  // Gestational specific
+  if (diabetesType === "gestational") {
+    all.push({ id: "pregnancy", label: "Pregnancy Module", href: "/modules/pregnancy", reason: "Trimester-specific glucose targets" });
+    all.push({ id: "meal-plan", label: "Meal Planning", href: "/meals/plan", reason: "Gestational nutrition guidance" });
+    all.push({ id: "education", label: "Education Library", href: "/education", reason: "Understand gestational diabetes" });
+    all.push({ id: "mira", label: "Meet Mira AI", href: "/mira", reason: "Your 24/7 education companion" });
+    return all.slice(0, 5);
+  }
+
+  // T1 / LADA / Other — original logic
   if (profile === "caregiver" || profile === "newly_diagnosed") {
     all.push({ id: "sick-day", label: "Sick Day Management", href: "/modules/sick-day", reason: "Essential for every caregiver" });
     all.push({ id: "education", label: "Education Library", href: "/education", reason: "100 topics for your journey" });
@@ -95,13 +143,14 @@ function getRecommendedModules(profile: ProfileType, age: string): ModuleRec[] {
 export default function OnboardingWizard() {
   const navigate = useNavigate();
   const [step, setStep] = useState(0);
+  const [diabetesType, setDiabetesType] = useState<DiabetesType | null>(null);
   const [profile, setProfile] = useState<ProfileType | null>(null);
   const [age, setAge] = useState("");
   const [insulinType, setInsulinType] = useState("");
   const [diagnosisDate, setDiagnosisDate] = useState("");
   const [selectedModules, setSelectedModules] = useState<string[]>([]);
 
-  const totalSteps = 4;
+  const totalSteps = 5;
 
   const next = () => {
     if (step < totalSteps - 1) setStep(step + 1);
@@ -125,7 +174,7 @@ export default function OnboardingWizard() {
     );
   };
 
-  const recommendations = profile ? getRecommendedModules(profile, age) : [];
+  const recommendations = profile && diabetesType ? getRecommendedModules(profile, age, diabetesType) : [];
 
   // Shared styles
   const pageStyle: React.CSSProperties = {
@@ -220,8 +269,38 @@ export default function OnboardingWizard() {
         ))}
       </div>
 
-      {/* STEP 0: Who are you? */}
+      {/* STEP 0: Diabetes type */}
       {step === 0 && (
+        <div style={{ width: "100%", maxWidth: 440, textAlign: "center" }}>
+          <h1 style={{ fontFamily: T.heading, fontSize: "clamp(24px, 5vw, 32px)", marginBottom: 8 }}>
+            What type of diabetes?
+          </h1>
+          <p style={{ color: T.muted, fontSize: 14, marginBottom: 28 }}>
+            This helps us tailor your experience
+          </p>
+          {DIABETES_TYPES.map(d => (
+            <div
+              key={d.id}
+              style={cardStyle(diabetesType === d.id)}
+              onClick={() => setDiabetesType(d.id)}
+            >
+              <span style={{ fontSize: 28 }}>{d.icon}</span>
+              <div style={{ textAlign: "left" }}>
+                <div style={{ fontWeight: 600, fontSize: 15 }}>{d.title}</div>
+                <div style={{ fontSize: 12, color: T.muted }}>{d.subtitle}</div>
+              </div>
+            </div>
+          ))}
+          <div style={{ marginTop: 24, display: "flex", justifyContent: "center" }}>
+            <button type="button" style={{ ...btnPrimary, opacity: diabetesType ? 1 : 0.4 }} disabled={!diabetesType} onClick={next}>
+              Continue
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* STEP 1: Who are you? */}
+      {step === 1 && (
         <div style={{ width: "100%", maxWidth: 440, textAlign: "center" }}>
           <h1 style={{ fontFamily: T.heading, fontSize: "clamp(24px, 5vw, 32px)", marginBottom: 8 }}>
             Who are you?
@@ -250,8 +329,8 @@ export default function OnboardingWizard() {
         </div>
       )}
 
-      {/* STEP 1: Quick setup */}
-      {step === 1 && (
+      {/* STEP 2: Quick setup */}
+      {step === 2 && (
         <div style={{ width: "100%", maxWidth: 440, textAlign: "center" }}>
           <h1 style={{ fontFamily: T.heading, fontSize: "clamp(24px, 5vw, 32px)", marginBottom: 8 }}>
             Quick setup
@@ -277,10 +356,10 @@ export default function OnboardingWizard() {
 
           <div style={{ textAlign: "left", marginBottom: 20 }}>
             <label style={{ fontSize: 12, color: T.muted, display: "block", marginBottom: 6 }}>
-              Rapid-acting insulin
+              {diabetesType === "type2" ? "Medication (if applicable)" : "Rapid-acting insulin"}
             </label>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-              {INSULIN_TYPES.slice(0, 4).map(t => (
+              {(diabetesType === "type2" ? T2_MED_TYPES : INSULIN_TYPES).slice(0, 4).map(t => (
                 <button type="button"
                   key={t}
                   onClick={() => setInsulinType(t)}
@@ -328,8 +407,8 @@ export default function OnboardingWizard() {
         </div>
       )}
 
-      {/* STEP 2: Your modules */}
-      {step === 2 && (
+      {/* STEP 3: Your modules */}
+      {step === 3 && (
         <div style={{ width: "100%", maxWidth: 440, textAlign: "center" }}>
           <h1 style={{ fontFamily: T.heading, fontSize: "clamp(24px, 5vw, 32px)", marginBottom: 8 }}>
             Recommended for you
@@ -366,8 +445,8 @@ export default function OnboardingWizard() {
         </div>
       )}
 
-      {/* STEP 3: Meet Mira */}
-      {step === 3 && (
+      {/* STEP 4: Meet Mira */}
+      {step === 4 && (
         <div style={{ width: "100%", maxWidth: 440, textAlign: "center", paddingTop: 20 }}>
           <div style={{
             width: 80, height: 80, borderRadius: "50%",

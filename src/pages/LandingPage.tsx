@@ -3,11 +3,32 @@
  * Mobile-first. Mira banner on top, text below, no duplicate nav.
  */
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const FONT_HREF =
   "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500;600&display=swap";
+
+const CASE_STUDIES = [
+  {
+    code: "SUBJ-001",
+    title: "Overnight Lows — A Timing Question",
+    type: "Paediatric · MDI · Tresiba + Fiasp + Humulin R",
+    insight:
+      "The dinner Humulin R tail overlaps with the Tresiba ramp-up through 02:00–06:00. Combined pressure peaks during fasting — this explains the overnight lows. A timing question, not a dose question.",
+    tag: "Overlap",
+    tagColor: "#F44336",
+  },
+  {
+    code: "SUBJ-002",
+    title: "Gastro Emergency — Insulin You Can't Take Back",
+    type: "Paediatric · MDI · Levemir 3× + Fiasp + Actrapid",
+    insight:
+      "Vomiting at 18:30 expelled carbs, but the dinner bolus was already absorbed. Combined IOB at 20:30 reached ~7.9 U against zero incoming glucose. If the caregiver had seen the IOB at vomiting onset — that is the information that saves lives.",
+    tag: "Critical",
+    tagColor: "#F44336",
+  },
+];
 
 const T = {
   navy: "#1a2a5e",
@@ -52,6 +73,38 @@ const responsiveCSS = `
     justify-content: center;
   }
 
+  .glm-case-carousel {
+    width: 100%;
+    max-width: 440px;
+    margin-bottom: 28px;
+    position: relative;
+  }
+
+  .glm-case-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(42,181,193,0.15);
+    border-radius: 12px;
+    padding: 20px 22px;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .glm-case-dots {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 14px;
+  }
+
+  .glm-case-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+    padding: 0;
+  }
+
   @media (min-width: 768px) {
     .glm-landing {
       flex-direction: row;
@@ -81,6 +134,7 @@ const responsiveCSS = `
 
 export default function LandingPage() {
   const navigate = useNavigate();
+  const [caseIdx, setCaseIdx] = useState(0);
 
   useEffect(() => {
     if (!document.querySelector('link[href*="Playfair"]')) {
@@ -89,6 +143,14 @@ export default function LandingPage() {
       link.href = FONT_HREF;
       document.head.appendChild(link);
     }
+  }, []);
+
+  // Auto-rotate case studies every 8s
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCaseIdx((i) => (i + 1) % CASE_STUDIES.length);
+    }, 8000);
+    return () => clearInterval(timer);
   }, []);
 
   return (
@@ -178,6 +240,116 @@ export default function LandingPage() {
           </p>
         </div>
 
+        {/* ═══ ROTATING CASE STUDIES ═══════════════════════════════════ */}
+        <div className="glm-case-carousel">
+          <p
+            style={{
+              fontSize: 10,
+              fontWeight: 600,
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              color: "rgba(255,255,255,0.35)",
+              marginBottom: 10,
+            }}
+          >
+            Case Studies — Real IOB Insights
+          </p>
+          {CASE_STUDIES.map((cs, i) => (
+            <div
+              key={cs.code}
+              className="glm-case-card"
+              style={{
+                display: i === caseIdx ? "block" : "none",
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+                <span
+                  style={{
+                    fontFamily: T.mono,
+                    fontSize: 11,
+                    fontWeight: 600,
+                    color: T.teal,
+                    letterSpacing: "0.04em",
+                  }}
+                >
+                  {cs.code}
+                </span>
+                <span
+                  style={{
+                    fontSize: 10,
+                    fontWeight: 600,
+                    padding: "2px 8px",
+                    borderRadius: 20,
+                    background: `${cs.tagColor}22`,
+                    color: cs.tagColor,
+                    letterSpacing: "0.04em",
+                  }}
+                >
+                  {cs.tag}
+                </span>
+              </div>
+              <p
+                style={{
+                  fontFamily: T.heading,
+                  fontSize: 16,
+                  fontWeight: 700,
+                  color: T.white,
+                  margin: "0 0 4px",
+                  lineHeight: 1.3,
+                }}
+              >
+                {cs.title}
+              </p>
+              <p
+                style={{
+                  fontSize: 11,
+                  fontWeight: 400,
+                  color: "rgba(255,255,255,0.4)",
+                  margin: "0 0 10px",
+                  letterSpacing: "0.02em",
+                }}
+              >
+                {cs.type}
+              </p>
+              <p
+                style={{
+                  fontSize: 13,
+                  fontWeight: 300,
+                  color: "rgba(255,255,255,0.7)",
+                  lineHeight: 1.65,
+                  margin: 0,
+                }}
+              >
+                {cs.insight}
+              </p>
+            </div>
+          ))}
+          <div className="glm-case-dots">
+            {CASE_STUDIES.map((cs, i) => (
+              <button
+                type="button"
+                key={cs.code}
+                className="glm-case-dot"
+                aria-label={`View case study ${cs.code}`}
+                onClick={() => setCaseIdx(i)}
+                style={{
+                  background: i === caseIdx ? T.teal : "rgba(255,255,255,0.2)",
+                }}
+              />
+            ))}
+          </div>
+          <p
+            style={{
+              fontSize: 9,
+              color: "rgba(255,255,255,0.25)",
+              marginTop: 10,
+              fontStyle: "italic",
+            }}
+          >
+            Educational only — not medical advice. All data anonymised.
+          </p>
+        </div>
+
         {/* CTA buttons — understated, refined */}
         <div className="glm-cta-row" style={{ display: "flex", gap: 14, flexWrap: "wrap", marginBottom: 32 }}>
           <button type="button"
@@ -231,6 +403,32 @@ export default function LandingPage() {
             }}
           >
             Login
+          </button>
+          <button type="button"
+            onClick={() => navigate("/demo")}
+            style={{
+              padding: "11px 28px",
+              borderRadius: 8,
+              border: "1px solid rgba(245,158,11,0.4)",
+              background: "rgba(245,158,11,0.08)",
+              color: "#f59e0b",
+              fontSize: 13,
+              fontWeight: 500,
+              fontFamily: T.body,
+              cursor: "pointer",
+              letterSpacing: "0.02em",
+              transition: "background 0.25s, border-color 0.25s",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "rgba(245,158,11,0.18)";
+              e.currentTarget.style.borderColor = "rgba(245,158,11,0.6)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "rgba(245,158,11,0.08)";
+              e.currentTarget.style.borderColor = "rgba(245,158,11,0.4)";
+            }}
+          >
+            Browse as Guest
           </button>
         </div>
 

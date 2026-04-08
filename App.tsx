@@ -118,6 +118,7 @@ const CGMLiveMonitorPage      = lazy(() => import("@/pages/CGMLiveMonitorPage"))
 const SocialSharePage         = lazy(() => import("@/pages/SocialSharePage"));
 const LaunchAnnouncementPage  = lazy(() => import("@/pages/LaunchAnnouncementPage"));
 
+const DemoDashboardPage       = lazy(() => import("@/pages/DemoDashboardPage"));
 const DevPanel                = lazy(() => import("@/pages/DevPanel"));
 const RegisterPage            = lazy(() => import("@/pages/RegisterPage"));
 const TutorialPage            = lazy(() => import("@/pages/TutorialPage"));
@@ -136,7 +137,7 @@ function LoadingFallback() {
 }
 
 /* ─── Paths with no sidebar chrome ───────────────────────────────────────── */
-const CHROMELESS = ["/", "/auth", "/auth/callback", "/dev", "/tutorial", "/onboarding/region", "/onboarding/consent", "/privacy", "/terms", "/launch"];
+const CHROMELESS = ["/", "/auth", "/auth/callback", "/dev", "/tutorial", "/onboarding/region", "/onboarding/consent", "/privacy", "/terms", "/launch", "/demo"];
 function isChromeless(pathname: string): boolean {
   if (CHROMELESS.includes(pathname)) return true;
   if (pathname === "/register") return true;
@@ -200,6 +201,8 @@ export default function App() {
               <Route path="/"          element={<HomeRoute />} />
               <Route path="/auth"      element={<AuthPage />} />
               <Route path="/auth/callback" element={<Navigate to="/dashboard" replace />} />
+              {/* Public routes — no auth required */}
+              <Route path="/demo"      element={<DemoDashboardPage />} />
               {/* Dev phase: all routes bypass auth */}
               <Route path="/dashboard" element={<DashboardPage />} />
               <Route path="/dashboard/what-if" element={<WhatIfPage />} />
