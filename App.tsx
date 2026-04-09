@@ -23,6 +23,7 @@ const MiraPage      = lazy(() => import("@/pages/MiraPage"));
 const BadgesPage    = lazy(() => import("@/pages/BadgesPage"));
 const FAQPage       = lazy(() => import("@/pages/FAQPage"));
 const SettingsPage  = lazy(() => import("@/pages/SettingsPage"));
+const InsulinProfilePage = lazy(() => import("@/pages/InsulinProfilePage"));
 const ProfilePage   = lazy(() => import("@/pages/ProfilePage"));
 const MealLogPage    = lazy(() => import("@/pages/MealLogPage"));
 const InsulinLogPage    = lazy(() => import("@/pages/InsulinLogPage"));
@@ -212,7 +213,8 @@ export default function App() {
               <Route path="/mira"      element={<MiraPage />} />
               <Route path="/badges"    element={<BadgesPage />} />
               <Route path="/faq"       element={<FAQPage />} />
-              <Route path="/settings"  element={<SettingsPage />} />
+              <Route path="/settings"  element={<InsulinProfilePage />} />
+              <Route path="/app-settings"  element={<SettingsPage />} />
               <Route path="/log"       element={<MealLogPage />} />
               <Route path="/insulin"    element={<InsulinLogPage />} />
               <Route path="/conditions" element={<ConditionLogPage />} />

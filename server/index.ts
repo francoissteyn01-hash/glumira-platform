@@ -40,6 +40,7 @@ import { schoolCarePlanRouter }    from "./routes/school-care-plan-route";
 import { glucosePredictionRouter } from "./routes/glucose-prediction.route";
 import { feedbackRouter }          from "./routes/feedback.route";
 import { insulinLogRouter }        from "./routes/insulin-log.route";
+import { insulinProfilesRouter }  from "./routes/insulin-profiles.route";
 
 const app = express();
 const PORT = parseInt(process.env.PORT ?? "3001", 10);
@@ -103,6 +104,7 @@ app.use("/api/school-care-plan", schoolCarePlanRouter);
 app.use("/api/glucose-prediction", glucosePredictionRouter);
 app.use("/api/feedback",           feedbackRouter);
 app.use("/api/insulin-log",        insulinLogRouter);
+app.use("/api/insulin-profiles",   insulinProfilesRouter);
 
 // ── 404 / Error ───────────────────────────────────────────────────────────────
 app.use((_req, res) => res.status(404).json({ error: "Not found" }));
