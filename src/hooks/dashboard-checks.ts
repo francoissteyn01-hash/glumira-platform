@@ -1,8 +1,6 @@
 // hooks/dashboard-checks.ts
 import { useEffect, useState } from 'react';
-import { createClient } from '@/utils/supabase/client';
-
-const supabase = createClient();
+import { supabase } from '@/hooks/useAuth';
 
 export function useHasProfile(): boolean {
   const [has, setHas] = useState(false);
