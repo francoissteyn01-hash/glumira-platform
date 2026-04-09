@@ -1,6 +1,5 @@
 // iob-engine.test.ts
-import { calculateIOB, detectStacking, predictiveLowAlert, generateDecayCurve } from './iob-engine';
-import { InsulinProfile, InsulinDose, StackedCurvePoint } from './types';
+import { calculateIOB, detectStacking, predictiveLowAlert, generateDecayCurve, InsulinProfile, InsulinDose, StackedCurvePoint } from './iob-engine';
 
 // Mock data
 const humalogProfile: InsulinProfile = {
