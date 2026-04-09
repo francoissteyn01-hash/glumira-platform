@@ -31,7 +31,7 @@ const emergencyBox: React.CSSProperties = {
   background: "var(--error-bg)", border: "2px solid var(--error-border)", borderRadius: 12,
   padding: 24, marginBottom: 20,
 };
-const anoukBox: React.CSSProperties = {
+const protocolBox: React.CSSProperties = {
   background: "var(--disclaimer-bg)", border: "2px solid var(--disclaimer-border)", borderRadius: 12,
   padding: 24, marginBottom: 20,
 };
@@ -92,7 +92,7 @@ const RED_FLAGS = [
 export default function SickDayModule() {
   const [open, setOpen] = useState<Record<string, boolean>>({
     checklist: true, ketones: false, fluids: false,
-    insulin: false, anouk: false, hospital: false, contacts: false,
+    insulin: false, gastroProtocol: false, hospital: false, contacts: false,
   });
   const toggle = (key: string) => setOpen(o => ({ ...o, [key]: !o[key] }));
 
@@ -299,9 +299,9 @@ export default function SickDayModule() {
         </Section>
 
         {/* ─── 5. The Gastroenteritis Crisis Protocol ──────────────── */}
-        <div style={anoukBox}>
+        <div style={protocolBox}>
           <button type="button"
-            onClick={() => toggle("anouk")}
+            onClick={() => toggle("gastroProtocol")}
             style={{
               all: "unset", cursor: "pointer", width: "100%", display: "flex",
               justifyContent: "space-between", alignItems: "center",
@@ -310,9 +310,9 @@ export default function SickDayModule() {
             <h2 style={{ ...heading2, color: "var(--disclaimer-text)", marginBottom: 0 }}>
               Vomiting Protocol — "The Gastroenteritis Crisis Protocol"
             </h2>
-            <span style={{ color: "var(--disclaimer-text)", fontSize: 22, fontWeight: 700 }}>{open.anouk ? "−" : "+"}</span>
+            <span style={{ color: "var(--disclaimer-text)", fontSize: 22, fontWeight: 700 }}>{open.gastroProtocol ? "−" : "+"}</span>
           </button>
-          {open.anouk && (
+          {open.gastroProtocol && (
             <div style={{ marginTop: 16, fontSize: 14, color: "#1e293b" }}>
               <p style={{ marginBottom: 12, color: "var(--disclaimer-text)", fontWeight: 600 }}>
                 This is a core GluMira scenario. When a person with T1D is vomiting and cannot keep food

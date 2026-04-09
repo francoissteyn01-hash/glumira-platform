@@ -31,7 +31,7 @@ export default function QuickActions() {
             borderRadius: 12,
             border: "1px solid var(--border-light)",
             borderLeft: `4px solid ${a.amber ? "#f59e0b" : "var(--accent-teal)"}`,
-            background: a.amber ? "var(--amber-bg, #fffbeb)" : "var(--bg-card)",
+            background: "var(--bg-card)",
             cursor: "pointer",
             fontFamily: "'DM Sans', system-ui, sans-serif",
             transition: "box-shadow 0.15s",

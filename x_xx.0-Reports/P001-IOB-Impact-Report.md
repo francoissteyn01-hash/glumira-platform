@@ -6,7 +6,7 @@
 **Report Date:** 20 March 2026
 **Report Version:** 1.0
 **Compiled by:** GluMira™ IOB Hunter™ Engine Analysis
-**Data Source:** ANOUK_T1D_MASTER_TRACKER (Google Sheets) + GluMira Database
+**Data Source:** SUBJ_001_T1D_MASTER_TRACKER (Google Sheets) + GluMira Database
 
 > **Educational use only. GluMira™ is not a medical device. This report is for platform development and educational insight purposes. All clinical decisions must be made by a qualified healthcare professional.**
 
@@ -14,7 +14,7 @@
 
 ## Executive Summary
 
-A critical data discrepancy was identified in the GluMira database for NAM-001 (SUBJ-NAM-001): Levemir basal doses are stored as 120/80/100 (a ×10 encoding artefact), which the IOB Hunter™ engine decodes as **12 U / 8 U / 10 U** per injection. The actual doses recorded in the `ANOUK_T1D_MASTER_TRACKER` are **5.5–7.5 U per injection** — a median of approximately **6.75 / 6.75 / 4.75 U** across the three daily injections.
+A critical data discrepancy was identified in the GluMira database for NAM-001 (SUBJ-NAM-001): Levemir basal doses are stored as 120/80/100 (a ×10 encoding artefact), which the IOB Hunter™ engine decodes as **12 U / 8 U / 10 U** per injection. The actual doses recorded in the `SUBJ_001_T1D_MASTER_TRACKER` are **5.5–7.5 U per injection** — a median of approximately **6.75 / 6.75 / 4.75 U** across the three daily injections.
 
 This discrepancy, if uncorrected, causes the IOB Hunter™ engine to overestimate SUBJ-NAM-001's basal Insulin on Board by a mean of **69%** and a peak of **81%** throughout the day. In absolute terms, the engine would model approximately **4.56 U more basal insulin** circulating at any given time than is actually present. Using SUBJ-NAM-001's estimated Insulin Sensitivity Factor (ISF) of 4.1 mmol/L per unit [^1], this translates to a theoretical excess glucose-lowering effect of up to **30 mmol/L** — a value that, if used to guide bolus suppression or correction recommendations, would represent a clinically dangerous overestimate.
 

@@ -1,7 +1,7 @@
 import React from "react";
 
 interface SixtySecondInsightProps {
-  profileId: "riley" | "subj002";
+  profileId: "subj001" | "subj002";
 }
 
 function Badge({ label, color }: { label: string; color: "green" | "amber" | "orange" | "red" }) {
@@ -34,12 +34,12 @@ function Section({
   );
 }
 
-function RileyInsight() {
+function Subj001Insight() {
   return (
     <div className="space-y-4">
       <h2 className="text-lg font-bold text-white font-['DM_Sans']">
         <span className="mr-2" aria-hidden="true">&#9201;</span>
-        60-SECOND INSIGHT — Riley | Day 2 Steady State
+        60-SECOND INSIGHT — SUBJ-001 | Day 2 Steady State
       </h2>
 
       <Section borderColor="border-amber-500" bgColor="bg-amber-500/10">
@@ -135,7 +135,7 @@ function Subj002Insight() {
 const SixtySecondInsight: React.FC<SixtySecondInsightProps> = ({ profileId }) => {
   return (
     <div className="bg-[#1a2a5e] rounded-lg p-6 font-['DM_Sans']">
-      {profileId === "riley" ? <RileyInsight /> : <Subj002Insight />}
+      {profileId === "subj001" ? <Subj001Insight /> : <Subj002Insight />}
     </div>
   );
 };
