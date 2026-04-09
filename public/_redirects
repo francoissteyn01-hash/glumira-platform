@@ -1,0 +1,4 @@
+/api/*    https://glumira-platform-production.up.railway.app/api/:splat    200
+/trpc/*   https://glumira-platform-production.up.railway.app/trpc/:splat  200
+/health   https://glumira-platform-production.up.railway.app/health       200
+/*        /index.html    200
