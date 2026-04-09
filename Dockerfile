@@ -5,8 +5,10 @@ WORKDIR /app
 COPY package.json ./
 RUN npm install --include=dev
 
-# Cache bust: 2026-04-09T15:10
-COPY . .
+COPY server/ ./server/
+COPY drizzle/ ./drizzle/
+COPY glumira-trpc-types.ts ./
+COPY tsconfig.server.json ./
 RUN npm run build:server
 
 RUN npm prune --production
