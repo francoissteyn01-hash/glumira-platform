@@ -5,8 +5,8 @@ WORKDIR /app
 COPY package.json ./
 RUN npm install --include=dev
 
+# Cache bust: 2026-04-09T15:10
 COPY . .
-ARG CACHEBUST=1
 RUN npm run build:server
 
 RUN npm prune --production
