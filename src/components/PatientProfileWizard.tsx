@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, useEffect, useMemo } from 'react';
-import { createClient } from '@/utils/supabase/client';
+import { supabase as supabaseClient } from '@/hooks/useAuth';
 
 interface Regimen {
   id: string;
