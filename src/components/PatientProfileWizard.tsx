@@ -16,7 +16,7 @@ interface InsulinProfile {
 }
 
 const PatientProfileWizard: React.FC = () => {
-  const supabase = createClient();
+  const supabase = supabaseClient;
 
   // Wizard state
   const [step, setStep] = useState(0);
