@@ -38,9 +38,9 @@ export default function PatientHeader({ patient, injections }: PatientHeaderProp
 
   return (
     <div style={{
-      background: "#fff",
+      background: "var(--bg-card)",
       borderRadius: 12,
-      border: "1px solid #e2e8f0",
+      border: "1px solid var(--border-light)",
       padding: "24px 28px",
       marginBottom: 24,
     }}>
@@ -50,7 +50,7 @@ export default function PatientHeader({ patient, injections }: PatientHeaderProp
           width: 48,
           height: 48,
           borderRadius: "50%",
-          background: "#1a2a5e",
+          background: "var(--text-primary)",
           color: "#fff",
           display: "flex",
           alignItems: "center",
@@ -62,11 +62,11 @@ export default function PatientHeader({ patient, injections }: PatientHeaderProp
           {initial}
         </div>
         <div>
-          <h2 style={{ margin: 0, fontSize: 22, fontWeight: 700, color: "#1a2a5e" }}>
+          <h2 style={{ margin: 0, fontSize: 22, fontWeight: 700, color: "var(--text-primary)", fontFamily: "'Playfair Display', serif" }}>
             {patient.name} — 24-hour insulin pressure map
           </h2>
-          <p style={{ margin: 0, fontSize: 14, color: "#6B7280" }}>
-            {patient.location} · {patient.weight}kg · {patient.therapy}
+          <p style={{ margin: 0, fontSize: 14, color: "var(--text-secondary)", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+            {patient.therapy} · {patient.diet}
           </p>
         </div>
       </div>
@@ -79,10 +79,10 @@ export default function PatientHeader({ patient, injections }: PatientHeaderProp
               {inj.insulinName}
             </span>
             {" "}
-            <span style={{ color: "#374151" }}>
+            <span style={{ color: "var(--text-secondary)" }}>
               {inj.dose}U @ {inj.time}
             </span>
-            <span style={{ color: "#D1D5DB", margin: "0 4px" }}>·</span>
+            <span style={{ color: "var(--text-faint)", margin: "0 4px" }}>·</span>
           </span>
         ))}
       </div>
