@@ -6,6 +6,7 @@ COPY package.json ./
 RUN npm install --include=dev
 
 COPY . .
+ARG CACHEBUST=1
 RUN npm run build:server
 
 RUN npm prune --production
