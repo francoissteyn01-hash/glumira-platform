@@ -5,3 +5,6 @@ dist
 !.env.example
 .git
 glumira-platform
+desktop.ini
+Thumbs.db
+.DS_Store
