@@ -1,14 +1,30 @@
 // iob-engine.ts
-import {
-  InsulinDose,
-  InsulinProfile,
-  PatientSettings,
-  IOBResult,
-  DecayCurvePoint,
-  StackedCurvePoint,
-  StackingAlert,
-  PredictiveAlert,
-} from './types';
+
+interface InsulinProfile {
+  id: string; brand_name: string; generic_name: string; manufacturer: string | null;
+  category: string; onset_minutes: number; peak_start_minutes: number | null;
+  peak_end_minutes: number | null; duration_minutes: number; is_peakless: boolean;
+  mechanism_notes: string | null; pk_source: string;
+  decay_model: 'exponential' | 'bilinear' | 'flat_depot' | 'mixed_profile';
+  decay_parameters: any; is_active: boolean; created_at: string;
+}
+interface InsulinDose {
+  id: string; profile_id: string; insulin_name: string; dose_units: number;
+  administered_at: string; dose_type: 'bolus' | 'correction' | 'basal_injection' | 'pump_delivery';
+  carbs_grams: number | null; notes: string | null;
+  source: 'manual' | 'csv_import' | 'pump_sync' | 'demo_seed'; created_at: string;
+}
+interface PatientSettings {
+  dia_hours: number; isf_mmol: number | null; icr: number | null;
+  target_low_mmol: number; target_high_mmol: number;
+}
+interface IOBResult { totalIOB: number; byInsulin: Record<string, number>; byDose: Record<string, number>; }
+interface DecayCurvePoint { time: Date; iob: number; }
+interface StackedCurvePoint { time: Date; totalIOB: number; byInsulin: Record<string, number>; }
+interface StackingAlert { doseId: string; stackedOnDoseIds: string[]; totalIOBAtTime: number; severity: 'INFO' | 'WARNING' | 'CRITICAL'; message: string; }
+interface PredictiveAlert { type: 'low' | 'high'; timeToEvent: number; predictedBG: number; currentIOB: number; }
+
+export type { InsulinProfile, InsulinDose, PatientSettings, IOBResult, DecayCurvePoint, StackedCurvePoint, StackingAlert, PredictiveAlert };
 
 /**
  * Calculates IOB for a single dose at a specific time point.
