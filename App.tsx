@@ -119,6 +119,7 @@ const CGMLiveMonitorPage      = lazy(() => import("@/pages/CGMLiveMonitorPage"))
 const SocialSharePage         = lazy(() => import("@/pages/SocialSharePage"));
 const LaunchAnnouncementPage  = lazy(() => import("@/pages/LaunchAnnouncementPage"));
 
+const IOBHunterPage           = lazy(() => import("@/pages/IOBHunterPage"));
 const DemoDashboardPage       = lazy(() => import("@/pages/DemoDashboardPage"));
 const DevPanel                = lazy(() => import("@/pages/DevPanel"));
 const RegisterPage            = lazy(() => import("@/pages/RegisterPage"));
@@ -301,6 +302,8 @@ export default function App() {
               <Route path="/cgm-live"              element={<CGMLiveMonitorPage />} />
               <Route path="/share"                 element={<SocialSharePage />} />
               <Route path="/launch"                element={<LaunchAnnouncementPage />} />
+              {/* ─── IOB Hunter ─────────────────────────────────────────── */}
+              <Route path="/iob-hunter"            element={<IOBHunterPage />} />
               {/* ─── Existing ─────────────────────────────────────────── */}
               <Route path="/dev"                   element={<DevPanel />} />
               <Route path="/register"              element={<RegisterPage />} />
