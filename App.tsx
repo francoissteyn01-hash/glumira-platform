@@ -19,6 +19,8 @@ const AuthPage      = lazy(() => import("@/pages/RegisterPage"));
 const DashboardPage = lazy(() => import("@/pages/DashboardPage"));
 const AnalyticsDashboardPage = lazy(() => import("@/pages/AnalyticsDashboardPage"));
 const AlertHistoryPage = lazy(() => import("@/pages/AlertHistoryPage"));
+const SyncStatusPage = lazy(() => import("@/pages/SyncStatusPage"));
+const CompliancePage = lazy(() => import("@/pages/CompliancePage"));
 const WhatIfPage    = lazy(() => import("@/pages/WhatIfPage"));
 const EducationPage = lazy(() => import("@/pages/EducationPage"));
 const MiraPage      = lazy(() => import("@/pages/MiraPage"));
@@ -211,6 +213,8 @@ export default function App() {
               <Route path="/dashboard" element={<DashboardPage />} />
               <Route path="/dashboard/analytics" element={<AnalyticsDashboardPage />} />
               <Route path="/alerts/history" element={<AlertHistoryPage />} />
+              <Route path="/sync-status" element={<SyncStatusPage />} />
+              <Route path="/compliance" element={<CompliancePage />} />
               <Route path="/dashboard/what-if" element={<WhatIfPage />} />
               <Route path="/education" element={<EducationPage />} />
               <Route path="/education/:id" element={<EducationTopicPage />} />

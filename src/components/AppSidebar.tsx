@@ -30,6 +30,8 @@ const ICONS = {
   dashboard: "M3 3h7v9H3zM14 3h7v5h-7zM14 12h7v9h-7zM3 16h7v5H3z",
   analytics: "M3 3v18h18M7 14l4-4 4 4 5-5",
   alertHistory: "M12 8v4l3 3M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z",
+  syncStatus: "M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8M3 22v-6h6M21 2v6h-6",
+  compliance: "M9 12l2 2 4-4M12 2 4 5v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V5l-8-3z",
   logInsulin: "M12 2v6M12 22v-6M4.93 4.93l4.24 4.24M14.83 14.83l4.24 4.24M2 12h6M22 12h-6M4.93 19.07l4.24-4.24M14.83 9.17l4.24-4.24",
   logMeal: "M18 8h1a4 4 0 0 1 0 8h-1M3 8h14v10H3zM6 1v3M10 1v3M14 1v3",
   conditions: "M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zM12 6v6l4 2",
@@ -211,6 +213,8 @@ function DesktopSidebar({ collapsed, setCollapsed }: { collapsed: boolean; setCo
         {navItem("/dashboard", "Dashboard", ICONS.dashboard)}
         {navItem("/dashboard/analytics", "Analytics", ICONS.analytics)}
         {navItem("/alerts/history", "Alert History", ICONS.alertHistory)}
+        {navItem("/sync-status", "Sync Status", ICONS.syncStatus)}
+        {navItem("/compliance", "Compliance", ICONS.compliance)}
         {navItem("/insulin", "Log Insulin", ICONS.logInsulin)}
         {navItem("/log", "Log Meal", ICONS.logMeal)}
         {navItem("/conditions", "Log Conditions", ICONS.conditions)}

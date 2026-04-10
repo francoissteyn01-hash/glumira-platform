@@ -198,23 +198,33 @@ const HISTORY_ACTIONS = new Set(["alert.dismiss", "alert.snooze"]);
  * Convert audit_log rows into a typed alert history list, filtering only
  * the alert.* actions and parsing metadata into typed fields.
  *
- * The alert.id from the resource_id has the form `${type}:${bucketIso}`,
- * so we can recover the alert type without joining anything.
+ * NOTE: audit_log.resource_id is a uuid column and cannot hold our composite
+ * alertIds (`${type}:${bucketIso}`). The alertId is stored in
+ * `metadata.alertId` instead. This function reads from metadata first and
+ * only falls back to resource_id for legacy rows that may have predated the
+ * fix.
  */
 export function shapeHistory(rows: AuditLogRow[]): HistoryEntry[] {
+  const knownTypes: ReadonlySet<string> = new Set([
+    "hypo", "hyper", "stacking", "rising_fast", "falling_fast",
+  ]);
+
   return rows
     .filter((r) => HISTORY_ACTIONS.has(r.action))
     .map((r) => {
       const action: HistoryAction = r.action === "alert.snooze" ? "snooze" : "dismiss";
-      const rid = r.resource_id ?? "";
-      const colonIdx = rid.indexOf(":");
-      const typeRaw  = colonIdx > 0 ? rid.slice(0, colonIdx) : "unknown";
-      const knownTypes: ReadonlySet<string> = new Set([
-        "hypo", "hyper", "stacking", "rising_fast", "falling_fast",
-      ]);
+      const meta = r.metadata ?? {};
+
+      // Prefer metadata.alertId; fall back to resource_id for legacy rows.
+      const alertIdRaw =
+        (typeof meta.alertId === "string" && meta.alertId) ||
+        r.resource_id ||
+        "";
+
+      const colonIdx = alertIdRaw.indexOf(":");
+      const typeRaw  = colonIdx > 0 ? alertIdRaw.slice(0, colonIdx) : "unknown";
       const alertType = (knownTypes.has(typeRaw) ? typeRaw : "unknown") as HistoryEntry["alertType"];
 
-      const meta = r.metadata ?? {};
       const snoozedUntil =
         action === "snooze" && typeof meta.snoozedUntil === "string"
           ? (meta.snoozedUntil as string)
@@ -222,7 +232,7 @@ export function shapeHistory(rows: AuditLogRow[]): HistoryEntry[] {
 
       return {
         id: r.id,
-        alertId: rid,
+        alertId: alertIdRaw,
         action,
         alertType,
         recordedAt: r.created_at,

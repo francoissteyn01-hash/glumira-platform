@@ -88,10 +88,14 @@ alertsRouter.post("/dismiss", requireAuth, async (req: AuthRequest, res: Respons
   if (!parsed.success) return res.status(400).json({ error: "alertId required" });
 
   const userId = req.user!.id;
+  // NOTE: audit_log.resource_id is a uuid column, but our alertIds are
+  // composite strings (`${type}:${bucketIso}`). We store the alertId in
+  // metadata.alertId and leave resource_id null.
   await supabase.from("audit_log").insert({
-    user_id: userId, action: "alert.dismiss",
-    resource_type: "alert", resource_id: parsed.data.alertId,
-    metadata: { dismissedAt: new Date().toISOString() },
+    user_id: userId,
+    action: "alert.dismiss",
+    resource_type: "alert",
+    metadata: { alertId: parsed.data.alertId, dismissedAt: new Date().toISOString() },
   });
   return res.json({ ok: true });
 });
@@ -108,9 +112,14 @@ alertsRouter.put("/snooze", requireAuth, async (req: AuthRequest, res: Response)
 
   const userId = req.user!.id;
   await supabase.from("audit_log").insert({
-    user_id: userId, action: "alert.snooze",
-    resource_type: "alert", resource_id: parsed.data.alertId,
-    metadata: { snoozedUntil: parsed.data.untilIso, recordedAt: new Date().toISOString() },
+    user_id: userId,
+    action: "alert.snooze",
+    resource_type: "alert",
+    metadata: {
+      alertId: parsed.data.alertId,
+      snoozedUntil: parsed.data.untilIso,
+      recordedAt: new Date().toISOString(),
+    },
   });
   return res.json({ ok: true, snoozedUntil: parsed.data.untilIso });
 });
@@ -148,8 +157,9 @@ alertsRouter.get("/history", requireAuth, async (req: AuthRequest, res: Response
     .limit(limit);
 
   if (type) {
-    // resource_id is `${type}:${bucketIso}` so a prefix filter is enough
-    query = query.like("resource_id", `${type}:%`);
+    // metadata.alertId follows the `${type}:${bucketIso}` convention,
+    // so a prefix filter on the JSONB field recovers the right rows.
+    query = query.like("metadata->>alertId", `${type}:%`);
   }
 
   const { data: rows, error } = await query;

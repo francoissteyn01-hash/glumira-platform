@@ -171,13 +171,16 @@ describe("computeAlerts", () => {
 
 /* ─── shapeHistory ─────────────────────────────────────────────────────── */
 describe("shapeHistory", () => {
+  // Note: production rows store alertId in metadata.alertId, not resource_id
+  // (resource_id is a uuid column and can't hold composite alert IDs).
+  // The fallback to resource_id exists for legacy rows from before that fix.
   const baseRow = (over: Partial<AuditLogRow>): AuditLogRow => ({
     id: over.id ?? "row-" + Math.random().toString(36).slice(2, 8),
     user_id: "u1",
     action: "alert.dismiss",
     resource_type: "alert",
-    resource_id: "hypo:2026-04-10T12:00:00Z",
-    metadata: null,
+    resource_id: null,
+    metadata: { alertId: "hypo:2026-04-10T12:00:00Z" },
     created_at: "2026-04-10T12:01:00Z",
     ...over,
   });
@@ -192,19 +195,27 @@ describe("shapeHistory", () => {
     expect(out[0].action).toBe("dismiss");
   });
 
-  test("recovers alert type from resource_id prefix", () => {
+  test("recovers alert type from metadata.alertId prefix", () => {
     const out = shapeHistory([
-      baseRow({ resource_id: "hypo:t1" }),
-      baseRow({ resource_id: "stacking:t2" }),
-      baseRow({ resource_id: "rising_fast:t3" }),
+      baseRow({ metadata: { alertId: "hypo:t1" } }),
+      baseRow({ metadata: { alertId: "stacking:t2" } }),
+      baseRow({ metadata: { alertId: "rising_fast:t3" } }),
     ]);
     expect(out.map((e) => e.alertType)).toEqual(["hypo", "stacking", "rising_fast"]);
   });
 
-  test("falls back to 'unknown' for malformed resource_id", () => {
+  test("falls back to resource_id for legacy rows without metadata.alertId", () => {
     const out = shapeHistory([
-      baseRow({ resource_id: "weirdo" }),
-      baseRow({ resource_id: null }),
+      baseRow({ metadata: null, resource_id: "hyper:legacy1" }),
+    ]);
+    expect(out[0].alertType).toBe("hyper");
+    expect(out[0].alertId).toBe("hyper:legacy1");
+  });
+
+  test("falls back to 'unknown' for malformed alertId", () => {
+    const out = shapeHistory([
+      baseRow({ metadata: { alertId: "weirdo" } }),
+      baseRow({ metadata: null, resource_id: null }),
     ]);
     expect(out[0].alertType).toBe("unknown");
     expect(out[1].alertType).toBe("unknown");
@@ -214,7 +225,7 @@ describe("shapeHistory", () => {
     const out = shapeHistory([
       baseRow({
         action: "alert.snooze",
-        metadata: { snoozedUntil: "2026-04-10T13:00:00Z" },
+        metadata: { alertId: "hypo:t1", snoozedUntil: "2026-04-10T13:00:00Z" },
       }),
     ]);
     expect(out[0].action).toBe("snooze");
@@ -225,7 +236,7 @@ describe("shapeHistory", () => {
     const out = shapeHistory([
       baseRow({
         action: "alert.dismiss",
-        metadata: { snoozedUntil: "2026-04-10T13:00:00Z" },
+        metadata: { alertId: "hypo:t1", snoozedUntil: "2026-04-10T13:00:00Z" },
       }),
     ]);
     expect(out[0].action).toBe("dismiss");
@@ -240,8 +251,8 @@ describe("shapeHistory", () => {
     expect(out[0].recordedAt).toBe("2026-04-10T11:30:00Z");
   });
 
-  test("alertId mirrors resource_id verbatim", () => {
-    const out = shapeHistory([baseRow({ resource_id: "hyper:t9" })]);
+  test("alertId mirrors metadata.alertId verbatim", () => {
+    const out = shapeHistory([baseRow({ metadata: { alertId: "hyper:t9" } })]);
     expect(out[0].alertId).toBe("hyper:t9");
   });
 
