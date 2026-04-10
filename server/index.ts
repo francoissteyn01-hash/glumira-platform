@@ -14,6 +14,7 @@ import { supabase, db } from "./db";
 
 // ── REST route imports ────────────────────────────────────────────────────────
 import { analyticsRouter }        from "./routes/analytics.route";
+import { alertsRouter }           from "./routes/alerts.route";
 import { nightscoutRouter }       from "./routes/nightscout";
 import { mealsRouter }            from "./routes/meals";
 import { dosesRouter }            from "./routes/doses";
@@ -75,6 +76,7 @@ app.use("/trpc", createExpressMiddleware({ router: appRouter, createContext }));
 
 // ── REST routes ───────────────────────────────────────────────────────────────
 app.use("/api/analytics",     analyticsRouter);
+app.use("/api/alerts",        alertsRouter);
 app.use("/api/nightscout",    nightscoutRouter);
 app.use("/api/meals",         mealsRouter);
 app.use("/api/doses",         dosesRouter);

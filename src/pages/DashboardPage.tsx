@@ -11,12 +11,11 @@ import { DISCLAIMER } from "@/lib/constants";
 import StackingCurve, { type StackingPoint } from "@/components/charts/StackingCurve";
 import GlucoseOverlay, { type GlucosePoint } from "@/components/charts/GlucoseOverlay";
 import InsulinActivityCurve, { type DoseCurve } from "@/components/charts/InsulinActivityCurve";
-import BasalHeatmap from "@/components/charts/BasalHeatmap";
 import ActiveInsulinCard, { type PressureClass } from "@/components/widgets/ActiveInsulinCard";
 import HiddenIOBWidget from "@/components/widgets/HiddenIOBWidget";
 import UnitToggle from "@/components/UnitToggle";
 import { useGlucoseUnits } from "@/context/GlucoseUnitsContext";
-import { formatGlucose as fmtGlucose, getUnitLabel } from "@/utils/glucose-units";
+import { formatGlucose as fmtGlucose } from "@/utils/glucose-units";
 import EmotionalDistressTracker from "@/components/EmotionalDistressTracker";
 import ExportReportButton from "@/components/ExportReportButton";
 import PatternHighlights from "@/components/widgets/PatternHighlights";
@@ -25,6 +24,7 @@ import RiskWindowCard from "@/components/widgets/RiskWindowCard";
 import SensorConfidenceCard from "@/components/widgets/SensorConfidenceCard";
 import TimeInRangeDonut from "@/components/widgets/TimeInRangeDonut";
 import EventLogTable from "@/components/widgets/EventLogTable";
+import AlertNotificationCenter from "@/components/widgets/AlertNotificationCenter";
 import PresentationToggle from "@/components/PresentationMode";
 import ShareButton from "@/components/ShareButton";
 import ThemeToggle from "@/components/ThemeToggle";
@@ -33,8 +33,8 @@ import QuickActions from "@/components/widgets/QuickActions";
 
 /* ─── Types ───────────────────────────────────────────────────────────────── */
 
-interface IOBResult { totalIOB: number; eventCount: number }
-interface GlucoseReading { glucose: number; time: string; trend: string }
+type IOBResult = { totalIOB: number; eventCount: number }
+type GlucoseReading = { glucose: number; time: string; trend: string }
 
 const ARROWS: Record<string, string> = {
   DoubleUp: "\u21C8", SingleUp: "\u2191", FortyFiveUp: "\u2197",
@@ -90,7 +90,15 @@ export default function DashboardPage() {
 
   // Condition events for timeline markers
   const [conditionEvents, setConditionEvents] = useState<{ event_time: string; event_type: string; intensity: string | null }[]>([]);
-  const [detectedPatterns, setDetectedPatterns] = useState<any[]>([]);
+  type DetectedPattern = {
+    id: string;
+    category: string;
+    type: string;
+    confidence: "high" | "moderate" | "low";
+    observation: string;
+    suggestion: string;
+  };
+  const [detectedPatterns, setDetectedPatterns] = useState<DetectedPattern[]>([]);
 
   // Glucose / Nightscout state
   const [readings, setReadings] = useState<GlucoseReading[]>([]);
@@ -136,7 +144,8 @@ export default function DashboardPage() {
 
         // Build DoseCurve[] per event
         const BASAL_TYPES = new Set(["levemir", "lantus", "basaglar", "toujeo", "tresiba", "nph"]);
-        const curves: DoseCurve[] = events.map((ev: any) => {
+        type InsulinEventLite = { id: string; event_time: string; dose_units: number; insulin_type: string };
+        const curves: DoseCurve[] = (events as InsulinEventLite[]).map((ev) => {
           const isBasal = BASAL_TYPES.has(ev.insulin_type);
           const time = new Date(ev.event_time);
           const label = `${time.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })} ${ev.insulin_type} ${Number(ev.dose_units).toFixed(1)}U`;
@@ -152,10 +161,9 @@ export default function DashboardPage() {
         setActivityCurves(curves);
 
         // Compute quiet tail: IOB from events > 12h ago
-        const twelveHoursAgo = Date.now() - 12 * 60 * 60_000;
         let tail = 0;
         // Approximate: events from yesterday contribute quiet tail
-        for (const ev of events) {
+        for (const ev of events as InsulinEventLite[]) {
           const elapsed = (Date.now() - new Date(ev.event_time).getTime()) / 60_000;
           if (elapsed > 720) { // > 12h
             tail += Number(ev.dose_units) * Math.exp(-Math.LN2 / 720 * elapsed);
@@ -202,13 +210,15 @@ export default function DashboardPage() {
       const data = await res.json();
       setReadings(data.readings ?? []);
       setError(null);
-    } catch (e: any) {
-      setError(e.message);
+    } catch (e) {
+      setError((e as Error).message);
     } finally {
       setSyncing(false);
     }
   }
 
+  // Run once on mount to auto-sync if a Nightscout URL is already saved.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { if (nsUrl) syncNS(); }, []);
 
   /* ─── Derived state ─────────────────────────────────────────────────── */
@@ -220,10 +230,6 @@ export default function DashboardPage() {
     time: r.time,
     value: r.glucose,
   }));
-
-  const tirPercent = readings.length > 0
-    ? Math.round((readings.filter((r) => r.glucose >= 3.9 && r.glucose <= 10).length / readings.length) * 100)
-    : null;
 
   /* ─── Render ────────────────────────────────────────────────────────── */
   return (
@@ -307,6 +313,9 @@ export default function DashboardPage() {
 
           {/* Hidden IOB */}
           <HiddenIOBWidget quietTailIOB={quietTail} />
+
+          {/* Alert Notification Center (live, polled) */}
+          <AlertNotificationCenter />
         </div>
 
         {/* ── IOB Stacking Curve ────────────────────────────────────────── */}
