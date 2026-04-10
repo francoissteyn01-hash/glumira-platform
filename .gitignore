@@ -28,3 +28,10 @@ drizzle/meta/
 
 # Coverage
 coverage/
+
+# Claude Code local config (per-user, not for sharing)
+.claude/
+CLAUDE.local.md
+
+# Auto-ship tooling
+auto-ship.py
