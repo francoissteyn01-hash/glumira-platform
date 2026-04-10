@@ -29,6 +29,7 @@ const ICONS = {
   insulin: "M19 3l-2 2M17 5l-8.5 8.5M7 14l-2.5 2.5M4.5 16.5L3 21l4.5-1.5M14 5.5l4.5 4.5M9 11l4.5 4.5",
   dashboard: "M3 3h7v9H3zM14 3h7v5h-7zM14 12h7v9h-7zM3 16h7v5H3z",
   analytics: "M3 3v18h18M7 14l4-4 4 4 5-5",
+  alertHistory: "M12 8v4l3 3M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z",
   logInsulin: "M12 2v6M12 22v-6M4.93 4.93l4.24 4.24M14.83 14.83l4.24 4.24M2 12h6M22 12h-6M4.93 19.07l4.24-4.24M14.83 9.17l4.24-4.24",
   logMeal: "M18 8h1a4 4 0 0 1 0 8h-1M3 8h14v10H3zM6 1v3M10 1v3M14 1v3",
   conditions: "M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zM12 6v6l4 2",
@@ -209,6 +210,7 @@ function DesktopSidebar({ collapsed, setCollapsed }: { collapsed: boolean; setCo
         {!collapsed && <div style={sectionLabelStyle}>Insulin &amp; Logging</div>}
         {navItem("/dashboard", "Dashboard", ICONS.dashboard)}
         {navItem("/dashboard/analytics", "Analytics", ICONS.analytics)}
+        {navItem("/alerts/history", "Alert History", ICONS.alertHistory)}
         {navItem("/insulin", "Log Insulin", ICONS.logInsulin)}
         {navItem("/log", "Log Meal", ICONS.logMeal)}
         {navItem("/conditions", "Log Conditions", ICONS.conditions)}

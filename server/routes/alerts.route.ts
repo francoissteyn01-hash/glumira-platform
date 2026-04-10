@@ -29,38 +29,23 @@ import { Router, type Response } from "express";
 import { z } from "zod";
 import { requireAuth, type AuthRequest } from "../middleware/auth";
 import { supabase } from "../index";
+import {
+  computeAlerts,
+  shapeHistory,
+  STACKING_LOOKBACK_HOURS,
+  type AuditLogRow,
+  type GlucoseReading,
+  type InsulinDose,
+} from "../analytics/alerts-engine";
 
 export const alertsRouter = Router();
 
-type Severity = "info" | "warning" | "critical";
-
-type ActiveAlert = {
-  id:        string;     // stable hash of type + bucket time
-  type:      "hypo" | "hyper" | "stacking" | "rising_fast" | "falling_fast";
-  severity:  Severity;
-  title:     string;
-  body:      string;
-  triggeredAt: string;   // ISO
-  metadata?: Record<string, unknown>;
-}
-
-const HYPO_THRESHOLD     = 3.9;
-const HYPER_THRESHOLD    = 13.9;
-const RECENT_WINDOW_MIN  = 30;
-const FAST_TREND_WINDOW  = 15;
-const FAST_TREND_DELTA   = 2.2;
-const STACKING_THRESHOLD = 3;
-const STACKING_LOOKBACK_HOURS = 6;
-
-function alertId(type: string, bucketIso: string): string {
-  return `${type}:${bucketIso}`;
-}
+const RECENT_WINDOW_MIN = 30;
 
 // ── GET /api/alerts ──────────────────────────────────────────────────────────
 alertsRouter.get("/", requireAuth, async (req: AuthRequest, res: Response) => {
   const userId = req.user!.id;
-  const sinceMs = Date.now() - RECENT_WINDOW_MIN * 60_000;
-  const since   = new Date(sinceMs).toISOString();
+  const since = new Date(Date.now() - RECENT_WINDOW_MIN * 60_000).toISOString();
 
   const [{ data: gRows, error: gErr }, { data: iRows, error: iErr }] = await Promise.all([
     supabase.from("glucose_readings")
@@ -82,62 +67,16 @@ alertsRouter.get("/", requireAuth, async (req: AuthRequest, res: Response) => {
     return res.status(500).json({ error: "Database error" });
   }
 
-  const readings = (gRows ?? []).map((r) => ({ value: Number(r.value_mmol), at: r.recorded_at as string }));
-  const doses    = (iRows ?? []).map((d) => ({ units: Number(d.dose_units),  at: d.event_time   as string }));
-  const alerts: ActiveAlert[] = [];
-  const latest = readings[0];
+  const readings: GlucoseReading[] = (gRows ?? []).map((r) => ({
+    value: Number(r.value_mmol),
+    at:    r.recorded_at as string,
+  }));
+  const doses: InsulinDose[] = (iRows ?? []).map((d) => ({
+    units: Number(d.dose_units),
+    at:    d.event_time as string,
+  }));
 
-  if (latest && latest.value < HYPO_THRESHOLD) {
-    alerts.push({
-      id: alertId("hypo", latest.at), type: "hypo", severity: "critical",
-      title: "Low glucose detected",
-      body:  `${latest.value.toFixed(1)} mmol/L — confirm and treat per your hypo plan.`,
-      triggeredAt: latest.at, metadata: { value: latest.value },
-    });
-  }
-  if (latest && latest.value > HYPER_THRESHOLD) {
-    alerts.push({
-      id: alertId("hyper", latest.at), type: "hyper", severity: "warning",
-      title: "High glucose detected",
-      body:  `${latest.value.toFixed(1)} mmol/L — review with your care team.`,
-      triggeredAt: latest.at, metadata: { value: latest.value },
-    });
-  }
-
-  // Fast trend: compare latest to a reading ~FAST_TREND_WINDOW ago
-  if (readings.length >= 2) {
-    const target = Date.now() - FAST_TREND_WINDOW * 60_000;
-    const earlier = readings.find((r) => new Date(r.at).getTime() <= target) ?? readings[readings.length - 1];
-    const delta = latest.value - earlier.value;
-    if (delta >= FAST_TREND_DELTA) {
-      alerts.push({
-        id: alertId("rising_fast", latest.at), type: "rising_fast", severity: "warning",
-        title: "Glucose rising fast",
-        body:  `+${delta.toFixed(1)} mmol/L in the last ${FAST_TREND_WINDOW} min.`,
-        triggeredAt: latest.at, metadata: { delta, windowMin: FAST_TREND_WINDOW },
-      });
-    } else if (delta <= -FAST_TREND_DELTA) {
-      alerts.push({
-        id: alertId("falling_fast", latest.at), type: "falling_fast", severity: "warning",
-        title: "Glucose falling fast",
-        body:  `${delta.toFixed(1)} mmol/L in the last ${FAST_TREND_WINDOW} min.`,
-        triggeredAt: latest.at, metadata: { delta, windowMin: FAST_TREND_WINDOW },
-      });
-    }
-  }
-
-  // Stacking: count distinct doses still likely on board (simple proxy)
-  const stackCount = doses.length;
-  if (stackCount >= STACKING_THRESHOLD) {
-    const bucket = doses[0]?.at ?? new Date().toISOString();
-    alerts.push({
-      id: alertId("stacking", bucket), type: "stacking", severity: "warning",
-      title: "Insulin stacking detected",
-      body:  `${stackCount} doses in the last ${STACKING_LOOKBACK_HOURS}h — IOB tails may overlap.`,
-      triggeredAt: bucket, metadata: { count: stackCount, hours: STACKING_LOOKBACK_HOURS },
-    });
-  }
-
+  const alerts = computeAlerts(readings, doses);
   return res.json({ ok: true, alerts, computedAt: new Date().toISOString() });
 });
 
@@ -174,4 +113,56 @@ alertsRouter.put("/snooze", requireAuth, async (req: AuthRequest, res: Response)
     metadata: { snoozedUntil: parsed.data.untilIso, recordedAt: new Date().toISOString() },
   });
   return res.json({ ok: true, snoozedUntil: parsed.data.untilIso });
+});
+
+// ── GET /api/alerts/history ──────────────────────────────────────────────────
+//
+// Returns a paged list of past dismiss/snooze actions for the current user,
+// sourced from the audit_log table. Used by the AlertHistoryPage to show
+// users what they have hidden and when.
+//
+// Query params:
+//   limit  — 1..200, default 50
+//   action — "dismiss" | "snooze" (optional filter)
+//   type   — "hypo" | "hyper" | "stacking" | "rising_fast" | "falling_fast" (optional)
+
+const HistoryQuery = z.object({
+  limit:  z.coerce.number().int().min(1).max(200).default(50),
+  action: z.enum(["dismiss", "snooze"]).optional(),
+  type:   z.enum(["hypo", "hyper", "stacking", "rising_fast", "falling_fast"]).optional(),
+});
+
+alertsRouter.get("/history", requireAuth, async (req: AuthRequest, res: Response) => {
+  const parsed = HistoryQuery.safeParse(req.query);
+  if (!parsed.success) {
+    return res.status(400).json({ error: "Invalid query", details: parsed.error.flatten().fieldErrors });
+  }
+  const { limit, action, type } = parsed.data;
+  const userId = req.user!.id;
+
+  let query = supabase.from("audit_log")
+    .select("id, user_id, action, resource_type, resource_id, metadata, created_at")
+    .eq("user_id", userId)
+    .in("action", action ? [`alert.${action}`] : ["alert.dismiss", "alert.snooze"])
+    .order("created_at", { ascending: false })
+    .limit(limit);
+
+  if (type) {
+    // resource_id is `${type}:${bucketIso}` so a prefix filter is enough
+    query = query.like("resource_id", `${type}:%`);
+  }
+
+  const { data: rows, error } = await query;
+  if (error) {
+    console.error("[alerts/history] db error:", error.message);
+    return res.status(500).json({ error: "Database error" });
+  }
+
+  const entries = shapeHistory((rows ?? []) as AuditLogRow[]);
+  return res.json({
+    ok: true,
+    entries,
+    total: entries.length,
+    appliedFilters: { action: action ?? null, type: type ?? null, limit },
+  });
 });
