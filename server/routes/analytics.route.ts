@@ -21,6 +21,20 @@ import { requireAuth, type AuthRequest } from "../middleware/auth";
 import { supabase } from "../index";
 import { computeAnalyticsSummary } from "../analytics/analytics-summary";
 import type { GlucosePoint } from "../analytics/glucose-trend";
+import {
+  computeInsulinSensitivity,
+  type InsulinEvent,
+  type GlucosePoint as SensitivityGlucosePoint,
+} from "../analytics/insulin-sensitivity";
+import {
+  computeCarbRatio,
+  type MealBolus,
+  type GlucosePoint as CarbRatioGlucosePoint,
+} from "../analytics/carb-ratio";
+import {
+  computeBasalEvaluation,
+  type GlucosePoint as BasalGlucosePoint,
+} from "../analytics/basal-evaluation";
 
 // ── Regime comparison import ─────────────────────────────────────────────────
 // NOTE: regime-comparison.ts is a module dependency.
@@ -199,5 +213,169 @@ analyticsRouter.post(
       ...(result as object),
       disclaimer: "GluMira™ is an educational platform, not a medical device.",
     });
+  }
+);
+
+// ── GET /api/analytics/insulin-sensitivity ───────────────────────────────────
+//
+// Returns per-hour ISF estimates (mmol/L per unit) for the authenticated user.
+// See server/analytics/insulin-sensitivity.ts for the algorithm.
+
+analyticsRouter.get(
+  "/insulin-sensitivity",
+  requireAuth,
+  async (req: AuthRequest, res: Response) => {
+    const userId = req.user!.id;
+    const daysParam = parseInt(req.query.days as string, 10);
+    const windowDays = Number.isFinite(daysParam) && daysParam > 0 && daysParam <= 60 ? daysParam : 14;
+
+    const cutoff = new Date(Date.now() - windowDays * 24 * 60 * 60 * 1000).toISOString();
+
+    const { data: events, error: evErr } = await supabase
+      .from("insulin_events")
+      .select("event_time, event_type, is_correction, dose_units")
+      .eq("user_id", userId)
+      .gte("event_time", cutoff)
+      .order("event_time", { ascending: true });
+
+    if (evErr) {
+      console.error("[analytics/insulin-sensitivity] insulin_events error:", evErr.message);
+      return res.status(500).json({ error: "Database error (insulin_events)" });
+    }
+
+    const { data: rows, error: gErr } = await supabase
+      .from("glucose_readings")
+      .select("value_mmol, recorded_at")
+      .eq("patient_id", userId)
+      .gte("recorded_at", cutoff)
+      .order("recorded_at", { ascending: true });
+
+    if (gErr) {
+      console.error("[analytics/insulin-sensitivity] glucose_readings error:", gErr.message);
+      return res.status(500).json({ error: "Database error (glucose_readings)" });
+    }
+
+    const insulinEvents: InsulinEvent[] = (events ?? []).map((e) => ({
+      event_time:    e.event_time as string,
+      event_type:    e.event_type as string,
+      is_correction: e.is_correction as boolean | null,
+      dose_units:    Number(e.dose_units),
+    }));
+
+    const readings: SensitivityGlucosePoint[] = (rows ?? []).map((r) => ({
+      value_mmol:  Number(r.value_mmol),
+      recorded_at: r.recorded_at as string,
+    }));
+
+    const result = computeInsulinSensitivity(insulinEvents, readings, windowDays);
+    return res.json({ ok: true, ...result });
+  }
+);
+
+// ── GET /api/analytics/carb-ratio ────────────────────────────────────────────
+//
+// Returns effective carb-ratio analysis for the authenticated user, comparing
+// configured ICR (from patient_profiles) against observed post-meal excursion.
+// See server/analytics/carb-ratio.ts for the algorithm.
+
+analyticsRouter.get(
+  "/carb-ratio",
+  requireAuth,
+  async (req: AuthRequest, res: Response) => {
+    const userId = req.user!.id;
+    const daysParam = parseInt(req.query.days as string, 10);
+    const windowDays = Number.isFinite(daysParam) && daysParam > 0 && daysParam <= 60 ? daysParam : 14;
+
+    const cutoff = new Date(Date.now() - windowDays * 24 * 60 * 60 * 1000).toISOString();
+
+    const { data: profile } = await supabase
+      .from("patient_profiles")
+      .select("icr")
+      .eq("user_id", userId)
+      .maybeSingle();
+
+    const configuredIcr =
+      profile && profile.icr != null && Number.isFinite(Number(profile.icr))
+        ? Number(profile.icr)
+        : null;
+
+    const { data: mealRows, error: mealErr } = await supabase
+      .from("meal_log")
+      .select("meal_time, event_type, units, carbs_g")
+      .eq("user_id", userId)
+      .eq("event_type", "meal_bolus")
+      .gte("meal_time", cutoff)
+      .order("meal_time", { ascending: true });
+
+    if (mealErr) {
+      console.error("[analytics/carb-ratio] meal_log error:", mealErr.message);
+      return res.status(500).json({ error: "Database error (meal_log)" });
+    }
+
+    const { data: gRows, error: gErr } = await supabase
+      .from("glucose_readings")
+      .select("value_mmol, recorded_at")
+      .eq("patient_id", userId)
+      .gte("recorded_at", cutoff)
+      .order("recorded_at", { ascending: true });
+
+    if (gErr) {
+      console.error("[analytics/carb-ratio] glucose_readings error:", gErr.message);
+      return res.status(500).json({ error: "Database error (glucose_readings)" });
+    }
+
+    const meals: MealBolus[] = (mealRows ?? [])
+      .filter((m) => m.units != null && m.carbs_g != null)
+      .map((m) => ({
+        meal_time: m.meal_time as string,
+        units:     Number(m.units),
+        carbs_g:   Number(m.carbs_g),
+      }));
+
+    const readings: CarbRatioGlucosePoint[] = (gRows ?? []).map((r) => ({
+      value_mmol:  Number(r.value_mmol),
+      recorded_at: r.recorded_at as string,
+    }));
+
+    const result = computeCarbRatio(meals, readings, windowDays, configuredIcr);
+    return res.json({ ok: true, ...result });
+  }
+);
+
+// ── GET /api/analytics/basal-evaluation ──────────────────────────────────────
+//
+// Scores overnight basal stability (0–10) by examining glucose readings during
+// the 02:00–06:00 fasting window across the last N nights.
+// See server/analytics/basal-evaluation.ts for the algorithm.
+
+analyticsRouter.get(
+  "/basal-evaluation",
+  requireAuth,
+  async (req: AuthRequest, res: Response) => {
+    const userId = req.user!.id;
+    const daysParam = parseInt(req.query.days as string, 10);
+    const windowDays = Number.isFinite(daysParam) && daysParam > 0 && daysParam <= 60 ? daysParam : 14;
+
+    const cutoff = new Date(Date.now() - windowDays * 24 * 60 * 60 * 1000).toISOString();
+
+    const { data: rows, error: gErr } = await supabase
+      .from("glucose_readings")
+      .select("value_mmol, recorded_at")
+      .eq("patient_id", userId)
+      .gte("recorded_at", cutoff)
+      .order("recorded_at", { ascending: true });
+
+    if (gErr) {
+      console.error("[analytics/basal-evaluation] glucose_readings error:", gErr.message);
+      return res.status(500).json({ error: "Database error (glucose_readings)" });
+    }
+
+    const readings: BasalGlucosePoint[] = (rows ?? []).map((r) => ({
+      value_mmol:  Number(r.value_mmol),
+      recorded_at: r.recorded_at as string,
+    }));
+
+    const result = computeBasalEvaluation(readings, windowDays);
+    return res.json({ ok: true, ...result });
   }
 );

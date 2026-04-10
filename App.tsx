@@ -4,7 +4,7 @@
  * Landing page at /, dark navbar for authenticated pages, light navbar for public pages.
  */
 
-import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { GlucoseUnitsProvider } from "@/context/GlucoseUnitsContext";
@@ -17,6 +17,7 @@ import { useSessionTimeout, SessionWarningModal } from "@/hooks/useSessionTimeou
 const LandingPage   = lazy(() => import("@/pages/LandingPage"));
 const AuthPage      = lazy(() => import("@/pages/RegisterPage"));
 const DashboardPage = lazy(() => import("@/pages/DashboardPage"));
+const AnalyticsDashboardPage = lazy(() => import("@/pages/AnalyticsDashboardPage"));
 const WhatIfPage    = lazy(() => import("@/pages/WhatIfPage"));
 const EducationPage = lazy(() => import("@/pages/EducationPage"));
 const MiraPage      = lazy(() => import("@/pages/MiraPage"));
@@ -207,6 +208,7 @@ export default function App() {
               <Route path="/demo"      element={<DemoDashboardPage />} />
               {/* Dev phase: all routes bypass auth */}
               <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/dashboard/analytics" element={<AnalyticsDashboardPage />} />
               <Route path="/dashboard/what-if" element={<WhatIfPage />} />
               <Route path="/education" element={<EducationPage />} />
               <Route path="/education/:id" element={<EducationTopicPage />} />
