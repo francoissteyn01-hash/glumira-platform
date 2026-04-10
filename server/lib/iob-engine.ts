@@ -31,7 +31,7 @@ export type { InsulinProfile, InsulinDose, PatientSettings, IOBResult, DecayCurv
  */
 export function calculateIOB(dose: InsulinDose, profile: InsulinProfile, minutesSinceDose: number): number {
   const { decay_model, decay_parameters, duration_minutes } = profile;
-  if (minutesSinceDose > duration_minutes || !profile.is_active) return 0;
+  if (minutesSinceDose >= duration_minutes || !profile.is_active) return 0;
 
   switch (decay_model) {
     case 'exponential': {

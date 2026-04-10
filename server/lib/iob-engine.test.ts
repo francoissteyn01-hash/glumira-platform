@@ -1,4 +1,5 @@
 // iob-engine.test.ts
+import { describe, test, expect } from 'vitest';
 import { calculateIOB, detectStacking, predictiveLowAlert, generateDecayCurve, InsulinProfile, InsulinDose, StackedCurvePoint } from './iob-engine';
 
 // Mock data
