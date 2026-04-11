@@ -16,6 +16,7 @@ import { useSessionTimeout, SessionWarningModal } from "@/hooks/useSessionTimeou
 /* ─── Lazy pages ─────────────────────────────────────────────────────────── */
 const LandingPage   = lazy(() => import("@/pages/LandingPage"));
 const AuthPage      = lazy(() => import("@/pages/RegisterPage"));
+const AuthCallbackPage = lazy(() => import("@/pages/AuthCallbackPage"));
 const DashboardPage = lazy(() => import("@/pages/DashboardPage"));
 const AnalyticsDashboardPage = lazy(() => import("@/pages/AnalyticsDashboardPage"));
 const AlertHistoryPage = lazy(() => import("@/pages/AlertHistoryPage"));
@@ -206,7 +207,7 @@ export default function App() {
             <Routes>
               <Route path="/"          element={<HomeRoute />} />
               <Route path="/auth"      element={<AuthPage />} />
-              <Route path="/auth/callback" element={<Navigate to="/dashboard" replace />} />
+              <Route path="/auth/callback" element={<AuthCallbackPage />} />
               {/* Public routes — no auth required */}
               <Route path="/demo"      element={<DemoDashboardPage />} />
               {/* Dev phase: all routes bypass auth */}
