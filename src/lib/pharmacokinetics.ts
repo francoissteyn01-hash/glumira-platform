@@ -353,7 +353,11 @@ export function buildTerrainTimeline(
     let basalIOB = 0;
     let bolusIOB = 0;
 
-    for (let cycle = 0; cycle < safeCycles; cycle++) {
+    // Iterate from cycle=-1 (yesterday) so prior-day Levemir/Tresiba tail
+    // is part of Day 1 from minute=0 — enforces the "NEVER start at 0 IOB"
+    // rule from the Three Owls system prompt. Without this, IOBTerrainChart
+    // showed a flat baseline at midnight that should have had a tail.
+    for (let cycle = -1; cycle < safeCycles; cycle++) {
       const offset = cycle * 1440;
       for (const e of basalEntries) {
         const [h, m] = e.time.split(":").map(Number);

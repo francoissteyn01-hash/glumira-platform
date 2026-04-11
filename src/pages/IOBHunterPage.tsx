@@ -1,108 +1,146 @@
 /**
- * GluMira™ V7 — IOB Hunter Page (v7 shell)
+ * GluMira™ V7 — IOB Hunter Page (v7 + observatory visualization)
  *
- * Thin shell that wires the new `src/iob-hunter/` module together:
- *   VisitorEntry → Chart → What-If → Report → TierGate
+ * Wires the rich `IOBTerrainChart` (Master Chart Component, 690 lines —
+ * pressure-band shading, per-insulin stacked layers, danger-window
+ * brackets, abbreviated dose markers, current-time marker, dynamic
+ * subtitle, individual-curves view tab, Clinical/Kids/Mountains toggle,
+ * density bar, 60-second insight panel, what-if panel) into the v7
+ * IOB Hunter route.
  *
- * Replaces the legacy Recharts IOBMountainGraph + InsulinDensityHeatmap
- * + PatientHeader + anoukData layout. All of those files are removed
- * in the same commit as this rewrite.
+ * The legacy `IOBTerrainChart` consumes `BasalEntry[]` + `BolusEntry[]`
+ * with `pharmacology: InsulinPharmacology` from `@/lib/pharmacokinetics`.
+ * The v7 module uses `InsulinDose[]` with `insulin_name` brand-name
+ * strings + a separate profile lookup. The adapter below converts
+ * v7 → legacy by mapping canonical brand names to legacy profile keys.
  *
- * The owner's priority order from 2026-04-11: correct functionality
- * and feedback FIRST, then the nice graphic, then characters. This
- * page is a functional assembly — visual polish iterates separately
- * via P3 after it ships.
+ * Observatory design profile per `10_Visual-Design-Philosophy.txt`:
+ * deep navy night sky, steel-blue → teal gradient body, amber as the
+ * singular warm accent. The traffic-light palette from my earlier
+ * IOBHunterChart.tsx is withdrawn — IOBTerrainChart already uses the
+ * correct observatory tokens.
  *
  * GluMira™ is an educational platform, not a medical device.
  */
 
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { DISCLAIMER } from "@/lib/constants";
+import IOBTerrainChart from "@/components/charts/IOBTerrainChart";
+import {
+  INSULIN_PROFILES as LEGACY_INSULIN_PROFILES,
+  type InsulinPharmacology,
+} from "@/lib/pharmacokinetics";
 import {
   DEMO_PATIENT_A_V7,
-  INSULIN_PROFILES,
-  IOBHunterChart,
   IOBHunterReport,
   IOBHunterTierGate,
   IOBHunterVisitorEntry,
-  IOBHunterWhatIf,
+  INSULIN_PROFILES as V7_INSULIN_PROFILES,
   getDemoPatientADoses,
   useIOBHunter,
 } from "@/iob-hunter";
-import type {
-  InsulinDose,
-  Tier,
-  WhatIfResult,
-  WhatIfScenario,
-} from "@/iob-hunter";
+import type { InsulinDose } from "@/iob-hunter";
 
-/* ─── Tier detection ─────────────────────────────────────────────────── */
-/*
- * For v7 slice 2.7 we treat anyone signed in as "pro" (30 days, 5 what-if
- * scenarios). Anonymous visitors are "free" (1 what-if, no save). The
- * clinical/enterprise tiers will be wired through Supabase in slice 2.2
- * (schema + data) which is a follow-up commit.
- */
-function deriveTier(isAuthenticated: boolean): Tier {
-  return isAuthenticated ? "pro" : "free";
+/* ─── v7 brand_name → legacy profile key map ──────────────────────── */
+const V7_NAME_TO_LEGACY_KEY: Record<string, string> = {
+  "Actrapid":  "regular",
+  "Apidra":    "glulisine",
+  "Basaglar":  "glargine_u100",
+  "Fiasp":     "fiasp",
+  "Humalog":   "lispro",
+  "Humulin N": "nph",
+  "Insulatard": "nph",
+  "Lantus":    "glargine_u100",
+  "Levemir":   "detemir",
+  "Lyumjev":   "lyumjev",
+  "NovoRapid": "aspart",
+  "Toujeo":    "glargine_u300",
+  "Tresiba":   "degludec",
+};
+
+/* ─── Adapter: v7 InsulinDose[] → legacy basal/bolus entries ──────── */
+
+type LegacyBasalEntry = {
+  insulinName: string;
+  dose: number;
+  time: string;
+  pharmacology: InsulinPharmacology;
 }
 
-/* ─── Tier gate state ────────────────────────────────────────────────── */
+type LegacyBolusEntry = {
+  mealType?: string;
+} & LegacyBasalEntry
+
+function v7ToLegacyEntries(doses: InsulinDose[]): {
+  basal: LegacyBasalEntry[];
+  bolus: LegacyBolusEntry[];
+} {
+  const basal: LegacyBasalEntry[] = [];
+  const bolus: LegacyBolusEntry[] = [];
+
+  for (const d of doses) {
+    const legacyKey = V7_NAME_TO_LEGACY_KEY[d.insulin_name];
+    if (!legacyKey) continue;
+    const pharmacology = (LEGACY_INSULIN_PROFILES as Record<string, InsulinPharmacology>)[legacyKey];
+    if (!pharmacology) continue;
+
+    // administered_at is "HH:mm" for v7 demo data
+    const time = /^\d{2}:\d{2}$/.test(d.administered_at)
+      ? d.administered_at
+      : new Date(d.administered_at)
+          .toTimeString()
+          .slice(0, 5);
+
+    const entry: LegacyBasalEntry = {
+      insulinName: d.insulin_name,
+      dose: d.dose_units,
+      time,
+      pharmacology,
+    };
+
+    if (d.dose_type === "basal_injection") {
+      basal.push(entry);
+    } else {
+      bolus.push({ ...entry, mealType: undefined });
+    }
+  }
+  return { basal, bolus };
+}
+
+/* ─── Tier detection ──────────────────────────────────────────────── */
 type TierGateFeature = React.ComponentProps<typeof IOBHunterTierGate>["feature"];
 
 export default function IOBHunterPage() {
   const { session } = useAuth();
   const isAuthenticated = session != null;
-  const tier = deriveTier(isAuthenticated);
 
-  /* ─── Active dose list ─────────────────────────────────────────── */
-  // Visitors start with the demo regimen. Authenticated users will have
-  // their real regimen piped through in slice 2.2 — for now we fall back
-  // to the demo data so the page always shows a working curve.
+  /* ─── Active dose list (v7 shape, used by report + adapter) ─── */
   const [activeDoses, setActiveDoses] = useState<InsulinDose[]>(() =>
     getDemoPatientADoses(),
   );
 
-  /* ─── What-if overlay (optional green dashed line) ─────────────── */
-  const [whatIfResult, setWhatIfResult] = useState<WhatIfResult | null>(null);
-
-  /* ─── Tier gate overlay ────────────────────────────────────────── */
+  /* ─── Tier gate overlay state ────────────────────────────────── */
   const [gateFeature, setGateFeature] = useState<TierGateFeature | null>(null);
 
-  /* ─── Engine hook — feeds the chart + report ───────────────────── */
-  const { curve, kpis, markers, stackingAlerts, basalAnalysis, maxIOB } =
-    useIOBHunter(activeDoses);
+  /* ─── v7 engine drives the report (KPIs, basal, stacking) ───── */
+  const { kpis, stackingAlerts, basalAnalysis } = useIOBHunter(activeDoses);
 
-  /* ─── Handlers ─────────────────────────────────────────────────── */
+  /* ─── Legacy adapter for IOBTerrainChart ─────────────────────── */
+  const legacyEntries = useMemo(() => v7ToLegacyEntries(activeDoses), [activeDoses]);
 
-  const handleVisitorDosesChange = useCallback((doses: InsulinDose[]) => {
-    setActiveDoses(doses);
-    setWhatIfResult(null); // reset any what-if overlay when the base data changes
-  }, []);
-
-  const handleWorkingDosesChange = useCallback(
-    (doses: InsulinDose[], result: WhatIfResult | null) => {
-      if (result) {
-        setWhatIfResult(result);
-      } else {
-        setWhatIfResult(null);
-      }
-      // When in "my_data" mode, the what-if component sends the actual
-      // doses back unchanged — we don't swap activeDoses in that case.
-      // When in "what_if" mode, we still display the actual curve as the
-      // primary line and the modified curve as the green overlay.
-      // (No state change needed to activeDoses here.)
-      void doses;
-    },
+  const profileForChart = useMemo(
+    () => ({
+      name: DEMO_PATIENT_A_V7.name,
+      country: "ZA",
+      glucoseUnit: "mmol/L" as const,
+    }),
     [],
   );
 
-  const handleSaveScenario = useCallback((scenario: WhatIfScenario) => {
-    // Slice 2.2 will wire this to Supabase via the insulin_doses table.
-    // For now we just log to console so the UI path is verifiable.
-     
-    console.info("[IOB Hunter] save scenario (slice 2.2 will persist):", scenario.name);
+  /* ─── Handlers ────────────────────────────────────────────────── */
+  const handleVisitorDosesChange = useCallback((doses: InsulinDose[]) => {
+    setActiveDoses(doses);
   }, []);
 
   const handleTierGate = useCallback(
@@ -119,10 +157,7 @@ export default function IOBHunterPage() {
     [],
   );
 
-  const closeTierGate = useCallback(() => {
-    setGateFeature(null);
-  }, []);
-
+  const closeTierGate = useCallback(() => setGateFeature(null), []);
   const handleSignUp = useCallback(() => {
     window.location.href = "/auth";
   }, []);
@@ -131,7 +166,7 @@ export default function IOBHunterPage() {
     <div style={{ minHeight: "100vh", background: "var(--bg-primary)" }}>
       <div
         style={{
-          maxWidth: 1024,
+          maxWidth: 1100,
           margin: "0 auto",
           padding: "clamp(16px, 4vw, 32px)",
         }}
@@ -178,9 +213,7 @@ export default function IOBHunterPage() {
           {DISCLAIMER}
         </div>
 
-        {/* ─── Patient header (for authenticated users, will show
-               real profile name in slice 2.2; for now always shows
-               Patient A demo meta) ─────────────────────────── */}
+        {/* ─── Patient header card ────────────────────────────── */}
         <div
           style={{
             background: "var(--bg-card)",
@@ -226,16 +259,16 @@ export default function IOBHunterPage() {
           </p>
         </div>
 
-        {/* ─── The pressure map ──────────────────────────────── */}
-        <IOBHunterChart
-          curve={curve}
-          markers={markers}
-          whatIfCurve={whatIfResult?.modified_curve}
-          stackingAlerts={stackingAlerts}
-          maxIOB={maxIOB}
-          showInjectionMarkers
-          showWhatIf={whatIfResult != null}
-          height={400}
+        {/* ─── Master visualization (the bird's-eye view) ────── */}
+        <IOBTerrainChart
+          profile={profileForChart}
+          basalEntries={legacyEntries.basal}
+          bolusEntries={legacyEntries.bolus}
+          cycles={2}
+          showInsight={true}
+          showDensityBar={true}
+          showWhatIf={true}
+          tier={isAuthenticated ? "pro" : "free"}
         />
 
         {/* ─── Visitor entry (unauthenticated only) ──────────── */}
@@ -248,21 +281,10 @@ export default function IOBHunterPage() {
           />
         )}
 
-        {/* ─── What-if sandbox ────────────────────────────────── */}
-        <IOBHunterWhatIf
-          actualDoses={activeDoses}
-          profiles={INSULIN_PROFILES}
-          tier={tier}
-          savedScenarioCount={0}
-          onWorkingDosesChange={handleWorkingDosesChange}
-          onSaveScenario={handleSaveScenario}
-          onTierGate={handleTierGate}
-        />
-
-        {/* ─── Clinical report ───────────────────────────────── */}
+        {/* ─── Clinical report (v7 engine) ───────────────────── */}
         <IOBHunterReport
           doses={activeDoses}
-          profiles={INSULIN_PROFILES}
+          profiles={V7_INSULIN_PROFILES}
           kpis={kpis}
           basalAnalysis={basalAnalysis}
           stackingAlerts={stackingAlerts}
@@ -272,7 +294,7 @@ export default function IOBHunterPage() {
         <div style={{ height: 80 }} />
       </div>
 
-      {/* ─── Tier gate overlay ────────────────────────────────── */}
+      {/* ─── Tier gate overlay ─────────────────────────────────── */}
       {gateFeature && (
         <IOBHunterTierGate
           feature={gateFeature}
