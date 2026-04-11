@@ -1,21 +1,16 @@
 import { useEffect, useState } from "react";
 import { createClient, type User, type Session, type SupabaseClient } from "@supabase/supabase-js";
 
-/* ─── Defensive Supabase client ──────────────────────────────────────────── */
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL ?? "";
-const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY ?? "";
-
-if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
-  console.error(
-    "[GluMira] VITE_SUPABASE_URL or VITE_SUPABASE_ANON_KEY is missing.\n" +
-    "Ensure both are set in your .env file (local) or Netlify environment variables (production).\n" +
-    "The auth form will render but sign-in/sign-up calls will fail gracefully."
-  );
-}
+/* ─── Supabase client ────────────────────────────────────────────────────── */
+const SUPABASE_URL =
+  import.meta.env.VITE_SUPABASE_URL || "https://jxkdtvwlzhdgzhkbilbf.supabase.co";
+const SUPABASE_ANON_KEY =
+  import.meta.env.VITE_SUPABASE_ANON_KEY ||
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp4a2R0dndsemhkZ3poa2JpbGJmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5OTE2NzksImV4cCI6MjA4OTU2NzY3OX0.ka74Ohcq8r3HhlZcEWaqRU15FR6TdlkwuGLdGLrnyfc";
 
 export const supabase: SupabaseClient = createClient(
-  SUPABASE_URL || "https://placeholder.supabase.co",
-  SUPABASE_ANON_KEY || "placeholder-anon-key",
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY,
   {
     auth: {
       persistSession: true,
