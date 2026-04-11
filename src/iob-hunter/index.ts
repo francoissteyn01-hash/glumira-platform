@@ -67,6 +67,24 @@ export {
 /* ─── Components ─────────────────────────────────────────────────────────── */
 export { default as IOBHunterChart } from "@/iob-hunter/components/IOBHunterChart";
 export type { IOBHunterChartProps } from "@/iob-hunter/components/IOBHunterChart";
+export { default as IOBHunterKPIRow } from "@/iob-hunter/components/IOBHunterKPIRow";
+export type { IOBHunterKPIRowProps } from "@/iob-hunter/components/IOBHunterKPIRow";
+export { default as IOBHunterPharmaTable } from "@/iob-hunter/components/IOBHunterPharmaTable";
+export type { IOBHunterPharmaTableProps } from "@/iob-hunter/components/IOBHunterPharmaTable";
+export { default as IOBHunterReport } from "@/iob-hunter/components/IOBHunterReport";
+export type { IOBHunterReportProps } from "@/iob-hunter/components/IOBHunterReport";
+export { default as IOBHunterTierGate } from "@/iob-hunter/components/IOBHunterTierGate";
+export type { IOBHunterTierGateProps } from "@/iob-hunter/components/IOBHunterTierGate";
+
+/* ─── Narrative generator ────────────────────────────────────────────────── */
+export {
+  basalCoverageSummary,
+  clinicalSummary,
+  kpiHeadline,
+  stackingAlertNarratives,
+  suggestedImprovements,
+} from "@/iob-hunter/engine/narrative-generator";
+export type { Improvement } from "@/iob-hunter/engine/narrative-generator";
 
 /* ─── Hooks ──────────────────────────────────────────────────────────────── */
 export { useIOBHunter } from "@/iob-hunter/hooks/useIOBHunter";
