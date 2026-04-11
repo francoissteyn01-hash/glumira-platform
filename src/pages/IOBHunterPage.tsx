@@ -13,15 +13,15 @@ import InsulinDensityHeatmap from "@/components/iob-hunter/InsulinDensityHeatmap
 import { generateHeatmapData } from "@/utils/insulinDensity";
 import { DISCLAIMER } from "@/lib/constants";
 import {
-  ANOUK_PATIENT,
-  ANOUK_INJECTIONS,
+  DEMO_PATIENT_A,
+  DEMO_PATIENT_A_INJECTIONS,
   PEAK_ZONE,
   HEATMAP_HIGHLIGHT,
-} from "@/data/anoukData";
+} from "@/data/demoPatientAData";
 
 export default function IOBHunterPage() {
   const heatmapData = useMemo(
-    () => generateHeatmapData(ANOUK_INJECTIONS),
+    () => generateHeatmapData(DEMO_PATIENT_A_INJECTIONS),
     [],
   );
 
@@ -64,10 +64,10 @@ export default function IOBHunterPage() {
           {DISCLAIMER}
         </div>
 
-        <PatientHeader patient={ANOUK_PATIENT} injections={ANOUK_INJECTIONS} />
+        <PatientHeader patient={DEMO_PATIENT_A} injections={DEMO_PATIENT_A_INJECTIONS} />
 
         <IOBMountainGraph
-          injections={ANOUK_INJECTIONS}
+          injections={DEMO_PATIENT_A_INJECTIONS}
           peakZone={PEAK_ZONE}
         />
 

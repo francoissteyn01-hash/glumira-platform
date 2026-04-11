@@ -19,7 +19,7 @@
 /*  Types                                                                     */
 /* ═══════════════════════════════════════════════════════════════════════════ */
 
-export interface InsulinPharmacology {
+export type InsulinPharmacology = {
   name: string;
   onsetMinutes: number;
   peakMinutes: number;
@@ -27,7 +27,7 @@ export interface InsulinPharmacology {
   category: "ultra-rapid" | "rapid" | "short" | "intermediate" | "long" | "ultra-long";
 }
 
-export interface InsulinEntry {
+export type InsulinEntry = {
   id: string;
   insulinName: string;
   dose: number;
@@ -37,14 +37,14 @@ export interface InsulinEntry {
   mealType?: string;
 }
 
-export interface IOBDataPoint {
+export type IOBDataPoint = {
   minute: number;
   totalIOB: number;
 }
 
 export type PressureClass = "light" | "moderate" | "strong" | "overlap";
 
-export interface DangerWindow {
+export type DangerWindow = {
   startMinute: number;
   endMinute: number;
   peakIOB: number;
@@ -115,8 +115,12 @@ function deriveRateConstants(pharm: InsulinPharmacology): { ka: number; ke: numb
  * Bateman function activity curve (rate of insulin action at time t).
  * Activity(t) = K × (e^(-ke×t) - e^(-ka×t))
  * Normalised so peak activity = 1.
+ *
+ * NOTE: exported so it can be used by future analysis tooling that needs
+ * the instantaneous activity rate rather than the cumulative IOB fraction.
+ * Currently only `iobFraction` is called by the rest of the file.
  */
-function batemanActivity(t: number, ka: number, ke: number): number {
+export function batemanActivity(t: number, ka: number, ke: number): number {
   if (t <= 0) return 0;
   const raw = Math.exp(-ke * t) - Math.exp(-ka * t);
   // Normalise by peak value
@@ -176,6 +180,21 @@ export function calculateIOB(
 
 /**
  * Combined IOB from all entries at a timepoint, including prior-day cycles.
+ *
+ * `cycles` controls how many days of regimen contribution are summed:
+ *   cycles=1 → today only
+ *   cycles=2 → today + yesterday's tail (default — Levemir/Tresiba persist
+ *              well past 24h, so the prior day's basal contributes to today)
+ *   cycles=3 → today + previous 2 days
+ *
+ * Bug fix (2026-04-11): the previous implementation iterated cycles
+ * 0..N-1 forward in time, so cycle≥1 represented FUTURE doses with
+ * `hoursPostDose < 0` and contributed nothing. The prior-day tail was
+ * never computed, so the demo data worked around it by adding duplicate
+ * `prev-pm`/`prev-night` Levemir entries — which double-counted at 14:00
+ * and 21:00 and produced a Levemir curve with two stacked peaks at the
+ * same hour. Removing the duplicates AND iterating cycles backward in
+ * time is the correct fix on both sides.
  */
 export function calculateCombinedIOB(
   entries: InsulinEntry[],
@@ -186,7 +205,9 @@ export function calculateCombinedIOB(
   let total = 0;
   const safeCycles = Math.max(1, cycles);
 
-  for (let cycle = 0; cycle < safeCycles; cycle++) {
+  // Iterate from -(cycles-1) up to and including 0 so each cycle
+  // represents a prior day whose dose tail can still be active today.
+  for (let cycle = -(safeCycles - 1); cycle <= 0; cycle++) {
     const cycleOffsetHours = cycle * 24;
     for (const entry of entries) {
       const [h, m] = entry.time.split(":").map(Number);
@@ -263,7 +284,7 @@ export function findDangerWindows(
 /*  Per-entry IOB curve (for individual mountain shapes + heatmap rows)      */
 /* ═══════════════════════════════════════════════════════════════════════════ */
 
-export interface EntryIOBPoint {
+export type EntryIOBPoint = {
   minute: number;
   iob: number;
 }
@@ -300,7 +321,7 @@ export function computeEntryCurve(
 /*  Terrain Timeline                                                          */
 /* ═══════════════════════════════════════════════════════════════════════════ */
 
-export interface TerrainPoint {
+export type TerrainPoint = {
   minute: number;
   hour: number;
   label: string;
@@ -379,7 +400,7 @@ export function buildTerrainTimeline(
 /*  Basal Evaluation Score                                                    */
 /* ═══════════════════════════════════════════════════════════════════════════ */
 
-export interface BasalEvaluation {
+export type BasalEvaluation = {
   score: number;
   observations: Array<{ type: "positive" | "warning" | "alert"; text: string }>;
 }
@@ -455,7 +476,7 @@ export function evaluateBasalProfile(
 /*  Insight Generation                                                        */
 /* ═══════════════════════════════════════════════════════════════════════════ */
 
-export interface InsightContent {
+export type InsightContent = {
   basalCoverage: string;
   dangerText?: string;
   bolusStacking: string;
@@ -566,7 +587,6 @@ export function generateInsight(
   }
 
   // Basal contribution at peak
-  const basalDose = basalEntries.reduce((s, e) => s + e.dose, 0);
   const basalContribution = peakPoint && peakTotalIOB > 0
     ? (() => {
         let basalAtPeak = 0;

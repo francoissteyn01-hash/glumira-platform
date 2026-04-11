@@ -6,10 +6,10 @@
 
 import React from "react";
 import type { InsulinEntry } from "@/lib/pharmacokinetics";
-import type { AnoukPatient } from "@/data/anoukData";
+import type { DemoPatientA } from "@/data/demoPatientAData";
 
-interface PatientHeaderProps {
-  patient: AnoukPatient;
+type PatientHeaderProps = {
+  patient: DemoPatientA;
   injections: InsulinEntry[];
 }
 
