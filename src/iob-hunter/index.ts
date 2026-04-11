@@ -77,6 +77,8 @@ export { default as IOBHunterTierGate } from "@/iob-hunter/components/IOBHunterT
 export type { IOBHunterTierGateProps } from "@/iob-hunter/components/IOBHunterTierGate";
 export { default as IOBHunterWhatIf } from "@/iob-hunter/components/IOBHunterWhatIf";
 export type { IOBHunterWhatIfProps, WhatIfMode } from "@/iob-hunter/components/IOBHunterWhatIf";
+export { default as IOBHunterVisitorEntry } from "@/iob-hunter/components/IOBHunterVisitorEntry";
+export type { IOBHunterVisitorEntryProps, VisitorMode } from "@/iob-hunter/components/IOBHunterVisitorEntry";
 
 /* ─── Narrative generator ────────────────────────────────────────────────── */
 export {
