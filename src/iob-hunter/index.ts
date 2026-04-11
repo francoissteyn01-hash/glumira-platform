@@ -75,6 +75,8 @@ export { default as IOBHunterReport } from "@/iob-hunter/components/IOBHunterRep
 export type { IOBHunterReportProps } from "@/iob-hunter/components/IOBHunterReport";
 export { default as IOBHunterTierGate } from "@/iob-hunter/components/IOBHunterTierGate";
 export type { IOBHunterTierGateProps } from "@/iob-hunter/components/IOBHunterTierGate";
+export { default as IOBHunterWhatIf } from "@/iob-hunter/components/IOBHunterWhatIf";
+export type { IOBHunterWhatIfProps, WhatIfMode } from "@/iob-hunter/components/IOBHunterWhatIf";
 
 /* ─── Narrative generator ────────────────────────────────────────────────── */
 export {
