@@ -63,3 +63,14 @@ export {
   listRegionalNames,
   resolveInsulinName,
 } from "@/iob-hunter/engine/insulin-regions";
+
+/* ─── Components ─────────────────────────────────────────────────────────── */
+export { default as IOBHunterChart } from "@/iob-hunter/components/IOBHunterChart";
+export type { IOBHunterChartProps } from "@/iob-hunter/components/IOBHunterChart";
+
+/* ─── Hooks ──────────────────────────────────────────────────────────────── */
+export { useIOBHunter } from "@/iob-hunter/hooks/useIOBHunter";
+export type {
+  UseIOBHunterOptions,
+  UseIOBHunterResult,
+} from "@/iob-hunter/hooks/useIOBHunter";
