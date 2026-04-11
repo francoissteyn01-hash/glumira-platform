@@ -80,6 +80,14 @@ export type { IOBHunterWhatIfProps, WhatIfMode } from "@/iob-hunter/components/I
 export { default as IOBHunterVisitorEntry } from "@/iob-hunter/components/IOBHunterVisitorEntry";
 export type { IOBHunterVisitorEntryProps, VisitorMode } from "@/iob-hunter/components/IOBHunterVisitorEntry";
 
+/* ─── Demo data ──────────────────────────────────────────────────────────── */
+export {
+  DEMO_PATIENT_A_V7,
+  DEMO_PATIENT_A_V7_DOSES,
+  getDemoPatientADoses,
+} from "@/iob-hunter/data/demo-patient-a";
+export type { DemoPatientAMeta } from "@/iob-hunter/data/demo-patient-a";
+
 /* ─── Narrative generator ────────────────────────────────────────────────── */
 export {
   basalCoverageSummary,
