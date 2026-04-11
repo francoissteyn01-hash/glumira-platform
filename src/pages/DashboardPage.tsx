@@ -386,6 +386,19 @@ export default function DashboardPage() {
           <TimeInRangeDonut readings={glucoseData.map((g) => ({ value: g.value }))} />
         </div>
 
+        {/* ── IOB Hunter Link ─────────────────────────────────────── */}
+        <div
+          onClick={() => window.location.href = "/iob-hunter"}
+          onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") window.location.href = "/iob-hunter"; }}
+          role="button"
+          tabIndex={0}
+          aria-label="Open IOB Hunter insulin density map"
+          style={{ background: "var(--bg-card)", borderRadius: 12, border: "2px solid var(--accent-teal)", padding: 32, textAlign: "center", marginBottom: 20, cursor: "pointer" }}
+        >
+          <p style={{ fontSize: 14, fontWeight: 600, color: "var(--text-primary)", margin: 0, fontFamily: "'DM Sans', system-ui, sans-serif" }}>&#127919; IOB Hunter&trade;</p>
+          <p style={{ fontSize: 12, color: "var(--text-secondary)", margin: "4px 0 0", fontFamily: "'DM Sans', system-ui, sans-serif" }}>24-hour insulin pressure map &mdash; spot stacking risk before it happens</p>
+        </div>
+
         {/* ── What-If Scenario Link ────────────────────────────────── */}
         <div
           onClick={() => window.location.href = "/dashboard/what-if"}
