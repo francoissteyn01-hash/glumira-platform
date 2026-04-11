@@ -11,6 +11,7 @@ import { GlucoseUnitsProvider } from "@/context/GlucoseUnitsContext";
 import { PresentationModeProvider } from "@/components/PresentationMode";
 import { SensoryProvider } from "@/contexts/SensoryContext";
 import AppSidebar, { useSidebarOffset } from "@/components/AppSidebar";
+import ConfigErrorBanner from "@/components/ConfigErrorBanner";
 import { useSessionTimeout, SessionWarningModal } from "@/hooks/useSessionTimeout";
 
 /* ─── Lazy pages ─────────────────────────────────────────────────────────── */
@@ -200,6 +201,7 @@ export default function App() {
         <SensoryProvider>
         <PresentationModeProvider>
         <div className="min-h-screen" style={{ background: "var(--bg-primary)", color: "var(--text-primary)" }}>
+          <ConfigErrorBanner />
           <a href="#main-content" className="skip-link">Skip to content</a>
           <AppShell>
           <main id="main-content">
