@@ -30,12 +30,12 @@ const MARCH_16_DOSES: InsulinDose[] = [
   { id: "lev-prev", insulin_name: "Levemir", dose_units: 4, administered_at: "20:45", dose_type: "basal_injection" },
   // Day 1
   { id: "lev-am", insulin_name: "Levemir", dose_units: 5, administered_at: "05:30", dose_type: "basal_injection" },
-  { id: "fiasp-bk", insulin_name: "Fiasp", dose_units: 1, administered_at: "06:30", dose_type: "bolus_meal" },
-  { id: "act-bk", insulin_name: "Actrapid", dose_units: 0.5, administered_at: "06:30", dose_type: "bolus_meal" },
-  { id: "fiasp-lunch", insulin_name: "Fiasp", dose_units: 1, administered_at: "10:00", dose_type: "bolus_meal" },
-  { id: "act-lunch", insulin_name: "Actrapid", dose_units: 0.5, administered_at: "10:00", dose_type: "bolus_meal" },
+  { id: "fiasp-bk", insulin_name: "Fiasp", dose_units: 1, administered_at: "06:30", dose_type: "bolus" },
+  { id: "act-bk", insulin_name: "Actrapid", dose_units: 0.5, administered_at: "06:30", dose_type: "bolus" },
+  { id: "fiasp-lunch", insulin_name: "Fiasp", dose_units: 1, administered_at: "10:00", dose_type: "bolus" },
+  { id: "act-lunch", insulin_name: "Actrapid", dose_units: 0.5, administered_at: "10:00", dose_type: "bolus" },
   { id: "lev-pm", insulin_name: "Levemir", dose_units: 5, administered_at: "13:45", dose_type: "basal_injection" },
-  { id: "fiasp-dinner", insulin_name: "Fiasp", dose_units: 0.5, administered_at: "19:30", dose_type: "bolus_meal" },
+  { id: "fiasp-dinner", insulin_name: "Fiasp", dose_units: 0.5, administered_at: "19:30", dose_type: "bolus" },
   { id: "lev-eve", insulin_name: "Levemir", dose_units: 4, administered_at: "22:30", dose_type: "basal_injection" },
 ];
 

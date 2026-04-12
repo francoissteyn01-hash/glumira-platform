@@ -432,24 +432,27 @@ export default function IOBTerrainChart({
       for (const [key, val] of Object.entries(pt.breakdown)) {
         perDose[key] = val;
       }
-      return { minute, totalIOB, basalIOB: 0, bolusIOB: 0, pressure, label: pt.time_label, ...perDose };
+      return { minute, hour: pt.hours, totalIOB, basalIOB: 0, bolusIOB: 0, overlap: 0, pressure, label: pt.time_label, ...perDose };
     });
 
     // Danger windows (>= 75% of peak for >= 15 min)
     const dangerWindows: DangerWindow[] = [];
     let dwStart: number | null = null;
+    let dwPeak = 0;
     for (const pt of points) {
       if (pt.pressure === "overlap" || pt.pressure === "strong") {
         if (dwStart === null) dwStart = pt.minute;
+        if (pt.totalIOB > dwPeak) dwPeak = pt.totalIOB;
       } else if (dwStart !== null) {
         if (pt.minute - dwStart >= 15) {
-          dangerWindows.push({ startMinute: dwStart, endMinute: pt.minute, pressure: points.find(p => p.minute === dwStart)!.pressure });
+          dangerWindows.push({ startMinute: dwStart, endMinute: pt.minute, peakIOB: dwPeak, pressure: points.find(p => p.minute === dwStart)!.pressure });
         }
         dwStart = null;
+        dwPeak = 0;
       }
     }
     if (dwStart !== null && points[points.length - 1].minute - dwStart >= 15) {
-      dangerWindows.push({ startMinute: dwStart, endMinute: points[points.length - 1].minute, pressure: "overlap" });
+      dangerWindows.push({ startMinute: dwStart, endMinute: points[points.length - 1].minute, peakIOB: dwPeak, pressure: "overlap" });
     }
 
     const worstPressure: PressureClass = points.some(p => p.pressure === "overlap") ? "overlap"
@@ -575,7 +578,7 @@ export default function IOBTerrainChart({
   const prefersReduced = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const chartHeight = compact ? 260 : 340;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const hasGlucose = points.some((p) => (p as unknown as any).glucose !== undefined);
+  const hasGlucose = enrichedPoints.some((p) => (p as unknown as any).glucose !== undefined);
   const totalDoses = entries.length;
   const currentMinute = getCurrentMinute();
 
