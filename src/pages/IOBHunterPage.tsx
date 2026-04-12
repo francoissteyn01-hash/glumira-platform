@@ -4,7 +4,7 @@
  * Wires the rich `IOBTerrainChart` (Master Chart Component, 690 lines —
  * pressure-band shading, per-insulin stacked layers, danger-window
  * brackets, abbreviated dose markers, current-time marker, dynamic
- * subtitle, individual-curves view tab, Clinical/Kids/Mountains toggle,
+ * subtitle, individual-curves view tab,
  * density bar, 60-second insight panel, what-if panel) into the v7
  * IOB Hunter route.
  *

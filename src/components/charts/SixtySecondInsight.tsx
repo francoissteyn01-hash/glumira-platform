@@ -1,7 +1,7 @@
 import React from 'react';
 
-interface SixtySecondInsightProps {
-  view: 'clinical' | 'kids' | 'mountains';
+type SixtySecondInsightProps = {
+  view: 'clinical';
   content: {
     basalCoverage: string;
     dangerText?: string;
@@ -24,17 +24,8 @@ const borderColors: Record<SixtySecondInsightProps['pressureClass'], string> = {
   overlap: '#F44336',
 };
 
-const SixtySecondInsight: React.FC<SixtySecondInsightProps> = ({ view, content, pressureClass }) => {
-  const isKids = view === 'kids' || view === 'mountains';
-  const isMountains = view === 'mountains';
-
-  const labels = isMountains
-    ? { basal: 'THE ROLLING HILLS', danger: 'STORMY SKY!', bolus: 'THE TALL PEAKS', observation: 'WHAT THE MOUNTAINS MEAN' }
-    : isKids
-    ? { basal: 'THE BIG WAVE', danger: 'WATCH HERE!', bolus: 'MEAL MOUNTAINS', observation: 'WHAT MIRA NOTICED' }
-    : { basal: 'BASAL COVERAGE', danger: 'DANGER WINDOWS', bolus: 'BOLUS STACKING', observation: 'KEY OBSERVATION' };
-
-  const bodyFontSize = isKids ? '14px' : '13px';
+const SixtySecondInsight: React.FC<SixtySecondInsightProps> = ({ content, pressureClass }) => {
+  const labels = { basal: 'BASAL COVERAGE', danger: 'DANGER WINDOWS', bolus: 'BOLUS STACKING', observation: 'KEY OBSERVATION' };
 
   const labelStyle: React.CSSProperties = {
     fontFamily: "'DM Sans', sans-serif",
@@ -48,7 +39,7 @@ const SixtySecondInsight: React.FC<SixtySecondInsightProps> = ({ view, content, 
 
   const bodyStyle: React.CSSProperties = {
     fontFamily: "'DM Sans', sans-serif",
-    fontSize: bodyFontSize,
+    fontSize: '13px',
     lineHeight: 1.7,
     color: '#C8D6E5',
     margin: 0,
@@ -75,75 +66,16 @@ const SixtySecondInsight: React.FC<SixtySecondInsightProps> = ({ view, content, 
       >
         {/* Header */}
         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '16px' }}>
-          {isKids ? (
-            <>
-              <div
-                style={{
-                  width: '24px',
-                  height: '24px',
-                  borderRadius: '50%',
-                  background: '#2AB5C1',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontFamily: "'Playfair Display', serif",
-                  fontWeight: 600,
-                  fontSize: '13px',
-                  color: '#fff',
-                  marginRight: '8px',
-                  flexShrink: 0,
-                }}
-              >
-                M
-              </div>
-              <span
-                style={{
-                  fontFamily: "'Playfair Display', serif",
-                  fontWeight: 600,
-                  fontSize: '14px',
-                  color: '#2AB5C1',
-                }}
-              >
-                {isMountains ? '⛰️ What the mountains mean' : '🦉 Mira says...'}
-              </span>
-            </>
-          ) : (
-            <span
-              style={{
-                fontFamily: "'Playfair Display', serif",
-                fontWeight: 600,
-                fontSize: '14px',
-                color: '#2AB5C1',
-              }}
-            >
-              ⏱ 60-SECOND INSIGHT
-            </span>
-          )}
-
-          {/* Kids avatar top-right */}
-          {isKids && (
-            <div
-              style={{
-                position: 'absolute',
-                top: '24px',
-                right: '24px',
-                width: '24px',
-                height: '24px',
-                borderRadius: '50%',
-                background: '#1a2a5e',
-                border: '1px solid #2AB5C1',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontFamily: "'DM Sans', sans-serif",
-                fontWeight: 600,
-                fontSize: '12px',
-                color: '#2AB5C1',
-              }}
-            >
-              M
-            </div>
-          )}
+          <span
+            style={{
+              fontFamily: "'Playfair Display', serif",
+              fontWeight: 600,
+              fontSize: '14px',
+              color: '#2AB5C1',
+            }}
+          >
+            60-SECOND INSIGHT
+          </span>
         </div>
 
         {/* Basal Coverage */}
@@ -173,9 +105,7 @@ const SixtySecondInsight: React.FC<SixtySecondInsightProps> = ({ view, content, 
             <p style={bodyStyle}>{content.dangerText}</p>
           ) : (
             <p style={{ ...bodyStyle, color: '#4CAF50' }}>
-              {isMountains
-                ? 'Clear skies! The mountains are calm and well-spaced — no storms today.'
-                : 'No danger windows detected. Steady basal coverage with well-separated bolus peaks.'}
+              No danger windows detected. Steady basal coverage with well-separated bolus peaks.
             </p>
           )}
         </div>
@@ -192,8 +122,8 @@ const SixtySecondInsight: React.FC<SixtySecondInsightProps> = ({ view, content, 
           <p style={bodyStyle}>{content.keyObservation}</p>
         </div>
 
-        {/* Pressure Map Details (clinical only) */}
-        {!isKids && (content.peakPressure || content.stackingRisk || content.basalContribution || content.lastBolusClear || content.overnightNote) && (
+        {/* Pressure Map Details */}
+        {(content.peakPressure || content.stackingRisk || content.basalContribution || content.lastBolusClear || content.overnightNote) && (
           <div style={{ marginBottom: '14px', borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '14px' }}>
             <div style={labelStyle}>PRESSURE MAP DETAIL</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>

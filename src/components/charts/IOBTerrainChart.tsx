@@ -9,7 +9,7 @@
  * - Current time marker
  * - Dynamic subtitle with live stats
  * - G4 individual curves density view (tab)
- * - Clinical/Kids/Mountains toggle
+ * - Clinical view only (mountains/kids removed)
  * - Density bar + 60-second insight panel + What-if panel
  *
  * Uses Recharts for rendering (Canvas upgrade planned for Phase 2).
@@ -23,7 +23,6 @@ import {
 import {
   buildTerrainTimeline,
   generateInsight,
-  generateKidsInsight,
   computeEntryCurve,
   type InsulinPharmacology,
   type InsulinEntry,
@@ -33,7 +32,6 @@ import {
 } from "@/lib/pharmacokinetics";
 
 import IOBDensityBar from "@/components/charts/IOBDensityBar";
-import ChartViewToggle from "@/components/charts/ChartViewToggle";
 import SixtySecondInsight from "@/components/charts/SixtySecondInsight";
 import WhatIfTiming from "@/components/charts/WhatIfTiming";
 
@@ -41,12 +39,12 @@ import WhatIfTiming from "@/components/charts/WhatIfTiming";
 /*  Types                                                                     */
 /* ═══════════════════════════════════════════════════════════════════════════ */
 
-interface BasalEntry { insulinName: string; dose: number; time: string; pharmacology: InsulinPharmacology; }
-interface BolusEntry { insulinName: string; dose: number; time: string; mealType?: string; pharmacology: InsulinPharmacology; }
-interface GlucosePoint { time: string; value: number; unit: "mmol/L" | "mg/dL"; }
-interface ProfileInfo { name: string; caregiver?: string; age?: number; sex?: string; country: string; glucoseUnit: "mmol/L" | "mg/dL"; }
+type BasalEntry = { insulinName: string; dose: number; time: string; pharmacology: InsulinPharmacology; }
+type BolusEntry = { insulinName: string; dose: number; time: string; mealType?: string; pharmacology: InsulinPharmacology; }
+type GlucosePoint = { time: string; value: number; unit: "mmol/L" | "mg/dL"; }
+type ProfileInfo = { name: string; caregiver?: string; age?: number; sex?: string; country: string; glucoseUnit: "mmol/L" | "mg/dL"; }
 
-export interface IOBTerrainChartProps {
+export type IOBTerrainChartProps = {
   profile: ProfileInfo;
   basalEntries: BasalEntry[];
   bolusEntries: BolusEntry[];
@@ -132,10 +130,11 @@ function toInsulinEntries(basalEntries: BasalEntry[], bolusEntries: BolusEntry[]
   return entries;
 }
 
-interface ChartPoint extends TerrainPoint {
+type ChartPoint = {
   glucose?: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
-}
+} & TerrainPoint
 
 function attachGlucose(points: TerrainPoint[], glucoseData: GlucosePoint[] | undefined, cycles: number): ChartPoint[] {
   if (!glucoseData || glucoseData.length === 0) return points;
@@ -175,6 +174,7 @@ function getCurrentMinute(): number {
 /*  Sub-components                                                            */
 /* ═══════════════════════════════════════════════════════════════════════════ */
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function StackedTooltip({ active, payload, entryCurves }: any) {
   if (!active || !payload?.[0]) return null;
   const d = payload[0].payload as ChartPoint;
@@ -237,8 +237,30 @@ function PressureLegend() {
   );
 }
 
-function DangerBrackets({ dangerWindows, totalMinutes, chartWidth, marginLeft, view }: {
-  dangerWindows: DangerWindow[]; totalMinutes: number; chartWidth: number; marginLeft: number; view: string;
+function SummaryStats({ peakIOB, peakTime, lowestIOB, lowestTime, strongOverlapHours, totalBasal, totalBolus }: {
+  peakIOB: number; peakTime: string; lowestIOB: number; lowestTime: string; strongOverlapHours: number; totalBasal: number; totalBolus: number;
+}) {
+  const stats = [
+    { label: "Peak IOB", value: `${peakIOB.toFixed(1)}U`, sub: `at ${peakTime}` },
+    { label: "Lowest pressure", value: `${lowestIOB.toFixed(1)}U`, sub: `@ ${lowestTime}` },
+    { label: "Strong / Overlap", value: `${strongOverlapHours}h`, sub: "" },
+    { label: "Daily totals", value: `${totalBasal.toFixed(1)}U basal`, sub: `${totalBolus.toFixed(1)}U bolus` },
+  ];
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12, marginTop: 16, padding: "0 4px" }}>
+      {stats.map((s, i) => (
+        <div key={i} style={{ textAlign: "center", padding: "12px 8px", borderRadius: 8, background: "var(--bg-primary, #f8fafc)", border: "1px solid var(--border)" }}>
+          <p style={{ margin: 0, fontSize: 10, fontWeight: 500, color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.05em", fontFamily: "'DM Sans', sans-serif" }}>{s.label}</p>
+          <p style={{ margin: "4px 0 0", fontSize: 20, fontWeight: 700, color: "var(--text-primary)", fontFamily: "'DM Sans', sans-serif" }}>{s.value}</p>
+          {s.sub && <p style={{ margin: "2px 0 0", fontSize: 11, color: "var(--text-secondary)", fontFamily: "'DM Sans', sans-serif" }}>{s.sub}</p>}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function DangerBrackets({ dangerWindows, totalMinutes, chartWidth, marginLeft }: {
+  dangerWindows: DangerWindow[]; totalMinutes: number; chartWidth: number; marginLeft: number;
 }) {
   if (dangerWindows.length === 0) return null;
   const dataWidth = chartWidth - marginLeft - 8;
@@ -250,10 +272,7 @@ function DangerBrackets({ dangerWindows, totalMinutes, chartWidth, marginLeft, v
         const isOverlap = w.pressure === "overlap";
         const colour = isOverlap ? "#EF4444" : "#F87171";
         const thickness = isOverlap ? 3 : 2;
-        const isKidsView = view === "kids" || view === "mountains";
-        const label = isKidsView
-          ? (isOverlap ? "Watch here!" : "Careful here")
-          : (isOverlap ? `⚠ Danger Window: ${minutesToTime(w.startMinute)} – ${minutesToTime(w.endMinute)}` : `Watch Window: ${minutesToTime(w.startMinute)} – ${minutesToTime(w.endMinute)}`);
+        const label = isOverlap ? `Danger Window: ${minutesToTime(w.startMinute)} – ${minutesToTime(w.endMinute)}` : `Watch Window: ${minutesToTime(w.startMinute)} – ${minutesToTime(w.endMinute)}`;
         const x1 = toX(w.startMinute);
         const x2 = toX(w.endMinute);
         const midX = (x1 + x2) / 2;
@@ -348,13 +367,7 @@ export default function IOBTerrainChart({
 }: IOBTerrainChartProps) {
   const safeCycles = Math.max(2, cycles);
 
-  const [view, setView] = useState<"clinical" | "kids" | "mountains">(() => {
-    try { return (localStorage.getItem("glumira-chart-view") as any) || "clinical"; } catch { return "clinical"; }
-  });
-  const handleViewChange = useCallback((v: "clinical" | "kids" | "mountains") => {
-    setView(v);
-    try { localStorage.setItem("glumira-chart-view", v); } catch {}
-  }, []);
+  const view = "clinical" as const;
 
   const [activeTab, setActiveTab] = useState<"stacked" | "individual">("stacked");
 
@@ -371,7 +384,7 @@ export default function IOBTerrainChart({
   const entryCurves = useMemo(() => {
     const totalMinutes = safeCycles * MINUTES_PER_DAY;
     let basalIdx = 0;
-    let bolusIdx = 0;
+    let _bolusIdx = 0;
     return entries.map((entry, idx) => {
       let colour: string;
       let stackColour: string;
@@ -382,7 +395,7 @@ export default function IOBTerrainChart({
       } else {
         colour = BOLUS_COLOURS[idx % BOLUS_COLOURS.length];
         stackColour = BOLUS_STACK_COLOURS[entry.pharmacology.category] || BOLUS_STACK_DEFAULT;
-        bolusIdx++;
+        _bolusIdx++;
       }
       return { entry, idx, colour, stackColour, curve: computeEntryCurve(entry, totalMinutes, safeCycles) };
     });
@@ -410,14 +423,30 @@ export default function IOBTerrainChart({
     return best;
   }, [rawPoints]);
 
-  const insight = useMemo(() => view === "kids" || view === "mountains"
-    ? generateKidsInsight(entries, dangerWindows, worstPressure, profile.name)
-    : generateInsight(entries, dangerWindows, peakIOB, worstPressure),
-  [entries, dangerWindows, peakIOB, worstPressure, view, profile.name]);
+  const lowestPoint = useMemo(() => {
+    if (rawPoints.length === 0) return undefined;
+    let best = rawPoints[0];
+    for (const pt of rawPoints) { if (pt.totalIOB < best.totalIOB) best = pt; }
+    return best;
+  }, [rawPoints]);
+
+  const lowestIOB = lowestPoint?.totalIOB ?? 0;
+
+  const strongOverlapHours = useMemo(() => {
+    const strongOrOverlap = rawPoints.filter((p) => p.pressure === "strong" || p.pressure === "overlap");
+    return Math.round((strongOrOverlap.length * 5) / 60);
+  }, [rawPoints]);
+
+  const totalBasalDose = useMemo(() => basalEntries.reduce((sum, e) => sum + e.dose, 0), [basalEntries]);
+  const totalBolusDose = useMemo(() => bolusEntries.reduce((sum, e) => sum + e.dose, 0), [bolusEntries]);
+
+  const insight = useMemo(() => generateInsight(entries, dangerWindows, peakIOB, worstPressure),
+  [entries, dangerWindows, peakIOB, worstPressure]);
 
   const prefersReduced = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const chartHeight = compact ? 260 : 340;
-  const hasGlucose = points.some((p) => (p as any).glucose !== undefined);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const hasGlucose = points.some((p) => (p as unknown as any).glucose !== undefined);
   const totalDoses = entries.length;
   const currentMinute = getCurrentMinute();
 
@@ -437,6 +466,32 @@ export default function IOBTerrainChart({
     })();
     return `${activeCount} insulin${activeCount !== 1 ? "s" : ""} active | Peak at ${peakTime} (${peakVal}U) | ${currentPressure.toUpperCase()} pressure now`;
   }, [entries.length, peakPoint, peakIOB, rawPoints, currentMinute]);
+
+  const doseMarkers = useMemo(() => {
+    const markers = entries.flatMap((entry, idx) => {
+      const colour = entry.type === "basal" ? BASAL_COLOURS[idx % BASAL_COLOURS.length] : BOLUS_COLOURS[idx % BOLUS_COLOURS.length];
+      const result = [];
+      for (let c = 0; c < safeCycles; c++) {
+        result.push({ entry, min: timeToMinutes(entry.time) + c * MINUTES_PER_DAY, colour, offset: 0 });
+      }
+      return result;
+    });
+    markers.sort((a, b) => a.min - b.min);
+    for (let i = 1; i < markers.length; i++) {
+      if (markers[i].min - markers[i - 1].min < 30) {
+        markers[i - 1].offset = -1;
+        markers[i].offset = 1;
+      }
+    }
+    return markers;
+  }, [entries, safeCycles]);
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const tooltipContent = useCallback((props: any) => (
+    <StackedTooltip {...props} entryCurves={entryCurves} />
+  ), [entryCurves]);
+
+  const marginLeft = compact ? 36 : 48;
 
   if (totalDoses === 0) {
     return (
@@ -471,31 +526,6 @@ export default function IOBTerrainChart({
   };
   const handleReset = () => { setWhatIfBasal(basalEntries); setWhatIfBolus(bolusEntries); };
 
-  const doseMarkers = useMemo(() => {
-    const markers = entries.flatMap((entry, idx) => {
-      const colour = entry.type === "basal" ? BASAL_COLOURS[idx % BASAL_COLOURS.length] : BOLUS_COLOURS[idx % BOLUS_COLOURS.length];
-      const result = [];
-      for (let c = 0; c < safeCycles; c++) {
-        result.push({ entry, min: timeToMinutes(entry.time) + c * MINUTES_PER_DAY, colour, offset: 0 });
-      }
-      return result;
-    });
-    markers.sort((a, b) => a.min - b.min);
-    for (let i = 1; i < markers.length; i++) {
-      if (markers[i].min - markers[i - 1].min < 30) {
-        markers[i - 1].offset = -1;
-        markers[i].offset = 1;
-      }
-    }
-    return markers;
-  }, [entries, safeCycles]);
-
-  const tooltipContent = useCallback((props: any) => (
-    <StackedTooltip {...props} entryCurves={entryCurves} />
-  ), [entryCurves]);
-
-  const marginLeft = compact ? 36 : 48;
-
   return (
     <div className="page-transition">
       {isModified && (
@@ -522,7 +552,6 @@ export default function IOBTerrainChart({
             </p>
           </div>
           <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
-            <ChartViewToggle view={view} onChange={handleViewChange} />
             <div style={{ display: "flex", borderRadius: 6, border: "1px solid var(--border)", overflow: "hidden" }}>
               {(["stacked", "individual"] as const).map((tab) => (
                 <button key={tab} onClick={() => setActiveTab(tab)} style={{
@@ -544,7 +573,7 @@ export default function IOBTerrainChart({
 
         {dangerWindows.length === 0 && (
           <div style={{ margin: "0 4px 8px", padding: "8px 14px", borderRadius: 8, background: "rgba(76,175,80,0.08)", border: "1px solid rgba(76,175,80,0.2)", fontSize: 12, fontWeight: 500, color: "#4CAF50", fontFamily: "'DM Sans', sans-serif" }}>
-            {view === "kids" || view === "mountains" ? "Looking good! No waves overlap today." : "No insulin stacking detected — steady coverage"}
+            No insulin stacking detected — steady coverage
           </div>
         )}
 
@@ -560,7 +589,7 @@ export default function IOBTerrainChart({
           <>
             {/* Danger/Watch brackets above chart */}
             <div style={{ position: "relative", height: dangerWindows.length > 0 ? 28 : 0 }}>
-              <DangerBrackets dangerWindows={dangerWindows} totalMinutes={totalMinutes} chartWidth={800} marginLeft={marginLeft} view={view} />
+              <DangerBrackets dangerWindows={dangerWindows} totalMinutes={totalMinutes} chartWidth={800} marginLeft={marginLeft} />
             </div>
 
             <ResponsiveContainer width="100%" height={chartHeight}>
@@ -661,9 +690,21 @@ export default function IOBTerrainChart({
 
         {showDensityBar && (
           <div style={{ marginTop: 8 }}>
+            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
             <IOBDensityBar points={rawPoints.map((p: any) => ({ minute: p.minute, pressure: p.pressure }))} totalMinutes={totalMinutes} />
           </div>
         )}
+
+        {/* ─── Summary stats (matches reference design) ──────────── */}
+        <SummaryStats
+          peakIOB={peakIOB}
+          peakTime={minutesToTime(peakPoint?.minute || 0)}
+          lowestIOB={lowestIOB}
+          lowestTime={minutesToTime(lowestPoint?.minute || 0)}
+          strongOverlapHours={strongOverlapHours}
+          totalBasal={totalBasalDose}
+          totalBolus={totalBolusDose}
+        />
       </div>
 
       {showInsight && (
