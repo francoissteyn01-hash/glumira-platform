@@ -196,3 +196,73 @@ export function clinicalSummary(
 
   return parts.join(" ");
 }
+
+/* ═════════════════════════════════════════════════════════════════════ */
+/*  6. Layer-by-layer analysis (step-by-step data interpretation)       */
+/*     Per Rule 9/11/55: tables + step-by-step for presentation.        */
+/* ═════════════════════════════════════════════════════════════════════ */
+
+export type LayerAnalysisStep = {
+  layer: number;
+  label: string;
+  insulinName: string;
+  doseInfo: string;
+  narrative: string;
+}
+
+export function generateLayerAnalysis(
+  basal: BasalCoverageAnalysis,
+  kpis: ReportKPIs,
+  stacking: StackingAlert[],
+): LayerAnalysisStep[] {
+  const steps: LayerAnalysisStep[] = [];
+  let layer = 1;
+
+  // Layer 1: Basal foundation
+  steps.push({
+    layer: layer++,
+    label: "Basal foundation",
+    insulinName: "Basal",
+    doseInfo: `${kpis.total_daily_basal.toFixed(1)}U/day`,
+    narrative: basal.floor_integrity === "continuous"
+      ? "Basal coverage is continuous — the foundation layer shows steady background insulin across 24 hours."
+      : basal.floor_integrity === "gapped"
+        ? `Basal trough at ${basal.trough_hour != null ? formatHour(basal.trough_hour) : "overnight"} drops to ${basal.trough_value != null ? basal.trough_value.toFixed(1) + "U" : "below floor"} — timing redistribution could close this gap.`
+        : `Basal overlap detected in ${basal.overlap_windows.length} window(s) — doses stack above 80% of peak simultaneously.`,
+  });
+
+  // Layer 2: Bolus peaks
+  if (kpis.total_daily_bolus > 0) {
+    steps.push({
+      layer: layer++,
+      label: "Bolus peaks",
+      insulinName: "Bolus",
+      doseInfo: `${kpis.total_daily_bolus.toFixed(1)}U/day`,
+      narrative: `Meal-time insulin adds ${kpis.total_daily_bolus.toFixed(1)}U across the day. Each bolus rises fast to peak then decays over its duration of action.`,
+    });
+  }
+
+  // Layer 3: Combined pressure
+  steps.push({
+    layer: layer++,
+    label: "Combined IOB pressure",
+    insulinName: "Combined",
+    doseInfo: `Peak ${kpis.peak_iob.toFixed(1)}U at ${formatHour(kpis.peak_hour)}`,
+    narrative: `When all layers combine, peak insulin pressure reaches ${kpis.peak_iob.toFixed(1)}U at ${formatHour(kpis.peak_hour)}. ${kpis.hours_strong_or_overlap}h spent in the strong/overlap band. Your combined insulin on board will reach a peak at ${formatHour(kpis.peak_hour)} — full picture before making more treatment decisions.`,
+  });
+
+  // Layer 4: Risk zones (if any)
+  if (stacking.length > 0) {
+    for (const alert of stacking) {
+      steps.push({
+        layer: layer++,
+        label: alert.severity === "critical" ? "Critical stacking zone" : "Watch zone",
+        insulinName: alert.contributing_doses.join(" + "),
+        doseInfo: `${formatHour(alert.start_hour)}–${formatHour(alert.end_hour)}`,
+        narrative: `${alert.message}. Peak ${alert.peak_iob.toFixed(1)}U. Contributing: ${alert.contributing_doses.join(" + ")}. A timing shift of 15–30 minutes could spread this peak — discuss with your care team.`,
+      });
+    }
+  }
+
+  return steps;
+}

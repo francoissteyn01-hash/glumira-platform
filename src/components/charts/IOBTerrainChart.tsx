@@ -369,7 +369,7 @@ export default function IOBTerrainChart({
 
   const view = "clinical" as const;
 
-  const [activeTab, setActiveTab] = useState<"stacked" | "individual">("stacked");
+  const [activeTab, setActiveTab] = useState<"stacked" | "basal" | "bolus" | "individual">("stacked");
 
   const [whatIfBasal, setWhatIfBasal] = useState(basalEntries);
   const [whatIfBolus, setWhatIfBolus] = useState(bolusEntries);
@@ -414,6 +414,13 @@ export default function IOBTerrainChart({
       return { ...pt, ...extra };
     });
   }, [points, entryCurves]);
+
+  const basalOnlyCurves = useMemo(() => entryCurves.filter(({ entry }) => entry.type === "basal"), [entryCurves]);
+  const bolusOnlyCurves = useMemo(() => entryCurves.filter(({ entry }) => entry.type === "bolus"), [entryCurves]);
+
+  // What-if comparison: build original curve for green overlay when in what-if mode
+  const originalEntries = useMemo(() => toInsulinEntries(basalEntries, bolusEntries), [basalEntries, bolusEntries]);
+  const { points: originalPoints } = useMemo(() => buildTerrainTimeline(originalEntries, safeCycles), [originalEntries, safeCycles]);
 
   const pressureBands = useMemo(() => buildPressureBands(rawPoints), [rawPoints]);
 
@@ -553,14 +560,15 @@ export default function IOBTerrainChart({
           </div>
           <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
             <div style={{ display: "flex", borderRadius: 6, border: "1px solid var(--border)", overflow: "hidden" }}>
-              {(["stacked", "individual"] as const).map((tab) => (
+              {(["stacked", "basal", "bolus", "individual"] as const).map((tab) => (
                 <button key={tab} onClick={() => setActiveTab(tab)} style={{
                   padding: "4px 10px", fontSize: 10, fontWeight: 500, border: "none", cursor: "pointer",
                   background: activeTab === tab ? "var(--text-primary)" : "transparent",
                   color: activeTab === tab ? "var(--bg-card)" : "var(--text-secondary)",
                   fontFamily: "'DM Sans', sans-serif",
+                  minHeight: 36,
                 }}>
-                  {tab === "stacked" ? "Stacked" : "G4 Individual"}
+                  {tab === "stacked" ? "Combined" : tab === "basal" ? "Basal" : tab === "bolus" ? "Bolus" : "Individual"}
                 </button>
               ))}
             </div>
@@ -585,12 +593,22 @@ export default function IOBTerrainChart({
           {hasGlucose && <LegendDot colour={GLUCOSE_COLOUR} label="Glucose" />}
         </div>
 
-        {activeTab === "stacked" ? (
+        {activeTab === "individual" ? (
+          <G4DensityView entryCurves={entryCurves} enrichedPoints={enrichedPoints}
+            totalMinutes={totalMinutes} xTicks={xTicks} compact={compact} />
+        ) : (
           <>
             {/* Danger/Watch brackets above chart */}
             <div style={{ position: "relative", height: dangerWindows.length > 0 ? 28 : 0 }}>
               <DangerBrackets dangerWindows={dangerWindows} totalMinutes={totalMinutes} chartWidth={800} marginLeft={marginLeft} />
             </div>
+
+            {/* Tab label */}
+            {activeTab !== "stacked" && (
+              <p style={{ margin: "0 4px 6px", fontSize: 12, fontWeight: 600, color: "var(--text-secondary)", fontFamily: "'DM Sans', sans-serif" }}>
+                {activeTab === "basal" ? `Basal insulin — ${basalOnlyCurves.map(c => c.entry.insulinName).filter((v, i, a) => a.indexOf(v) === i).join(" + ")} — 24h activity` : `Bolus insulin — ${bolusOnlyCurves.map(c => c.entry.insulinName).filter((v, i, a) => a.indexOf(v) === i).join(" + ")} — 24h activity`}
+              </p>
+            )}
 
             <ResponsiveContainer width="100%" height={chartHeight}>
               <ComposedChart data={enrichedPoints} margin={{ top: 4, right: 8, left: compact ? -12 : 0, bottom: 0 }}>
@@ -605,8 +623,8 @@ export default function IOBTerrainChart({
 
                 <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" strokeOpacity={0.5} strokeWidth={0.75} vertical={false} />
 
-                {/* Pressure map background bands */}
-                {pressureBands.filter((b) => b.pressure !== "light").map((band, i) => (
+                {/* Pressure map background bands (stacked view only) */}
+                {activeTab === "stacked" && pressureBands.filter((b) => b.pressure !== "light").map((band, i) => (
                   <ReferenceArea key={`pband-${i}`} x1={band.start} x2={band.end}
                     fill={PRESSURE_COLOURS[band.pressure]} fillOpacity={PRESSURE_OPACITY[band.pressure]}
                     stroke={PRESSURE_COLOURS[band.pressure]} strokeOpacity={0.4} strokeDasharray="2 4" strokeWidth={1}
@@ -622,11 +640,13 @@ export default function IOBTerrainChart({
                 <ReferenceLine x={currentMinute} stroke="#F59E0B" strokeWidth={2}
                   label={{ value: "Now", position: "top", fill: "#F59E0B", fontSize: 10, fontWeight: 700 }} />
 
-                {/* Dose markers with arrows + abbreviations */}
-                {doseMarkers.map((dm, i) => (
+                {/* Dose markers — filtered by active tab */}
+                {doseMarkers
+                  .filter((dm) => activeTab === "stacked" || dm.entry.type === activeTab)
+                  .map((dm, i) => (
                   <ReferenceLine key={`dose-${i}`} x={dm.min} stroke={dm.colour} strokeDasharray="3 5" strokeOpacity={0.7} strokeWidth={1}
                     label={{
-                      value: `▲ ${dm.entry.time} — ${dm.entry.dose}U  ${getAbbrev(dm.entry.insulinName)}`,
+                      value: `${dm.entry.time} — ${dm.entry.dose}U ${getAbbrev(dm.entry.insulinName)}`,
                       position: "top",
                       fill: dm.colour,
                       fontSize: 9,
@@ -643,8 +663,8 @@ export default function IOBTerrainChart({
                   tick={{ fontSize: 11, fill: "var(--text-secondary)", fontWeight: 500, fontFamily: "'DM Sans', sans-serif" }}
                   tickFormatter={(v: number) => `${v.toFixed(1)}`}
                   axisLine={{ stroke: "var(--border)" }} tickLine={{ stroke: "var(--border)" }}
-                  label={{ value: "IOB (Units)", angle: -90, position: "insideLeft", offset: 16, style: { fontSize: 10, fill: "var(--text-secondary)", fontWeight: 500, fontFamily: "'DM Sans', sans-serif" } }} />
-                {hasGlucose && (
+                  label={{ value: activeTab === "basal" ? "Basal activity (U)" : activeTab === "bolus" ? "Bolus activity (U)" : "IOB (Units)", angle: -90, position: "insideLeft", offset: 16, style: { fontSize: 10, fill: "var(--text-secondary)", fontWeight: 500, fontFamily: "'DM Sans', sans-serif" } }} />
+                {hasGlucose && activeTab === "stacked" && (
                   <YAxis yAxisId="glucose" orientation="right"
                     tick={{ fontSize: 11, fill: GLUCOSE_COLOUR, fontFamily: "'DM Sans', sans-serif" }}
                     tickFormatter={(v: number) => `${v.toFixed(1)}`}
@@ -654,8 +674,8 @@ export default function IOBTerrainChart({
 
                 <Tooltip content={tooltipContent} />
 
-                {/* Stacked area layers — basal first, then bolus on top */}
-                {entryCurves.map(({ entry, stackColour }) => (
+                {/* Stacked area layers — filtered by tab */}
+                {(activeTab === "stacked" ? entryCurves : activeTab === "basal" ? basalOnlyCurves : bolusOnlyCurves).map(({ entry, stackColour }) => (
                   <Area key={entry.id} yAxisId="iob" type="natural" dataKey={entry.id}
                     stackId="insulin"
                     stroke={stackColour} strokeWidth={0.5} strokeOpacity={0.4}
@@ -664,13 +684,23 @@ export default function IOBTerrainChart({
                     name={`${entry.insulinName} ${entry.dose}U`} />
                 ))}
 
-                {/* Combined IOB dark outline */}
+                {/* Combined IOB outline */}
                 <Line yAxisId="iob" type="natural" dataKey="totalIOB"
                   stroke="#1A2A5E" strokeWidth={2.5}
                   dot={false} animationDuration={prefersReduced ? 0 : 800}
                   name="Combined IOB" />
 
-                {hasGlucose && (
+                {/* Green what-if overlay — original curve shown when in what-if mode (Rule 12) */}
+                {isModified && activeTab === "stacked" && (
+                  <Line yAxisId="iob" type="natural"
+                    data={originalPoints.map((p) => ({ minute: p.minute, originalIOB: p.totalIOB }))}
+                    dataKey="originalIOB"
+                    stroke="#2E9E5A" strokeWidth={2.5} strokeDasharray="8 4"
+                    dot={false} animationDuration={0}
+                    name="Original (before what-if)" />
+                )}
+
+                {hasGlucose && activeTab === "stacked" && (
                   <Line yAxisId="glucose" type="natural" dataKey="glucose"
                     stroke={GLUCOSE_COLOUR} strokeWidth={2} dot={false} connectNulls
                     animationDuration={prefersReduced ? 0 : 800} name="Glucose"
@@ -682,10 +712,6 @@ export default function IOBTerrainChart({
             {/* Pressure legend */}
             <PressureLegend />
           </>
-        ) : (
-          /* G4 Individual Curves View */
-          <G4DensityView entryCurves={entryCurves} enrichedPoints={enrichedPoints}
-            totalMinutes={totalMinutes} xTicks={xTicks} compact={compact} />
         )}
 
         {showDensityBar && (
