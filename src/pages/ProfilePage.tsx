@@ -154,13 +154,14 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   );
 }
 
-function TextInput({ value, onChange, placeholder, type = "text", inputMode, pattern }: {
-  value: string; onChange: (v: string) => void; placeholder?: string; type?: string; inputMode?: string; pattern?: string;
+function TextInput({ value, onChange, placeholder, type = "text", inputMode, pattern, name, autoComplete }: {
+  value: string; onChange: (v: string) => void; placeholder?: string; type?: string; inputMode?: string; pattern?: string; name?: string; autoComplete?: string;
 }) {
   return (
     <input
       type={type} value={value} onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder} inputMode={inputMode as React.HTMLAttributes<HTMLInputElement>["inputMode"]} pattern={pattern}
+      name={name} autoComplete={autoComplete}
       style={inputStyle}
       onFocus={(e) => { e.currentTarget.style.borderColor = "#2ab5c1"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(42,181,193,0.15)"; }}
       onBlur={(e) => { e.currentTarget.style.borderColor = "#dee2e6"; e.currentTarget.style.boxShadow = "none"; }}
@@ -293,9 +294,17 @@ export default function ProfilePage() {
     setError(null);
     setSaved(false);
     try {
-      // Refresh token before saving to prevent expired-token errors
+      // Get a fresh token — try refresh first, then current session, then bail
+      let token = session.access_token;
       const { data: refreshed } = await supabase.auth.refreshSession();
-      const token = refreshed?.session?.access_token ?? session.access_token;
+      if (refreshed?.session?.access_token) {
+        token = refreshed.session.access_token;
+      } else {
+        const { data: current } = await supabase.auth.getSession();
+        if (current?.session?.access_token) {
+          token = current.session.access_token;
+        }
+      }
       const res = await fetch(`${API}/api/profile`, {
         method: "PUT",
         headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
@@ -366,7 +375,7 @@ export default function ProfilePage() {
           {DISCLAIMER}
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+        <form autoComplete="on" onSubmit={(e) => { e.preventDefault(); save(); }} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
 
           {/* ── Section 0: Profile Type ─────────────────────────────────── */}
           <Card title="Who are you?" defaultOpen={true}>
@@ -405,14 +414,14 @@ export default function ProfilePage() {
           <Card title="Personal Information" defaultOpen={true}>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
               <Field label="First name">
-                <TextInput value={form.first_name} onChange={set("first_name")} placeholder="First name" />
+                <TextInput value={form.first_name} onChange={set("first_name")} placeholder="First name" name="given-name" autoComplete="given-name" />
               </Field>
               <Field label="Last name">
-                <TextInput value={form.last_name} onChange={set("last_name")} placeholder="Last name" />
+                <TextInput value={form.last_name} onChange={set("last_name")} placeholder="Last name" name="family-name" autoComplete="family-name" />
               </Field>
             </div>
             <Field label="Date of birth">
-              <TextInput value={form.date_of_birth} onChange={set("date_of_birth")} type="date" />
+              <TextInput value={form.date_of_birth} onChange={set("date_of_birth")} type="date" name="bday" autoComplete="bday" />
             </Field>
             <Field label="Sex">
               <SelectInput value={form.sex} onChange={set("sex")} options={SEX_OPTIONS} placeholder="Select sex" />
@@ -433,7 +442,7 @@ export default function ProfilePage() {
               <TextInput value={form.diagnosis_date} onChange={set("diagnosis_date")} type="date" />
             </Field>
             <Field label="Country">
-              <TextInput value={form.country} onChange={set("country")} placeholder="e.g. South Africa" />
+              <TextInput value={form.country} onChange={set("country")} placeholder="e.g. South Africa" name="country-name" autoComplete="country-name" />
             </Field>
             <Field label="Language">
               <SelectInput value={form.language} onChange={set("language")} options={LANGUAGE_OPTIONS} placeholder="Select language" />
@@ -516,7 +525,7 @@ export default function ProfilePage() {
               </>
             )}
           </Card>
-        </div>
+        </form>
 
         {/* ── Save Button & Feedback ─────────────────────────────────────── */}
         <div style={{ marginTop: 24, display: "flex", flexDirection: "column", gap: 12 }}>
