@@ -259,36 +259,29 @@ function SummaryStats({ peakIOB, peakTime, lowestIOB, lowestTime, strongOverlapH
   );
 }
 
-function DangerBrackets({ dangerWindows, totalMinutes, chartWidth, marginLeft }: {
-  dangerWindows: DangerWindow[]; totalMinutes: number; chartWidth: number; marginLeft: number;
-}) {
+function DangerWindowBadges({ dangerWindows }: { dangerWindows: DangerWindow[] }) {
   if (dangerWindows.length === 0) return null;
-  const dataWidth = chartWidth - marginLeft - 8;
-  const toX = (min: number) => marginLeft + (min / totalMinutes) * dataWidth;
-
   return (
-    <svg width="100%" height={28} style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none", overflow: "visible" }} viewBox={`0 0 ${chartWidth} 28`} preserveAspectRatio="xMidYMid meet">
+    <div style={{ display: "flex", gap: 6, flexWrap: "wrap", padding: "0 4px", marginBottom: 8 }}>
       {dangerWindows.map((w, i) => {
         const isOverlap = w.pressure === "overlap";
         const colour = isOverlap ? "#EF4444" : "#F87171";
-        const thickness = isOverlap ? 3 : 2;
-        const label = isOverlap ? `Danger Window: ${minutesToTime(w.startMinute)} – ${minutesToTime(w.endMinute)}` : `Watch Window: ${minutesToTime(w.startMinute)} – ${minutesToTime(w.endMinute)}`;
-        const x1 = toX(w.startMinute);
-        const x2 = toX(w.endMinute);
-        const midX = (x1 + x2) / 2;
-
+        const bg = isOverlap ? "rgba(239,68,68,0.08)" : "rgba(248,113,113,0.08)";
+        const label = isOverlap ? "Danger" : "Watch";
         return (
-          <g key={`bracket-${i}`}>
-            <line x1={x1} y1={16} x2={x2} y2={16} stroke={colour} strokeWidth={thickness} />
-            <polygon points={`${x1 - 3},16 ${x1 + 3},16 ${x1},22`} fill={colour} />
-            <polygon points={`${x2 - 3},16 ${x2 + 3},16 ${x2},22`} fill={colour} />
-            <text x={midX} y={11} textAnchor="middle" fill={colour} fontSize={9} fontWeight={600} fontFamily="'DM Sans', sans-serif">
-              {label}
-            </text>
-          </g>
+          <span key={`dw-${i}`} style={{
+            display: "inline-flex", alignItems: "center", gap: 4,
+            padding: "4px 10px", borderRadius: 6,
+            background: bg, border: `1px solid ${colour}30`,
+            fontSize: 11, fontWeight: 600, color: colour,
+            fontFamily: "'DM Sans', sans-serif",
+          }}>
+            <span style={{ width: 6, height: 6, borderRadius: "50%", background: colour }} />
+            {label}: {minutesToTime(w.startMinute)} – {minutesToTime(w.endMinute)}
+          </span>
         );
       })}
-    </svg>
+    </div>
   );
 }
 
@@ -498,7 +491,7 @@ export default function IOBTerrainChart({
     <StackedTooltip {...props} entryCurves={entryCurves} />
   ), [entryCurves]);
 
-  const marginLeft = compact ? 36 : 48;
+  const _marginLeft = compact ? 36 : 48;
 
   if (totalDoses === 0) {
     return (
@@ -598,10 +591,8 @@ export default function IOBTerrainChart({
             totalMinutes={totalMinutes} xTicks={xTicks} compact={compact} />
         ) : (
           <>
-            {/* Danger/Watch brackets above chart */}
-            <div style={{ position: "relative", height: dangerWindows.length > 0 ? 28 : 0 }}>
-              <DangerBrackets dangerWindows={dangerWindows} totalMinutes={totalMinutes} chartWidth={800} marginLeft={marginLeft} />
-            </div>
+            {/* Danger/Watch window badges */}
+            <DangerWindowBadges dangerWindows={dangerWindows} />
 
             {/* Tab label */}
             {activeTab !== "stacked" && (
