@@ -314,7 +314,15 @@ export default function ProfilePage() {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       let data: any;
       try { data = JSON.parse(text); } catch { throw new Error("Server returned an unexpected response. Please try again."); }
-      if (!res.ok) throw new Error(data.error ?? "Save failed");
+      if (!res.ok) {
+        if (res.status === 401) {
+          // Token truly expired — force re-login
+          await supabase.auth.signOut();
+          window.location.href = "/auth";
+          return;
+        }
+        throw new Error(data.error ?? "Save failed");
+      }
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);
     } catch (e: unknown) {
