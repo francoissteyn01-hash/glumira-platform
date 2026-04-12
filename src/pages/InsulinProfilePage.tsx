@@ -9,6 +9,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { DISCLAIMER } from "@/lib/constants";
 import { API } from "@/lib/api";
 import { useKeyboardSave } from "@/hooks/useKeyboardSave";
+import { INSULIN_PROFILES as CLIENT_PROFILES } from "@/iob-hunter/engine/insulin-profiles";
 
 /* ─── Constants ───────────────────────────────────────────────────────────── */
 
@@ -37,7 +38,7 @@ const CATEGORY_COLORS: Record<string, string> = {
 
 /* ─── Types ───────────────────────────────────────────────────────────────── */
 
-interface InsulinRef {
+type InsulinRef = {
   id: string;
   brand_name: string;
   generic_name: string;
@@ -52,7 +53,7 @@ interface InsulinRef {
   pk_source: string;
 }
 
-interface InsulinData {
+type InsulinData = {
   insulin_types: string[];
   delivery_method: string;
   basal_frequency: string;
@@ -144,7 +145,7 @@ function TextInput({ value, onChange, placeholder, type = "text", inputMode, pat
   return (
     <input
       type={type} value={value} onChange={(e) => onChange(e.target.value)}
-      placeholder={placeholder} inputMode={inputMode as any} pattern={pattern}
+      placeholder={placeholder} inputMode={inputMode as React.HTMLAttributes<HTMLInputElement>["inputMode"]} pattern={pattern}
       style={inputStyle}
       onFocus={(e) => { e.currentTarget.style.borderColor = "#2ab5c1"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(42,181,193,0.15)"; }}
       onBlur={(e) => { e.currentTarget.style.borderColor = "#dee2e6"; e.currentTarget.style.boxShadow = "none"; }}
@@ -244,8 +245,41 @@ export default function InsulinProfilePage() {
 
     const refFetch = fetch(`${API}/api/insulin-profiles`)
       .then((r) => r.json())
-      .then((data) => data.insulins ?? [])
-      .catch(() => []);
+      .then((data) => {
+        const dbInsulins = data.insulins ?? [];
+        if (dbInsulins.length > 0) return dbInsulins;
+        // Fallback: use client-side PK profiles when DB returns empty
+        return CLIENT_PROFILES.map((p) => ({
+          id: p.brand_name.toLowerCase().replace(/\s+/g, "-"),
+          brand_name: p.brand_name,
+          generic_name: p.generic_name,
+          manufacturer: p.manufacturer ?? null,
+          category: p.category.replace(/-/g, "_"),
+          onset_minutes: p.onset_minutes,
+          peak_start_minutes: p.peak_start_minutes ?? null,
+          peak_end_minutes: p.peak_end_minutes ?? null,
+          duration_minutes: p.duration_minutes,
+          is_peakless: p.is_peakless,
+          mechanism_notes: p.mechanism_notes ?? null,
+          pk_source: p.pk_source,
+        }));
+      })
+      .catch(() =>
+        CLIENT_PROFILES.map((p) => ({
+          id: p.brand_name.toLowerCase().replace(/\s+/g, "-"),
+          brand_name: p.brand_name,
+          generic_name: p.generic_name,
+          manufacturer: p.manufacturer ?? null,
+          category: p.category.replace(/-/g, "_"),
+          onset_minutes: p.onset_minutes,
+          peak_start_minutes: p.peak_start_minutes ?? null,
+          peak_end_minutes: p.peak_end_minutes ?? null,
+          duration_minutes: p.duration_minutes,
+          is_peakless: p.is_peakless,
+          mechanism_notes: p.mechanism_notes ?? null,
+          pk_source: p.pk_source,
+        }))
+      );
 
     Promise.all([profileFetch, refFetch]).then(([profile, insulins]) => {
       if (profile) {
@@ -277,13 +311,14 @@ export default function InsulinProfilePage() {
         body: JSON.stringify(form),
       });
       const text = await res.text();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       let data: any;
       try { data = JSON.parse(text); } catch { throw new Error("Server returned an unexpected response. Please try again."); }
       if (!res.ok) throw new Error(data.error ?? "Save failed");
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);
-    } catch (e: any) {
-      setError(e.message);
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : "Save failed");
     } finally {
       setSaving(false);
     }
@@ -292,6 +327,7 @@ export default function InsulinProfilePage() {
   useKeyboardSave(save);
 
   /* ─── Helpers ─────────────────────────────────────────────────────────── */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const set = (key: keyof InsulinData) => (val: any) => setForm((f) => ({ ...f, [key]: val }));
   const toggleInsulin = (brandName: string) => {
     setForm((f) => ({

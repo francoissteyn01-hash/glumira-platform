@@ -71,18 +71,18 @@ const PRESSURE_OPACITY: Record<PressureClass, number> = {
   light: 0, moderate: 0.08, strong: 0.12, overlap: 0.18,
 };
 
-// Stacked layer colours
-const BASAL_STACK_COLOURS = ["#1A2A5E", "#2A3A6E", "#3A4A7E", "#4A5A8E"];
+// Stacked layer colours — distinct per insulin, NOT monochrome navy
+const BASAL_STACK_COLOURS = ["#5B8FD4", "#7F77DD", "#378ADD", "#5BA3CF"];
 const BOLUS_STACK_COLOURS: Record<string, string> = {
   "ultra-rapid": "#2AB5C1",
   "rapid": "#2AB5C1",
-  "short": "#4A7FB5",
+  "short": "#E8A838",
 };
 const BOLUS_STACK_DEFAULT = "#2AB5C1";
 
-// Per-insulin colours for individual view / legend
-const BASAL_COLOURS = ["#2ab5c1", "#7F77DD", "#378ADD", "#5BA3CF"];
-const BOLUS_COLOURS = ["#D85A30", "#D4537E", "#EF9F27", "#E06B55"];
+// Per-insulin colours — high contrast, multi-colour (reference images)
+const BASAL_COLOURS = ["#5B8FD4", "#7F77DD", "#378ADD", "#5BA3CF"];
+const BOLUS_COLOURS = ["#2AB5C1", "#E8A838", "#E06B55", "#D4537E"];
 const GLUCOSE_COLOUR = "#f59e0b";
 
 // Abbreviations for dose markers
@@ -289,10 +289,11 @@ function DangerWindowBadges({ dangerWindows }: { dangerWindows: DangerWindow[] }
 /*  G4 Individual Curves View                                                 */
 /* ═══════════════════════════════════════════════════════════════════════════ */
 
-function G4DensityView({ entryCurves, enrichedPoints, totalMinutes, xTicks, compact }: {
+function G4DensityView({ entryCurves, enrichedPoints, totalMinutes, graphStartMinute, xTicks, compact }: {
   entryCurves: Array<{ entry: InsulinEntry; idx: number; colour: string; stackColour: string; curve: Array<{ minute: number; iob: number }> }>;
   enrichedPoints: ChartPoint[];
   totalMinutes: number;
+  graphStartMinute: number;
   xTicks: number[];
   compact: boolean;
 }) {
@@ -598,7 +599,7 @@ export default function IOBTerrainChart({
 
         {activeTab === "individual" ? (
           <G4DensityView entryCurves={entryCurves} enrichedPoints={enrichedPoints}
-            totalMinutes={totalMinutes} xTicks={xTicks} compact={compact} />
+            totalMinutes={totalMinutes} graphStartMinute={graphStartMinute} xTicks={xTicks} compact={compact} />
         ) : (
           <>
             {/* Danger/Watch window badges */}
