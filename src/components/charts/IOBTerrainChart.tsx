@@ -44,6 +44,16 @@ type BolusEntry = { insulinName: string; dose: number; time: string; mealType?: 
 type GlucosePoint = { time: string; value: number; unit: "mmol/L" | "mg/dL"; }
 type ProfileInfo = { name: string; caregiver?: string; age?: number; sex?: string; country: string; glucoseUnit: "mmol/L" | "mg/dL"; }
 
+/** v7 engine curve data — when provided, bypasses the legacy pharmacokinetics engine entirely */
+export type V7ChartData = {
+  /** IOB curve points from generateStackedCurve (v7 engine, cited PK models) */
+  curve: Array<{ hours: number; time_label: string; total_iob: number; breakdown: Record<string, number> }>;
+  /** Dose metadata for legend/markers */
+  doses: Array<{ id: string; insulin_name: string; dose_units: number; administered_at: string; dose_type: string }>;
+  /** Peak IOB from the curve */
+  maxIOB: number;
+}
+
 export type IOBTerrainChartProps = {
   profile: ProfileInfo;
   basalEntries: BasalEntry[];
@@ -55,6 +65,8 @@ export type IOBTerrainChartProps = {
   showWhatIf?: boolean;
   compact?: boolean;
   tier?: "free" | "pro" | "ai" | "clinical";
+  /** When provided, uses v7 cited PK engine instead of legacy Bateman model */
+  v7Data?: V7ChartData;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════ */
@@ -358,8 +370,10 @@ function G4DensityView({ entryCurves, enrichedPoints, totalMinutes, graphStartMi
 export default function IOBTerrainChart({
   profile, basalEntries, bolusEntries, glucoseData,
   cycles = 2, showInsight = true, showDensityBar = true, showWhatIf = false, compact = false, tier = "free",
+  v7Data,
 }: IOBTerrainChartProps) {
   const safeCycles = Math.max(2, cycles);
+  const useV7 = v7Data != null;
 
   const view = "clinical" as const;
 
@@ -367,19 +381,120 @@ export default function IOBTerrainChart({
 
   const [whatIfBasal, setWhatIfBasal] = useState(basalEntries);
   const [whatIfBolus, setWhatIfBolus] = useState(bolusEntries);
-  const isModified = JSON.stringify(whatIfBasal) !== JSON.stringify(basalEntries) || JSON.stringify(whatIfBolus) !== JSON.stringify(bolusEntries);
+  const isModified = !useV7 && (JSON.stringify(whatIfBasal) !== JSON.stringify(basalEntries) || JSON.stringify(whatIfBolus) !== JSON.stringify(bolusEntries));
   const activeBasal = isModified ? whatIfBasal : basalEntries;
   const activeBolus = isModified ? whatIfBolus : bolusEntries;
 
-  const entries = useMemo(() => toInsulinEntries(activeBasal, activeBolus), [activeBasal, activeBolus]);
-  const { points: rawPoints, peakIOB, dangerWindows, worstPressure } = useMemo(() => buildTerrainTimeline(entries, safeCycles), [entries, safeCycles]);
-  const points = useMemo(() => attachGlucose(rawPoints, glucoseData, safeCycles), [rawPoints, glucoseData, safeCycles]);
+  // ═══════════════════════════════════════════════════════════════════
+  // DATA PIPELINE — v7 engine (cited PK) when available, legacy fallback
+  // ═══════════════════════════════════════════════════════════════════
 
-  const entryCurves = useMemo(() => {
+  const entries = useMemo(() => toInsulinEntries(activeBasal, activeBolus), [activeBasal, activeBolus]);
+
+  // --- v7 path: convert IOBCurvePoint[] → chart-ready data ---
+  const v7Derived = useMemo(() => {
+    if (!v7Data) return null;
+    const { curve, doses, maxIOB } = v7Data;
+    if (curve.length === 0) return null;
+
+    // Build unique dose list with colours
+    let bIdx = 0;
+    let rIdx = 0;
+    const doseColours: Array<{ id: string; name: string; dose: number; type: string; colour: string; stackColour: string }> = doses.map((d) => {
+      const isBasal = d.dose_type === "basal_injection";
+      const colour = isBasal ? BASAL_COLOURS[bIdx % BASAL_COLOURS.length] : BOLUS_COLOURS[rIdx % BOLUS_COLOURS.length];
+      const stackColour = isBasal ? BASAL_STACK_COLOURS[bIdx % BASAL_STACK_COLOURS.length] : BOLUS_STACK_DEFAULT;
+      if (isBasal) bIdx++; else rIdx++;
+      return { id: d.id, name: d.insulin_name, dose: d.dose_units, type: isBasal ? "basal" : "bolus", colour, stackColour };
+    });
+
+    // Convert curve points to chart format (minute-based)
+    const points: ChartPoint[] = curve.map((pt) => {
+      const minute = Math.round(pt.hours * 60);
+      const totalIOB = pt.total_iob;
+      // Pressure classification
+      const ratio = maxIOB > 0 ? totalIOB / maxIOB : 0;
+      const pressure: PressureClass = ratio >= 0.75 ? "overlap" : ratio >= 0.5 ? "strong" : ratio >= 0.25 ? "moderate" : "light";
+      // Per-dose IOB values
+      const perDose: Record<string, number> = {};
+      for (const [key, val] of Object.entries(pt.breakdown)) {
+        perDose[key] = val;
+      }
+      return { minute, totalIOB, basalIOB: 0, bolusIOB: 0, pressure, label: pt.time_label, ...perDose };
+    });
+
+    // Danger windows (>= 75% of peak for >= 15 min)
+    const dangerWindows: DangerWindow[] = [];
+    let dwStart: number | null = null;
+    for (const pt of points) {
+      if (pt.pressure === "overlap" || pt.pressure === "strong") {
+        if (dwStart === null) dwStart = pt.minute;
+      } else if (dwStart !== null) {
+        if (pt.minute - dwStart >= 15) {
+          dangerWindows.push({ startMinute: dwStart, endMinute: pt.minute, pressure: points.find(p => p.minute === dwStart)!.pressure });
+        }
+        dwStart = null;
+      }
+    }
+    if (dwStart !== null && points[points.length - 1].minute - dwStart >= 15) {
+      dangerWindows.push({ startMinute: dwStart, endMinute: points[points.length - 1].minute, pressure: "overlap" });
+    }
+
+    const worstPressure: PressureClass = points.some(p => p.pressure === "overlap") ? "overlap"
+      : points.some(p => p.pressure === "strong") ? "strong"
+      : points.some(p => p.pressure === "moderate") ? "moderate" : "light";
+
+    // Build entryCurves-compatible structure for the chart layers
+    const entryCurvesV7 = doseColours.map((dc, idx) => {
+      // Collect all breakdown keys that match this dose (including cycle variants like "id_c-1")
+      const matchingKeys = new Set<string>();
+      for (const pt of curve) {
+        for (const key of Object.keys(pt.breakdown)) {
+          if (key === dc.id || key.startsWith(dc.id + "_c")) matchingKeys.add(key);
+        }
+      }
+      const curveData = points.map((pt) => {
+        let iob = 0;
+        for (const key of matchingKeys) {
+          iob += (pt[key] as number) || 0;
+        }
+        return { minute: pt.minute, iob };
+      });
+      // Merge all matching keys into a single key for this dose in enrichedPoints
+      const mergedKey = dc.id;
+      return {
+        entry: { id: mergedKey, insulinName: dc.name, dose: dc.dose, time: doses.find(d => d.id === dc.id)?.administered_at ?? "", type: dc.type, pharmacology: {} as InsulinPharmacology, mealType: undefined } as InsulinEntry,
+        idx, colour: dc.colour, stackColour: dc.stackColour, curve: curveData,
+      };
+    });
+
+    // Rebuild enrichedPoints with merged per-dose keys
+    const enriched = points.map((pt) => {
+      const merged: Record<string, number> = {};
+      for (const ec of entryCurvesV7) {
+        let iob = 0;
+        for (const key of Object.keys(pt)) {
+          if (key === ec.entry.id || (typeof key === "string" && key.startsWith(ec.entry.id + "_c"))) {
+            iob += (pt[key] as number) || 0;
+          }
+        }
+        merged[ec.entry.id] = iob;
+      }
+      return { ...pt, ...merged };
+    });
+
+    return { points: enriched, rawPoints: points, peakIOB: maxIOB, dangerWindows, worstPressure, entryCurves: entryCurvesV7 };
+  }, [v7Data]);
+
+  // --- Legacy path (fallback when v7Data not provided) ---
+  const legacyDerived = useMemo(() => {
+    if (useV7) return null;
+    const { points: rp, peakIOB: pk, dangerWindows: dw, worstPressure: wp } = buildTerrainTimeline(entries, safeCycles);
+    const pts = attachGlucose(rp, glucoseData, safeCycles);
     const totalMinutes = safeCycles * MINUTES_PER_DAY;
     let basalIdx = 0;
     let _bolusIdx = 0;
-    return entries.map((entry, idx) => {
+    const ec = entries.map((entry, idx) => {
       let colour: string;
       let stackColour: string;
       if (entry.type === "basal") {
@@ -393,32 +508,33 @@ export default function IOBTerrainChart({
       }
       return { entry, idx, colour, stackColour, curve: computeEntryCurve(entry, totalMinutes, safeCycles) };
     });
-  }, [entries, safeCycles]);
-
-  const enrichedPoints = useMemo(() => {
     const lookup = new Map<number, Record<string, number>>();
-    for (const { entry, curve } of entryCurves) {
+    for (const { entry, curve } of ec) {
       for (const pt of curve) {
         if (!lookup.has(pt.minute)) lookup.set(pt.minute, {});
         lookup.get(pt.minute)![entry.id] = pt.iob;
       }
     }
-    return points.map((pt) => {
-      const extra = lookup.get(pt.minute) || {};
-      return { ...pt, ...extra };
-    });
-  }, [points, entryCurves]);
+    const enriched = pts.map((pt) => ({ ...pt, ...(lookup.get(pt.minute) || {}) }));
+    return { points: enriched, rawPoints: rp, peakIOB: pk, dangerWindows: dw, worstPressure: wp, entryCurves: ec };
+  }, [useV7, entries, safeCycles, glucoseData]);
+
+  // --- Unified variables for the rest of the component ---
+  const derived = v7Derived ?? legacyDerived!;
+  const { rawPoints, peakIOB, dangerWindows, worstPressure, entryCurves } = derived;
+  const enrichedPoints = derived.points;
 
   const basalOnlyCurves = useMemo(() => entryCurves.filter(({ entry }) => entry.type === "basal"), [entryCurves]);
   const bolusOnlyCurves = useMemo(() => entryCurves.filter(({ entry }) => entry.type === "bolus"), [entryCurves]);
 
-  // What-if comparison: build original curve for green overlay when in what-if mode
+  // What-if comparison (legacy only)
   const originalEntries = useMemo(() => toInsulinEntries(basalEntries, bolusEntries), [basalEntries, bolusEntries]);
-  const { points: originalPoints } = useMemo(() => buildTerrainTimeline(originalEntries, safeCycles), [originalEntries, safeCycles]);
+  const { points: originalPoints } = useMemo(() => useV7 ? { points: [] as TerrainPoint[] } : buildTerrainTimeline(originalEntries, safeCycles), [useV7, originalEntries, safeCycles]);
 
   const pressureBands = useMemo(() => buildPressureBands(rawPoints), [rawPoints]);
 
   const peakPoint = useMemo(() => {
+    if (rawPoints.length === 0) return rawPoints[0];
     let best = rawPoints[0];
     for (const pt of rawPoints) { if (pt.totalIOB > best.totalIOB) best = pt; }
     return best;

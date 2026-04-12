@@ -123,10 +123,26 @@ export default function IOBHunterPage() {
   /* ─── Tier gate overlay state ────────────────────────────────── */
   const [gateFeature, setGateFeature] = useState<TierGateFeature | null>(null);
 
-  /* ─── v7 engine drives the report (KPIs, basal, stacking) ───── */
-  const { kpis, stackingAlerts, basalAnalysis } = useIOBHunter(activeDoses);
+  /* ─── v7 engine drives EVERYTHING (chart + report) ────────────── */
+  const { curve, kpis, stackingAlerts, basalAnalysis, maxIOB } = useIOBHunter(
+    activeDoses,
+    { resolutionMinutes: 5, cycles: 3, startHour: 0, endHour: 48 },
+  );
 
-  /* ─── Legacy adapter for IOBTerrainChart ─────────────────────── */
+  /* ─── v7 data for the chart (bypasses legacy engine) ─────────── */
+  const v7ChartData = useMemo(() => ({
+    curve,
+    doses: activeDoses.map((d) => ({
+      id: d.id,
+      insulin_name: d.insulin_name,
+      dose_units: d.dose_units,
+      administered_at: d.administered_at,
+      dose_type: d.dose_type,
+    })),
+    maxIOB,
+  }), [curve, activeDoses, maxIOB]);
+
+  /* ─── Legacy adapter kept as fallback only ───────────────────── */
   const legacyEntries = useMemo(() => v7ToLegacyEntries(activeDoses), [activeDoses]);
 
   const profileForChart = useMemo(
@@ -264,10 +280,11 @@ export default function IOBHunterPage() {
           profile={profileForChart}
           basalEntries={legacyEntries.basal}
           bolusEntries={legacyEntries.bolus}
+          v7Data={v7ChartData}
           cycles={2}
           showInsight={true}
           showDensityBar={true}
-          showWhatIf={true}
+          showWhatIf={false}
           tier={isAuthenticated ? "pro" : "free"}
         />
 
