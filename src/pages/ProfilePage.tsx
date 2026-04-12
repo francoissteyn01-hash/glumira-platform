@@ -49,7 +49,7 @@ const PROFILE_TYPES = [
   { value: "clinician",          label: "Clinician / HCP",         icon: "\u{1FA7A}", desc: "Healthcare professional using GluMira\u2122" },
 ] as const;
 
-interface ProfileData {
+type ProfileData = {
   profile_type: string;
   first_name: string;
   last_name: string;
@@ -160,7 +160,7 @@ function TextInput({ value, onChange, placeholder, type = "text", inputMode, pat
   return (
     <input
       type={type} value={value} onChange={(e) => onChange(e.target.value)}
-      placeholder={placeholder} inputMode={inputMode as any} pattern={pattern}
+      placeholder={placeholder} inputMode={inputMode as React.HTMLAttributes<HTMLInputElement>["inputMode"]} pattern={pattern}
       style={inputStyle}
       onFocus={(e) => { e.currentTarget.style.borderColor = "#2ab5c1"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(42,181,193,0.15)"; }}
       onBlur={(e) => { e.currentTarget.style.borderColor = "#dee2e6"; e.currentTarget.style.boxShadow = "none"; }}
@@ -196,7 +196,7 @@ function CheckboxGrid({ options, selected, onToggle }: {
               display: "flex", alignItems: "center", gap: 8, minHeight: 48,
               padding: "8px 12px", borderRadius: 8, cursor: "pointer",
               border: `1px solid ${checked ? "var(--accent-teal)" : "var(--border-light)"}`,
-              background: checked ? "rgba(42,181,193,0.08)" : "#ffffff",
+              background: checked ? "rgba(42,181,193,0.08)" : "var(--bg-card)",
               fontSize: 13, color: "var(--text-primary)", fontFamily: "'DM Sans', system-ui, sans-serif",
               transition: "all 0.15s",
             }}
@@ -241,7 +241,7 @@ function ProgressBar({ percent }: { percent: number }) {
 
 /* ═══════════════════════════════════════════════════════════════════════════ */
 export default function ProfilePage() {
-  const { user, session, loading: authLoading } = useAuth();
+  const { session, loading: authLoading } = useAuth();
   const [form, setForm] = useState<ProfileData>(EMPTY_PROFILE);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -293,19 +293,23 @@ export default function ProfilePage() {
     setError(null);
     setSaved(false);
     try {
+      // Refresh token before saving to prevent expired-token errors
+      const { data: refreshed } = await supabase.auth.refreshSession();
+      const token = refreshed?.session?.access_token ?? session.access_token;
       const res = await fetch(`${API}/api/profile`, {
         method: "PUT",
-        headers: { Authorization: `Bearer ${session.access_token}`, "Content-Type": "application/json" },
+        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
       const text = await res.text();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       let data: any;
       try { data = JSON.parse(text); } catch { throw new Error("Server returned an unexpected response. Please try again."); }
       if (!res.ok) throw new Error(data.error ?? "Save failed");
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);
-    } catch (e: any) {
-      setError(e.message);
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : "Save failed");
     } finally {
       setSaving(false);
     }
@@ -314,6 +318,7 @@ export default function ProfilePage() {
   useKeyboardSave(save);
 
   /* ─── Helpers ─────────────────────────────────────────────────────────── */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const set = (key: keyof ProfileData) => (val: any) => setForm((f) => ({ ...f, [key]: val }));
   const toggleArray = (key: "allergens" | "comorbidities" | "special_conditions") => (val: string) => {
     setForm((f) => ({
@@ -379,7 +384,7 @@ export default function ProfilePage() {
                       display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 4,
                       padding: "16px 14px", borderRadius: 10, cursor: "pointer", textAlign: "left",
                       border: `1.5px solid ${selected ? "var(--accent-teal)" : "var(--border)"}`,
-                      background: selected ? "rgba(42,181,193,0.05)" : "#ffffff",
+                      background: selected ? "rgba(42,181,193,0.05)" : "var(--bg-card)",
                       transition: "all 0.15s",
                     }}
                   >
@@ -454,7 +459,7 @@ export default function ProfilePage() {
                     style={{
                       minWidth: 48, minHeight: 48, borderRadius: 8, cursor: "pointer",
                       border: `1px solid ${form.meals_per_day === n ? "var(--accent-teal)" : "var(--border-light)"}`,
-                      background: form.meals_per_day === n ? "rgba(42,181,193,0.12)" : "#ffffff",
+                      background: form.meals_per_day === n ? "rgba(42,181,193,0.12)" : "var(--bg-card)",
                       color: form.meals_per_day === n ? "var(--accent-teal)" : "var(--text-secondary)",
                       fontSize: 15, fontWeight: form.meals_per_day === n ? 700 : 400,
                       fontFamily: "'JetBrains Mono', monospace",
@@ -489,7 +494,7 @@ export default function ProfilePage() {
               display: "flex", alignItems: "center", gap: 12, minHeight: 48,
               padding: "10px 14px", borderRadius: 8, cursor: "pointer",
               border: `1px solid ${form.is_caregiver ? "var(--accent-teal)" : "var(--border-light)"}`,
-              background: form.is_caregiver ? "rgba(42,181,193,0.08)" : "#ffffff",
+              background: form.is_caregiver ? "rgba(42,181,193,0.08)" : "var(--bg-card)",
               fontSize: 14, color: "var(--text-primary)", fontFamily: "'DM Sans', system-ui, sans-serif",
               marginBottom: form.is_caregiver ? 16 : 0,
             }}>
