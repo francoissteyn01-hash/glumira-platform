@@ -79,12 +79,15 @@ const PRESSURE_COLOURS: Record<PressureClass, string> = {
   light: "#4CAF50", moderate: "#F59E0B", strong: "#F87171", overlap: "#EF4444",
 };
 
+// Rule 50 audit — pressure bands were invisible at mobile (0.08/0.12/0.18).
+// Bumped to stay legible at 393px and to make strong/overlap visibly distinct.
 const PRESSURE_OPACITY: Record<PressureClass, number> = {
-  light: 0, moderate: 0.08, strong: 0.12, overlap: 0.18,
+  light: 0, moderate: 0.22, strong: 0.32, overlap: 0.44,
 };
 
-// Stacked layer colours — distinct per insulin, NOT monochrome navy
-const BASAL_STACK_COLOURS = ["#5B8FD4", "#7F77DD", "#378ADD", "#5BA3CF"];
+// Rule 50 audit — basal blues (#5B8FD4 vs #7F77DD vs #378ADD vs #5BA3CF) were
+// perceptually adjacent on navy. Spread hues to distinguish stacked layers.
+const BASAL_STACK_COLOURS = ["#5B8FD4", "#9E7FDD", "#2E86AB", "#7FB3D3"];
 const BOLUS_STACK_COLOURS: Record<string, string> = {
   "ultra-rapid": "#2AB5C1",
   "rapid": "#2AB5C1",
@@ -93,7 +96,7 @@ const BOLUS_STACK_COLOURS: Record<string, string> = {
 const BOLUS_STACK_DEFAULT = "#2AB5C1";
 
 // Per-insulin colours — high contrast, multi-colour (reference images)
-const BASAL_COLOURS = ["#5B8FD4", "#7F77DD", "#378ADD", "#5BA3CF"];
+const BASAL_COLOURS = ["#5B8FD4", "#9E7FDD", "#2E86AB", "#7FB3D3"];
 const BOLUS_COLOURS = ["#2AB5C1", "#E8A838", "#E06B55", "#D4537E"];
 const GLUCOSE_COLOUR = "#f59e0b";
 
@@ -200,22 +203,31 @@ function StackedTooltip({ active, payload, entryCurves }: any) {
     }
   }
   breakdown.sort((a, b) => b.iob - a.iob);
+  // Rule 53 audit — mobile tooltip overflow on 393px S23 FE. Cap at 4 rows.
+  const MAX_ROWS = 4;
+  const visible = breakdown.slice(0, MAX_ROWS);
+  const overflow = Math.max(0, breakdown.length - MAX_ROWS);
 
   return (
-    <div style={{ background: "var(--bg-card, #fff)", border: "1px solid var(--border, #e2e8f0)", borderRadius: 10, padding: "12px 16px", boxShadow: "0 4px 16px rgba(0,0,0,0.12)", fontFamily: "'DM Sans', system-ui, sans-serif", minWidth: 220, maxWidth: 300 }}>
-      <p style={{ fontSize: 13, color: "var(--text-primary)", margin: "0 0 8px", fontWeight: 700, fontFamily: "'JetBrains Mono', monospace" }}>
+    <div style={{ background: "var(--bg-card, #fff)", border: "1px solid var(--border, #e2e8f0)", borderRadius: 10, padding: "12px 16px", boxShadow: "0 4px 16px rgba(0,0,0,0.12)", fontFamily: "'DM Sans', system-ui, sans-serif", minWidth: 200, maxWidth: 280 }}>
+      <p style={{ fontSize: "clamp(12px, 3vw, 13px)", color: "var(--text-primary)", margin: "0 0 8px", fontWeight: 700, fontFamily: "'JetBrains Mono', monospace" }}>
         {d.label} — Total IOB: {d.totalIOB.toFixed(2)}U
       </p>
-      {breakdown.length > 0 && (
+      {visible.length > 0 && (
         <div style={{ display: "flex", flexDirection: "column", gap: 3, marginBottom: 8 }}>
-          {breakdown.map((b, i) => (
-            <div key={i} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 11, color: "var(--text-secondary)" }}>
+          {visible.map((b, i) => (
+            <div key={i} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: "clamp(10px, 2.8vw, 11px)", color: "var(--text-secondary)" }}>
               <span style={{ width: 8, height: 8, borderRadius: 2, background: b.colour, flexShrink: 0 }} />
               <span style={{ fontFamily: "'JetBrains Mono', monospace" }}>
                 {b.name} ({b.time}): {b.iob.toFixed(2)}U
               </span>
             </div>
           ))}
+          {overflow > 0 && (
+            <div style={{ fontSize: 10, color: "var(--text-secondary)", opacity: 0.7, fontStyle: "italic" }}>
+              +{overflow} more
+            </div>
+          )}
         </div>
       )}
       <div style={{ display: "flex", gap: 12, fontSize: 11 }}>
