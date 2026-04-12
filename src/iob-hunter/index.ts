@@ -15,6 +15,7 @@ export type {
   DecayModel,
   DoseType,
   InjectionMarker,
+  InjectionRoute,
   InsulinCategory,
   InsulinDose,
   InsulinProfile,
@@ -44,8 +45,10 @@ export {
   generateInjectionMarkers,
   generateStackedCurve,
   getHistoryWindow,
+  getRegimenGraphWindow,
   predictiveHighAlert,
   predictiveLowAlert,
+  resolveEffectiveDOA,
   TIER_CONFIG,
 } from "@/iob-hunter/engine/iob-engine";
 

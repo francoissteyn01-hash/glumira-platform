@@ -23,11 +23,12 @@ export type InsulinCategory =
 
 /* ─── Decay model (alphabetical, all lower_snake) ────────────────────────── */
 export type DecayModel =
-  | "bilinear"        // linear rise then linear fall (simple rapid)
-  | "exponential"     // Bateman two-compartment (standard rapid/short/int.)
-  | "flat_depot"      // Tresiba/Toujeo — linear decline, NO peak
-  | "microprecipitate" // Lantus/Basaglar — near-flat with slow onset
-  | "mixed_profile";  // premix (e.g. Humulin 70/30) — rapid + long components
+  | "albumin_bound"    // Levemir — albumin binding, dose-dependent DOA (Plank 2005)
+  | "bilinear"         // linear rise then linear fall (simple rapid)
+  | "depot_release"    // Tresiba/Toujeo — slow depot release, near-constant rate
+  | "exponential"      // Bateman two-compartment (standard rapid/short/int.)
+  | "microprecipitate" // Lantus/Basaglar — near-flat with slow onset, small peak (clamp data)
+  | "mixed_profile";   // premix (e.g. Humulin 70/30) — rapid + long components
 
 /* ─── Insulin status per region (alphabetical) ───────────────────────────── */
 export type RegionalStatus =
@@ -103,6 +104,9 @@ export type InsulinRegionalName = {
   notes: string | null;
 }
 
+/* ─── Injection route ────────────────────────────────────────────────────── */
+export type InjectionRoute = "intramuscular" | "subcutaneous";
+
 /* ─── Dose event (a single injection or pump delivery) ───────────────────── */
 export type InsulinDose = {
   id: string;
@@ -112,6 +116,8 @@ export type InsulinDose = {
   /** ISO timestamp OR "HH:mm" for schedule-based demo data. */
   administered_at: string;
   dose_type: DoseType;
+  /** Injection route. Defaults to "subcutaneous" when omitted. */
+  route?: InjectionRoute;
   notes?: string | null;
 }
 

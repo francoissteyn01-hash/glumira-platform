@@ -1,16 +1,19 @@
 /**
  * GluMira™ V7 — IOB Hunter v7 · Core Engine
  *
- * Pure functions that compute insulin-on-board (IOB) across four decay
+ * Pure functions that compute insulin-on-board (IOB) across six decay
  * models. No React, no Supabase, no Chart.js — fully testable in isolation.
  *
  * Canonical rules enforced by this file:
- *   - Tresiba uses `flat_depot` → LINEAR decline, NEVER a peak
- *   - Lantus/Basaglar use `microprecipitate` → near-flat plateau, not Bateman
+ *   - Tresiba uses `depot_release` with `is_peakless: true` → LINEAR decline, NEVER a peak
+ *   - Levemir uses `albumin_bound` → dose-dependent DOA from Plank 2005
+ *   - Lantus/Basaglar use `microprecipitate` → near-flat with small peak (clamp data, not marketing)
  *   - Rapid/short/intermediate use `exponential` (Bateman two-compartment)
  *   - Premix uses `mixed_profile` → rapid + long components summed
  *   - Every curve samples backward in time (prior-cycle residual included)
  *   - No hardcoded PK values — profiles passed in as parameters
+ *
+ * Phase 1 foundation commit. Source: 05.8_IOB-Hunter-V7-PK-Research_v1.1.md
  *
  * GluMira™ is an educational platform, not a medical device.
  */
@@ -94,61 +97,65 @@ export function calculateIOB(
   doseUnits: number,
   profile: InsulinProfile,
   minutesSinceDose: number,
+  patientWeightKg?: number,
 ): number {
   if (doseUnits <= 0) return 0;
   if (minutesSinceDose < 0) return 0;
-  if (minutesSinceDose >= profile.duration_minutes) return 0;
   if (minutesSinceDose === 0) return doseUnits;
 
+  // For albumin_bound (Levemir), resolve effective DOA before the boundary check
+  const effectiveDuration = profile.decay_model === "albumin_bound"
+    ? resolveEffectiveDOA(doseUnits, patientWeightKg ?? 70, profile)
+    : profile.duration_minutes;
+
+  if (minutesSinceDose >= effectiveDuration) return 0;
+
   const t = minutesSinceDose / 60;
-  const tDur = profile.duration_minutes / 60;
+  const tDur = effectiveDuration / 60;
 
   switch (profile.decay_model) {
-    /* ─── flat_depot: Tresiba / Toujeo — LINEAR decline, NO peak ────── */
-    case "flat_depot": {
-      const fraction = Math.max(0, 1 - minutesSinceDose / profile.duration_minutes);
+    /* ─── albumin_bound: Levemir — dose-dependent DOA, flat plateau ── */
+    case "albumin_bound": {
+      return calculateAlbuminBoundIOB(doseUnits, profile, minutesSinceDose, effectiveDuration);
+    }
+
+    /* ─── depot_release: Tresiba / Toujeo — LINEAR decline, peakless ─ */
+    case "depot_release": {
+      // Tresiba (peakless): pure linear decline — LOCKED canonical rule
+      // Toujeo (peakless flag set): same treatment for simplicity
+      const fraction = Math.max(0, 1 - minutesSinceDose / effectiveDuration);
       return doseUnits * fraction;
     }
 
     /* ─── microprecipitate: Lantus / Basaglar — near-flat plateau ──── */
     case "microprecipitate": {
-      // Slow exponential-ish decline with a plateau between onset and
-      // ~85% of duration. Keeps IOB near-constant then falls off.
-      const plateauEnd = (profile.decay_parameters.plateau_minutes as number) ?? profile.duration_minutes * 0.85;
+      const plateauEnd = (profile.decay_parameters.plateau_minutes as number) ?? effectiveDuration * 0.85;
       if (minutesSinceDose <= plateauEnd) {
-        // Linear plateau: from 100% at t=onset to ~25% at plateau end
         const onsetPct = minutesSinceDose < profile.onset_minutes
           ? 1 - (minutesSinceDose / profile.onset_minutes) * 0.05
           : 1 - 0.05 - ((minutesSinceDose - profile.onset_minutes) / (plateauEnd - profile.onset_minutes)) * 0.7;
         return doseUnits * Math.max(0, onsetPct);
       }
-      // After plateau: linear tail from 25% → 0 across the final 15%
-      const tailRatio = 1 - (minutesSinceDose - plateauEnd) / (profile.duration_minutes - plateauEnd);
+      const tailRatio = 1 - (minutesSinceDose - plateauEnd) / (effectiveDuration - plateauEnd);
       return doseUnits * Math.max(0, 0.25 * tailRatio);
     }
 
     /* ─── bilinear: simple rise + fall (legacy rapid approximation) ── */
     case "bilinear": {
-      const tPeak = (profile.peak_start_minutes ?? profile.duration_minutes * 0.3) / 60;
-      if (t <= tPeak) {
-        // Rising: from 100% at t=0 to 100% at peak (bolus is fully "on board" immediately)
-        return doseUnits;
-      }
-      // Falling: linear from peak to zero at duration
+      const tPeak = (profile.peak_start_minutes ?? effectiveDuration * 0.3) / 60;
+      if (t <= tPeak) return doseUnits;
       const fallFraction = (tDur - t) / (tDur - tPeak);
       return doseUnits * Math.max(0, fallFraction);
     }
 
     /* ─── mixed_profile: 70/30 premix etc. ──────────────────────────── */
     case "mixed_profile": {
-      // Parameters: { rapid_fraction, rapid_duration, long_duration }
       const rf = (profile.decay_parameters.rapid_fraction as number) ?? 0.3;
       const rapidDur = (profile.decay_parameters.rapid_duration_minutes as number) ?? 300;
-      const longDur = (profile.decay_parameters.long_duration_minutes as number) ?? profile.duration_minutes;
+      const longDur = (profile.decay_parameters.long_duration_minutes as number) ?? effectiveDuration;
 
       let rapidIOB = 0;
       if (minutesSinceDose < rapidDur) {
-        // Treat rapid component as exponential with a ~60min peak
         const { ka, ke } = deriveBatemanRates(60, rapidDur);
         rapidIOB = doseUnits * rf * batemanFraction(minutesSinceDose / 60, ka, ke);
       }
@@ -163,14 +170,136 @@ export function calculateIOB(
     case "exponential":
     default: {
       if (profile.is_peakless || profile.peak_start_minutes == null) {
-        // Fallback: use flat_depot for anything marked peakless
-        return doseUnits * Math.max(0, 1 - minutesSinceDose / profile.duration_minutes);
+        return doseUnits * Math.max(0, 1 - minutesSinceDose / effectiveDuration);
       }
       const peakMinutes = ((profile.peak_start_minutes ?? 0) + (profile.peak_end_minutes ?? 0)) / 2;
-      const { ka, ke } = deriveBatemanRates(peakMinutes, profile.duration_minutes);
+      const { ka, ke } = deriveBatemanRates(peakMinutes, effectiveDuration);
       return doseUnits * batemanFraction(t, ka, ke);
     }
   }
+}
+
+/* ═════════════════════════════════════════════════════════════════════════ */
+/*  Function 1b: resolveEffectiveDOA                                       */
+/*  Levemir dose-dependent DOA from Plank 2005 PMID:15855574              */
+/* ═════════════════════════════════════════════════════════════════════════ */
+
+/**
+ * For albumin_bound insulins (Levemir), the duration of action depends on
+ * the dose in U/kg. This function interpolates from the Plank 2005 table
+ * stored in decay_parameters (doa_0_1 through doa_1_6).
+ *
+ * Returns effective DOA in minutes. Falls back to profile.duration_minutes
+ * if the table is missing or weight is unknown.
+ */
+export function resolveEffectiveDOA(
+  doseUnits: number,
+  patientWeightKg: number,
+  profile: InsulinProfile,
+): number {
+  if (!profile.decay_parameters.dose_dependent_doa) return profile.duration_minutes;
+  if (patientWeightKg <= 0) return profile.duration_minutes;
+
+  // Plank 2005 anchors (U/kg → DOA in minutes)
+  const raw: Array<[number, number]> = [
+    [0.1, profile.decay_parameters.doa_0_1 as number],
+    [0.2, profile.decay_parameters.doa_0_2 as number],
+    [0.4, profile.decay_parameters.doa_0_4 as number],
+    [0.8, profile.decay_parameters.doa_0_8 as number],
+    [1.6, profile.decay_parameters.doa_1_6 as number],
+  ];
+  const anchors = raw.filter(([, doa]) => doa != null && typeof doa === "number") as Array<[number, number]>;
+
+  if (anchors.length === 0) return profile.duration_minutes;
+
+  const uPerKg = doseUnits / patientWeightKg;
+
+  // Below minimum anchor: use lowest value
+  if (uPerKg <= anchors[0][0]) return anchors[0][1];
+  // Above maximum anchor: use highest value
+  if (uPerKg >= anchors[anchors.length - 1][0]) return anchors[anchors.length - 1][1];
+
+  // Linear interpolation between the two nearest anchors
+  for (let i = 0; i < anchors.length - 1; i++) {
+    const [x0, y0] = anchors[i];
+    const [x1, y1] = anchors[i + 1];
+    if (uPerKg >= x0 && uPerKg <= x1) {
+      const ratio = (uPerKg - x0) / (x1 - x0);
+      return y0 + ratio * (y1 - y0);
+    }
+  }
+
+  return profile.duration_minutes;
+}
+
+/* ═════════════════════════════════════════════════════════════════════════ */
+/*  Function 1c: calculateAlbuminBoundIOB                                  */
+/*  Levemir-specific: flat plateau shape per Plank 2005                    */
+/* ═════════════════════════════════════════════════════════════════════════ */
+
+/**
+ * Shape for albumin-bound insulins (Levemir):
+ *   1. Ramp phase (0 → 120 min): linear rise to ~90% of dose on board
+ *   2. Plateau phase (120 min → 70% of DOA): flat at ~90%, slight linear decline
+ *   3. Tail phase (70% of DOA → DOA): linear decline to 0
+ *
+ * Plank 2005: "flat and protracted pharmacodynamic profile"
+ */
+function calculateAlbuminBoundIOB(
+  doseUnits: number,
+  profile: InsulinProfile,
+  minutesSinceDose: number,
+  effectiveDOAMinutes: number,
+): number {
+  const rampEnd = profile.onset_minutes; // 120 min for Levemir
+  const plateauEnd = effectiveDOAMinutes * 0.7;
+
+  if (minutesSinceDose <= rampEnd) {
+    // Ramp: 0 → 90% of dose over onset period (free fraction ~10% absorbed immediately)
+    const rampFraction = 0.9 * (minutesSinceDose / rampEnd);
+    return doseUnits * rampFraction;
+  }
+
+  if (minutesSinceDose <= plateauEnd) {
+    // Plateau: flat at ~90%, slight decline to ~85%
+    const plateauProgress = (minutesSinceDose - rampEnd) / (plateauEnd - rampEnd);
+    const fraction = 0.9 - 0.05 * plateauProgress;
+    return doseUnits * fraction;
+  }
+
+  // Tail: linear decline from 85% → 0
+  const tailProgress = (minutesSinceDose - plateauEnd) / (effectiveDOAMinutes - plateauEnd);
+  return doseUnits * Math.max(0, 0.85 * (1 - tailProgress));
+}
+
+/* ═════════════════════════════════════════════════════════════════════════ */
+/*  Function 1d: getRegimenGraphWindow                                     */
+/*  DOA-driven graph window — the graph does not start at zero            */
+/* ═════════════════════════════════════════════════════════════════════════ */
+
+/**
+ * Returns the appropriate number of backward cycles to capture the full
+ * residual tail of every insulin in the regimen.
+ *
+ * - Tresiba → 4 cycles (96h back → captures 42h+ residual)
+ * - Levemir → 1-2 cycles (depends on dose-dependent DOA)
+ * - Lantus → 2 cycles (48h)
+ * - Rapids only → 1 cycle (24h)
+ */
+export function getRegimenGraphWindow(
+  doses: InsulinDose[],
+  profiles: readonly InsulinProfile[],
+): { cycles: number; longestDOAHours: number } {
+  let maxDOAMinutes = 0;
+  for (const dose of doses) {
+    const profile = profiles.find((p) => p.brand_name.toLowerCase() === dose.insulin_name.toLowerCase());
+    if (!profile) continue;
+    maxDOAMinutes = Math.max(maxDOAMinutes, profile.duration_minutes);
+  }
+  const longestDOAHours = maxDOAMinutes / 60;
+  // Each cycle is 24h. We need enough cycles to capture the full DOA.
+  const cycles = Math.max(1, Math.ceil(longestDOAHours / 24) + 1);
+  return { cycles, longestDOAHours };
 }
 
 /* ═════════════════════════════════════════════════════════════════════════ */
@@ -183,6 +312,7 @@ export function calculateTotalIOB(
   profiles: readonly InsulinProfile[],
   atHour: number,
   cycles = 2,
+  patientWeightKg?: number,
 ): number {
   let total = 0;
   const safeCycles = Math.max(1, cycles);
@@ -194,7 +324,7 @@ export function calculateTotalIOB(
       if (!profile) continue;
       const doseHour = parseAdministeredHour(dose.administered_at) + cycleOffset;
       const minutesSince = (atHour - doseHour) * 60;
-      total += calculateIOB(dose.dose_units, profile, minutesSince);
+      total += calculateIOB(dose.dose_units, profile, minutesSince, patientWeightKg);
     }
   }
   return Math.round(total * 1000) / 1000;
@@ -229,6 +359,7 @@ export function generateStackedCurve(
   endHour = 24,
   resolutionMinutes = 15,
   cycles = 2,
+  patientWeightKg?: number,
 ): IOBCurvePoint[] {
   const points: IOBCurvePoint[] = [];
   const stepHours = resolutionMinutes / 60;
@@ -245,7 +376,7 @@ export function generateStackedCurve(
         if (!profile) continue;
         const doseHour = parseAdministeredHour(dose.administered_at) + cycleOffset;
         const minutesSince = (h - doseHour) * 60;
-        const iob = calculateIOB(dose.dose_units, profile, minutesSince);
+        const iob = calculateIOB(dose.dose_units, profile, minutesSince, patientWeightKg);
         if (iob > 0.001) {
           const key = cycle === 0 ? dose.id : `${dose.id}_c${cycle}`;
           breakdown[key] = (breakdown[key] ?? 0) + iob;
