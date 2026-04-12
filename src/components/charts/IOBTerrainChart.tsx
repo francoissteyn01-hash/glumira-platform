@@ -326,7 +326,7 @@ function G4DensityView({ entryCurves, enrichedPoints, totalMinutes, xTicks, comp
       <ResponsiveContainer width="100%" height={chartHeight}>
         <ComposedChart data={enrichedPoints} margin={{ top: 4, right: 8, left: compact ? -12 : 0, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" strokeOpacity={0.5} strokeWidth={0.75} vertical={false} />
-          <XAxis dataKey="minute" type="number" domain={[0, totalMinutes]} ticks={xTicks} tickFormatter={minutesToLabel}
+          <XAxis dataKey="minute" type="number" domain={[graphStartMinute, totalMinutes]} ticks={xTicks} tickFormatter={minutesToLabel}
             tick={{ fontSize: 10, fill: "var(--text-secondary)", fontFamily: "'DM Sans', sans-serif" }}
             axisLine={{ stroke: "var(--border)" }} tickLine={{ stroke: "var(--border)" }} />
           <YAxis tick={{ fontSize: 10, fill: "var(--text-secondary)", fontFamily: "'DM Sans', sans-serif" }}
@@ -336,7 +336,7 @@ function G4DensityView({ entryCurves, enrichedPoints, totalMinutes, xTicks, comp
           {entryCurves.map(({ entry, colour }) => {
             const isHighlighted = highlighted === null || highlighted === entry.id;
             return (
-              <Area key={entry.id} type="natural" dataKey={entry.id}
+              <Area key={entry.id} type="monotone" dataKey={entry.id}
                 stroke={colour} strokeWidth={isHighlighted ? 1.5 : 1}
                 strokeOpacity={isHighlighted ? 0.9 : 0.15}
                 fill={colour} fillOpacity={isHighlighted ? 0.15 : 0.02}
@@ -451,8 +451,18 @@ export default function IOBTerrainChart({
   const currentMinute = getCurrentMinute();
 
   const totalMinutes = safeCycles * MINUTES_PER_DAY;
+
+  // Graph starts at the earliest injection time (not 00:00) — Rule 17
+  const earliestInjectionMinute = useMemo(() => {
+    if (entries.length === 0) return 0;
+    return Math.min(...entries.map((e) => timeToMinutes(e.time)));
+  }, [entries]);
+  const graphStartMinute = earliestInjectionMinute;
+
   const xTicks: number[] = [];
-  for (let m = 0; m <= totalMinutes; m += 180) xTicks.push(m);
+  // Ticks from graph start, every 3 hours
+  const firstTick = Math.floor(graphStartMinute / 180) * 180;
+  for (let m = firstTick; m <= totalMinutes; m += 180) xTicks.push(m);
   const dayBoundaries: number[] = [];
   for (let d = 1; d < safeCycles; d++) dayBoundaries.push(d * MINUTES_PER_DAY);
 
@@ -614,8 +624,8 @@ export default function IOBTerrainChart({
 
                 <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" strokeOpacity={0.5} strokeWidth={0.75} vertical={false} />
 
-                {/* Pressure map background bands (stacked view only) */}
-                {activeTab === "stacked" && pressureBands.filter((b) => b.pressure !== "light").map((band, i) => (
+                {/* Pressure map background bands */}
+                {pressureBands.filter((b) => b.pressure !== "light").map((band, i) => (
                   <ReferenceArea key={`pband-${i}`} x1={band.start} x2={band.end}
                     fill={PRESSURE_COLOURS[band.pressure]} fillOpacity={PRESSURE_OPACITY[band.pressure]}
                     stroke={PRESSURE_COLOURS[band.pressure]} strokeOpacity={0.4} strokeDasharray="2 4" strokeWidth={1}
@@ -647,7 +657,7 @@ export default function IOBTerrainChart({
                     }} />
                 ))}
 
-                <XAxis dataKey="minute" type="number" domain={[0, totalMinutes]} ticks={xTicks} tickFormatter={minutesToLabel}
+                <XAxis dataKey="minute" type="number" domain={[graphStartMinute, totalMinutes]} ticks={xTicks} tickFormatter={minutesToLabel}
                   tick={{ fontSize: 11, fill: "var(--text-secondary)", fontWeight: 400, fontFamily: "'DM Sans', sans-serif" }}
                   axisLine={{ stroke: "var(--border)" }} tickLine={{ stroke: "var(--border)" }} />
                 <YAxis yAxisId="iob"
@@ -667,7 +677,7 @@ export default function IOBTerrainChart({
 
                 {/* Stacked area layers — filtered by tab */}
                 {(activeTab === "stacked" ? entryCurves : activeTab === "basal" ? basalOnlyCurves : bolusOnlyCurves).map(({ entry, stackColour }) => (
-                  <Area key={entry.id} yAxisId="iob" type="natural" dataKey={entry.id}
+                  <Area key={entry.id} yAxisId="iob" type="monotone" dataKey={entry.id}
                     stackId="insulin"
                     stroke={stackColour} strokeWidth={0.5} strokeOpacity={0.4}
                     fill={`url(#sgrad_${entry.id})`}
@@ -676,14 +686,14 @@ export default function IOBTerrainChart({
                 ))}
 
                 {/* Combined IOB outline */}
-                <Line yAxisId="iob" type="natural" dataKey="totalIOB"
+                <Line yAxisId="iob" type="monotone" dataKey="totalIOB"
                   stroke="#1A2A5E" strokeWidth={2.5}
                   dot={false} animationDuration={prefersReduced ? 0 : 800}
                   name="Combined IOB" />
 
                 {/* Green what-if overlay — original curve shown when in what-if mode (Rule 12) */}
                 {isModified && activeTab === "stacked" && (
-                  <Line yAxisId="iob" type="natural"
+                  <Line yAxisId="iob" type="monotone"
                     data={originalPoints.map((p) => ({ minute: p.minute, originalIOB: p.totalIOB }))}
                     dataKey="originalIOB"
                     stroke="#2E9E5A" strokeWidth={2.5} strokeDasharray="8 4"
@@ -692,7 +702,7 @@ export default function IOBTerrainChart({
                 )}
 
                 {hasGlucose && activeTab === "stacked" && (
-                  <Line yAxisId="glucose" type="natural" dataKey="glucose"
+                  <Line yAxisId="glucose" type="monotone" dataKey="glucose"
                     stroke={GLUCOSE_COLOUR} strokeWidth={2} dot={false} connectNulls
                     animationDuration={prefersReduced ? 0 : 800} name="Glucose"
                     activeDot={{ r: 3, stroke: GLUCOSE_COLOUR, strokeWidth: 2, fill: "var(--bg-card)" }} />
