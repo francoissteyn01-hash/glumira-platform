@@ -76,7 +76,7 @@ Only these words authorize: `go`, `build`, `ship it`, `apply`, `yes apply`, `app
 25. Thumb CTA: 48px+ minimum touch target, full-width on mobile.
 26. No personal names, no locations, no private data anywhere in codebase. Anouk = P0 violation.
 27. Educational platform, NOT a medical device. Disclaimers on every analysis surface.
-28. 30-day free trial. Always. Never 14.
+28. **14-day free trial.** Always. Never 30. (Updated 2026-04-14 per financial model: 30-day trial breaks unit economics; 14-day maximizes conversion velocity.)
 29. Archive old versions to 99_ARCHIVE. Never reference v6 — platform is V7.
 30. No AI-tell writing: No Oxford-comma-and lists ("X, Y, and Z"). No parenthetical asides in brackets. Use em-dashes or short sentences.
 
