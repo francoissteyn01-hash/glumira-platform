@@ -43,7 +43,7 @@ const ADVANTAGES = [
   { title: "20 dietary regime support", desc: "From standard carb counting to Bernstein, keto, Mediterranean, and more" },
   { title: "Paediatric-first design", desc: "Purpose-built for children and young people with T1D" },
   { title: "Caregiver-focused", desc: "Multi-user family dashboard with delegated access" },
-  { title: "Africa PPP pricing model", desc: "Purchasing-power-parity pricing for emerging markets" },
+  { title: "Regional pricing strategy", desc: "Pricing optimized for affordability across regions" },
 ];
 
 interface RoadmapPhase {
@@ -77,8 +77,8 @@ function statusLabel(s: RoadmapPhase["status"]): string {
 }
 
 export default function InvestorDashboard() {
-  const { user } = useAuth();
-  const [activeSection, setActiveSection] = useState<string | null>(null);
+  const { _user } = useAuth();
+  const [_activeSection, _setActiveSection] = useState<string | null>(null);
 
   const card: React.CSSProperties = {
     background: "var(--bg-card)",
@@ -279,7 +279,7 @@ export default function InvestorDashboard() {
                 background: "linear-gradient(90deg, #10b981 0%, #10b981 44%, #f59e0b 44%, #f59e0b 66%, var(--border-light) 66%)",
                 borderRadius: 1,
               }} />
-              {ROADMAP.map((phase, i) => (
+              {ROADMAP.map((phase) => (
                 <div key={phase.label} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", position: "relative", zIndex: 1 }}>
                   <div style={{
                     width: 14, height: 14, borderRadius: "50%",

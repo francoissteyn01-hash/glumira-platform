@@ -74,7 +74,7 @@ Only these words authorize: `go`, `build`, `ship it`, `apply`, `yes apply`, `app
 23. No teal copy from mockups, no graphs copy. Observatory palette per 10_Visual-Design-Philosophy.txt.
 24. Hero: GluMira™ big/bold/white (clamp 52-88px), tagline "made visible" in amber with glow. No casino flash.
 25. Thumb CTA: 48px+ minimum touch target, full-width on mobile.
-26. No personal names, no locations, no private data anywhere in codebase. Anouk = P0 violation.
+26. No personal names, no locations, no private data anywhere in codebase. P0 violation.
 27. Educational platform, NOT a medical device. Disclaimers on every analysis surface.
 28. **14-day free trial.** Always. Never 30. (Updated 2026-04-14 per financial model: 30-day trial breaks unit economics; 14-day maximizes conversion velocity.)
 29. Archive old versions to 99_ARCHIVE. Never reference v6 — platform is V7.
@@ -91,7 +91,7 @@ Only these words authorize: `go`, `build`, `ship it`, `apply`, `yes apply`, `app
 37. Filing: 00_PROMPT-FIX-FINAL.md supersedes all previous prompts.
 38. Naming convention: [FOLDER].[SEQ]_[Description]_v[X.X].[ext].
 39. Audit: Comprehensive (Patient Safety v2, Remediation Checklist).
-40. No Namibia/world origin mention. Privacy lock all.
+40. Complete anonymity enforced. No geography, no builder location, no origin story visible. Privacy lock all.
 41. DNS propagation: Wait full loop before verify.
 42. TM on GluMira™ everywhere in display text (not code variables).
 43. Owl on landing page — always.
@@ -123,14 +123,12 @@ Before ANY IOB Hunter work, re-read in order:
 3. Brand rules (Group 3 above)
 4. Visual Design Philosophy (`G:\My Drive\GLUMIRA\GluMira-V7\10_BRAND\10_Visual-Design-Philosophy.txt`)
 
-## The Origin Story
+## The Mission
 
-The 16 March 2026 logbook is the founder's 9-year-old daughter. From 20:10 to 06:00 her mother sat awake feeding her glucose every 20-30 minutes. That night is why GluMira exists. The free tier is the priority tier. The mother who needs GluMira most cannot afford a Dexcom. She has sugar water in a cup. The Pro tier funds the free tier — it is the secondary product.
+GluMira exists for patients who cannot afford premium glucose monitoring. The platform prioritizes accessibility over profit. Revenue from Pro and AI tiers directly funds the free tier. The science of insulin, made visible.
 
 ## Project Context
 
-- **Code:** C:\glumira-v7 → github.com/francoissteyn01-hash/glumira-platform → Netlify → glumira.ai
-- **Filing:** C:\Users\franc\Desktop\00_GLUMIRA\GluMira-V7 (00_MASTER through 16_BADGES)
-- **Drive:** G:\My Drive\GLUMIRA\GluMira-V7
-- **Stack:** React + Vite + TypeScript → Netlify | Express + tRPC + Drizzle → Railway | Supabase PostgreSQL
-- **User:** Founder, NOT a developer. Samsung S23 FE. Autonomous execution only.
+- **Code:** github.com/francoissteyn01-hash/glumira-platform → Vercel → glumira.ai + glumira.app
+- **Stack:** React + Vite + TypeScript | Express + tRPC + Drizzle | Supabase PostgreSQL
+- **Deployment:** Vercel (dual-region for EMRO performance)

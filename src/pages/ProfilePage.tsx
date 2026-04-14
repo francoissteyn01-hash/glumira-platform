@@ -449,8 +449,8 @@ export default function ProfilePage() {
             <Field label="Diagnosis date">
               <TextInput value={form.diagnosis_date} onChange={set("diagnosis_date")} type="date" />
             </Field>
-            <Field label="Country">
-              <TextInput value={form.country} onChange={set("country")} placeholder="e.g. South Africa" name="country-name" autoComplete="country-name" />
+            <Field label="Region (optional)">
+              <TextInput value={form.country} onChange={set("country")} placeholder="Your region" name="region-name" autoComplete="off" />
             </Field>
             <Field label="Language">
               <SelectInput value={form.language} onChange={set("language")} options={LANGUAGE_OPTIONS} placeholder="Select language" />

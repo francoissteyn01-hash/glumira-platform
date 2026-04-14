@@ -382,7 +382,7 @@ function BundleSection() {
           <BundleCard
             kicker="01 — Engine"
             title="IOB Hunter™"
-            body="Pharmacokinetic curves for 9+ insulins, regional variants for UK, EU, US, UAE, and Africa. Surfaces stacking before it becomes a low."
+            body="Pharmacokinetic curves for 13 insulins with global regional variants. Surfaces insulin stacking before hypoglycemia occurs."
             icon={<GaugeIcon className="w-6 h-6" />}
           />
           <BundleCard
@@ -508,9 +508,9 @@ function IobHunterStrip() {
           </h2>
           <p className="mt-4 text-lg text-slate-600">
             IOB Hunter™ renders the pharmacokinetic curve of every insulin still
-            active in your body, across 9+ insulin types — Lantus, Tresiba, Levemir,
-            Humalog, NovoRapid, and more, with regional names for UK, EU, US, UAE, and
-            Africa.
+            active in your body across 13 insulin types globally. Covers rapid-acting,
+            intermediate, and long-acting profiles with support for all major brands and
+            formulations worldwide.
           </p>
           <ul className="mt-6 space-y-3 text-slate-700">
             <BulletLine>Stacking alerts before they become lows</BulletLine>

@@ -204,10 +204,8 @@ export default function LaunchAnnouncementPage() {
 
           <h3 style={{ ...sectionTitle, marginTop: 24 }}>Availability</h3>
           <p style={bodyText}>
-            GluMira™ is available free of charge on the web at glumira.ai. A generous free tier
-            provides full access to all educational content, IOB Hunter™ visualizations, and Mira AI.
-            The platform is committed to purchasing-power-parity pricing for users in Africa and
-            lower-income regions, ensuring equitable access to diabetes education globally.
+            GluMira™ is available at glumira.ai and glumira.app. A free tier provides access to educational
+            content, IOB Hunter™ visualizations, and Mira AI. Regional pricing ensures affordability globally.
           </p>
 
           <h3 style={{ ...sectionTitle, marginTop: 24 }}>Target Users</h3>
