@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { formatGlucose as fmtGlucose, getUnitLabel } from "@/utils/glucose-units";
 import TimeInRangeDonut from "@/components/widgets/TimeInRangeDonut";
+import ShowcaseCarousel from "@/components/ShowcaseCarousel";
 
 const T = {
   navy: "#1a2a5e",
@@ -198,42 +199,8 @@ export default function DemoDashboardPage() {
           </div>
         </div>
 
-        {/* Sample glucose chart placeholder */}
-        <div style={{
-          ...cardStyle,
-          marginBottom: 20,
-          padding: 0,
-          overflow: "hidden",
-        }}>
-          <div style={{ padding: "14px 20px", borderBottom: "1px solid var(--border-light, #e2e8f0)" }}>
-            <p style={{ margin: 0, fontSize: 15, fontWeight: 700, color: "var(--text-primary, #1a2a5e)", fontFamily: T.heading }}>
-              Glucose Timeline (Sample)
-            </p>
-          </div>
-          <div style={{ padding: 20 }}>
-            {/* Simple visual bar chart */}
-            <div style={{ display: "flex", alignItems: "flex-end", gap: 8, height: 120 }}>
-              {SAMPLE_READINGS.map((r, i) => {
-                const height = Math.max(20, (r.glucose / 12) * 100);
-                const color = r.glucose < 3.9 ? "#ef4444" : r.glucose > 10 ? "#eab308" : "#22c55e";
-                return (
-                  <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
-                    <span style={{ fontSize: 10, fontFamily: T.mono, color: "var(--text-secondary, #64748b)" }}>
-                      {r.glucose.toFixed(1)}
-                    </span>
-                    <div style={{
-                      width: "100%", height, borderRadius: "4px 4px 0 0",
-                      background: `linear-gradient(180deg, ${color}cc, ${color}44)`,
-                    }} />
-                    <span style={{ fontSize: 9, color: "var(--text-faint, #94a3b8)", fontFamily: T.body }}>
-                      {r.time}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
+        {/* Showcase carousel */}
+        <ShowcaseCarousel />
 
         {/* TIR Donut */}
         <div style={{ marginBottom: 20 }}>

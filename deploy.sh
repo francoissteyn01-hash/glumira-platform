@@ -6,7 +6,7 @@ set -e
 echo "Starting deployment process..."
 
 # Navigate to the project root directory
-cd /home/ubuntu/glumira-platform
+cd "$(dirname "$0")"
 
 # Pull the latest changes from the main branch
 echo "Pulling latest changes from GitHub..."

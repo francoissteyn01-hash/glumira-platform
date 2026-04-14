@@ -87,6 +87,21 @@ body { @apply antialiased; background: var(--bg-primary); color: var(--text-prim
 .skip-link { @apply sr-only; }
 .skip-link:focus { @apply not-sr-only fixed top-2 left-2 z-[100] rounded-lg bg-brand-600 px-4 py-2 text-sm text-white; }
 
+/* ─── IOB Hunter stacked chart layout ────────────────────────────────
+ *  All screens stack vertically:
+ *    [Chart 1] → [4 KPI markers] → [Chart 2] → [4 KPI markers]
+ *  Side-by-side compression hurt the visuals too much on laptops;
+ *  founder preferred full-width stacking.
+ */
+.iob-chart-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr;
+}
+.iob-chart-1 { min-width: 0; }
+.iob-chart-2 { min-width: 0; }
+.iob-kpi-row { min-width: 0; }
+
 /* ─── Typography Hierarchy ──────────────────────────────────────────────── */
 h1 { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 28px; color: var(--text-primary); }
 h2 { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 22px; color: var(--text-primary); }

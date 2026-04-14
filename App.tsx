@@ -4,25 +4,33 @@
  * Landing page at /, dark navbar for authenticated pages, light navbar for public pages.
  */
 
-import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { GlucoseUnitsProvider } from "@/context/GlucoseUnitsContext";
 import { PresentationModeProvider } from "@/components/PresentationMode";
 import { SensoryProvider } from "@/contexts/SensoryContext";
 import AppSidebar, { useSidebarOffset } from "@/components/AppSidebar";
+import ConfigErrorBanner from "@/components/ConfigErrorBanner";
 import { useSessionTimeout, SessionWarningModal } from "@/hooks/useSessionTimeout";
 
 /* ─── Lazy pages ─────────────────────────────────────────────────────────── */
 const LandingPage   = lazy(() => import("@/pages/LandingPage"));
+const LandingPageV2 = lazy(() => import("@/pages/LandingPageV2"));
 const AuthPage      = lazy(() => import("@/pages/RegisterPage"));
+const AuthCallbackPage = lazy(() => import("@/pages/AuthCallbackPage"));
 const DashboardPage = lazy(() => import("@/pages/DashboardPage"));
+const AnalyticsDashboardPage = lazy(() => import("@/pages/AnalyticsDashboardPage"));
+const AlertHistoryPage = lazy(() => import("@/pages/AlertHistoryPage"));
+const SyncStatusPage = lazy(() => import("@/pages/SyncStatusPage"));
+const CompliancePage = lazy(() => import("@/pages/CompliancePage"));
 const WhatIfPage    = lazy(() => import("@/pages/WhatIfPage"));
 const EducationPage = lazy(() => import("@/pages/EducationPage"));
 const MiraPage      = lazy(() => import("@/pages/MiraPage"));
 const BadgesPage    = lazy(() => import("@/pages/BadgesPage"));
 const FAQPage       = lazy(() => import("@/pages/FAQPage"));
 const SettingsPage  = lazy(() => import("@/pages/SettingsPage"));
+const InsulinProfilePage = lazy(() => import("@/pages/InsulinProfilePage"));
 const ProfilePage   = lazy(() => import("@/pages/ProfilePage"));
 const MealLogPage    = lazy(() => import("@/pages/MealLogPage"));
 const InsulinLogPage    = lazy(() => import("@/pages/InsulinLogPage"));
@@ -118,7 +126,11 @@ const CGMLiveMonitorPage      = lazy(() => import("@/pages/CGMLiveMonitorPage"))
 const SocialSharePage         = lazy(() => import("@/pages/SocialSharePage"));
 const LaunchAnnouncementPage  = lazy(() => import("@/pages/LaunchAnnouncementPage"));
 
+const IOBHunterPage           = lazy(() => import("@/pages/IOBHunterPage"));
+const BasalParametersPage     = lazy(() => import("@/pages/BasalParametersPage"));
 const DemoDashboardPage       = lazy(() => import("@/pages/DemoDashboardPage"));
+const PricingPage             = lazy(() => import("@/pages/PricingPage"));
+const SciencePage             = lazy(() => import("@/pages/SciencePage"));
 const DevPanel                = lazy(() => import("@/pages/DevPanel"));
 const RegisterPage            = lazy(() => import("@/pages/RegisterPage"));
 const TutorialPage            = lazy(() => import("@/pages/TutorialPage"));
@@ -137,7 +149,7 @@ function LoadingFallback() {
 }
 
 /* ─── Paths with no sidebar chrome ───────────────────────────────────────── */
-const CHROMELESS = ["/", "/auth", "/auth/callback", "/dev", "/tutorial", "/onboarding/region", "/onboarding/consent", "/privacy", "/terms", "/launch", "/demo"];
+const CHROMELESS = ["/", "/v2", "/auth", "/auth/callback", "/dev", "/tutorial", "/onboarding/region", "/onboarding/consent", "/privacy", "/terms", "/launch", "/demo", "/pricing", "/science"];
 function isChromeless(pathname: string): boolean {
   if (CHROMELESS.includes(pathname)) return true;
   if (pathname === "/register") return true;
@@ -193,18 +205,26 @@ export default function App() {
         <SensoryProvider>
         <PresentationModeProvider>
         <div className="min-h-screen" style={{ background: "var(--bg-primary)", color: "var(--text-primary)" }}>
+          <ConfigErrorBanner />
           <a href="#main-content" className="skip-link">Skip to content</a>
           <AppShell>
           <main id="main-content">
           <Suspense fallback={<LoadingFallback />}>
             <Routes>
               <Route path="/"          element={<HomeRoute />} />
+              <Route path="/v2"        element={<LandingPageV2 />} />
               <Route path="/auth"      element={<AuthPage />} />
-              <Route path="/auth/callback" element={<Navigate to="/dashboard" replace />} />
+              <Route path="/auth/callback" element={<AuthCallbackPage />} />
               {/* Public routes — no auth required */}
               <Route path="/demo"      element={<DemoDashboardPage />} />
+              <Route path="/pricing"   element={<PricingPage />} />
+              <Route path="/science"   element={<SciencePage />} />
               {/* Dev phase: all routes bypass auth */}
               <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/dashboard/analytics" element={<AnalyticsDashboardPage />} />
+              <Route path="/alerts/history" element={<AlertHistoryPage />} />
+              <Route path="/sync-status" element={<SyncStatusPage />} />
+              <Route path="/compliance" element={<CompliancePage />} />
               <Route path="/dashboard/what-if" element={<WhatIfPage />} />
               <Route path="/education" element={<EducationPage />} />
               <Route path="/education/:id" element={<EducationTopicPage />} />
@@ -212,7 +232,8 @@ export default function App() {
               <Route path="/mira"      element={<MiraPage />} />
               <Route path="/badges"    element={<BadgesPage />} />
               <Route path="/faq"       element={<FAQPage />} />
-              <Route path="/settings"  element={<SettingsPage />} />
+              <Route path="/settings"  element={<InsulinProfilePage />} />
+              <Route path="/app-settings"  element={<SettingsPage />} />
               <Route path="/log"       element={<MealLogPage />} />
               <Route path="/insulin"    element={<InsulinLogPage />} />
               <Route path="/conditions" element={<ConditionLogPage />} />
@@ -299,6 +320,9 @@ export default function App() {
               <Route path="/cgm-live"              element={<CGMLiveMonitorPage />} />
               <Route path="/share"                 element={<SocialSharePage />} />
               <Route path="/launch"                element={<LaunchAnnouncementPage />} />
+              {/* ─── IOB Hunter ─────────────────────────────────────────── */}
+              <Route path="/iob-hunter"            element={<IOBHunterPage />} />
+              <Route path="/basal-parameters"      element={<BasalParametersPage />} />
               {/* ─── Existing ─────────────────────────────────────────── */}
               <Route path="/dev"                   element={<DevPanel />} />
               <Route path="/register"              element={<RegisterPage />} />

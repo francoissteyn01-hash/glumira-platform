@@ -14,20 +14,6 @@ import { useKeyboardSave } from "@/hooks/useKeyboardSave";
 
 const DIABETES_TYPES = ["T1D", "T2D", "LADA", "Gestational", "Other"] as const;
 
-const INSULIN_TYPES = [
-  { value: "glargine_u100", label: "Glargine U-100 (Lantus/Basaglar)" },
-  { value: "glargine_u300", label: "Glargine U-300 (Toujeo)" },
-  { value: "degludec",      label: "Degludec (Tresiba)" },
-  { value: "detemir",       label: "Detemir (Levemir)" },
-  { value: "nph",           label: "NPH (Humulin N/Novolin N)" },
-  { value: "aspart",        label: "Aspart (NovoRapid/Fiasp)" },
-  { value: "lispro",        label: "Lispro (Humalog/Lyumjev)" },
-  { value: "glulisine",     label: "Glulisine (Apidra)" },
-  { value: "regular",       label: "Regular (Actrapid/Humulin R)" },
-] as const;
-
-const DELIVERY_METHODS = ["MDI (Multiple Daily Injections)", "Insulin Pump", "Insulin Pen", "Inhaled Insulin"] as const;
-
 const DIETARY_APPROACHES = [
   "Standard/Full Carb Count", "Moderate Carb", "Low Carb", "Keto",
   "Bernstein Protocol", "Halal", "Kosher", "Ramadan Fasting",
@@ -63,7 +49,7 @@ const PROFILE_TYPES = [
   { value: "clinician",          label: "Clinician / HCP",         icon: "\u{1FA7A}", desc: "Healthcare professional using GluMira\u2122" },
 ] as const;
 
-interface ProfileData {
+type ProfileData = {
   profile_type: string;
   first_name: string;
   last_name: string;
@@ -74,13 +60,6 @@ interface ProfileData {
   country: string;
   language: string;
   glucose_units: string;
-  insulin_types: string[];
-  delivery_method: string;
-  basal_frequency: string;
-  basal_times: string[];
-  icr: string;
-  isf: string;
-  correction_target: string;
   dietary_approach: string;
   allergens: string[];
   meals_per_day: number;
@@ -96,8 +75,6 @@ interface ProfileData {
 const EMPTY_PROFILE: ProfileData = {
   profile_type: "", first_name: "", last_name: "", date_of_birth: "", sex: "", diabetes_type: "",
   diagnosis_date: "", country: "", language: "", glucose_units: "mmol",
-  insulin_types: [], delivery_method: "", basal_frequency: "", basal_times: [],
-  icr: "", isf: "", correction_target: "",
   dietary_approach: "", allergens: [], meals_per_day: 3,
   comorbidities: [], special_conditions: [], is_caregiver: false, patient_name: "", relationship: "",
 };
@@ -105,7 +82,6 @@ const EMPTY_PROFILE: ProfileData = {
 const SEX_OPTIONS = ["Female", "Male", "Other", "Prefer not to say"] as const;
 const LANGUAGE_OPTIONS = ["Afrikaans", "Arabic", "English", "French", "German", "Other", "Portuguese", "Spanish"] as const;
 const GLUCOSE_UNIT_OPTIONS = ["mmol", "mg/dL"] as const;
-const BASAL_FREQUENCY_OPTIONS = ["Once daily", "Twice daily", "Pump (continuous)", "Other (split doses)"] as const;
 
 /* ─── Helpers ─────────────────────────────────────────────────────────────── */
 
@@ -113,7 +89,7 @@ function completionPercent(p: ProfileData): number {
   // Only REQUIRED fields count — optional fields never block access
   const checks = [
     !!p.first_name, !!p.last_name, !!p.date_of_birth, !!p.diabetes_type,
-    !!p.country, p.insulin_types.length > 0, !!p.delivery_method,
+    !!p.country,
   ];
   return Math.round((checks.filter(Boolean).length / checks.length) * 100);
 }
@@ -178,13 +154,14 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   );
 }
 
-function TextInput({ value, onChange, placeholder, type = "text", inputMode, pattern }: {
-  value: string; onChange: (v: string) => void; placeholder?: string; type?: string; inputMode?: string; pattern?: string;
+function TextInput({ value, onChange, placeholder, type = "text", inputMode, pattern, name, autoComplete }: {
+  value: string; onChange: (v: string) => void; placeholder?: string; type?: string; inputMode?: string; pattern?: string; name?: string; autoComplete?: string;
 }) {
   return (
     <input
       type={type} value={value} onChange={(e) => onChange(e.target.value)}
-      placeholder={placeholder} inputMode={inputMode as any} pattern={pattern}
+      placeholder={placeholder} inputMode={inputMode as React.HTMLAttributes<HTMLInputElement>["inputMode"]} pattern={pattern}
+      name={name} autoComplete={autoComplete}
       style={inputStyle}
       onFocus={(e) => { e.currentTarget.style.borderColor = "#2ab5c1"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(42,181,193,0.15)"; }}
       onBlur={(e) => { e.currentTarget.style.borderColor = "#dee2e6"; e.currentTarget.style.boxShadow = "none"; }}
@@ -220,7 +197,7 @@ function CheckboxGrid({ options, selected, onToggle }: {
               display: "flex", alignItems: "center", gap: 8, minHeight: 48,
               padding: "8px 12px", borderRadius: 8, cursor: "pointer",
               border: `1px solid ${checked ? "var(--accent-teal)" : "var(--border-light)"}`,
-              background: checked ? "rgba(42,181,193,0.08)" : "#ffffff",
+              background: checked ? "rgba(42,181,193,0.08)" : "var(--bg-card)",
               fontSize: 13, color: "var(--text-primary)", fontFamily: "'DM Sans', system-ui, sans-serif",
               transition: "all 0.15s",
             }}
@@ -231,34 +208,6 @@ function CheckboxGrid({ options, selected, onToggle }: {
             />
             {opt}
           </label>
-        );
-      })}
-    </div>
-  );
-}
-
-function MultiSelectPills({ options, selected, onToggle }: {
-  options: readonly { value: string; label: string }[]; selected: string[]; onToggle: (v: string) => void;
-}) {
-  return (
-    <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-      {options.map((opt) => {
-        const checked = selected.includes(opt.value);
-        return (
-          <button
-            key={opt.value} type="button" onClick={() => onToggle(opt.value)}
-            style={{
-              minHeight: 48, padding: "10px 16px", borderRadius: 8, cursor: "pointer",
-              border: `1px solid ${checked ? "var(--accent-teal)" : "var(--border-light)"}`,
-              background: checked ? "rgba(42,181,193,0.12)" : "#ffffff",
-              color: checked ? "var(--accent-teal)" : "var(--text-secondary)",
-              fontSize: 13, fontWeight: checked ? 600 : 400,
-              fontFamily: "'DM Sans', system-ui, sans-serif",
-              transition: "all 0.15s",
-            }}
-          >
-            {checked ? "✓ " : ""}{opt.label}
-          </button>
         );
       })}
     </div>
@@ -293,7 +242,7 @@ function ProgressBar({ percent }: { percent: number }) {
 
 /* ═══════════════════════════════════════════════════════════════════════════ */
 export default function ProfilePage() {
-  const { user, session } = useAuth();
+  const { session, loading: authLoading } = useAuth();
   const [form, setForm] = useState<ProfileData>(EMPTY_PROFILE);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -305,7 +254,7 @@ export default function ProfilePage() {
 
   /* ─── Load profile ────────────────────────────────────────────────────── */
   useEffect(() => {
-    if (!session) return;
+    if (!session) { setLoading(false); return; }
     fetch(`${API}/api/profile`, {
       headers: { Authorization: `Bearer ${session.access_token}`, "Content-Type": "application/json" },
     })
@@ -323,13 +272,6 @@ export default function ProfilePage() {
             country:          data.profile.country ?? "",
             language:         data.profile.language ?? "",
             glucose_units:    data.profile.glucose_units ?? "mmol",
-            insulin_types:    data.profile.insulin_types ?? [],
-            delivery_method:  data.profile.delivery_method ?? "",
-            basal_frequency:  data.profile.basal_frequency ?? "",
-            basal_times:      data.profile.basal_times ?? [],
-            icr:              data.profile.icr ?? "",
-            isf:              data.profile.isf ?? "",
-            correction_target: data.profile.correction_target ?? "",
             dietary_approach: data.profile.dietary_approach ?? "",
             allergens:        data.profile.allergens ?? [],
             meals_per_day:    data.profile.meals_per_day ?? 3,
@@ -352,19 +294,39 @@ export default function ProfilePage() {
     setError(null);
     setSaved(false);
     try {
+      // Get a fresh token — try refresh first, then current session, then bail
+      let token = session.access_token;
+      const { data: refreshed } = await supabase.auth.refreshSession();
+      if (refreshed?.session?.access_token) {
+        token = refreshed.session.access_token;
+      } else {
+        const { data: current } = await supabase.auth.getSession();
+        if (current?.session?.access_token) {
+          token = current.session.access_token;
+        }
+      }
       const res = await fetch(`${API}/api/profile`, {
         method: "PUT",
-        headers: { Authorization: `Bearer ${session.access_token}`, "Content-Type": "application/json" },
+        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
       const text = await res.text();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       let data: any;
       try { data = JSON.parse(text); } catch { throw new Error("Server returned an unexpected response. Please try again."); }
-      if (!res.ok) throw new Error(data.error ?? "Save failed");
+      if (!res.ok) {
+        if (res.status === 401) {
+          // Token truly expired — force re-login
+          await supabase.auth.signOut();
+          window.location.href = "/auth";
+          return;
+        }
+        throw new Error(data.error ?? "Save failed");
+      }
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);
-    } catch (e: any) {
-      setError(e.message);
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : "Save failed");
     } finally {
       setSaving(false);
     }
@@ -373,8 +335,9 @@ export default function ProfilePage() {
   useKeyboardSave(save);
 
   /* ─── Helpers ─────────────────────────────────────────────────────────── */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const set = (key: keyof ProfileData) => (val: any) => setForm((f) => ({ ...f, [key]: val }));
-  const toggleArray = (key: "insulin_types" | "allergens" | "comorbidities" | "special_conditions") => (val: string) => {
+  const toggleArray = (key: "allergens" | "comorbidities" | "special_conditions") => (val: string) => {
     setForm((f) => ({
       ...f,
       [key]: (f[key] as string[]).includes(val)
@@ -383,7 +346,7 @@ export default function ProfilePage() {
     }));
   };
 
-  if (loading) {
+  if (loading || authLoading) {
     return (
       <div style={{ minHeight: "100vh", background: "var(--bg-primary)", display: "flex", alignItems: "center", justifyContent: "center" }}>
         <p style={{ color: "var(--text-secondary)", fontSize: 14, fontFamily: "'DM Sans', system-ui, sans-serif" }}>Loading profile...</p>
@@ -401,7 +364,7 @@ export default function ProfilePage() {
             fontFamily: "'Playfair Display', serif", fontSize: "clamp(24px, 6vw, 32px)",
             fontWeight: 700, color: "var(--text-primary)", margin: "0 0 4px",
           }}>
-            Patient Profile
+            User Profile
           </h1>
           <p style={{ fontSize: 14, color: "var(--text-secondary)", margin: 0, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
             Complete your profile to personalise your GluMira™ experience.
@@ -420,7 +383,7 @@ export default function ProfilePage() {
           {DISCLAIMER}
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+        <form autoComplete="on" onSubmit={(e) => { e.preventDefault(); save(); }} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
 
           {/* ── Section 0: Profile Type ─────────────────────────────────── */}
           <Card title="Who are you?" defaultOpen={true}>
@@ -438,7 +401,7 @@ export default function ProfilePage() {
                       display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 4,
                       padding: "16px 14px", borderRadius: 10, cursor: "pointer", textAlign: "left",
                       border: `1.5px solid ${selected ? "var(--accent-teal)" : "var(--border)"}`,
-                      background: selected ? "rgba(42,181,193,0.05)" : "#ffffff",
+                      background: selected ? "rgba(42,181,193,0.05)" : "var(--bg-card)",
                       transition: "all 0.15s",
                     }}
                   >
@@ -459,14 +422,14 @@ export default function ProfilePage() {
           <Card title="Personal Information" defaultOpen={true}>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
               <Field label="First name">
-                <TextInput value={form.first_name} onChange={set("first_name")} placeholder="First name" />
+                <TextInput value={form.first_name} onChange={set("first_name")} placeholder="First name" name="given-name" autoComplete="given-name" />
               </Field>
               <Field label="Last name">
-                <TextInput value={form.last_name} onChange={set("last_name")} placeholder="Last name" />
+                <TextInput value={form.last_name} onChange={set("last_name")} placeholder="Last name" name="family-name" autoComplete="family-name" />
               </Field>
             </div>
             <Field label="Date of birth">
-              <TextInput value={form.date_of_birth} onChange={set("date_of_birth")} type="date" />
+              <TextInput value={form.date_of_birth} onChange={set("date_of_birth")} type="date" name="bday" autoComplete="bday" />
             </Field>
             <Field label="Sex">
               <SelectInput value={form.sex} onChange={set("sex")} options={SEX_OPTIONS} placeholder="Select sex" />
@@ -487,7 +450,7 @@ export default function ProfilePage() {
               <TextInput value={form.diagnosis_date} onChange={set("diagnosis_date")} type="date" />
             </Field>
             <Field label="Country">
-              <TextInput value={form.country} onChange={set("country")} placeholder="e.g. South Africa" />
+              <TextInput value={form.country} onChange={set("country")} placeholder="e.g. South Africa" name="country-name" autoComplete="country-name" />
             </Field>
             <Field label="Language">
               <SelectInput value={form.language} onChange={set("language")} options={LANGUAGE_OPTIONS} placeholder="Select language" />
@@ -497,79 +460,7 @@ export default function ProfilePage() {
             </Field>
           </Card>
 
-          {/* ── Section 2: Insulin & Management ─────────────────────────── */}
-          <Card id="insulin" title="Insulin & Management">
-            <Field label="Insulin type(s) — select all that apply">
-              <MultiSelectPills options={INSULIN_TYPES} selected={form.insulin_types} onToggle={toggleArray("insulin_types")} />
-            </Field>
-            <Field label="Delivery method">
-              <SelectInput value={form.delivery_method} onChange={set("delivery_method")} options={DELIVERY_METHODS} placeholder="Select delivery method" />
-            </Field>
-            <Field label="Basal frequency">
-              <SelectInput value={form.basal_frequency} onChange={set("basal_frequency")} options={BASAL_FREQUENCY_OPTIONS} placeholder="Select basal frequency" />
-            </Field>
-            {form.basal_frequency && form.basal_frequency !== "Pump (continuous)" && (
-              <Field label="Planned basal injection times (up to 4)">
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center" }}>
-                  {form.basal_times.map((t, i) => (
-                    <div key={i} style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                      <input
-                        type="time" value={t}
-                        onChange={(e) => {
-                          const updated = [...form.basal_times];
-                          updated[i] = e.target.value;
-                          set("basal_times")(updated);
-                        }}
-                        style={{ ...inputStyle, width: 130 }}
-                      />
-                      <button
-                        type="button"
-                        onClick={() => set("basal_times")(form.basal_times.filter((_, j) => j !== i))}
-                        style={{
-                          width: 32, height: 32, borderRadius: 6, border: "1px solid var(--border-light)",
-                          background: "#fff", color: "var(--error-text)", fontSize: 16, cursor: "pointer",
-                          display: "flex", alignItems: "center", justifyContent: "center",
-                        }}
-                        aria-label="Remove time slot"
-                      >
-                        ×
-                      </button>
-                    </div>
-                  ))}
-                  {form.basal_times.length < 4 && (
-                    <button
-                      type="button"
-                      onClick={() => set("basal_times")([...form.basal_times, "08:00"])}
-                      style={{
-                        minHeight: 48, padding: "10px 16px", borderRadius: 8, cursor: "pointer",
-                        border: "1px dashed #2ab5c1", background: "rgba(42,181,193,0.06)",
-                        color: "#2ab5c1", fontSize: 13, fontWeight: 600,
-                        fontFamily: "'DM Sans', system-ui, sans-serif",
-                      }}
-                    >
-                      + Add time
-                    </button>
-                  )}
-                </div>
-                <p style={{ fontSize: 11, color: "var(--text-faint)", marginTop: 6, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
-                  {form.basal_times.length} of 4 slots used
-                </p>
-              </Field>
-            )}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12 }}>
-              <Field label="ICR (optional)">
-                <TextInput value={form.icr} onChange={set("icr")} placeholder="e.g. 10" type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" />
-              </Field>
-              <Field label="ISF (optional)">
-                <TextInput value={form.isf} onChange={set("isf")} placeholder="e.g. 2.5" type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" />
-              </Field>
-              <Field label="Correction target">
-                <TextInput value={form.correction_target} onChange={set("correction_target")} placeholder="e.g. 5.5" type="text" inputMode="decimal" pattern="[0-9]*.?[0-9]*" />
-              </Field>
-            </div>
-          </Card>
-
-          {/* ── Section 3: Dietary Profile ──────────────────────────────── */}
+          {/* ── Section 2: Dietary Profile ──────────────────────────────── */}
           <Card title="Dietary Profile">
             <Field label="Dietary approach">
               <SelectInput value={form.dietary_approach} onChange={set("dietary_approach")} options={DIETARY_APPROACHES} placeholder="Select dietary approach" />
@@ -585,7 +476,7 @@ export default function ProfilePage() {
                     style={{
                       minWidth: 48, minHeight: 48, borderRadius: 8, cursor: "pointer",
                       border: `1px solid ${form.meals_per_day === n ? "var(--accent-teal)" : "var(--border-light)"}`,
-                      background: form.meals_per_day === n ? "rgba(42,181,193,0.12)" : "#ffffff",
+                      background: form.meals_per_day === n ? "rgba(42,181,193,0.12)" : "var(--bg-card)",
                       color: form.meals_per_day === n ? "var(--accent-teal)" : "var(--text-secondary)",
                       fontSize: 15, fontWeight: form.meals_per_day === n ? 700 : 400,
                       fontFamily: "'JetBrains Mono', monospace",
@@ -620,7 +511,7 @@ export default function ProfilePage() {
               display: "flex", alignItems: "center", gap: 12, minHeight: 48,
               padding: "10px 14px", borderRadius: 8, cursor: "pointer",
               border: `1px solid ${form.is_caregiver ? "var(--accent-teal)" : "var(--border-light)"}`,
-              background: form.is_caregiver ? "rgba(42,181,193,0.08)" : "#ffffff",
+              background: form.is_caregiver ? "rgba(42,181,193,0.08)" : "var(--bg-card)",
               fontSize: 14, color: "var(--text-primary)", fontFamily: "'DM Sans', system-ui, sans-serif",
               marginBottom: form.is_caregiver ? 16 : 0,
             }}>
@@ -642,7 +533,7 @@ export default function ProfilePage() {
               </>
             )}
           </Card>
-        </div>
+        </form>
 
         {/* ── Save Button & Feedback ─────────────────────────────────────── */}
         <div style={{ marginTop: 24, display: "flex", flexDirection: "column", gap: 12 }}>

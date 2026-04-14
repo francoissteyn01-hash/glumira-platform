@@ -1,15 +1,30 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+const OwlIcon = () => (
+  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" style={{ color: '#ccc' }}>
+    <circle cx="20" cy="20" r="18" stroke="currentColor" strokeWidth="2" fill="#0A2A5E"></circle>
+    <path d="M15 15h10 a1 0 0 0 5 0 h-10 z" fill="currentColor"></path>
+    <rect x="18" y="22" width="4" height="6" fill="#BA7517"></rect>
+    <polygon points="18,25 20,20 22,25" fill="#0d1b3e"></polygon>
+  </svg>
+);
+
 interface EmptyStateProps {
   icon?: React.ReactNode;
   title: string;
-  description: string;
+  description?: string;
+  message?: string;
   ctaLabel?: string;
   ctaTo?: string;
+  ctaHref?: string;
+  illustration?: React.ReactNode;
+  subText?: string;
+  owlIcon?: boolean;
 }
 
-const EmptyState: React.FC<EmptyStateProps> = ({ icon, title, description, ctaLabel, ctaTo }) => {
+const EmptyState: React.FC<EmptyStateProps> = ({ icon, title, description, message, ctaLabel, ctaTo, ctaHref, illustration, subText, owlIcon }) => {
+  const displayMessage = description || message;
   return (
     <div
       style={{
@@ -23,13 +38,15 @@ const EmptyState: React.FC<EmptyStateProps> = ({ icon, title, description, ctaLa
         textAlign: 'center',
       }}
     >
+      {owlIcon && <div style={{ marginBottom: 16 }}><OwlIcon /></div>}
+      {illustration && <div style={{ marginBottom: 16 }}>{illustration}</div>}
       <div
         style={{
           width: 48,
           height: 48,
           borderRadius: '50%',
           backgroundColor: 'var(--teal, #14b8a6)',
-          display: 'flex',
+          display: owlIcon || illustration ? 'none' : 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           marginBottom: 16,
@@ -61,12 +78,12 @@ const EmptyState: React.FC<EmptyStateProps> = ({ icon, title, description, ctaLa
           lineHeight: 1.5,
         }}
       >
-        {description}
+        {displayMessage}
       </p>
 
-      {ctaLabel && ctaTo && (
+      {ctaLabel && (ctaTo || ctaHref) && (
         <Link
-          to={ctaTo}
+          to={ctaTo || ctaHref || ''}
           style={{
             backgroundColor: 'var(--teal, #14b8a6)',
             color: '#fff',
@@ -79,6 +96,11 @@ const EmptyState: React.FC<EmptyStateProps> = ({ icon, title, description, ctaLa
         >
           {ctaLabel}
         </Link>
+      )}
+      {subText && (
+        <p style={{ color: 'var(--text-faint, #94a3b8)', fontSize: 12, marginTop: 8 }}>
+          {subText}
+        </p>
       )}
     </div>
   );

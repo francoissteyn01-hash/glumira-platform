@@ -171,10 +171,11 @@ describe("Levemir 3× daily stacking", () => {
     // Check IOB at 13:30 (just before second dose — only dose 1 active)
     const at1330 = calculateStackingScore(events, new Date(`${baseDate}T13:30:00Z`));
 
-    // Check IOB at 14:30 (30 min after second dose — doses 1 + 2 overlap, but dose 2 still in onset)
+    // Check IOB at 14:30 (30 min post-dose-2 — engine returns 0 for dose 2 because
+    // it's still in its 60-min onset window. That's the correct PK model.)
     const at1430 = calculateStackingScore(events, new Date(`${baseDate}T14:30:00Z`));
 
-    // Check IOB at 15:30 (1.5h after second dose — doses 1 + 2 both active)
+    // Check IOB at 15:30 (1.5h after second dose — past 60min onset, doses 1 + 2 both active)
     const at1530 = calculateStackingScore(events, new Date(`${baseDate}T15:30:00Z`));
 
     // At 14:30, dose 2 is still in its 60-min onset window so it contributes 0;

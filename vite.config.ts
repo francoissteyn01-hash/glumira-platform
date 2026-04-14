@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
@@ -26,5 +27,24 @@ export default defineConfig({
         },
       },
     },
+  },
+  // Vitest test config (kept here as the canonical source — vitest 4.1.3
+  // on Windows wasn't auto-discovering vitest.config.ts at the root,
+  // so excludes need to live where vitest is actually reading them).
+  // See ARCHIVE-LOG.md (2026-04-10 entry) for the glumira-platform/ context.
+  test: {
+    environment: "node",
+    globals: false,
+    include: [
+      "client/**/*.{test,spec}.{ts,tsx}",
+      "server/**/*.{test,spec}.{ts,tsx}",
+      "src/**/*.{test,spec}.{ts,tsx}",
+    ],
+    exclude: [
+      "**/node_modules/**",
+      "dist/**",
+      "e2e/**",
+      "glumira-platform/**",
+    ],
   },
 });

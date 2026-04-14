@@ -5,14 +5,26 @@
 
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 
-interface Props {
+type Props = {
   readings: { value: number }[];
   targetLow?: number;
   targetHigh?: number;
 }
 
 export default function TimeInRangeDonut({ readings, targetLow = 3.9, targetHigh = 10 }: Props) {
-  const total = readings.length || 1;
+  const total = readings.length;
+
+  if (total === 0) {
+    return (
+      <div style={{ background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)", padding: 16 }}>
+        <h3 style={{ margin: "0 0 8px", fontSize: 16, fontWeight: 700, color: "var(--text-primary)", fontFamily: "'Playfair Display', serif" }}>Time in Range</h3>
+        <p style={{ fontSize: 13, color: "var(--text-secondary)", margin: 0, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+          No glucose readings yet. Log a reading to see your time in range.
+        </p>
+      </div>
+    );
+  }
+
   const tbr = readings.filter((r) => r.value < targetLow).length;
   const tar = readings.filter((r) => r.value > targetHigh).length;
   const tir = total - tbr - tar;

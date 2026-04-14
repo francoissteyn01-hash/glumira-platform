@@ -3,7 +3,7 @@
 **Participant: NAM-001 — SUBJ-NAM-001**
 **Region: NAM (Namibia) | Status: Active | Enrolled: 20 March 2026**
 **Form Source: GluMira Beta — Participant Profile (forms.gle/chm8XLnR6WduGLtC6)**
-**Master Tracker: ANOUK_T1D_MASTER_TRACKER (Google Sheets)**
+**Master Tracker: SUBJ_001_T1D_MASTER_TRACKER (Google Sheets)**
 
 > These cards map directly to the 6-section GluMira Beta Participant Profile form. Each question is shown with SUBJ-NAM-001's confirmed answer (drawn from Drive records and the database), or marked `[ EDIT ]` where the answer is still missing. Edit any `[ EDIT ]` field and return — I will update the database and Drive records accordingly.
 
@@ -47,7 +47,7 @@ Standard carb counting · Low carb (Dr. Bernstein style) · Gluten-free · Dairy
 **Available options for Q3.2 (regular foods):**
 Pap / Maize meal / Ugali · Braai / Grilled meat · Potjiekos / Stews · Biltong / Dried meat · Magwinya / Vetkoek · Kapana (Namibia) · Sadza (Zimbabwe) · Rice-based meals · Bread / Sandwiches · Oshifima (Namibia)
 
-**Known from master tracker (ANOUK_T1D_MASTER_TRACKER):**
+**Known from master tracker (SUBJ_001_T1D_MASTER_TRACKER):**
 
 | Date | Meal | Carbs (g) | Notes |
 |---|---|---|---|
@@ -75,7 +75,7 @@ Pap / Maize meal / Ugali · Braai / Grilled meat · Potjiekos / Stews · Biltong
 | 4.4 | Do you use any clinician-approved insulin variations? | **Yes — split basal dosing (two injections per day)** | ✔ Confirmed (3×/day) |
 | 4.5 | If Other — please specify here | **Three Levemir injections: 07:00 (12 U), 14:00 (8 U), 22:00 (10 U)** | ✔ Confirmed |
 
-**Actual dosing from master tracker (ANOUK_T1D_MASTER_TRACKER):**
+**Actual dosing from master tracker (SUBJ_001_T1D_MASTER_TRACKER):**
 
 | Date | Time | Insulin | Dose | Route | Notes |
 |---|---|---|---|---|---|
@@ -175,7 +175,7 @@ Derived from master tracker data — not part of the form but critical for engin
 | Source | File / Location | Last Updated | Data Contained |
 |---|---|---|---|
 | **Google Form** | forms.gle/chm8XLnR6WduGLtC6 | 19 Mar 2026 | 6-section intake form (no responses recorded yet) |
-| **Master Tracker** | ANOUK_T1D_MASTER_TRACKER (Sheets) | 1 Mar 2026 | Finger BG, Dexcom EGV, Insulin Log, Historical input |
+| **Master Tracker** | SUBJ_001_T1D_MASTER_TRACKER (Sheets) | 1 Mar 2026 | Finger BG, Dexcom EGV, Insulin Log, Historical input |
 | **Patient Profile Chat** | 2026-03-19_Chat-SUBJ-NAM-001-Patient-Profile_v1.0.txt | 19 Mar 2026 | Identity, insulin therapy, monitoring devices |
 | **Insulin Profile Chat** | 2026-03-19_Chat-SUBJ-NAM-001-Insulin-Profile_v1.0.txt | 19 Mar 2026 | Pharmacology models, dosing structure |
 | **Beta Testing Module** | 02.5_MODULE-Beta-Testing_v1.0.txt | 19 Mar 2026 | Template structure, required fields |

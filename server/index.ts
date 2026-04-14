@@ -14,6 +14,8 @@ import { supabase, db } from "./db";
 
 // ── REST route imports ────────────────────────────────────────────────────────
 import { analyticsRouter }        from "./routes/analytics.route";
+import { alertsRouter }           from "./routes/alerts.route";
+import { complianceRouter }       from "./routes/compliance.route";
 import { nightscoutRouter }       from "./routes/nightscout";
 import { mealsRouter }            from "./routes/meals";
 import { dosesRouter }            from "./routes/doses";
@@ -40,6 +42,7 @@ import { schoolCarePlanRouter }    from "./routes/school-care-plan-route";
 import { glucosePredictionRouter } from "./routes/glucose-prediction.route";
 import { feedbackRouter }          from "./routes/feedback.route";
 import { insulinLogRouter }        from "./routes/insulin-log.route";
+import { insulinProfilesRouter }  from "./routes/insulin-profiles.route";
 
 const app = express();
 const PORT = parseInt(process.env.PORT ?? "3001", 10);
@@ -51,6 +54,7 @@ const ALLOWED_ORIGINS = [
   "https://www.glumira.ai",
   process.env.CLIENT_URL,
   "http://localhost:5173",
+  process.env.RAILWAY_PUBLIC_DOMAIN ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}` : "",
 ].filter(Boolean) as string[];
 
 app.use(cors({
@@ -73,6 +77,8 @@ app.use("/trpc", createExpressMiddleware({ router: appRouter, createContext }));
 
 // ── REST routes ───────────────────────────────────────────────────────────────
 app.use("/api/analytics",     analyticsRouter);
+app.use("/api/alerts",        alertsRouter);
+app.use("/api/compliance",    complianceRouter);
 app.use("/api/nightscout",    nightscoutRouter);
 app.use("/api/meals",         mealsRouter);
 app.use("/api/doses",         dosesRouter);
@@ -102,6 +108,7 @@ app.use("/api/school-care-plan", schoolCarePlanRouter);
 app.use("/api/glucose-prediction", glucosePredictionRouter);
 app.use("/api/feedback",           feedbackRouter);
 app.use("/api/insulin-log",        insulinLogRouter);
+app.use("/api/insulin-profiles",   insulinProfilesRouter);
 
 // ── 404 / Error ───────────────────────────────────────────────────────────────
 app.use((_req, res) => res.status(404).json({ error: "Not found" }));

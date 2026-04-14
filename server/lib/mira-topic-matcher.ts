@@ -161,7 +161,7 @@ const TOPIC_KEYWORDS: Record<string, number[]> = {
   "vomiting": [73],
   "gastro": [73],
   "stomach bug": [73],
-  "anouk": [73],
+  "gastro crisis": [73],
   "fever": [74],
   "infection": [74],
   "sick": [16, 73, 74],

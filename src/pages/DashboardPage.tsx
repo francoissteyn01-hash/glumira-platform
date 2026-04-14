@@ -11,12 +11,11 @@ import { DISCLAIMER } from "@/lib/constants";
 import StackingCurve, { type StackingPoint } from "@/components/charts/StackingCurve";
 import GlucoseOverlay, { type GlucosePoint } from "@/components/charts/GlucoseOverlay";
 import InsulinActivityCurve, { type DoseCurve } from "@/components/charts/InsulinActivityCurve";
-import BasalHeatmap from "@/components/charts/BasalHeatmap";
 import ActiveInsulinCard, { type PressureClass } from "@/components/widgets/ActiveInsulinCard";
 import HiddenIOBWidget from "@/components/widgets/HiddenIOBWidget";
 import UnitToggle from "@/components/UnitToggle";
 import { useGlucoseUnits } from "@/context/GlucoseUnitsContext";
-import { formatGlucose as fmtGlucose, getUnitLabel } from "@/utils/glucose-units";
+import { formatGlucose as fmtGlucose } from "@/utils/glucose-units";
 import EmotionalDistressTracker from "@/components/EmotionalDistressTracker";
 import ExportReportButton from "@/components/ExportReportButton";
 import PatternHighlights from "@/components/widgets/PatternHighlights";
@@ -25,6 +24,7 @@ import RiskWindowCard from "@/components/widgets/RiskWindowCard";
 import SensorConfidenceCard from "@/components/widgets/SensorConfidenceCard";
 import TimeInRangeDonut from "@/components/widgets/TimeInRangeDonut";
 import EventLogTable from "@/components/widgets/EventLogTable";
+import AlertNotificationCenter from "@/components/widgets/AlertNotificationCenter";
 import PresentationToggle from "@/components/PresentationMode";
 import ShareButton from "@/components/ShareButton";
 import ThemeToggle from "@/components/ThemeToggle";
@@ -33,8 +33,8 @@ import QuickActions from "@/components/widgets/QuickActions";
 
 /* ─── Types ───────────────────────────────────────────────────────────────── */
 
-interface IOBResult { totalIOB: number; eventCount: number }
-interface GlucoseReading { glucose: number; time: string; trend: string }
+type IOBResult = { totalIOB: number; eventCount: number }
+type GlucoseReading = { glucose: number; time: string; trend: string }
 
 const ARROWS: Record<string, string> = {
   DoubleUp: "\u21C8", SingleUp: "\u2191", FortyFiveUp: "\u2197",
@@ -90,7 +90,15 @@ export default function DashboardPage() {
 
   // Condition events for timeline markers
   const [conditionEvents, setConditionEvents] = useState<{ event_time: string; event_type: string; intensity: string | null }[]>([]);
-  const [detectedPatterns, setDetectedPatterns] = useState<any[]>([]);
+  type DetectedPattern = {
+    id: string;
+    category: string;
+    type: string;
+    confidence: "high" | "moderate" | "low";
+    observation: string;
+    suggestion: string;
+  };
+  const [detectedPatterns, setDetectedPatterns] = useState<DetectedPattern[]>([]);
 
   // Glucose / Nightscout state
   const [readings, setReadings] = useState<GlucoseReading[]>([]);
@@ -102,86 +110,107 @@ export default function DashboardPage() {
 
   const latest = readings[0] ?? null;
 
-  /* ─── Fetch IOB data ────────────────────────────────────────────────── */
+  /* ─── Fetch IOB data ──────────────────────────────────────────────────
+   *
+   * One AbortController per effect run. Every fetch passes the signal,
+   * and the cleanup function aborts in-flight requests when `session` or
+   * `dateRange` changes — preventing a race where an older response wins
+   * and renders stale data into the chart. Date.now() and "today" are
+   * captured once at the top of the effect so a re-render mid-effect
+   * cannot drift the quiet-tail computation.
+   */
   useEffect(() => {
     if (!session) return;
+    const controller = new AbortController();
+    const { signal } = controller;
+
     const headers = { Authorization: `Bearer ${session.access_token}` };
     const { from, to } = getDateRange(dateRange);
+    const effectStartedAt = Date.now();
+    const today = new Date(effectStartedAt).toISOString().slice(0, 10);
+    const todayFrom = `${today}T00:00:00`;
+    const todayTo   = `${today}T23:59:59`;
+
+    // Helper — build a tRPC GET URL with json input.
+    const trpc = (proc: string, input: unknown) =>
+      `/trpc/${proc}?input=${encodeURIComponent(JSON.stringify({ json: input }))}`;
+
+    // Helper — fetch + parse JSON, swallowing aborts. Caller checks
+    // signal.aborted before calling setState.
+    const get = async (url: string): Promise<unknown | null> => {
+      try {
+        const res = await fetch(url, { headers, signal });
+        if (signal.aborted) return null;
+        const j = await res.json();
+        return j?.result?.data?.json ?? null;
+      } catch (err) {
+        // AbortError is expected on cleanup; ignore it.
+        if ((err as { name?: string })?.name === "AbortError") return null;
+        return null;
+      }
+    };
 
     // Stacking curve
-    fetch(`/trpc/iobHunter.getStackingCurve?input=${encodeURIComponent(JSON.stringify({ json: { from, to } }))}`, { headers })
-      .then((r) => r.json())
-      .then((res) => {
-        const data = res?.result?.data?.json;
-        if (Array.isArray(data)) setStackingData(data);
-      })
-      .catch(() => {});
+    get(trpc("iobHunter.getStackingCurve", { from, to })).then((data) => {
+      if (signal.aborted) return;
+      if (Array.isArray(data)) setStackingData(data);
+    });
 
     // Current IOB
-    fetch(`/trpc/iobHunter.calculateIOB?input=${encodeURIComponent(JSON.stringify({ json: {} }))}`, { headers })
-      .then((r) => r.json())
-      .then((res) => {
-        const data = res?.result?.data?.json;
-        if (data) setIobResult(data);
-      })
-      .catch(() => {});
+    get(trpc("iobHunter.calculateIOB", {})).then((data) => {
+      if (signal.aborted) return;
+      if (data) setIobResult(data as IOBResult);
+    });
 
-    // Insulin events for activity curves
-    const today = new Date().toISOString().slice(0, 10);
-    fetch(`/trpc/insulinEvent.getByDateRange?input=${encodeURIComponent(JSON.stringify({ json: { from: `${today}T00:00:00`, to: `${today}T23:59:59` } }))}`, { headers })
-      .then((r) => r.json())
-      .then((res) => {
-        const events = res?.result?.data?.json;
-        if (!Array.isArray(events)) return;
+    // Insulin events for activity curves + quiet-tail computation
+    const BASAL_TYPES = new Set(["levemir", "lantus", "basaglar", "toujeo", "tresiba", "nph"]);
+    type InsulinEventLite = { id: string; event_time: string; dose_units: number; insulin_type: string };
 
-        // Build DoseCurve[] per event
-        const BASAL_TYPES = new Set(["levemir", "lantus", "basaglar", "toujeo", "tresiba", "nph"]);
-        const curves: DoseCurve[] = events.map((ev: any) => {
-          const isBasal = BASAL_TYPES.has(ev.insulin_type);
-          const time = new Date(ev.event_time);
-          const label = `${time.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })} ${ev.insulin_type} ${Number(ev.dose_units).toFixed(1)}U`;
-          return {
-            id: ev.id,
-            label,
-            type: isBasal ? "basal" as const : "bolus" as const,
-            points: [], // populated below by engine call
-          };
-        });
+    get(trpc("insulinEvent.getByDateRange", { from: todayFrom, to: todayTo })).then((events) => {
+      if (signal.aborted) return;
+      if (!Array.isArray(events)) return;
+      const list = events as InsulinEventLite[];
 
-        // For now, set curves with empty points — the StackingCurve is the main vis
-        setActivityCurves(curves);
+      const curves: DoseCurve[] = list.map((ev) => {
+        const isBasal = BASAL_TYPES.has(ev.insulin_type);
+        const time = new Date(ev.event_time);
+        const label = `${time.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })} ${ev.insulin_type} ${Number(ev.dose_units).toFixed(1)}U`;
+        return {
+          id: ev.id,
+          label,
+          type: isBasal ? "basal" as const : "bolus" as const,
+          points: [],
+        };
+      });
+      setActivityCurves(curves);
 
-        // Compute quiet tail: IOB from events > 12h ago
-        const twelveHoursAgo = Date.now() - 12 * 60 * 60_000;
-        let tail = 0;
-        // Approximate: events from yesterday contribute quiet tail
-        for (const ev of events) {
-          const elapsed = (Date.now() - new Date(ev.event_time).getTime()) / 60_000;
-          if (elapsed > 720) { // > 12h
-            tail += Number(ev.dose_units) * Math.exp(-Math.LN2 / 720 * elapsed);
-          }
+      // Quiet tail uses the captured effectStartedAt — not Date.now()
+      // again — so the value cannot drift if React re-runs the .then().
+      let tail = 0;
+      for (const ev of list) {
+        const elapsed = (effectStartedAt - new Date(ev.event_time).getTime()) / 60_000;
+        if (elapsed > 720) {
+          tail += Number(ev.dose_units) * Math.exp(-Math.LN2 / 720 * elapsed);
         }
-        setQuietTail(Math.round(tail * 100) / 100);
-      })
-      .catch(() => {});
+      }
+      setQuietTail(Math.round(tail * 100) / 100);
+    });
 
     // Condition events for timeline markers
-    fetch(`/trpc/conditionEvent.list?input=${encodeURIComponent(JSON.stringify({ json: { from: `${today}T00:00:00`, to: `${today}T23:59:59`, limit: 50 } }))}`, { headers })
-      .then((r) => r.json())
-      .then((res) => {
-        const data = res?.result?.data?.json;
-        if (Array.isArray(data)) setConditionEvents(data);
-      })
-      .catch(() => {});
+    get(trpc("conditionEvent.list", { from: todayFrom, to: todayTo, limit: 50 })).then((data) => {
+      if (signal.aborted) return;
+      if (Array.isArray(data)) setConditionEvents(data);
+    });
 
     // Pattern analysis
-    fetch(`/trpc/patterns.analyse?input=${encodeURIComponent(JSON.stringify({ json: { from: `${today}T00:00:00`, to: `${today}T23:59:59` } }))}`, { headers })
-      .then((r) => r.json())
-      .then((res) => {
-        const data = res?.result?.data?.json;
-        if (Array.isArray(data)) setDetectedPatterns(data);
-      })
-      .catch(() => {});
+    get(trpc("patterns.analyse", { from: todayFrom, to: todayTo })).then((data) => {
+      if (signal.aborted) return;
+      if (Array.isArray(data)) setDetectedPatterns(data);
+    });
+
+    return () => {
+      controller.abort();
+    };
   }, [session, dateRange]);
 
   /* ─── Nightscout sync ───────────────────────────────────────────────── */
@@ -202,13 +231,15 @@ export default function DashboardPage() {
       const data = await res.json();
       setReadings(data.readings ?? []);
       setError(null);
-    } catch (e: any) {
-      setError(e.message);
+    } catch (e) {
+      setError((e as Error).message);
     } finally {
       setSyncing(false);
     }
   }
 
+  // Run once on mount to auto-sync if a Nightscout URL is already saved.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { if (nsUrl) syncNS(); }, []);
 
   /* ─── Derived state ─────────────────────────────────────────────────── */
@@ -220,10 +251,6 @@ export default function DashboardPage() {
     time: r.time,
     value: r.glucose,
   }));
-
-  const tirPercent = readings.length > 0
-    ? Math.round((readings.filter((r) => r.glucose >= 3.9 && r.glucose <= 10).length / readings.length) * 100)
-    : null;
 
   /* ─── Render ────────────────────────────────────────────────────────── */
   return (
@@ -307,6 +334,9 @@ export default function DashboardPage() {
 
           {/* Hidden IOB */}
           <HiddenIOBWidget quietTailIOB={quietTail} />
+
+          {/* Alert Notification Center (live, polled) */}
+          <AlertNotificationCenter />
         </div>
 
         {/* ── IOB Stacking Curve ────────────────────────────────────────── */}
@@ -375,6 +405,19 @@ export default function DashboardPage() {
         {/* ── Time in Range Donut ───────────────────────────────────── */}
         <div style={{ marginBottom: 20 }}>
           <TimeInRangeDonut readings={glucoseData.map((g) => ({ value: g.value }))} />
+        </div>
+
+        {/* ── IOB Hunter Link ─────────────────────────────────────── */}
+        <div
+          onClick={() => window.location.href = "/iob-hunter"}
+          onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") window.location.href = "/iob-hunter"; }}
+          role="button"
+          tabIndex={0}
+          aria-label="Open IOB Hunter insulin density map"
+          style={{ background: "var(--bg-card)", borderRadius: 12, border: "2px solid var(--accent-teal)", padding: 32, textAlign: "center", marginBottom: 20, cursor: "pointer" }}
+        >
+          <p style={{ fontSize: 14, fontWeight: 600, color: "var(--text-primary)", margin: 0, fontFamily: "'DM Sans', system-ui, sans-serif" }}>&#127919; IOB Hunter&trade;</p>
+          <p style={{ fontSize: 12, color: "var(--text-secondary)", margin: "4px 0 0", fontFamily: "'DM Sans', system-ui, sans-serif" }}>24-hour insulin pressure map &mdash; spot stacking risk before it happens</p>
         </div>
 
         {/* ── What-If Scenario Link ────────────────────────────────── */}

@@ -158,7 +158,7 @@ describe("generateSchoolCarePlan — HTML content", () => {
 describe("generateSchoolCarePlan — meal regime integration", () => {
   it("uses pediatric-standard regime for pediatric patients", () => {
     const result = generateSchoolCarePlan(BASE_INPUT);
-    expect(result.regimeName).toContain("Pediatric");
+    expect(result.regimeName.toLowerCase()).toContain("pediatric");
   });
 
   it("uses Ramadan regime when specified", () => {
@@ -169,7 +169,7 @@ describe("generateSchoolCarePlan — meal regime integration", () => {
 
   it("uses standard-3meal regime when specified", () => {
     const result = generateSchoolCarePlan({ ...BASE_INPUT, mealRegimeId: "standard-3meal" });
-    expect(result.regimeName).toContain("Standard");
+    expect(result.regimeName.toLowerCase()).toContain("standard");
   });
 
   it("handles unknown regime ID gracefully (falls back to ID string)", () => {
