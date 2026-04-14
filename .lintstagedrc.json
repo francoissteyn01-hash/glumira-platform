@@ -1,5 +1,5 @@
 {
   "*.{ts,tsx}": [
-    "eslint --max-warnings=0 --fix"
+    "npx --no-install eslint --max-warnings=0 --fix"
   ]
 }

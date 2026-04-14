@@ -46,6 +46,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@testing-library/react": "^16.3.2",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
@@ -58,11 +59,17 @@
     "autoprefixer": "^10.4.19",
     "concurrently": "^8.2.2",
     "drizzle-kit": "^0.22.0",
+    "eslint": "^10.2.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "globals": "^17.5.0",
     "jsdom": "^29.0.2",
     "postcss": "^8.4.39",
     "tailwindcss": "^3.4.6",
     "tsx": "^4.16.0",
     "typescript": "^5.5.3",
+    "typescript-eslint": "^8.58.2",
     "vite": "^5.3.3",
     "vitest": "^4.1.3"
   }
