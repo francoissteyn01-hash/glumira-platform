@@ -19,6 +19,7 @@ import {
   INSULIN_PROFILES,
   analyzeBasalCoverage,
   calculateReportKPIs,
+  computeGraphBounds,
   detectStacking,
   generateInjectionMarkers,
   generateStackedCurve,
@@ -37,6 +38,15 @@ export type UseIOBHunterOptions = {
   cycles?: number;             // default 2 (today + yesterday)
   startHour?: number;          // default 0
   endHour?: number;            // default 24
+  /**
+   * Patient weight in kilograms. CRITICAL for albumin-bound insulins
+   * (Levemir): the engine resolves dose-dependent DOA from Plank 2005
+   * by U/kg. Omitting this defaults to 70kg, which silently collapses
+   * Levemir DOA to ~5.7h for any dose under ~7U — making the chart
+   * drop to zero between basal injections instead of showing the
+   * correct sustained baseline.
+   */
+  patientWeightKg?: number;
 }
 
 export type UseIOBHunterResult = {
@@ -54,12 +64,26 @@ export function useIOBHunter(
 ): UseIOBHunterResult {
   const {
     resolutionMinutes = 15,
-    cycles = 2,
-    startHour = 0,
-    endHour = 24,
+    cycles: cyclesOpt,
+    startHour: startHourOpt,
+    endHour: endHourOpt,
+    patientWeightKg,
   } = options;
 
   return useMemo(() => {
+    // Dynamic window — only fires when the caller hasn't pinned bounds.
+    // This is what eliminates the empty whitespace on the right of the
+    // chart when the longest-DOA insulin is Levemir (~12h), not Tresiba.
+    const anyBoundMissing =
+      startHourOpt === undefined || endHourOpt === undefined || cyclesOpt === undefined;
+    const auto = anyBoundMissing
+      ? computeGraphBounds(doses, INSULIN_PROFILES, patientWeightKg)
+      : null;
+
+    const startHour = startHourOpt ?? auto?.startHour ?? 0;
+    const endHour   = endHourOpt   ?? auto?.endHour   ?? 24;
+    const cycles    = cyclesOpt    ?? auto?.cycles    ?? 2;
+
     const curve = generateStackedCurve(
       doses,
       INSULIN_PROFILES,
@@ -67,6 +91,7 @@ export function useIOBHunter(
       endHour,
       resolutionMinutes,
       cycles,
+      patientWeightKg,
     );
 
     const kpis = calculateReportKPIs(doses, INSULIN_PROFILES, 0.5, curve);
@@ -79,5 +104,5 @@ export function useIOBHunter(
     const maxIOB = curve.reduce((m, p) => Math.max(m, p.total_iob), 0);
 
     return { curve, kpis, markers, stackingAlerts, basalAnalysis, maxIOB };
-  }, [doses, resolutionMinutes, cycles, startHour, endHour]);
+  }, [doses, resolutionMinutes, cyclesOpt, startHourOpt, endHourOpt, patientWeightKg]);
 }

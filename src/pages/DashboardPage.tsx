@@ -110,86 +110,107 @@ export default function DashboardPage() {
 
   const latest = readings[0] ?? null;
 
-  /* ─── Fetch IOB data ────────────────────────────────────────────────── */
+  /* ─── Fetch IOB data ──────────────────────────────────────────────────
+   *
+   * One AbortController per effect run. Every fetch passes the signal,
+   * and the cleanup function aborts in-flight requests when `session` or
+   * `dateRange` changes — preventing a race where an older response wins
+   * and renders stale data into the chart. Date.now() and "today" are
+   * captured once at the top of the effect so a re-render mid-effect
+   * cannot drift the quiet-tail computation.
+   */
   useEffect(() => {
     if (!session) return;
+    const controller = new AbortController();
+    const { signal } = controller;
+
     const headers = { Authorization: `Bearer ${session.access_token}` };
     const { from, to } = getDateRange(dateRange);
+    const effectStartedAt = Date.now();
+    const today = new Date(effectStartedAt).toISOString().slice(0, 10);
+    const todayFrom = `${today}T00:00:00`;
+    const todayTo   = `${today}T23:59:59`;
+
+    // Helper — build a tRPC GET URL with json input.
+    const trpc = (proc: string, input: unknown) =>
+      `/trpc/${proc}?input=${encodeURIComponent(JSON.stringify({ json: input }))}`;
+
+    // Helper — fetch + parse JSON, swallowing aborts. Caller checks
+    // signal.aborted before calling setState.
+    const get = async (url: string): Promise<unknown | null> => {
+      try {
+        const res = await fetch(url, { headers, signal });
+        if (signal.aborted) return null;
+        const j = await res.json();
+        return j?.result?.data?.json ?? null;
+      } catch (err) {
+        // AbortError is expected on cleanup; ignore it.
+        if ((err as { name?: string })?.name === "AbortError") return null;
+        return null;
+      }
+    };
 
     // Stacking curve
-    fetch(`/trpc/iobHunter.getStackingCurve?input=${encodeURIComponent(JSON.stringify({ json: { from, to } }))}`, { headers })
-      .then((r) => r.json())
-      .then((res) => {
-        const data = res?.result?.data?.json;
-        if (Array.isArray(data)) setStackingData(data);
-      })
-      .catch(() => {});
+    get(trpc("iobHunter.getStackingCurve", { from, to })).then((data) => {
+      if (signal.aborted) return;
+      if (Array.isArray(data)) setStackingData(data);
+    });
 
     // Current IOB
-    fetch(`/trpc/iobHunter.calculateIOB?input=${encodeURIComponent(JSON.stringify({ json: {} }))}`, { headers })
-      .then((r) => r.json())
-      .then((res) => {
-        const data = res?.result?.data?.json;
-        if (data) setIobResult(data);
-      })
-      .catch(() => {});
+    get(trpc("iobHunter.calculateIOB", {})).then((data) => {
+      if (signal.aborted) return;
+      if (data) setIobResult(data as IOBResult);
+    });
 
-    // Insulin events for activity curves
-    const today = new Date().toISOString().slice(0, 10);
-    fetch(`/trpc/insulinEvent.getByDateRange?input=${encodeURIComponent(JSON.stringify({ json: { from: `${today}T00:00:00`, to: `${today}T23:59:59` } }))}`, { headers })
-      .then((r) => r.json())
-      .then((res) => {
-        const events = res?.result?.data?.json;
-        if (!Array.isArray(events)) return;
+    // Insulin events for activity curves + quiet-tail computation
+    const BASAL_TYPES = new Set(["levemir", "lantus", "basaglar", "toujeo", "tresiba", "nph"]);
+    type InsulinEventLite = { id: string; event_time: string; dose_units: number; insulin_type: string };
 
-        // Build DoseCurve[] per event
-        const BASAL_TYPES = new Set(["levemir", "lantus", "basaglar", "toujeo", "tresiba", "nph"]);
-        type InsulinEventLite = { id: string; event_time: string; dose_units: number; insulin_type: string };
-        const curves: DoseCurve[] = (events as InsulinEventLite[]).map((ev) => {
-          const isBasal = BASAL_TYPES.has(ev.insulin_type);
-          const time = new Date(ev.event_time);
-          const label = `${time.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })} ${ev.insulin_type} ${Number(ev.dose_units).toFixed(1)}U`;
-          return {
-            id: ev.id,
-            label,
-            type: isBasal ? "basal" as const : "bolus" as const,
-            points: [], // populated below by engine call
-          };
-        });
+    get(trpc("insulinEvent.getByDateRange", { from: todayFrom, to: todayTo })).then((events) => {
+      if (signal.aborted) return;
+      if (!Array.isArray(events)) return;
+      const list = events as InsulinEventLite[];
 
-        // For now, set curves with empty points — the StackingCurve is the main vis
-        setActivityCurves(curves);
+      const curves: DoseCurve[] = list.map((ev) => {
+        const isBasal = BASAL_TYPES.has(ev.insulin_type);
+        const time = new Date(ev.event_time);
+        const label = `${time.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })} ${ev.insulin_type} ${Number(ev.dose_units).toFixed(1)}U`;
+        return {
+          id: ev.id,
+          label,
+          type: isBasal ? "basal" as const : "bolus" as const,
+          points: [],
+        };
+      });
+      setActivityCurves(curves);
 
-        // Compute quiet tail: IOB from events > 12h ago
-        let tail = 0;
-        // Approximate: events from yesterday contribute quiet tail
-        for (const ev of events as InsulinEventLite[]) {
-          const elapsed = (Date.now() - new Date(ev.event_time).getTime()) / 60_000;
-          if (elapsed > 720) { // > 12h
-            tail += Number(ev.dose_units) * Math.exp(-Math.LN2 / 720 * elapsed);
-          }
+      // Quiet tail uses the captured effectStartedAt — not Date.now()
+      // again — so the value cannot drift if React re-runs the .then().
+      let tail = 0;
+      for (const ev of list) {
+        const elapsed = (effectStartedAt - new Date(ev.event_time).getTime()) / 60_000;
+        if (elapsed > 720) {
+          tail += Number(ev.dose_units) * Math.exp(-Math.LN2 / 720 * elapsed);
         }
-        setQuietTail(Math.round(tail * 100) / 100);
-      })
-      .catch(() => {});
+      }
+      setQuietTail(Math.round(tail * 100) / 100);
+    });
 
     // Condition events for timeline markers
-    fetch(`/trpc/conditionEvent.list?input=${encodeURIComponent(JSON.stringify({ json: { from: `${today}T00:00:00`, to: `${today}T23:59:59`, limit: 50 } }))}`, { headers })
-      .then((r) => r.json())
-      .then((res) => {
-        const data = res?.result?.data?.json;
-        if (Array.isArray(data)) setConditionEvents(data);
-      })
-      .catch(() => {});
+    get(trpc("conditionEvent.list", { from: todayFrom, to: todayTo, limit: 50 })).then((data) => {
+      if (signal.aborted) return;
+      if (Array.isArray(data)) setConditionEvents(data);
+    });
 
     // Pattern analysis
-    fetch(`/trpc/patterns.analyse?input=${encodeURIComponent(JSON.stringify({ json: { from: `${today}T00:00:00`, to: `${today}T23:59:59` } }))}`, { headers })
-      .then((r) => r.json())
-      .then((res) => {
-        const data = res?.result?.data?.json;
-        if (Array.isArray(data)) setDetectedPatterns(data);
-      })
-      .catch(() => {});
+    get(trpc("patterns.analyse", { from: todayFrom, to: todayTo })).then((data) => {
+      if (signal.aborted) return;
+      if (Array.isArray(data)) setDetectedPatterns(data);
+    });
+
+    return () => {
+      controller.abort();
+    };
   }, [session, dateRange]);
 
   /* ─── Nightscout sync ───────────────────────────────────────────────── */

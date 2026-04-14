@@ -4,6 +4,43 @@
 
 ---
 
+## 🔒 INSULIN LOCK — SUPERSEDES EVERYTHING BELOW FOR INSULIN / CHART / ENGINE WORK
+
+Before ANY `Edit` / `Write` / `MultiEdit` touching **any of these files**:
+
+- `src/iob-hunter/engine/iob-engine.ts`
+- `src/iob-hunter/engine/insulin-profiles.ts`
+- `src/iob-hunter/components/BasalLifecycleChart.tsx`
+- `src/iob-hunter/components/BasalActivityChart.tsx`
+- `src/iob-hunter/components/IOBHunterChart.tsx`
+- `src/pages/BasalParametersPage.tsx`
+- `src/pages/IOBHunterPage.tsx`
+- `tresiba-interpretation-test.html`
+
+Claude MUST, in this order, in the SAME reply, **before any tool call**:
+
+1. **Read `INSULIN_LOCK.md`** at the repo root.
+2. **Paste the matching row(s)** for every insulin touched by the change.
+3. **State the prose diff** — current behavior vs proposed behavior, with `pk_source` citation.
+4. **Wait for the founder to type:** `APPROVE-INSULIN-EDIT`.
+
+No row paste + no prose diff + no `APPROVE-INSULIN-EDIT` phrase → **no edit**.
+Questions ("why", "how come", "what if") are never authorizations.
+Only these words authorize: `go`, `build`, `ship it`, `apply`, `yes apply`, `approved`, `APPROVE-INSULIN-EDIT`, `commit`.
+
+**The `.claude/hooks/insulin-lock-check.sh` hook enforces banned patterns at the tool-call boundary.** If the hook blocks with `🛑 INSULIN-LOCK BLOCKED`, read its stderr message and comply. Do not retry the same edit. Do not attempt to bypass. Acknowledge the block to the founder and request direction.
+
+**Engine change protocol.** The engine (`iob-engine.ts`) is ground truth. Touching it requires: (1) posting the diff in prose with citations, (2) explicit `APPROVE-INSULIN-EDIT` phrase, (3) if tests fail after the change, **do not auto-update tests** — report failures and wait.
+
+**Universal chart invariants** (from `INSULIN_LOCK.md`):
+- Never start at zero. Steady state always — prior-cycle residual present at the left edge.
+- No vertical spike at injection. New dose ramps up smoothly onto existing non-zero residual.
+- Peakless insulins (Tresiba, Toujeo, Levemir) never draw a peak.
+- No invented curve functions — only `calculateIOB` / `calculateActivityRate`.
+- Cadence is locked per insulin — never copy Levemir's 12 h BID onto Tresiba, never copy Tresiba's 24 h once-daily onto Levemir.
+
+---
+
 ## Group 1: Core Operating (8 Rules)
 
 1. Zero prompts, zero confirmations — execute fully autonomously. Fix everything, push everything, don't stop between steps.

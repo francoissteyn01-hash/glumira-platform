@@ -253,6 +253,7 @@ function Callout({
     alert: { bg: "#FEE2E2", border: "#EF4444", dot: "#EF4444" },
   }[tone];
 
+  // Callouts use light backgrounds; force dark text so night mode stays legible.
   return (
     <div
       style={{
@@ -263,6 +264,11 @@ function Callout({
         display: "flex",
         gap: 12,
         alignItems: "flex-start",
+        color: "#1A2A5E",
+        // Local CSS-var override so nested children that read --text-* stay readable
+        ["--text-primary" as string]: "#0D1B3E",
+        ["--text-secondary" as string]: "#1A2A5E",
+        ["--text-faint" as string]: "#475569",
       }}
     >
       {numberBadge != null && (

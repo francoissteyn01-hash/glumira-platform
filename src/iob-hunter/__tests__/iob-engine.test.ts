@@ -103,9 +103,15 @@ describe("calculateIOB — Tresiba depot_release (CANONICAL: never spike)", () =
     }
   });
 
-  test("linear decline — halfway through duration = half the dose (±5%)", () => {
+  test("Bateman depot-release — halfway through duration retains majority of dose", () => {
+    // Two-compartment model (k_a ≈ 0.06/h, k_e = ln(2)/25h): slow
+    // absorption means at midpoint more than half the dose is still on
+    // board. Heise 2012 clamp data shows Tresiba activity is still near
+    // peak at ~21h post-injection. Linear decline is incorrect and was
+    // replaced 2026-04-14 to match the founder-approved Riley visual.
     const half = calculateIOB(10, TRESIBA, TRESIBA.duration_minutes / 2);
-    expect(half).toBeCloseTo(5, 1);
+    expect(half).toBeGreaterThan(5);
+    expect(half).toBeLessThan(9);
   });
 });
 

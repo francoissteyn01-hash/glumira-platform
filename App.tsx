@@ -16,6 +16,7 @@ import { useSessionTimeout, SessionWarningModal } from "@/hooks/useSessionTimeou
 
 /* ─── Lazy pages ─────────────────────────────────────────────────────────── */
 const LandingPage   = lazy(() => import("@/pages/LandingPage"));
+const LandingPageV2 = lazy(() => import("@/pages/LandingPageV2"));
 const AuthPage      = lazy(() => import("@/pages/RegisterPage"));
 const AuthCallbackPage = lazy(() => import("@/pages/AuthCallbackPage"));
 const DashboardPage = lazy(() => import("@/pages/DashboardPage"));
@@ -126,6 +127,7 @@ const SocialSharePage         = lazy(() => import("@/pages/SocialSharePage"));
 const LaunchAnnouncementPage  = lazy(() => import("@/pages/LaunchAnnouncementPage"));
 
 const IOBHunterPage           = lazy(() => import("@/pages/IOBHunterPage"));
+const BasalParametersPage     = lazy(() => import("@/pages/BasalParametersPage"));
 const DemoDashboardPage       = lazy(() => import("@/pages/DemoDashboardPage"));
 const PricingPage             = lazy(() => import("@/pages/PricingPage"));
 const SciencePage             = lazy(() => import("@/pages/SciencePage"));
@@ -147,7 +149,7 @@ function LoadingFallback() {
 }
 
 /* ─── Paths with no sidebar chrome ───────────────────────────────────────── */
-const CHROMELESS = ["/", "/auth", "/auth/callback", "/dev", "/tutorial", "/onboarding/region", "/onboarding/consent", "/privacy", "/terms", "/launch", "/demo", "/pricing", "/science"];
+const CHROMELESS = ["/", "/v2", "/auth", "/auth/callback", "/dev", "/tutorial", "/onboarding/region", "/onboarding/consent", "/privacy", "/terms", "/launch", "/demo", "/pricing", "/science"];
 function isChromeless(pathname: string): boolean {
   if (CHROMELESS.includes(pathname)) return true;
   if (pathname === "/register") return true;
@@ -210,6 +212,7 @@ export default function App() {
           <Suspense fallback={<LoadingFallback />}>
             <Routes>
               <Route path="/"          element={<HomeRoute />} />
+              <Route path="/v2"        element={<LandingPageV2 />} />
               <Route path="/auth"      element={<AuthPage />} />
               <Route path="/auth/callback" element={<AuthCallbackPage />} />
               {/* Public routes — no auth required */}
@@ -319,6 +322,7 @@ export default function App() {
               <Route path="/launch"                element={<LaunchAnnouncementPage />} />
               {/* ─── IOB Hunter ─────────────────────────────────────────── */}
               <Route path="/iob-hunter"            element={<IOBHunterPage />} />
+              <Route path="/basal-parameters"      element={<BasalParametersPage />} />
               {/* ─── Existing ─────────────────────────────────────────── */}
               <Route path="/dev"                   element={<DevPanel />} />
               <Route path="/register"              element={<RegisterPage />} />

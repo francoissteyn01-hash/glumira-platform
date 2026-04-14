@@ -15,7 +15,7 @@
  * Uses Recharts for rendering (Canvas upgrade planned for Phase 2).
  */
 
-import { useMemo, useState, useCallback } from "react";
+import { useEffect, useMemo, useState, useCallback } from "react";
 import {
   ComposedChart, Area, Line, XAxis, YAxis, Tooltip,
   ResponsiveContainer, CartesianGrid, ReferenceLine, ReferenceArea,
@@ -393,7 +393,22 @@ export default function IOBTerrainChart({
 
   const [whatIfBasal, setWhatIfBasal] = useState(basalEntries);
   const [whatIfBolus, setWhatIfBolus] = useState(bolusEntries);
-  const isModified = !useV7 && (JSON.stringify(whatIfBasal) !== JSON.stringify(basalEntries) || JSON.stringify(whatIfBolus) !== JSON.stringify(bolusEntries));
+  // Track whether the user has manually edited the What-If entries. Without
+  // this flag the local state never picks up parent prop changes (the
+  // useState initialiser only fires on mount), so a CSV re-import or a CGM
+  // refresh would silently leave the chart on stale data.
+  const [userEditedWhatIf, setUserEditedWhatIf] = useState(false);
+
+  // Sync from props when the parent updates basal/bolus, *unless* the user
+  // is actively iterating in the What-If panel. Their edits are preserved
+  // until handleReset() clears the flag.
+  useEffect(() => {
+    if (userEditedWhatIf) return;
+    setWhatIfBasal(basalEntries);
+    setWhatIfBolus(bolusEntries);
+  }, [basalEntries, bolusEntries, userEditedWhatIf]);
+
+  const isModified = !useV7 && userEditedWhatIf;
   const activeBasal = isModified ? whatIfBasal : basalEntries;
   const activeBolus = isModified ? whatIfBolus : bolusEntries;
 
@@ -580,7 +595,15 @@ export default function IOBTerrainChart({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const hasGlucose = enrichedPoints.some((p) => (p as unknown as any).glucose !== undefined);
   const totalDoses = entries.length;
-  const currentMinute = getCurrentMinute();
+  // Stateful clock: initialised once, advanced once per minute. Calling
+  // getCurrentMinute() inline on every render drifted the marker on each
+  // re-render and caused subtle visual jitter — see audit Suspect #2.
+  const [currentMinute, setCurrentMinute] = useState<number>(() => getCurrentMinute());
+  useEffect(() => {
+    const tick = () => setCurrentMinute(getCurrentMinute());
+    const interval = window.setInterval(tick, 60_000);
+    return () => window.clearInterval(interval);
+  }, []);
 
   const totalMinutes = safeCycles * MINUTES_PER_DAY;
 
@@ -645,6 +668,7 @@ export default function IOBTerrainChart({
   }
 
   const handleTimingChange = (type: "basal" | "bolus", index: number, newTime: string) => {
+    setUserEditedWhatIf(true);
     if (type === "basal") {
       const updated = [...whatIfBasal];
       updated[index] = { ...updated[index], time: newTime };
@@ -656,6 +680,7 @@ export default function IOBTerrainChart({
     }
   };
   const handleDoseChange = (type: "basal" | "bolus", index: number, newDose: number) => {
+    setUserEditedWhatIf(true);
     if (type === "basal") {
       const updated = [...whatIfBasal];
       updated[index] = { ...updated[index], dose: newDose };
@@ -666,7 +691,11 @@ export default function IOBTerrainChart({
       setWhatIfBolus(updated);
     }
   };
-  const handleReset = () => { setWhatIfBasal(basalEntries); setWhatIfBolus(bolusEntries); };
+  const handleReset = () => {
+    setUserEditedWhatIf(false);
+    setWhatIfBasal(basalEntries);
+    setWhatIfBolus(bolusEntries);
+  };
 
   return (
     <div className="page-transition">

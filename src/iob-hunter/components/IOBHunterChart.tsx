@@ -26,7 +26,7 @@
  * GluMira™ is an educational platform, not a medical device.
  */
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type RefObject } from "react";
 import {
   Chart,
   CategoryScale,
@@ -92,13 +92,22 @@ function segmentColourForValue(value: number, max: number): string {
  * data. This cannot be done cleanly with the annotation plugin alone —
  * label orientation hacks in that plugin break on mobile.
  */
+/**
+ * Plugin factory that reads markers + visibility from refs. This lets the
+ * parent component mutate markers without destroying and re-creating the
+ * Chart.js instance on every prop change — which is the root cause of
+ * the flicker/blank-frame bug the founder reported.
+ */
 function makeInjectionMarkerPlugin(
-  markers: InjectionMarker[],
+  markersRef: RefObject<InjectionMarker[]>,
+  showRef: RefObject<boolean>,
   labelZoneTop: number = 0.15,  // top 15% of the chart area is label territory
 ): Plugin<"line"> {
   return {
     id: "iob-hunter-injection-markers",
     afterDatasetsDraw(chart) {
+      if (!showRef.current) return;
+      const markers = markersRef.current ?? [];
       const { ctx, chartArea, scales } = chart;
       if (!chartArea || !scales.x) return;
       const xScale = scales.x;
@@ -159,29 +168,28 @@ export type IOBHunterChartProps = {
   height?: number;
 }
 
-/* ─── Main component ─────────────────────────────────────────────────── */
-export default function IOBHunterChart({
-  curve,
-  markers,
-  basalCurve,
-  whatIfCurve,
-  stackingAlerts = [],
-  maxIOB,
-  showBasalBand = true,
-  showWhatIf = true,
-  showInjectionMarkers = true,
-  height = 380,
-}: IOBHunterChartProps) {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const chartRef = useRef<Chart<"line"> | null>(null);
+/**
+ * Pure config builder. Given props, returns a ChartConfiguration that
+ * reflects the current state of the chart. Used on mount (first render)
+ * and on every prop change (update-in-place). Does NOT include the
+ * injection-marker plugin — that is attached once at mount and reads
+ * fresh markers from a ref.
+ */
+function buildConfig(args: {
+  curve: IOBCurvePoint[];
+  basalCurve?: IOBCurvePoint[];
+  whatIfCurve?: IOBCurvePoint[];
+  stackingAlerts: StackingAlert[];
+  maxIOB: number;
+  showBasalBand: boolean;
+  showWhatIf: boolean;
+}): ChartConfiguration<"line"> {
+  const {
+    curve, basalCurve, whatIfCurve, stackingAlerts,
+    maxIOB, showBasalBand, showWhatIf,
+  } = args;
 
-  useEffect(() => {
-    if (!canvasRef.current) return;
-
-    // Destroy previous instance on re-render
-    chartRef.current?.destroy();
-
-    const labels = curve.map((p) => p.time_label);
+  const labels = curve.map((p) => p.time_label);
     const primaryData = curve.map((p) => p.total_iob);
     const yMax = Math.max(21, Math.ceil(maxIOB * 1.25));
 
@@ -330,8 +338,43 @@ export default function IOBHunterChart({
           },
         },
       },
-      plugins: showInjectionMarkers ? [makeInjectionMarkerPlugin(markers)] : [],
-    };
+  };
+  return config;
+}
+
+
+/* ─── Main component ─────────────────────────────────────────────────── */
+export default function IOBHunterChart({
+  curve,
+  markers,
+  basalCurve,
+  whatIfCurve,
+  stackingAlerts = [],
+  maxIOB,
+  showBasalBand = true,
+  showWhatIf = true,
+  showInjectionMarkers = true,
+  height = 380,
+}: IOBHunterChartProps) {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const chartRef = useRef<Chart<"line"> | null>(null);
+
+  // Refs the marker plugin reads on every frame. Keeping markers behind
+  // refs means changing them does NOT require destroying the chart.
+  const markersRef = useRef<InjectionMarker[]>(markers);
+  const showMarkersRef = useRef<boolean>(showInjectionMarkers);
+  markersRef.current = markers;
+  showMarkersRef.current = showInjectionMarkers;
+
+  /* Effect A — mount only. Create the chart once. */
+  useEffect(() => {
+    if (!canvasRef.current) return;
+
+    const config = buildConfig({
+      curve, basalCurve, whatIfCurve, stackingAlerts,
+      maxIOB, showBasalBand, showWhatIf,
+    });
+    config.plugins = [makeInjectionMarkerPlugin(markersRef, showMarkersRef)];
 
     chartRef.current = new Chart(canvasRef.current, config);
 
@@ -339,7 +382,32 @@ export default function IOBHunterChart({
       chartRef.current?.destroy();
       chartRef.current = null;
     };
-  }, [curve, markers, basalCurve, whatIfCurve, stackingAlerts, maxIOB, showBasalBand, showWhatIf, showInjectionMarkers]);
+    // Intentional: mount-once effect. Prop changes are handled by Effect B,
+    // which mutates chart.data / chart.options in place instead of destroying.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Skip Effect B's first run — Effect A already created the chart with
+  // the right config, so calling update() immediately would be wasted work.
+  const isInitialMount = useRef(true);
+
+  /* Effect B — on prop changes, update the chart in place. No destroy. */
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+    const chart = chartRef.current;
+    if (!chart) return;
+
+    const next = buildConfig({
+      curve, basalCurve, whatIfCurve, stackingAlerts,
+      maxIOB, showBasalBand, showWhatIf,
+    });
+    chart.data = next.data;
+    if (next.options) chart.options = next.options;
+    chart.update("none");
+  }, [curve, basalCurve, whatIfCurve, stackingAlerts, maxIOB, showBasalBand, showWhatIf]);
 
   return (
     <div

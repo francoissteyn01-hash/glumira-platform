@@ -23,112 +23,124 @@ const T = {
   mono: FONTS.mono,
 };
 
-/* ───────────────────── Hero (preserved, Rule 24 + 43) ───────────────────── */
+/* ───────────────────── Hero (centered, dense, Rule 24 + 43) ─────────────── */
 
 function Hero() {
   const navigate = useNavigate();
 
   return (
     <section
-      className="glm-hero"
       style={{
-        minHeight: "100vh",
-        display: "flex",
-        flexDirection: "column",
+        position: "relative",
+        padding: "56px 20px 72px",
         textAlign: "center",
+        overflow: "hidden",
       }}
     >
-      <style>{`
-        .glm-hero-banner { width: 100%; flex-shrink: 0; }
-        .glm-hero-banner img { width: 100%; display: block; }
-        .glm-hero-content { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 28px 24px 20px; }
-        .glm-hero-cta { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 20px; justify-content: center; align-items: center; }
-        @media (min-width: 768px) {
-          .glm-hero { flex-direction: row; text-align: left; }
-          .glm-hero-banner { width: 50%; min-height: 90vh; display: flex; align-items: center; justify-content: center; }
-          .glm-hero-banner img { width: 90%; max-width: 600px; }
-          .glm-hero-content { width: 50%; padding: 40px 48px; align-items: flex-start; }
-          .glm-hero-cta { justify-content: flex-start; }
-        }
-      `}</style>
+      {/* Ambient glow */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          top: "-20%",
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: 900,
+          height: 900,
+          maxWidth: "140vw",
+          background:
+            "radial-gradient(circle at center, rgba(42,181,193,0.12) 0%, rgba(42,181,193,0) 55%)",
+          filter: "blur(20px)",
+          pointerEvents: "none",
+          zIndex: 0,
+        }}
+      />
 
-      <div className="glm-hero-banner">
+      <div style={{ position: "relative", zIndex: 1, maxWidth: 920, margin: "0 auto" }}>
+        {/* Mira — compact, floats above wordmark */}
         <img
           src="/images/mira-hero.png"
           alt="Mira — GluMira™ AI companion"
           style={{
+            width: "clamp(140px, 22vw, 220px)",
+            height: "auto",
+            display: "block",
+            margin: "0 auto 18px",
             objectFit: "contain",
             mixBlendMode: "lighten",
-            filter: "drop-shadow(0 0 40px rgba(42,181,193,0.15))",
+            filter: "drop-shadow(0 0 48px rgba(42,181,193,0.22))",
           }}
         />
-      </div>
-
-      <div className="glm-hero-content">
-        <h1
-          style={{
-            fontFamily: T.heading,
-            fontSize: "clamp(52px, 16vw, 88px)",
-            fontWeight: 700,
-            color: T.white,
-            lineHeight: 1.0,
-            margin: "0 0 6px",
-            letterSpacing: "-0.03em",
-            width: "100%",
-          }}
-        >
-          GluMira<span style={{ fontSize: "0.35em", verticalAlign: "super", color: T.white }}>™</span>
-        </h1>
 
         <p
           style={{
-            fontSize: "clamp(11px, 2.2vw, 14px)",
+            fontSize: 11,
             fontWeight: 500,
-            letterSpacing: "0.22em",
+            letterSpacing: "0.28em",
             textTransform: "uppercase",
             color: "rgba(255,255,255,0.55)",
-            marginBottom: 0,
+            margin: "0 0 14px",
           }}
         >
           Companion for life with insulin
         </p>
 
-        <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "44px 0" }}>
-          <p
-            style={{
-              fontFamily: T.heading,
-              fontSize: "clamp(22px, 5.5vw, 36px)",
-              fontWeight: 700,
-              color: T.white,
-              margin: 0,
-              lineHeight: 1.25,
-              letterSpacing: "-0.01em",
-            }}
-          >
-            The science of insulin,
-          </p>
-          <p
-            style={{
-              fontFamily: T.heading,
-              fontSize: "clamp(22px, 5.5vw, 36px)",
-              fontWeight: 700,
-              color: T.amber,
-              margin: 0,
-              lineHeight: 1.25,
-              letterSpacing: "-0.01em",
-              textShadow: "0 0 24px rgba(245,158,11,0.3)",
-            }}
-          >
-            made visible
-          </p>
-        </div>
+        <h1
+          style={{
+            fontFamily: T.heading,
+            fontSize: "clamp(44px, 9.5vw, 104px)",
+            fontWeight: 700,
+            color: T.white,
+            lineHeight: 0.95,
+            margin: "0 0 12px",
+            letterSpacing: "-0.035em",
+          }}
+        >
+          GluMira
+          <span style={{ fontSize: "0.32em", verticalAlign: "super", color: T.white }}>™</span>
+        </h1>
 
-        <div className="glm-hero-cta">
-          <button
-            type="button"
-            onClick={() => navigate("/demo")}
-            style={ctaStyle(T.teal, T.navyDeep)}
-          >
+        <p
+          style={{
+            fontFamily: T.heading,
+            fontSize: "clamp(20px, 4.4vw, 36px)",
+            fontWeight: 700,
+            color: T.white,
+            margin: "0 0 6px",
+            lineHeight: 1.15,
+            letterSpacing: "-0.015em",
+          }}
+        >
+          The science of insulin,{" "}
+          <span style={{ color: T.amber, textShadow: "0 0 28px rgba(245,158,11,0.35)" }}>
+            made visible.
+          </span>
+        </p>
+
+        <p
+          style={{
+            maxWidth: 560,
+            margin: "18px auto 28px",
+            fontSize: "clamp(14px, 2.6vw, 16px)",
+            lineHeight: 1.65,
+            color: "rgba(255,255,255,0.72)",
+          }}
+        >
+          A companion for life with insulin — Type&nbsp;1, Type&nbsp;2, LADA, MODY and
+          gestational. See what your insulin is still doing, and when the picture gets
+          clearer.
+        </p>
+
+        <div
+          style={{
+            display: "flex",
+            gap: 12,
+            flexWrap: "wrap",
+            justifyContent: "center",
+            marginBottom: 14,
+          }}
+        >
+          <button type="button" onClick={() => navigate("/demo")} style={ctaStyle(T.teal, T.navyDeep)}>
             Browse as guest
           </button>
           <button
@@ -147,46 +159,39 @@ function Hero() {
             background: "none",
             border: "none",
             padding: 0,
-            marginBottom: 24,
             color: "rgba(255,255,255,0.55)",
             fontSize: 13,
-            fontWeight: 400,
             fontFamily: T.body,
             cursor: "pointer",
-            letterSpacing: "0.02em",
             textDecoration: "underline",
-            textUnderlineOffset: "3px",
+            textUnderlineOffset: 3,
           }}
         >
           Already have an account? Log in
         </button>
 
-        <p
+        {/* Trust strip */}
+        <div
           style={{
-            fontSize: "clamp(14px, 2.5vw, 15px)",
-            fontWeight: 300,
-            color: "rgba(255,255,255,0.72)",
-            lineHeight: 1.7,
-            maxWidth: 440,
-            marginBottom: 20,
+            marginTop: 34,
+            display: "flex",
+            gap: 18,
+            justifyContent: "center",
+            flexWrap: "wrap",
+            fontFamily: T.body,
+            fontSize: 12,
+            color: "rgba(255,255,255,0.55)",
+            letterSpacing: "0.02em",
           }}
         >
-          A complete companion for life with insulin — for everyone managing
-          Type&nbsp;1, Type&nbsp;2, LADA, MODY and gestational diabetes.
-        </p>
-
-        <p
-          style={{
-            fontSize: 11,
-            fontWeight: 500,
-            color: "rgba(255,255,255,0.45)",
-            letterSpacing: "0.22em",
-            textTransform: "uppercase",
-            marginBottom: 8,
-          }}
-        >
-          Silent. Vigilant. Yours.
-        </p>
+          <span>✓ Free forever</span>
+          <span style={{ opacity: 0.35 }}>•</span>
+          <span>✓ No card required</span>
+          <span style={{ opacity: 0.35 }}>•</span>
+          <span>✓ 13 cited insulin profiles</span>
+          <span style={{ opacity: 0.35 }}>•</span>
+          <span>✓ Educational, not a medical device</span>
+        </div>
       </div>
     </section>
   );
@@ -219,7 +224,7 @@ function Section({ eyebrow, title, kicker, children }: {
   children: React.ReactNode;
 }) {
   return (
-    <section style={{ padding: "72px 20px 8px" }}>
+    <section style={{ padding: "56px 20px 8px" }}>
       <div style={{ maxWidth: 1080, margin: "0 auto" }}>
         {eyebrow ? (
           <p
@@ -691,7 +696,7 @@ export default function LandingPage() {
   }, []);
 
   return (
-    <MarketingLayout showNav={false}>
+    <MarketingLayout showNav={true}>
       <Hero />
       <Problem />
       <IOBPreview />

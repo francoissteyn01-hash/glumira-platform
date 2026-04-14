@@ -302,9 +302,9 @@ export default function IOBHunterVisitorEntry({
             lineHeight: 1.5,
           }}
         >
-          This is Patient A — an anonymised 9-year-old T1D demo regimen. Tap{" "}
-          <strong>Enter my insulin</strong> to build your own pressure map and
-          watch the curve appear as you add each dose.
+          This is a synthetic demo regimen — a T1D example used to show the
+          pressure map. Tap <strong>Enter my insulin</strong> to build your
+          own and watch the curve appear as you add each dose.
         </p>
       )}
 

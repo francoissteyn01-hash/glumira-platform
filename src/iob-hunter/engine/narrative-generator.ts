@@ -23,9 +23,19 @@ import type {
 /* ─── Helpers ────────────────────────────────────────────────────────── */
 
 function formatHour(h: number): string {
-  const hh = Math.floor(h);
-  const mm = Math.round((h - hh) * 60);
-  return `${String(hh).padStart(2, "0")}:${String(mm).padStart(2, "0")}`;
+  // Wrap to [0, 24) and append a day marker for hours past midnight so
+  // the reader sees "03:30 (next day)" instead of "27:30" — the latter
+  // is unreadable to non-engineers (see founder's "46.3h? which human
+  // will understand this" feedback).
+  const wrapped = ((h % 24) + 24) % 24;
+  const hh = Math.floor(wrapped);
+  const mm = Math.round((wrapped - hh) * 60);
+  const base = `${String(hh).padStart(2, "0")}:${String(mm).padStart(2, "0")}`;
+  const dayOffset = Math.floor(h / 24);
+  if (dayOffset === 0) return base;
+  if (dayOffset === 1) return `${base} (next day)`;
+  if (dayOffset === -1) return `${base} (prev day)`;
+  return `${base} (day ${dayOffset >= 0 ? "+" : ""}${dayOffset})`;
 }
 
 /* ═════════════════════════════════════════════════════════════════════ */

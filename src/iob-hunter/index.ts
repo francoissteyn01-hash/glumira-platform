@@ -46,10 +46,22 @@ export {
   generateStackedCurve,
   getHistoryWindow,
   getRegimenGraphWindow,
+  computeGraphBounds,
+  calculateActivityRate,
+  generatePerDoseActivityCurves,
+  detectRiskZones,
+  suggestEqualSpacedSchedule,
+  generateSuggestedTotalCurve,
   predictiveHighAlert,
   predictiveLowAlert,
   resolveEffectiveDOA,
   TIER_CONFIG,
+} from "@/iob-hunter/engine/iob-engine";
+
+export type {
+  PerDoseActivityCurve,
+  PerDoseActivityPoint,
+  RiskZone,
 } from "@/iob-hunter/engine/iob-engine";
 
 /* ─── Profiles ───────────────────────────────────────────────────────────── */

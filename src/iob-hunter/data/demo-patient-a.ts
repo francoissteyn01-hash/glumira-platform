@@ -23,7 +23,7 @@ import type { InsulinDose } from "@/iob-hunter/types";
 
 export const DEMO_PATIENT_A_V7 = {
   id: "DEMO-A",
-  name: "Patient A",
+  name: "Demo regimen",
   age: 9,
   weight_kg: 30,
   condition: "Type 1 Diabetes",
@@ -43,7 +43,7 @@ export const DEMO_PATIENT_A_V7_DOSES: readonly InsulinDose[] = [
   {
     id: "demo-levemir-am",
     insulin_name: "Levemir",
-    dose_units: 5.5,
+    dose_units: 5,
     administered_at: "06:30",
     dose_type: "basal_injection",
   },
@@ -64,14 +64,14 @@ export const DEMO_PATIENT_A_V7_DOSES: readonly InsulinDose[] = [
   {
     id: "demo-levemir-pm",
     insulin_name: "Levemir",
-    dose_units: 6.0,
+    dose_units: 5,
     administered_at: "14:00",
     dose_type: "basal_injection",
   },
   {
     id: "demo-levemir-night",
     insulin_name: "Levemir",
-    dose_units: 2.5,
+    dose_units: 4,
     administered_at: "21:00",
     dose_type: "basal_injection",
   },
