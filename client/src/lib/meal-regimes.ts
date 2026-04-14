@@ -26,6 +26,27 @@ export interface MealRegime {
 
 const MEAL_REGIMES: MealRegime[] = [
   {
+    id: "pediatric-standard",
+    name: "Pediatric Standard",
+    meals: [
+      { name: "Breakfast", timeWindow: { start: "07:00", end: "08:00" }, carbRange: { min: 25, max: 45 }, insulinTiming: "Pre-meal bolus", preBolusMinutes: 10 },
+      { name: "Morning Snack", timeWindow: { start: "10:00", end: "10:30" }, carbRange: { min: 10, max: 20 }, insulinTiming: "Bolus if >15g carbs" },
+      { name: "Lunch", timeWindow: { start: "12:00", end: "13:00" }, carbRange: { min: 35, max: 55 }, insulinTiming: "Pre-meal bolus", preBolusMinutes: 10 },
+      { name: "Afternoon Snack", timeWindow: { start: "15:00", end: "15:30" }, carbRange: { min: 10, max: 20 }, insulinTiming: "Bolus if >15g carbs" },
+      { name: "Dinner", timeWindow: { start: "17:30", end: "18:30" }, carbRange: { min: 35, max: 55 }, insulinTiming: "Pre-meal bolus", preBolusMinutes: 10 },
+    ],
+    culturalNotes: "Standard pediatric meal pattern with morning and afternoon snacks. Suitable for school-age children with type 1 diabetes.",
+  },
+  {
+    id: "standard-3meal",
+    name: "Standard 3-Meal",
+    meals: [
+      { name: "Breakfast", timeWindow: { start: "07:00", end: "08:30" }, carbRange: { min: 30, max: 50 }, insulinTiming: "Pre-meal bolus", preBolusMinutes: 15 },
+      { name: "Lunch", timeWindow: { start: "12:00", end: "13:00" }, carbRange: { min: 40, max: 65 }, insulinTiming: "Pre-meal bolus", preBolusMinutes: 15 },
+      { name: "Dinner", timeWindow: { start: "18:00", end: "19:30" }, carbRange: { min: 40, max: 65 }, insulinTiming: "Pre-meal bolus", preBolusMinutes: 15 },
+    ],
+  },
+  {
     id: "full-carb-count",
     name: "Full Carb Count",
     meals: [

@@ -2,6 +2,7 @@
  * GluMira™ V7 — IOB Hunter™ Engine Tests
  */
 
+import { describe, expect, test } from "vitest";
 import {
   calculateIOB,
   applyGaussianPeak,
@@ -176,9 +177,11 @@ describe("Levemir 3× daily stacking", () => {
     // Check IOB at 15:30 (1.5h after second dose — doses 1 + 2 both active)
     const at1530 = calculateStackingScore(events, new Date(`${baseDate}T15:30:00Z`));
 
-    // The stacking score should be higher at 14:30-15:30 than at 13:30
-    // because two Levemir doses overlap
-    expect(at1430).toBeGreaterThan(at1330);
+    // At 14:30, dose 2 is still in its 60-min onset window so it contributes 0;
+    // only dose 1 is active and has decayed slightly more than at 13:30.
+    expect(at1430).toBeLessThan(at1330);
+    // At 15:30, dose 2 has cleared onset (90 min elapsed) so the two Levemir
+    // doses now overlap and the stacking score exceeds the dose-1-only baseline.
     expect(at1530).toBeGreaterThan(at1330);
 
     // Verify doses 1 and 2 both contribute
