@@ -18,39 +18,82 @@ const BORDER = "var(--border)";
 const RED = "#ef4444";
 
 /* ─── Icons (inline SVG) ────────────────────────────────────────────────── */
+// Raw stroke icon — used for utility controls (collapse, chevron, signout)
 const Icon = ({ d, size = 18 }: { d: string; size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
     <path d={d} />
   </svg>
 );
 
+// Circular nav icon — modern clinical style matching brand icon language
+// Active: teal pill background, white icon. Inactive: soft grey, navy icon.
+const NavIcon = ({ d, active, collapsed }: { d: string; active: boolean; collapsed: boolean }) => {
+  const size = collapsed ? 36 : 32;
+  return (
+    <span style={{
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      width: size,
+      height: size,
+      borderRadius: 10,
+      flexShrink: 0,
+      background: active ? "var(--accent-teal)" : "rgba(26,42,94,0.07)",
+      transition: "background 0.15s",
+    }}>
+      <svg
+        width={collapsed ? 18 : 16}
+        height={collapsed ? 18 : 16}
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke={active ? "#ffffff" : "var(--text-primary)"}
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d={d} />
+      </svg>
+    </span>
+  );
+};
+
 const ICONS = {
-  profile: "M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8z",
-  insulin: "M19 3l-2 2M17 5l-8.5 8.5M7 14l-2.5 2.5M4.5 16.5L3 21l4.5-1.5M14 5.5l4.5 4.5M9 11l4.5 4.5",
-  dashboard: "M3 3h7v9H3zM14 3h7v5h-7zM14 12h7v9h-7zM3 16h7v5H3z",
-  analytics: "M3 3v18h18M7 14l4-4 4 4 5-5",
+  profile:      "M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8z",
+  // Insulin pen (not syringe): clean pen/stylus representing modern insulin delivery
+  insulin:      "M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z",
+  dashboard:    "M3 3h7v9H3zM14 3h7v5h-7zM14 12h7v9h-7zM3 16h7v5H3z",
+  analytics:    "M3 3v18h18M7 14l4-4 4 4 5-5",
   alertHistory: "M12 8v4l3 3M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z",
-  syncStatus: "M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8M3 22v-6h6M21 2v6h-6",
-  compliance: "M9 12l2 2 4-4M12 2 4 5v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V5l-8-3z",
-  iobHunter: "M3 12h4l3-9 4 18 3-9h4",
-  logInsulin: "M12 2v6M12 22v-6M4.93 4.93l4.24 4.24M14.83 14.83l4.24 4.24M2 12h6M22 12h-6M4.93 19.07l4.24-4.24M14.83 9.17l4.24-4.24",
-  logMeal: "M18 8h1a4 4 0 0 1 0 8h-1M3 8h14v10H3zM6 1v3M10 1v3M14 1v3",
-  conditions: "M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zM12 6v6l4 2",
-  education: "M22 10v6M2 10l10-5 10 5-10 5z M6 12v5c3 3 9 3 12 0v-5",
-  mira: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z",
-  modules: "M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z",
-  meal: "M18 8h1a4 4 0 0 1 0 8h-1M3 8h14v10H3zM6 1v3M10 1v3M14 1v3",
-  badges: "M12 15a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM8.21 13.89L7 22l5-3 5 3-1.21-8.12",
-  tutorial: "M15 10l-4.553-2.276A1 1 0 0 0 9 8.618v6.764a1 1 0 0 0 1.447.894L15 14M3 4h18v16H3z",
-  settings: "M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z",
-  faq: "M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0z",
-  signout: "M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9",
-  chevronDown: "M6 9l6 6 6-6",
+  syncStatus:   "M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8M3 22v-6h6M21 2v6h-6",
+  compliance:   "M9 12l2 2 4-4M12 2 4 5v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V5l-8-3z",
+  iobHunter:    "M3 12h4l3-9 4 18 3-9h4",
+  // Insulin log: clipboard with pen — clinical record, not syringe
+  logInsulin:   "M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2M9 2h6a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zM12 11h4M12 16h4M8 11h.01M8 16h.01",
+  // Meal log: fork and knife — clean, not a syringe
+  logMeal:      "M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7",
+  // Conditions log: pulse/heart rate — medical, clean
+  conditions:   "M22 12h-4l-3 9L9 3l-3 9H2",
+  // Education: open book — clean, professional
+  education:    "M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z",
+  // Mira AI: message with sparkle — AI assistant
+  mira:         "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2zM12 7v.01M16 11v.01M8 11v.01",
+  // Modules: clean 4-square grid
+  modules:      "M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z",
+  // Meal plan: calendar with fork
+  meal:         "M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z",
+  badges:       "M12 15a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM8.21 13.89L7 22l5-3 5 3-1.21-8.12",
+  // Tutorial: play button — video/walkthrough
+  tutorial:     "M15 10l-4.553-2.276A1 1 0 0 0 9 8.618v6.764a1 1 0 0 0 1.447.894L15 14M3 4h18v16H3z",
+  // Settings: sliders (not gear — cleaner, less mechanical)
+  settings:     "M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6",
+  faq:          "M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0z",
+  signout:      "M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9",
+  chevronDown:  "M6 9l6 6 6-6",
   chevronRight: "M9 6l6 6-6 6",
-  more: "M12 5v.01M12 12v.01M12 19v.01",
-  close: "M18 6L6 18M6 6l12 12",
-  collapse: "M19 12H5M12 5l-7 7 7 7",
-  expand: "M5 12h14M12 5l7 7-7 7",
+  more:         "M12 5v.01M12 12v.01M12 19v.01",
+  close:        "M18 6L6 18M6 6l12 12",
+  collapse:     "M19 12H5M12 5l-7 7 7 7",
+  expand:       "M5 12h14M12 5l7 7-7 7",
 };
 
 const CLINICAL_MODULES = [
@@ -93,14 +136,14 @@ const DIETARY_MODULES = [
 const itemStyle = (active: boolean, collapsed: boolean): React.CSSProperties => ({
   display: "flex",
   alignItems: "center",
-  gap: collapsed ? 0 : 12,
-  padding: collapsed ? "10px" : "10px 14px",
-  margin: "2px 8px",
-  borderRadius: 8,
+  gap: collapsed ? 0 : 10,
+  padding: collapsed ? "6px" : "6px 10px",
+  margin: "2px 6px",
+  borderRadius: 10,
   color: active ? TEAL : NAVY,
-  background: active ? "rgba(42,181,193,0.08)" : "transparent",
-  fontSize: 13,
-  fontWeight: active ? 600 : 500,
+  background: "transparent",
+  fontSize: 14,
+  fontWeight: active ? 600 : 450,
   textDecoration: "none",
   cursor: "pointer",
   position: "relative",
@@ -108,17 +151,18 @@ const itemStyle = (active: boolean, collapsed: boolean): React.CSSProperties => 
   fontFamily: "'DM Sans', system-ui, sans-serif",
   justifyContent: collapsed ? "center" : "flex-start",
   border: "none",
-  width: collapsed ? "calc(100% - 16px)" : "calc(100% - 16px)",
+  width: collapsed ? "calc(100% - 12px)" : "calc(100% - 12px)",
   textAlign: "left",
+  lineHeight: 1.4,
 });
 
 const sectionLabelStyle: React.CSSProperties = {
   fontSize: 10,
-  fontWeight: 600,
-  letterSpacing: "0.1em",
+  fontWeight: 700,
+  letterSpacing: "0.12em",
   textTransform: "uppercase",
   color: MUTED,
-  padding: "16px 22px 6px",
+  padding: "20px 18px 5px",
   fontFamily: "'DM Sans', system-ui, sans-serif",
 };
 
@@ -136,8 +180,12 @@ function DesktopSidebar({ collapsed, setCollapsed }: { collapsed: boolean; setCo
       title={collapsed ? label : undefined}
       style={({ isActive }) => itemStyle(isActive, collapsed)}
     >
-      <Icon d={iconPath} />
-      {!collapsed && <span>{label}</span>}
+      {({ isActive }: { isActive: boolean }) => (
+        <>
+          <NavIcon d={iconPath} active={isActive} collapsed={collapsed} />
+          {!collapsed && <span style={{ letterSpacing: "-0.01em" }}>{label}</span>}
+        </>
+      )}
     </NavLink>
   );
 
@@ -186,7 +234,7 @@ function DesktopSidebar({ collapsed, setCollapsed }: { collapsed: boolean; setCo
         borderBottom: `1px solid ${BORDER}`,
       }}>
         {!collapsed && (
-          <span style={{ fontSize: 16, fontWeight: 700, color: TEAL, letterSpacing: "-0.01em", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+          <span style={{ fontSize: 16, fontWeight: 700, color: TEAL, letterSpacing: "-0.02em", fontFamily: "'Playfair Display', Georgia, serif" }}>
             GluMira&trade;
           </span>
         )}
@@ -228,10 +276,10 @@ function DesktopSidebar({ collapsed, setCollapsed }: { collapsed: boolean; setCo
           title={collapsed ? "Modules" : undefined}
           style={itemStyle(false, collapsed)}
         >
-          <Icon d={ICONS.modules} />
+          <NavIcon d={ICONS.modules} active={false} collapsed={collapsed} />
           {!collapsed && (
             <>
-              <span style={{ flex: 1 }}>Modules</span>
+              <span style={{ flex: 1, letterSpacing: "-0.01em" }}>Modules</span>
               <Icon d={modulesOpen ? ICONS.chevronDown : ICONS.chevronRight} size={14} />
             </>
           )}
