@@ -82,16 +82,7 @@
 }
 
 html { scroll-behavior: smooth; }
-body {
-  @apply antialiased;
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: 15px;
-  line-height: 1.7;
-  font-weight: 400;
-  -webkit-font-smoothing: antialiased;
-}
+body { @apply antialiased; background: var(--bg-primary); color: var(--text-primary); font-family: 'DM Sans', system-ui, sans-serif; font-size: 16px; line-height: 1.6; }
 :focus-visible { @apply outline-none ring-2 ring-brand-500 ring-offset-2; }
 .skip-link { @apply sr-only; }
 .skip-link:focus { @apply not-sr-only fixed top-2 left-2 z-[100] rounded-lg bg-brand-600 px-4 py-2 text-sm text-white; }
@@ -112,14 +103,11 @@ body {
 .iob-kpi-row { min-width: 0; }
 
 /* ─── Typography Hierarchy ──────────────────────────────────────────────── */
-/* Optimised for tired parents: generous sizes, high contrast, easy scan    */
-h1 { font-family: 'Playfair Display', serif; font-weight: 700; font-size: clamp(24px, 4vw, 32px); color: var(--text-primary); line-height: 1.2; letter-spacing: -0.02em; }
-h2 { font-family: 'Playfair Display', serif; font-weight: 700; font-size: clamp(20px, 3vw, 26px); color: var(--text-primary); line-height: 1.25; letter-spacing: -0.015em; }
-h3 { font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 17px; color: var(--text-primary); line-height: 1.35; }
-h4 { font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 15px; color: var(--text-primary); line-height: 1.4; }
-p  { line-height: 1.75; color: var(--text-secondary); }
-.data, .mono { font-family: 'JetBrains Mono', monospace; font-weight: 400; font-size: 13px; }
-.label-upper { font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); }
+h1 { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 28px; color: var(--text-primary); }
+h2 { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 22px; color: var(--text-primary); }
+h3 { font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 18px; color: var(--text-primary); }
+.data, .mono { font-family: 'JetBrains Mono', monospace; font-weight: 400; }
+.label-upper { font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
 
 /* ─── Page Transitions ──────────────────────────────────────────────────── */
 @keyframes pageIn {
