@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GluMira™ — IOB Hunter™ Pressure Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --navy:#1a2a5e; --navy-deep:#0d1b3e;
+  --teal:#2ab5c1; --teal-dim:#1e8a94;
+  --amber:#f59e0b;
+  --white:#ffffff; --body-text:#52667a; --border:#dee2e6; --bg:#f8f9fa;
+  --font-disp:'Playfair Display',Georgia,serif;
+  --font-body:'DM Sans',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+  --r-md:8px; --r-lg:12px; --r-xl:16px;
+  --sh-card:0 1px 3px rgba(26,42,94,0.06),0 4px 12px rgba(26,42,94,0.04);
+  /* pressure colors — locked per IOBHunterChart.tsx */
+  --p-light:#D4C960;
+  --p-moderate:#FFD700;
+  --p-strong:#FF8C00;
+  --p-overlap:#E84040;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:15px;background:var(--bg);}
+body{font-family:var(--font-body);color:var(--navy);-webkit-font-smoothing:antialiased;min-height:100vh;padding-bottom:40px;}
+
+/* NAV */
+.nav{height:56px;background:var(--navy-deep);display:flex;align-items:center;justify-content:space-between;padding:0 20px;border-bottom:1px solid rgba(42,181,193,0.12);}
+.nav-brand{display:flex;align-items:center;gap:8px;}
+.nav-wordmark{font-family:var(--font-disp);font-size:17px;font-weight:700;color:var(--white);letter-spacing:-0.02em;}
+.nav-wordmark sup{font-size:9px;color:var(--teal);}
+.nav-badge{font-family:var(--font-mono);font-size:10px;color:rgba(42,181,193,0.5);background:rgba(42,181,193,0.06);border:1px solid rgba(42,181,193,0.15);padding:2px 7px;border-radius:4px;}
+.nav-right{display:flex;align-items:center;gap:10px;}
+.nav-date{font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,0.5);}
+
+/* LAYOUT */
+.layout{max-width:520px;margin:0 auto;padding:20px 16px;}
+
+/* HEADER CARD */
+.header-card{
+  background:var(--navy);
+  border-radius:var(--r-xl);
+  padding:18px 20px;
+  margin-bottom:16px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.header-left h2{font-family:var(--font-disp);font-size:17px;font-weight:700;color:var(--white);letter-spacing:-0.01em;}
+.header-left h2 sup{font-size:9px;vertical-align:super;}
+.header-left p{font-size:12px;color:rgba(255,255,255,0.55);margin-top:2px;}
+.patient-badge{
+  background:rgba(42,181,193,0.12);
+  border:1px solid rgba(42,181,193,0.25);
+  border-radius:6px;
+  padding:6px 12px;
+  text-align:center;
+}
+.patient-badge .pid{font-family:var(--font-mono);font-size:13px;font-weight:600;color:var(--teal);}
+.patient-badge .label{font-size:10px;color:rgba(255,255,255,0.4);margin-top:1px;}
+.trial-badge{
+  display:inline-block;font-size:10px;font-weight:600;
+  background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.3);
+  color:var(--amber);padding:2px 8px;border-radius:100px;margin-top:6px;letter-spacing:0.02em;
+}
+
+/* SECTION CARD */
+.card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-xl);padding:18px 16px;box-shadow:var(--sh-card);margin-bottom:14px;}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.card-title{font-size:13px;font-weight:600;color:var(--navy);}
+.card-eyebrow{font-family:var(--font-mono);font-size:10px;color:var(--body-text);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:4px;}
+.chart-wrap{position:relative;height:220px;}
+
+/* LEGEND ROW */
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--body-text);}
+.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.legend-box{width:12px;height:10px;border-radius:3px;flex-shrink:0;}
+
+/* INJECTION MARKER */
+.injection-labels{display:flex;gap:0;justify-content:space-between;font-family:var(--font-mono);font-size:9px;color:var(--body-text);margin-top:6px;padding:0 6px;}
+
+/* BASAL SCHEDULE TABLE */
+.schedule-table{width:100%;border-collapse:collapse;}
+.schedule-table th{font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--body-text);padding:8px 10px;text-align:left;background:var(--bg);border-bottom:1px solid var(--border);}
+.schedule-table td{padding:10px 10px;border-bottom:1px solid rgba(222,226,230,0.5);font-size:13px;color:var(--body-text);}
+.schedule-table tr:last-child td{border-bottom:none;}
+.schedule-table td:first-child{font-family:var(--font-mono);font-weight:600;color:var(--navy);}
+.schedule-table td.dose{font-family:var(--font-mono);color:var(--teal-dim);font-weight:600;}
+.tag-pill{display:inline-block;font-size:10px;font-weight:500;padding:2px 8px;border-radius:100px;background:rgba(26,42,94,0.06);border:1px solid rgba(26,42,94,0.1);color:var(--navy);}
+.tag-pill.night{background:rgba(42,181,193,0.07);border-color:rgba(42,181,193,0.18);color:var(--teal-dim);}
+.night-note{font-size:11px;color:rgba(245,158,11,0.9);margin-top:10px;padding:8px 10px;background:rgba(245,158,11,0.06);border-left:3px solid var(--amber);border-radius:0 6px 6px 0;}
+
+/* PRESSURE LEGEND */
+.pressure-legend{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:12px;}
+.pl-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--body-text);padding:6px 8px;border-radius:6px;background:var(--bg);border:1px solid var(--border);}
+.pl-swatch{width:14px;height:14px;border-radius:3px;flex-shrink:0;}
+
+/* DISCLAIMER */
+.disclaimer{text-align:center;font-size:10px;color:rgba(82,102,122,0.6);margin-top:18px;line-height:1.6;padding:0 8px;}
+
+/* FOOTER */
+footer{text-align:center;margin-top:28px;padding:16px;border-top:1px solid var(--border);}
+footer p{font-family:var(--font-mono);font-size:10px;color:rgba(82,102,122,0.5);letter-spacing:0.04em;}
+footer span{color:var(--teal);opacity:0.7;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-brand">
+    <div class="nav-wordmark">GluMira<sup>™</sup></div>
+    <div class="nav-badge">IOB Hunter™</div>
+  </div>
+  <div class="nav-right">
+    <div class="nav-date" id="nav-date"></div>
+  </div>
+</nav>
+
+<div class="layout">
+
+  <!-- HEADER CARD -->
+  <div class="header-card">
+    <div class="header-left">
+      <h2>IOB Hunter<sup>™</sup> Report</h2>
+      <p>Levemir BID · Plank 2005 · PMID:15855574</p>
+      <div class="trial-badge">14-day free trial</div>
+    </div>
+    <div class="patient-badge">
+      <div class="pid">GLM-001</div>
+      <div class="label">Patient ID</div>
+    </div>
+  </div>
+
+  <!-- CHART 1 — Glucose Overlay Map -->
+  <div class="card">
+    <div class="card-eyebrow">Glucose Overlay Map</div>
+    <div class="card-header">
+      <div class="card-title">Glucose Pressure Zones · 24h</div>
+    </div>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-box" style="background:#3b82f6;opacity:0.7"></div>Low (&lt;3.9)</div>
+      <div class="legend-item"><div class="legend-box" style="background:#22c55e;opacity:0.7"></div>In-range</div>
+      <div class="legend-item"><div class="legend-box" style="background:#f59e0b;opacity:0.7"></div>High (&gt;10)</div>
+    </div>
+    <div class="chart-wrap">
+      <canvas id="glucoseChart"></canvas>
+    </div>
+  </div>
+
+  <!-- CHART 2 — Insulin Stacking Curve -->
+  <div class="card">
+    <div class="card-eyebrow">Insulin Stacking Curve</div>
+    <div class="card-header">
+      <div class="card-title">IOB Hunter™ · Levemir 20 U BID</div>
+    </div>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--p-light)"></div>Light (&lt;5U)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--p-moderate)"></div>Moderate (5–10U)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--p-strong)"></div>Strong (10–15U)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--p-overlap)"></div>Overlap (&gt;15U)</div>
+    </div>
+    <div class="chart-wrap">
+      <canvas id="iobChart"></canvas>
+    </div>
+    <div class="injection-labels">
+      <span>↑ 06:00 — 20U</span>
+      <span>↑ 18:00 — 20U</span>
+    </div>
+    <div class="pressure-legend">
+      <div class="pl-item"><div class="pl-swatch" style="background:var(--p-light)"></div>&lt;5 U — Light</div>
+      <div class="pl-item"><div class="pl-swatch" style="background:var(--p-moderate)"></div>5–10 U — Moderate</div>
+      <div class="pl-item"><div class="pl-swatch" style="background:var(--p-strong)"></div>10–15 U — Strong</div>
+      <div class="pl-item"><div class="pl-swatch" style="background:var(--p-overlap)"></div>&gt;15 U — Overlap</div>
+    </div>
+  </div>
+
+  <!-- TABLE — Suggested Basal Schedule -->
+  <div class="card">
+    <div class="card-eyebrow">Suggested Basal Schedule</div>
+    <div class="card-header">
+      <div class="card-title">Levemir (detemir) BID — Timing analysis</div>
+    </div>
+    <table class="schedule-table">
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Dose</th>
+          <th>Tag</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>22:00</td>
+          <td class="dose">20 U</td>
+          <td><span class="tag-pill night">Night · prior day</span></td>
+        </tr>
+        <tr>
+          <td>06:00</td>
+          <td class="dose">20 U</td>
+          <td><span class="tag-pill">Morning</span></td>
+        </tr>
+        <tr>
+          <td>18:00</td>
+          <td class="dose">20 U</td>
+          <td><span class="tag-pill">Evening</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="night-note">
+      Timing suggestion: Evening dose at 20:00–22:00 may reduce overnight trough risk. Stacking pressure peaks at 07:30–09:00. Review with your clinician.
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    GluMira™ is an educational platform, not a medical device.<br>
+    Curves rendered from Plank 2005 (PMID:15855574) pharmacokinetic data.<br>
+    Timing suggestions only — never dose volumes. Always consult a qualified clinician.
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>GluMira<span>™</span> AI Glucose Insight System · IOB Hunter<span>™</span> · Educational use only</p>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════════════
+   IOB Engine — Vanilla JS translation of iob-engine.ts
+   Source: Plank 2005 PMID:15855574 (Levemir dose-dependent DOA)
+   Rules: Never starts at 0 (Rule 17). Peakless insulin, no peak drawn.
+═══════════════════════════════════════════════════════════════════════════ */
+
+// Cubic hermite smoothstep
+function smoothstep(x) {
+  if (x <= 0) return 0;
+  if (x >= 1) return 1;
+  return x * x * (3 - 2 * x);
+}
+
+// Plank 2005 DOA table: [U/kg, DOA_minutes]
+const PLANK_TABLE = [
+  [0.1, 342],
+  [0.2, 726],
+  [0.4, 1194],
+  [0.8, 1362],
+  [1.6, 1392],
+];
+
+function resolveLevemerDOA(doseUnits, weightKg) {
+  const uPerKg = doseUnits / weightKg;
+  if (uPerKg <= PLANK_TABLE[0][0]) return PLANK_TABLE[0][1];
+  if (uPerKg >= PLANK_TABLE[PLANK_TABLE.length - 1][0]) return PLANK_TABLE[PLANK_TABLE.length - 1][1];
+  for (let i = 0; i < PLANK_TABLE.length - 1; i++) {
+    const [x0, y0] = PLANK_TABLE[i];
+    const [x1, y1] = PLANK_TABLE[i + 1];
+    if (uPerKg >= x0 && uPerKg <= x1) {
+      const ratio = (uPerKg - x0) / (x1 - x0);
+      return y0 + ratio * (y1 - y0);
+    }
+  }
+  return 1200; // fallback: 20h
+}
+
+// Levemir albumin-bound IOB
+function levemirIOB(doseUnits, minutesSinceDose, doaMinutes) {
+  if (minutesSinceDose < 0) return 0;
+  if (minutesSinceDose >= doaMinutes) return 0;
+  const onsetMinutes = 120; // Levemir onset
+  const plateauEnd = doaMinutes * 0.7;
+  if (minutesSinceDose <= onsetMinutes) {
+    const t = minutesSinceDose / onsetMinutes;
+    return doseUnits * 0.9 * smoothstep(t);
+  }
+  if (minutesSinceDose <= plateauEnd) {
+    const t = (minutesSinceDose - onsetMinutes) / (plateauEnd - onsetMinutes);
+    return doseUnits * (0.9 - 0.05 * smoothstep(t));
+  }
+  const t = (minutesSinceDose - plateauEnd) / (doaMinutes - plateauEnd);
+  return doseUnits * 0.85 * Math.max(0, 1 - smoothstep(t));
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Build 24h IOB curve
+   Demo: Patient GLM-001, 80 kg, Levemir 20 U BID
+   Doses: yesterday 22:00, today 06:00, today 18:00
+   Resolution: 30 min (48 points)
+═══════════════════════════════════════════════════════════════════════════ */
+
+const WEIGHT_KG  = 80;
+const DOSE_U     = 20;
+const DOA_MIN    = resolveLevemerDOA(DOSE_U, WEIGHT_KG); // expected ~730 min ≈ 12.2h
+
+// Injection times as minutes from 00:00 today
+// Prior day 22:00 = -120 min (yesterday 22:00 = midnight - 2h)
+const INJECTIONS = [
+  -120,   // yesterday 22:00 — prior-day residual (Rule 17 compliance)
+  360,    // today 06:00
+  1080,   // today 18:00
+];
+
+const LABELS = [];
+const IOB_DATA = [];
+const RESOLUTION = 30; // minutes per point
+
+for (let m = 0; m < 1440; m += RESOLUTION) {
+  const h = Math.floor(m / 60);
+  const min = m % 60;
+  LABELS.push(`${String(h).padStart(2,'0')}:${String(min).padStart(2,'0')}`);
+
+  let totalIOB = 0;
+  INJECTIONS.forEach(injMin => {
+    const elapsed = m - injMin;
+    totalIOB += levemirIOB(DOSE_U, elapsed, DOA_MIN);
+  });
+  IOB_DATA.push(parseFloat(totalIOB.toFixed(2)));
+}
+
+// Pressure thresholds — locked from IOBHunterChart.tsx
+const T_LIGHT    = 5;
+const T_MODERATE = 10;
+const T_STRONG   = 15;
+
+// Split into stacked layers for the area chart
+const LAYER_LIGHT    = IOB_DATA.map(v => Math.min(v, T_LIGHT));
+const LAYER_MODERATE = IOB_DATA.map(v => v <= T_LIGHT ? 0 : Math.min(v, T_MODERATE) - T_LIGHT);
+const LAYER_STRONG   = IOB_DATA.map(v => v <= T_MODERATE ? 0 : Math.min(v, T_STRONG) - T_MODERATE);
+const LAYER_OVERLAP  = IOB_DATA.map(v => v <= T_STRONG ? 0 : v - T_STRONG);
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Chart 1 — Glucose Overlay Map
+   Synthetic diurnal pressure distribution (typical Levemir BID patient).
+   Shows proportion of the hour spent in each glucose zone.
+   Source: representative pattern from real-world BID Levemir data.
+═══════════════════════════════════════════════════════════════════════════ */
+
+// 24 hourly values: [low%, inRange%, high%] — sums to 1
+// Pattern: overnight low-risk with some hypoglycemia risk (basal active),
+// post-meal highs at 08:00, 13:00, 19:00, afternoon in-range plateau.
+const GLUCOSE_HOURS = Array.from({length: 24}, (_, h) => `${String(h).padStart(2,'0')}:00`);
+
+// Low zone (hypo risk) — highest overnight where basal still active
+const G_LOW = [
+  0.18, 0.20, 0.22, 0.20, 0.16, 0.12, // 00–05h: overnight basal tail
+  0.08, 0.06, 0.04, 0.04, 0.04, 0.04, // 06–11h: dose given, hypo risk drops
+  0.04, 0.04, 0.05, 0.06, 0.08, 0.07, // 12–17h: trough before evening dose
+  0.06, 0.05, 0.06, 0.08, 0.12, 0.15, // 18–23h: evening dose onset
+];
+
+// High zone (hyperglycemia) — post-meal peaks
+const G_HIGH = [
+  0.06, 0.04, 0.03, 0.03, 0.04, 0.06, // 00–05h: dinner still digesting
+  0.08, 0.24, 0.28, 0.18, 0.10, 0.08, // 06–11h: breakfast spike
+  0.08, 0.22, 0.20, 0.12, 0.08, 0.06, // 12–17h: lunch spike
+  0.08, 0.20, 0.26, 0.16, 0.10, 0.08, // 18–23h: dinner spike
+];
+
+// In-range = 1 - low - high
+const G_INRANGE = G_LOW.map((l, i) => Math.max(0, 1 - l - G_HIGH[i]));
+
+const glucoseCtx = document.getElementById('glucoseChart').getContext('2d');
+new Chart(glucoseCtx, {
+  type: 'bar',
+  data: {
+    labels: GLUCOSE_HOURS,
+    datasets: [
+      {
+        label: 'Low (<3.9)',
+        data: G_LOW,
+        backgroundColor: 'rgba(59,130,246,0.65)',
+        stack: 'glucose',
+        borderWidth: 0,
+      },
+      {
+        label: 'In-range',
+        data: G_INRANGE,
+        backgroundColor: 'rgba(34,197,94,0.55)',
+        stack: 'glucose',
+        borderWidth: 0,
+      },
+      {
+        label: 'High (>10)',
+        data: G_HIGH,
+        backgroundColor: 'rgba(245,158,11,0.65)',
+        stack: 'glucose',
+        borderWidth: 0,
+      },
+    ],
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    animation: { duration: 800 },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: ctx => `${ctx.dataset.label}: ${Math.round(ctx.raw * 100)}% of hour`
+        }
+      }
+    },
+    scales: {
+      x: {
+        stacked: true,
+        grid: { display: false },
+        ticks: {
+          font: { family: "'JetBrains Mono'", size: 9 },
+          color: '#52667a',
+          maxTicksLimit: 8,
+        }
+      },
+      y: {
+        stacked: true,
+        min: 0, max: 1,
+        ticks: {
+          callback: v => `${Math.round(v * 100)}%`,
+          font: { family: "'JetBrains Mono'", size: 9 },
+          color: '#52667a',
+          maxTicksLimit: 5,
+        },
+        grid: { color: 'rgba(0,0,0,0.05)' }
+      }
+    }
+  }
+});
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Chart 2 — IOB Stacking Curve (stacked area)
+═══════════════════════════════════════════════════════════════════════════ */
+
+// Injection marker plugin — dashed vertical lines at dose times
+const injectionPlugin = {
+  id: 'injectionMarkers',
+  afterDatasetsDraw(chart) {
+    const ctx = chart.ctx;
+    const xAxis = chart.scales.x;
+    const yAxis = chart.scales.y;
+    // Injection times: 06:00 (index 12) and 18:00 (index 36) at 30min resolution
+    const markerIndices = [12, 36]; // 06:00 and 18:00
+    markerIndices.forEach(idx => {
+      const x = xAxis.getPixelForValue(idx);
+      ctx.save();
+      ctx.setLineDash([4, 4]);
+      ctx.strokeStyle = 'rgba(26,42,94,0.25)';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(x, yAxis.top);
+      ctx.lineTo(x, yAxis.bottom);
+      ctx.stroke();
+      ctx.restore();
+    });
+  }
+};
+
+const iobCtx = document.getElementById('iobChart').getContext('2d');
+const maxIOB = Math.ceil(Math.max(...IOB_DATA) * 1.25);
+
+new Chart(iobCtx, {
+  type: 'line',
+  plugins: [injectionPlugin],
+  data: {
+    labels: Array.from({length: 48}, (_, i) => i),
+    datasets: [
+      {
+        label: 'Overlap (>15U)',
+        data: LAYER_OVERLAP,
+        fill: true,
+        tension: 0.4,
+        backgroundColor: 'rgba(232,64,64,0.75)',
+        borderColor: 'transparent',
+        pointRadius: 0,
+        stack: 'iob',
+      },
+      {
+        label: 'Strong (10–15U)',
+        data: LAYER_STRONG,
+        fill: true,
+        tension: 0.4,
+        backgroundColor: 'rgba(255,140,0,0.72)',
+        borderColor: 'transparent',
+        pointRadius: 0,
+        stack: 'iob',
+      },
+      {
+        label: 'Moderate (5–10U)',
+        data: LAYER_MODERATE,
+        fill: true,
+        tension: 0.4,
+        backgroundColor: 'rgba(255,215,0,0.70)',
+        borderColor: 'transparent',
+        pointRadius: 0,
+        stack: 'iob',
+      },
+      {
+        label: 'Light (<5U)',
+        data: LAYER_LIGHT,
+        fill: true,
+        tension: 0.4,
+        backgroundColor: 'rgba(212,201,96,0.68)',
+        borderColor: 'rgba(212,201,96,0.9)',
+        borderWidth: 1.5,
+        pointRadius: 0,
+        stack: 'iob',
+      },
+    ],
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    animation: { duration: 900 },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          title: items => {
+            const idx = items[0].dataIndex;
+            const h = Math.floor(idx * RESOLUTION / 60);
+            const m = (idx * RESOLUTION) % 60;
+            return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
+          },
+          label: ctx => {
+            const totalAtPoint = IOB_DATA[ctx.dataIndex];
+            if (ctx.datasetIndex === 3) { // bottom (Light) layer — show total
+              return `Total IOB: ${totalAtPoint.toFixed(1)} U`;
+            }
+            return null;
+          },
+          afterBody: items => {
+            const total = IOB_DATA[items[0].dataIndex];
+            const zone = total > T_STRONG ? 'Overlap' : total > T_MODERATE ? 'Strong' : total > T_LIGHT ? 'Moderate' : 'Light';
+            return [`Pressure: ${zone}`];
+          }
+        },
+        filter: item => item.datasetIndex === 3,
+      }
+    },
+    scales: {
+      x: {
+        stacked: true,
+        grid: { display: false },
+        ticks: {
+          font: { family: "'JetBrains Mono'", size: 9 },
+          color: '#52667a',
+          callback: (val) => {
+            // Show labels at 00:00, 06:00, 12:00, 18:00
+            const minutes = val * RESOLUTION;
+            const h = Math.floor(minutes / 60);
+            const m = minutes % 60;
+            if (m === 0 && h % 6 === 0) return `${String(h).padStart(2,'0')}:00`;
+            return '';
+          },
+        }
+      },
+      y: {
+        stacked: true,
+        min: 0,
+        max: maxIOB || 20,
+        ticks: {
+          callback: v => `${v}U`,
+          font: { family: "'JetBrains Mono'", size: 9 },
+          color: '#52667a',
+          maxTicksLimit: 5,
+        },
+        grid: { color: 'rgba(0,0,0,0.05)' }
+      }
+    }
+  }
+});
+
+/* ─── Set nav date ─────────────────────────────────────────────────────── */
+document.getElementById('nav-date').textContent = new Date().toLocaleDateString('en-GB', {
+  day: '2-digit', month: 'short', year: 'numeric'
+});
+</script>
+</body>
+</html>

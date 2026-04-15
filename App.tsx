@@ -5,7 +5,7 @@
  */
 
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useState, useCallback } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { GlucoseUnitsProvider } from "@/context/GlucoseUnitsContext";
 import { PresentationModeProvider } from "@/components/PresentationMode";
@@ -13,6 +13,7 @@ import { SensoryProvider } from "@/contexts/SensoryContext";
 import AppSidebar, { useSidebarOffset } from "@/components/AppSidebar";
 import ConfigErrorBanner from "@/components/ConfigErrorBanner";
 import { useSessionTimeout, SessionWarningModal } from "@/hooks/useSessionTimeout";
+import SplashScreen from "@/components/SplashScreen";
 
 /* ─── Lazy pages ─────────────────────────────────────────────────────────── */
 const LandingPage   = lazy(() => import("@/pages/LandingPage"));
@@ -193,8 +194,26 @@ function AppShell({ children }: { children: React.ReactNode }) {
 /* ─── Smart home route ───────────────────────────────────────────────────── */
 function HomeRoute() {
   const { user } = useAuth();
+  // Show splash once per browser session (sessionStorage prevents repeat on nav back)
+  const [showSplash, setShowSplash] = useState(() => {
+    try {
+      if (sessionStorage.getItem("glm-splash-seen")) return false;
+    } catch { /* private browsing */ }
+    return true;
+  });
+
+  const handleSplashDone = useCallback(() => {
+    try { sessionStorage.setItem("glm-splash-seen", "1"); } catch { /* ignore */ }
+    setShowSplash(false);
+  }, []);
+
   if (user) return <Navigate to="/dashboard" replace />;
-  return <LandingPage />;
+  return (
+    <>
+      {showSplash && <SplashScreen onDone={handleSplashDone} />}
+      <LandingPage />
+    </>
+  );
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════ */
