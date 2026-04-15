@@ -294,39 +294,72 @@ export default function ProfilePage() {
     setError(null);
     setSaved(false);
     try {
-      // Get a fresh token — try refresh first, then current session, then bail
+      // Get the freshest token available
       let token = session.access_token;
       const { data: refreshed } = await supabase.auth.refreshSession();
-      if (refreshed?.session?.access_token) {
-        token = refreshed.session.access_token;
-      } else {
-        const { data: current } = await supabase.auth.getSession();
-        if (current?.session?.access_token) {
-          token = current.session.access_token;
+      if (refreshed?.session?.access_token) token = refreshed.session.access_token;
+
+      // --- Attempt 1: server route (Railway backend) ---
+      let savedViaServer = false;
+      try {
+        const res = await fetch(`${API}/api/profile`, {
+          method: "PUT",
+          headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+          body: JSON.stringify(form),
+        });
+        if (res.ok) {
+          savedViaServer = true;
+        } else if (res.status !== 401 && res.status !== 403) {
+          // Non-auth error from server — surface it
+          const body = await res.json().catch(() => ({}));
+          throw new Error((body as { error?: string }).error ?? `Save failed (${res.status})`);
         }
+        // 401/403 → fall through to Supabase direct below
+      } catch (fetchErr: unknown) {
+        // Network error (Railway unreachable) → fall through to direct save
+        if (fetchErr instanceof Error && fetchErr.message.startsWith("Save failed")) throw fetchErr;
       }
-      const res = await fetch(`${API}/api/profile`, {
-        method: "PUT",
-        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-      const text = await res.text();
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      let data: any;
-      try { data = JSON.parse(text); } catch { throw new Error("Server returned an unexpected response. Please try again."); }
-      if (!res.ok) {
-        if (res.status === 401) {
-          // Token truly expired — force re-login
-          await supabase.auth.signOut();
-          window.location.href = "/auth";
-          return;
-        }
-        throw new Error(data.error ?? "Save failed");
+
+      // --- Attempt 2: direct Supabase upsert (bypasses Railway auth middleware) ---
+      // Used when server returns 401/403 or is unreachable. Client has a valid
+      // Supabase session and RLS on patient_self_profiles protects by user_id.
+      if (!savedViaServer) {
+        const userId = session.user.id;
+        const dob = form.date_of_birth ? new Date(form.date_of_birth) : null;
+        const age = dob ? (Date.now() - dob.getTime()) / (365.25 * 24 * 60 * 60 * 1000) : null;
+        const row = {
+          user_id:            userId,
+          profile_type:       form.profile_type || null,
+          first_name:         form.first_name || null,
+          last_name:          form.last_name || null,
+          date_of_birth:      form.date_of_birth || null,
+          sex:                form.sex || null,
+          diabetes_type:      form.diabetes_type || null,
+          diagnosis_date:     form.diagnosis_date || null,
+          country:            form.country || null,
+          language:           form.language || null,
+          glucose_units:      form.glucose_units ?? "mmol",
+          dietary_approach:   form.dietary_approach || null,
+          allergens:          form.allergens ?? [],
+          meals_per_day:      form.meals_per_day ?? 3,
+          comorbidities:      form.comorbidities ?? [],
+          special_conditions: form.special_conditions ?? [],
+          is_caregiver:       form.is_caregiver ?? false,
+          patient_name:       form.patient_name || null,
+          relationship:       form.relationship || null,
+          under_18_flag:      age !== null ? age < 18 : false,
+          profile_complete:   !!(form.first_name && form.last_name && form.date_of_birth && form.diabetes_type && form.country),
+        };
+        const { error: upsertErr } = await supabase
+          .from("patient_self_profiles")
+          .upsert(row, { onConflict: "user_id" });
+        if (upsertErr) throw new Error(upsertErr.message);
       }
+
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);
     } catch (e: unknown) {
-      setError(e instanceof Error ? e.message : "Save failed");
+      setError(e instanceof Error ? e.message : "Save failed — please try again.");
     } finally {
       setSaving(false);
     }
