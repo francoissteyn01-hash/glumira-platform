@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, type ReactNode } from "react";
 import { createClient, type User, type Session, type SupabaseClient } from "@supabase/supabase-js";
 
 /* ─── Supabase client (hardcoded fallback + defensive detection) ────────── */
@@ -93,4 +93,8 @@ export function useAuth(): AuthState & { signOut: () => Promise<void> } {
   }
 
   return { ...state, signOut };
+}
+
+export function AuthProvider({ children }: { children: ReactNode }) {
+  return React.createElement(React.Fragment, null, children);
 }
