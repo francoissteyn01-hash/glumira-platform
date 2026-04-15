@@ -64,8 +64,8 @@ function TopNav() {
       <div className="mx-auto max-w-6xl px-4 h-16 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 cursor-pointer">
           <LogoMark />
-          <span className="font-[Playfair_Display] text-xl font-bold tracking-tight text-[#1A2A5E]">
-            GluMira<span className="text-[#2AB5C1]">™</span>
+          <span className="font-[Playfair_Display] text-xl font-bold tracking-tight text-[#0D2149]">
+            GluMira<span className="text-[#2A8FA8]">™</span>
           </span>
         </Link>
         <nav className="hidden md:flex items-center gap-6 text-sm text-slate-600">
@@ -83,7 +83,7 @@ function TopNav() {
           </Link>
           <a
             href="#quiz"
-            className="inline-flex items-center h-11 px-4 rounded-full bg-[#1A2A5E] text-white text-sm font-medium hover:bg-[#0D1B3E] transition-colors cursor-pointer"
+            className="inline-flex items-center h-11 px-4 rounded-full bg-[#0D2149] text-white text-sm font-medium hover:bg-[#14307a] transition-colors cursor-pointer"
           >
             Start the 60-second match
           </a>
@@ -111,7 +111,7 @@ function Hero(props: {
   return (
     <section
       id="quiz"
-      className="relative overflow-hidden bg-gradient-to-b from-[#1A2A5E] to-[#0D1B3E] text-white"
+      className="relative overflow-hidden bg-gradient-to-b from-[#0D2149] to-[#14307a] text-white"
     >
       <div className="mx-auto max-w-6xl px-4 py-20 md:py-28 grid md:grid-cols-2 gap-10 items-center">
         {/* Left: copy */}
@@ -122,7 +122,7 @@ function Hero(props: {
           <h1 className="mt-6 font-[Playfair_Display] text-4xl md:text-5xl lg:text-6xl leading-tight font-bold !text-white">
             The science of insulin,
             <br />
-            <span className="!text-[#F59E0B]" style={{textShadow:"0 0 28px rgba(245,158,11,0.35)"}}>made visible.</span>
+            <span className="!text-[#7bd3df]">made visible.</span>
           </h1>
           <p className="mt-5 text-lg text-slate-200/90 max-w-xl">
             Answer three quick questions and we'll match you with the GluMira™
@@ -147,7 +147,7 @@ function Hero(props: {
               <p className="text-xs uppercase tracking-wider text-slate-500">
                 Step {quizStep + 1} of 3
               </p>
-              <h3 className="mt-1 font-[Playfair_Display] text-2xl font-bold !text-[#1A2A5E]">
+              <h3 className="mt-1 font-[Playfair_Display] text-2xl font-bold !text-[#0D2149]">
                 {QUIZ_STEPS[quizStep].title}
               </h3>
               <p className="mt-1 text-sm text-slate-500">{QUIZ_STEPS[quizStep].hint}</p>
@@ -206,7 +206,7 @@ function QuizProgress({ step }: { step: QuizStep }) {
         <div
           key={i}
           className={`h-1.5 flex-1 rounded-full transition-colors ${
-            step > i ? "bg-[#2AB5C1]" : step === i ? "bg-[#2AB5C1]" : "bg-slate-200"
+            step > i ? "bg-[#2A8FA8]" : step === i ? "bg-[#7bd3df]" : "bg-slate-200"
           }`}
         />
       ))}
@@ -224,11 +224,11 @@ function QuizOption(props: {
       onClick={onClick}
       className={`text-left h-full min-h-[72px] rounded-lg border-2 px-4 py-3 cursor-pointer transition-all
         ${selected
-          ? "border-[#2AB5C1] bg-[#2AB5C1]/10"
-          : "border-slate-200 hover:border-[#2AB5C1] hover:bg-slate-50"}`}
+          ? "border-[#2A8FA8] bg-[#2A8FA8]/10"
+          : "border-slate-200 hover:border-[#2A8FA8] hover:bg-slate-50"}`}
       aria-pressed={selected}
     >
-      <div className="font-semibold text-[#1A2A5E]">{label}</div>
+      <div className="font-semibold text-[#0D2149]">{label}</div>
       <div className="text-xs text-slate-500 mt-0.5">{sub}</div>
     </button>
   );
@@ -243,8 +243,8 @@ function QuizResult(props: {
 
   return (
     <div className="mt-2">
-      <p className="text-xs uppercase tracking-wider text-[#2AB5C1]">Your matched track</p>
-      <h3 className="mt-1 font-[Playfair_Display] text-2xl font-bold !text-[#1A2A5E]">
+      <p className="text-xs uppercase tracking-wider text-[#2A8FA8]">Your matched track</p>
+      <h3 className="mt-1 font-[Playfair_Display] text-2xl font-bold !text-[#0D2149]">
         {pathway.title}
       </h3>
       <p className="mt-2 text-sm text-slate-600">{pathway.blurb}</p>
@@ -252,7 +252,7 @@ function QuizResult(props: {
       <ul className="mt-4 space-y-2">
         {pathway.bullets.map((b) => (
           <li key={b} className="flex items-start gap-2 text-sm text-slate-700">
-            <CheckIcon className="w-4 h-4 text-[#2AB5C1] mt-0.5 flex-shrink-0" />
+            <CheckIcon className="w-4 h-4 text-[#2A8FA8] mt-0.5 flex-shrink-0" />
             {b}
           </li>
         ))}
@@ -261,7 +261,7 @@ function QuizResult(props: {
       <div className="mt-6 flex flex-wrap gap-3">
         <Link
           to="/auth?plan=pro"
-          className="inline-flex items-center justify-center h-11 px-5 rounded-full bg-[#1A2A5E] text-white text-sm font-medium hover:bg-[#0D1B3E] transition-colors cursor-pointer"
+          className="inline-flex items-center justify-center h-11 px-5 rounded-full bg-[#0D2149] text-white text-sm font-medium hover:bg-[#14307a] transition-colors cursor-pointer"
         >
           Start Pro — $29.99/mo
           <ArrowRightIcon className="w-4 h-4 ml-2" />
@@ -365,10 +365,10 @@ function BundleSection() {
     <section id="bundle" className="py-20 md:py-28">
       <div className="mx-auto max-w-6xl px-4">
         <div className="max-w-2xl">
-          <span className="inline-flex items-center gap-2 rounded-full bg-[#2AB5C1]/10 px-3 py-1 text-xs uppercase tracking-wider text-[#1A2A5E]">
+          <span className="inline-flex items-center gap-2 rounded-full bg-[#2A8FA8]/10 px-3 py-1 text-xs uppercase tracking-wider text-[#0D2149]">
             The Diabetes OS
           </span>
-          <h2 className="mt-4 font-[Playfair_Display] text-3xl md:text-4xl font-bold !text-[#1A2A5E] leading-tight">
+          <h2 className="mt-4 font-[Playfair_Display] text-3xl md:text-4xl font-bold !text-[#0D2149] leading-tight">
             One bundle. Not a scattered toolkit.
           </h2>
           <p className="mt-4 text-lg text-slate-600">
@@ -405,12 +405,12 @@ function BundleSection() {
 
 function BundleCard(props: { kicker: string; title: string; body: string; icon: React.ReactNode }) {
   return (
-    <article className="group rounded-2xl border border-slate-200 bg-white p-6 hover:border-[#2AB5C1] hover:shadow-lg transition-all cursor-default">
-      <div className="w-10 h-10 rounded-lg bg-[#1A2A5E] text-white flex items-center justify-center">
+    <article className="group rounded-2xl border border-slate-200 bg-white p-6 hover:border-[#2A8FA8] hover:shadow-lg transition-all cursor-default">
+      <div className="w-10 h-10 rounded-lg bg-[#0D2149] text-white flex items-center justify-center">
         {props.icon}
       </div>
-      <p className="mt-5 text-xs uppercase tracking-wider text-[#2AB5C1] font-semibold">{props.kicker}</p>
-      <h3 className="mt-2 font-[Playfair_Display] text-2xl font-bold !text-[#1A2A5E]">{props.title}</h3>
+      <p className="mt-5 text-xs uppercase tracking-wider text-[#2A8FA8] font-semibold">{props.kicker}</p>
+      <h3 className="mt-2 font-[Playfair_Display] text-2xl font-bold !text-[#0D2149]">{props.title}</h3>
       <p className="mt-3 text-slate-600 leading-relaxed">{props.body}</p>
     </article>
   );
@@ -420,10 +420,10 @@ function BundleCard(props: { kicker: string; title: string; body: string; icon: 
 
 function SupportStack() {
   return (
-    <section id="support" className="bg-[#1A2A5E] text-white py-20 md:py-28">
+    <section id="support" className="bg-[#0D2149] text-white py-20 md:py-28">
       <div className="mx-auto max-w-6xl px-4">
         <div className="max-w-2xl">
-          <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs uppercase tracking-wider text-[#2AB5C1]">
+          <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs uppercase tracking-wider text-[#7bd3df]">
             Three-tier support
           </span>
           <h2 className="mt-4 font-[Playfair_Display] text-3xl md:text-4xl font-bold leading-tight !text-white">
@@ -442,7 +442,7 @@ function SupportStack() {
             label="Mira™ AI"
             availability="24/7, instant"
             sample='"Explain why I went low at 2am after dinner insulin."'
-            accent="#2AB5C1"
+            accent="#7bd3df"
           />
           <TierCard
             tier="Tier 2"
@@ -457,7 +457,7 @@ function SupportStack() {
             label="Clinician portal"
             availability="Scheduled"
             sample='"Share my trend report with my endocrinologist."'
-            accent="#2AB5C1"
+            accent="#2A8FA8"
           />
         </div>
         <p className="mt-8 text-sm text-slate-300 max-w-2xl">
@@ -482,7 +482,7 @@ function TierCard(props: {
       <p className="text-xs uppercase tracking-wider" style={{ color: props.accent }}>
         {props.tier}
       </p>
-      <h3 className={`mt-2 font-[Playfair_Display] text-2xl font-bold ${props.highlight ? "!text-[#1A2A5E]" : "!text-white"}`}>{props.label}</h3>
+      <h3 className={`mt-2 font-[Playfair_Display] text-2xl font-bold ${props.highlight ? "!text-[#0D2149]" : "!text-white"}`}>{props.label}</h3>
       <p className={`mt-1 text-sm ${props.highlight ? "text-slate-500" : "text-slate-300"}`}>
         {props.availability}
       </p>
@@ -500,10 +500,10 @@ function IobHunterStrip() {
     <section className="py-20 md:py-28">
       <div className="mx-auto max-w-6xl px-4 grid md:grid-cols-2 gap-10 items-center">
         <div>
-          <span className="inline-flex items-center gap-2 rounded-full bg-[#1A2A5E]/5 px-3 py-1 text-xs uppercase tracking-wider text-[#1A2A5E]">
+          <span className="inline-flex items-center gap-2 rounded-full bg-[#0D2149]/5 px-3 py-1 text-xs uppercase tracking-wider text-[#0D2149]">
             Powered by IOB Hunter™
           </span>
-          <h2 className="mt-4 font-[Playfair_Display] text-3xl md:text-4xl font-bold !text-[#1A2A5E] leading-tight">
+          <h2 className="mt-4 font-[Playfair_Display] text-3xl md:text-4xl font-bold !text-[#0D2149] leading-tight">
             Insulin has a shape. We draw it.
           </h2>
           <p className="mt-4 text-lg text-slate-600">
@@ -518,7 +518,7 @@ function IobHunterStrip() {
             <BulletLine>Evidence-grounded in Plank 2005 PK data and the ADA Standards</BulletLine>
           </ul>
         </div>
-        <div className="rounded-2xl bg-gradient-to-br from-[#1A2A5E] to-[#0D1B3E] p-6 md:p-8 text-white shadow-xl">
+        <div className="rounded-2xl bg-gradient-to-br from-[#0D2149] to-[#14307a] p-6 md:p-8 text-white shadow-xl">
           <IobGraphic />
         </div>
       </div>
@@ -529,7 +529,7 @@ function IobHunterStrip() {
 function BulletLine({ children }: { children: React.ReactNode }) {
   return (
     <li className="flex items-start gap-3">
-      <CheckIcon className="w-5 h-5 text-[#2AB5C1] mt-0.5 flex-shrink-0" />
+      <CheckIcon className="w-5 h-5 text-[#2A8FA8] mt-0.5 flex-shrink-0" />
       <span>{children}</span>
     </li>
   );
@@ -540,14 +540,14 @@ function IobGraphic() {
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <p className="text-xs uppercase tracking-wider text-[#2AB5C1]">Active insulin</p>
+        <p className="text-xs uppercase tracking-wider text-[#7bd3df]">Active insulin</p>
         <p className="text-xs text-slate-300">00:00 – 12:00</p>
       </div>
       <svg viewBox="0 0 400 180" className="w-full h-auto" role="img" aria-label="Illustrative insulin-on-board curves">
         <defs>
           <linearGradient id="g1" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0" stopColor="#2AB5C1" stopOpacity="0.5" />
-            <stop offset="1" stopColor="#2AB5C1" stopOpacity="0" />
+            <stop offset="0" stopColor="#7bd3df" stopOpacity="0.5" />
+            <stop offset="1" stopColor="#7bd3df" stopOpacity="0" />
           </linearGradient>
           <linearGradient id="g2" x1="0" x2="0" y1="0" y2="1">
             <stop offset="0" stopColor="#f0c05a" stopOpacity="0.35" />
@@ -560,13 +560,13 @@ function IobGraphic() {
             stroke="rgba(255,255,255,0.08)" strokeDasharray="2 4" />
         ))}
         {/* basal curve */}
-        <path d="M0 140 Q 80 70 200 80 T 400 110" stroke="#2AB5C1" strokeWidth="2.5" fill="none" />
+        <path d="M0 140 Q 80 70 200 80 T 400 110" stroke="#7bd3df" strokeWidth="2.5" fill="none" />
         <path d="M0 140 Q 80 70 200 80 T 400 110 L 400 180 L 0 180 Z" fill="url(#g1)" />
         {/* bolus curve */}
         <path d="M60 160 Q 110 40 160 90 T 260 150 L 260 160" stroke="#f0c05a" strokeWidth="2.5" fill="none" />
         <path d="M60 160 Q 110 40 160 90 T 260 150 L 260 180 L 60 180 Z" fill="url(#g2)" />
         {/* labels */}
-        <text x="12" y="20" fill="#2AB5C1" fontSize="11" fontFamily="DM Sans">Basal (Tresiba)</text>
+        <text x="12" y="20" fill="#7bd3df" fontSize="11" fontFamily="DM Sans">Basal (Tresiba)</text>
         <text x="200" y="40" fill="#f0c05a" fontSize="11" fontFamily="DM Sans">Bolus (Humalog) — stacking risk at 11:00</text>
       </svg>
       <p className="mt-4 text-xs text-slate-300 italic">
@@ -583,10 +583,10 @@ function Pricing() {
     <section id="pricing" className="bg-slate-50 py-20 md:py-28">
       <div className="mx-auto max-w-6xl px-4">
         <div className="max-w-2xl">
-          <span className="inline-flex items-center gap-2 rounded-full bg-[#2AB5C1]/10 px-3 py-1 text-xs uppercase tracking-wider text-[#1A2A5E]">
+          <span className="inline-flex items-center gap-2 rounded-full bg-[#2A8FA8]/10 px-3 py-1 text-xs uppercase tracking-wider text-[#0D2149]">
             Free is the flagship
           </span>
-          <h2 className="mt-4 font-[Playfair_Display] text-3xl md:text-4xl font-bold !text-[#1A2A5E] leading-tight">
+          <h2 className="mt-4 font-[Playfair_Display] text-3xl md:text-4xl font-bold !text-[#0D2149] leading-tight">
             The platform starts free. Upgrade only when you want more.
           </h2>
           <p className="mt-4 text-lg text-slate-600">
@@ -678,15 +678,15 @@ function PricingCard(props: {
   return (
     <article
       className={`rounded-2xl p-7 border ${props.featured
-        ? "bg-[#1A2A5E] text-white border-[#1A2A5E] shadow-2xl scale-[1.02]"
+        ? "bg-[#0D2149] text-white border-[#0D2149] shadow-2xl scale-[1.02]"
         : "bg-white text-slate-900 border-slate-200"}`}
     >
       {props.featured && (
-        <div className="inline-flex items-center h-6 px-2 rounded-full bg-[#f0c05a] text-[#1A2A5E] text-[10px] font-bold uppercase tracking-wider">
+        <div className="inline-flex items-center h-6 px-2 rounded-full bg-[#f0c05a] text-[#0D2149] text-[10px] font-bold uppercase tracking-wider">
           {props.badge ?? "Most popular"}
         </div>
       )}
-      <h3 className={`mt-3 font-[Playfair_Display] text-2xl font-bold ${props.featured ? "!text-white" : "!text-[#1A2A5E]"}`}>GluMira™ {props.tier}</h3>
+      <h3 className={`mt-3 font-[Playfair_Display] text-2xl font-bold ${props.featured ? "!text-white" : "!text-[#0D2149]"}`}>GluMira™ {props.tier}</h3>
       <div className="mt-3 flex items-baseline gap-1">
         <span className="font-[Playfair_Display] text-4xl font-bold">{props.price}</span>
         <span className={`text-sm ${props.featured ? "text-slate-300" : "text-slate-500"}`}>{props.period}</span>
@@ -694,7 +694,7 @@ function PricingCard(props: {
       <ul className={`mt-6 space-y-3 text-sm ${props.featured ? "text-slate-200" : "text-slate-700"}`}>
         {props.features.map((f) => (
           <li key={f} className="flex items-start gap-2">
-            <CheckIcon className={`w-4 h-4 mt-0.5 flex-shrink-0 ${props.featured ? "text-[#2AB5C1]" : "text-[#2AB5C1]"}`} />
+            <CheckIcon className={`w-4 h-4 mt-0.5 flex-shrink-0 ${props.featured ? "text-[#7bd3df]" : "text-[#2A8FA8]"}`} />
             {f}
           </li>
         ))}
@@ -703,8 +703,8 @@ function PricingCard(props: {
         to={props.ctaHref}
         className={`mt-7 inline-flex w-full items-center justify-center h-11 px-5 rounded-full text-sm font-medium transition-colors cursor-pointer
           ${props.featured
-            ? "bg-white text-[#1A2A5E] hover:bg-slate-100"
-            : "bg-[#1A2A5E] text-white hover:bg-[#0D1B3E]"}`}
+            ? "bg-white text-[#0D2149] hover:bg-slate-100"
+            : "bg-[#0D2149] text-white hover:bg-[#14307a]"}`}
       >
         {props.cta}
       </Link>
@@ -723,7 +723,7 @@ function AudienceStrip() {
   return (
     <section className="py-16">
       <div className="mx-auto max-w-6xl px-4 text-center">
-        <p className="text-xs uppercase tracking-wider text-[#2AB5C1] font-semibold">Built for every corner of diabetes</p>
+        <p className="text-xs uppercase tracking-wider text-[#2A8FA8] font-semibold">Built for every corner of diabetes</p>
         <div className="mt-5 flex flex-wrap justify-center gap-2">
           {audiences.map((a) => (
             <span key={a} className="inline-flex items-center h-9 px-4 rounded-full bg-slate-100 text-sm text-slate-700">
@@ -742,7 +742,7 @@ function EvidenceStrip() {
   return (
     <section className="bg-white border-t border-slate-200 py-14">
       <div className="mx-auto max-w-4xl px-4 text-center">
-        <blockquote className="font-[Playfair_Display] text-2xl md:text-3xl italic text-[#1A2A5E] leading-snug">
+        <blockquote className="font-[Playfair_Display] text-2xl md:text-3xl italic text-[#0D2149] leading-snug">
           "We make the invisible visible — for every child, every caregiver, every
           clinician who has ever stared at a number and not known why."
         </blockquote>
@@ -756,7 +756,7 @@ function EvidenceStrip() {
 
 function FinalCta() {
   return (
-    <section className="bg-gradient-to-br from-[#1A2A5E] via-[#0D1B3E] to-[#2AB5C1] text-white">
+    <section className="bg-gradient-to-br from-[#0D2149] via-[#14307a] to-[#2A8FA8] text-white">
       <div className="mx-auto max-w-4xl px-4 py-16 md:py-20 text-center">
         <h2 className="font-[Playfair_Display] text-3xl md:text-4xl font-bold leading-tight !text-white">
           Ready to stop guessing?
@@ -767,7 +767,7 @@ function FinalCta() {
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <a
             href="#quiz"
-            className="inline-flex items-center justify-center h-12 px-6 rounded-full bg-white text-[#1A2A5E] text-sm font-medium hover:bg-slate-100 transition-colors cursor-pointer"
+            className="inline-flex items-center justify-center h-12 px-6 rounded-full bg-white text-[#0D2149] text-sm font-medium hover:bg-slate-100 transition-colors cursor-pointer"
           >
             Match me to a pathway
             <ArrowRightIcon className="w-4 h-4 ml-2" />
@@ -794,7 +794,7 @@ function Footer() {
           <div className="flex items-center gap-2">
             <LogoMark />
             <span className="font-[Playfair_Display] text-lg font-bold text-white">
-              GluMira<span className="text-[#2AB5C1]">™</span>
+              GluMira<span className="text-[#7bd3df]">™</span>
             </span>
           </div>
           <p className="mt-3 text-xs leading-relaxed text-slate-400">
@@ -861,8 +861,8 @@ function TrustPill({ children }: { children: React.ReactNode }) {
 function LogoMark() {
   return (
     <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden>
-      <circle cx="14" cy="14" r="13" fill="#1A2A5E" />
-      <path d="M8 18 Q 14 6 20 18" stroke="#2AB5C1" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+      <circle cx="14" cy="14" r="13" fill="#0D2149" />
+      <path d="M8 18 Q 14 6 20 18" stroke="#7bd3df" strokeWidth="2.5" fill="none" strokeLinecap="round" />
       <circle cx="14" cy="10" r="2" fill="#f0c05a" />
     </svg>
   );
