@@ -43,6 +43,7 @@
     "react-router-dom": "^6.24.0",
     "recharts": "^3.8.1",
     "tailwind-merge": "^2.3.0",
+    "uuid": "^13.0.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
