@@ -9,10 +9,10 @@
 ## PROGRESS BAR
 
 ```
-███████████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ 30% COMPLETE
+█████████████████████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ 45% COMPLETE
 ```
 
-### Completed (30%)
+### Completed (45%)
 - ✅ Anonymity audit + geography stripping
 - ✅ CLAUDE.md updated with privacy rules
 - ✅ Vite dual-domain routing (glumira.ai / glumira.app)
@@ -20,6 +20,8 @@
 - ✅ Supabase client + TanStack Query setup
 - ✅ RamadanModule MVP (Iftar/Suhoor calc + glucose log)
 - ✅ Vercel dual-domain config
+- ✅ WhatIfPage rewritten with REAL IOB engine
+- ✅ WhatIfPage uses Chart.js (matches IOBHunterChart style)
 - ✅ All code committed and pushed to main
 
 ---
