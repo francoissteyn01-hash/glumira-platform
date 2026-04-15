@@ -1,10 +1,10 @@
 /**
- * GluMira™ V7 — Ramadan Dietary Module
- * Suhoor & Iftar planning, fasting insulin adjustments,
- * Tarawih activity impact, exemption guidance, and emergency protocols.
+ * Ramadan T1D Fasting Support Module
+ * Iftar/Suhoor timing calculator + glucose monitoring for safe fasting
+ * DISCLAIMER: GluMira is an informational tool only, not a medical device.
  */
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useAnonymousAuth } from "../hooks/useAnonymousAuth";
 
 /* ── colour tokens ─────────────────────────────────── */
 const NAVY = "#1A2A5E";
