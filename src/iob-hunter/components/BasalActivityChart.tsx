@@ -75,8 +75,8 @@ const MARGIN = { top: 44, right: 14, bottom: 40, left: 36 };
 const DEFAULT_HEIGHT = 360;
 const Y_MAX_DEFAULT = 1.5;
 const Y_TICK_STEP = 0.2;
-/** X-axis tick interval — 4 hours, no rotation, fits narrow screens. */
-const X_TICK_HOURS = 4;
+/** X-axis tick interval — 2 hours reads cleanly on narrow screens. */
+const X_TICK_HOURS = 2;
 /** Breakpoint below which we apply a more compact text/spacing variant. */
 const MOBILE_BREAKPOINT = 500;
 
@@ -96,7 +96,7 @@ const BLUE_RAMP = [
   "#cce2f7", // lightest
 ];
 
-function _rampColour(index: number, total: number): string {
+function rampColour(index: number, total: number): string {
   if (total <= 1) return BLUE_RAMP[0];
   const position = index / (total - 1);
   const bucket = Math.min(
@@ -131,7 +131,7 @@ function formatHourLabel(h: number): string {
 }
 
 /** Build an SVG stroke path (line only) from curve points. */
-function _curveToPath(
+function curveToPath(
   points: PerDoseActivityCurve["points"],
   xScale: (h: number) => number,
   yScale: (r: number) => number,
@@ -198,8 +198,8 @@ export default function BasalActivityChart(props: BasalActivityChartProps) {
     });
     if (containerRef.current) ro.observe(containerRef.current);
     return () => ro.disconnect();
-   
-  }, []);
+  // re-run only if height changes
+  }, [height]);
 
   const chartWidth = width - MARGIN.left - MARGIN.right;
   const chartHeight = height - MARGIN.top - MARGIN.bottom;
@@ -282,8 +282,7 @@ export default function BasalActivityChart(props: BasalActivityChartProps) {
         colour: doseColour(c),
       };
     });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hoverHour, curves, doseColour, startHour, endHour, width, height]);
+  }, [hoverHour, curves, doseColour]);
 
   const tooltip = useMemo(() => {
     if (hoverHour === null || hoverRows === null) return null;
@@ -401,14 +400,14 @@ export default function BasalActivityChart(props: BasalActivityChartProps) {
             <text
               x={MARGIN.left - 8} y={yScale(r) + 3}
               textAnchor="end"
-              style={{ font: `${xTickFontSize}px 'DM Sans', system-ui, sans-serif`, fill: "#64748B" }}
+              style={{ font: `${xTickFontSize}px 'JetBrains Mono', monospace`, fill: "#64748B" }}
             >
               {r.toFixed(1)}
             </text>
           </g>
         ))}
         <text
-          x={MARGIN.left + 2} y={MARGIN.top - 4}
+          x={8} y={MARGIN.top - 8}
           style={{ font: `500 ${yTickFontSize}px 'DM Sans', system-ui, sans-serif`, fill: "#64748B" }}
         >
           U/h
@@ -425,7 +424,8 @@ export default function BasalActivityChart(props: BasalActivityChartProps) {
             <text
               x={xScale(h)} y={MARGIN.top + chartHeight + 16}
               textAnchor="middle"
-              style={{ font: `${xTickFontSize}px 'DM Sans', system-ui, sans-serif`, fill: "#64748B" }}
+              transform={`rotate(-40, ${xScale(h)}, ${MARGIN.top + chartHeight + 16})`}
+              style={{ font: `${xTickFontSize}px 'JetBrains Mono', monospace`, fill: "#64748B" }}
             >
               {formatHourLabel(h)}
             </text>
@@ -480,16 +480,19 @@ export default function BasalActivityChart(props: BasalActivityChartProps) {
           <g key={`mk-${mk.dose_id}`}>
             <line
               x1={xScale(mk.hour)} x2={xScale(mk.hour)}
-              y1={MARGIN.top + chartHeight} y2={MARGIN.top}
+              y1={MARGIN.top + chartHeight} y2={MARGIN.top - 4}
               stroke={mk.colour} strokeWidth={1} strokeDasharray="4 3"
             />
-            {/* Label rotated -90°, reads bottom-to-top along the line */}
+            {/* Arrow head at the top */}
+            <polygon
+              points={`${xScale(mk.hour) - 3},${MARGIN.top - 4} ${xScale(mk.hour) + 3},${MARGIN.top - 4} ${xScale(mk.hour)},${MARGIN.top - 10}`}
+              fill={mk.colour}
+            />
+            {/* Rotated label above */}
             <text
-              x={xScale(mk.hour)}
-              y={MARGIN.top + chartHeight * 0.35}
+              x={xScale(mk.hour)} y={MARGIN.top - 14}
               textAnchor="middle"
-              transform={`rotate(-90, ${xScale(mk.hour)}, ${MARGIN.top + chartHeight * 0.35})`}
-              style={{ font: `500 ${injectionLabelFontSize}px 'DM Sans', system-ui, sans-serif`, fill: "#475569" }}
+              style={{ font: `500 ${injectionLabelFontSize}px 'DM Sans', system-ui, sans-serif`, fill: mk.colour }}
             >
               {mk.label}
             </text>
