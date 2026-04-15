@@ -75,8 +75,8 @@ const MARGIN = { top: 44, right: 14, bottom: 40, left: 36 };
 const DEFAULT_HEIGHT = 360;
 const Y_MAX_DEFAULT = 1.5;
 const Y_TICK_STEP = 0.2;
-/** X-axis tick interval — 2 hours, horizontal labels, matches gold standard. */
-const X_TICK_HOURS = 2;
+/** X-axis tick interval — 4 hours, no rotation, fits narrow screens. */
+const X_TICK_HOURS = 4;
 /** Breakpoint below which we apply a more compact text/spacing variant. */
 const MOBILE_BREAKPOINT = 500;
 
@@ -478,22 +478,18 @@ export default function BasalActivityChart(props: BasalActivityChartProps) {
         {/* Injection markers (today's doses) — dashed vertical arrows + labels above */}
         {injectionMarkers.map((mk) => (
           <g key={`mk-${mk.dose_id}`}>
-            {/* Dashed line from chart top to bottom */}
             <line
               x1={xScale(mk.hour)} x2={xScale(mk.hour)}
-              y1={MARGIN.top} y2={MARGIN.top + chartHeight}
+              y1={MARGIN.top + chartHeight} y2={MARGIN.top}
               stroke={mk.colour} strokeWidth={1} strokeDasharray="4 3"
             />
-            {/* Triangle pointing down into the chart from label */}
-            <polygon
-              points={`${xScale(mk.hour) - 4},${MARGIN.top - 6} ${xScale(mk.hour) + 4},${MARGIN.top - 6} ${xScale(mk.hour)},${MARGIN.top}`}
-              fill={mk.colour}
-            />
-            {/* Horizontal label above triangle */}
+            {/* Label rotated -90°, reads bottom-to-top along the line */}
             <text
-              x={xScale(mk.hour)} y={MARGIN.top - 10}
+              x={xScale(mk.hour)}
+              y={MARGIN.top + chartHeight * 0.35}
               textAnchor="middle"
-              style={{ font: `500 ${injectionLabelFontSize}px 'DM Sans', system-ui, sans-serif`, fill: "#334155" }}
+              transform={`rotate(-90, ${xScale(mk.hour)}, ${MARGIN.top + chartHeight * 0.35})`}
+              style={{ font: `500 ${injectionLabelFontSize}px 'DM Sans', system-ui, sans-serif`, fill: "#475569" }}
             >
               {mk.label}
             </text>
