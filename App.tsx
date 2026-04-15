@@ -20,7 +20,6 @@ const LandingPageV2 = lazy(() => import("@/pages/LandingPageV2"));
 const AuthPage      = lazy(() => import("@/pages/RegisterPage"));
 const AuthCallbackPage = lazy(() => import("@/pages/AuthCallbackPage"));
 const DashboardPage = lazy(() => import("@/pages/DashboardPage"));
-const DashboardPageV2 = lazy(() => import("@/pages/DashboardPageV2"));
 const AnalyticsDashboardPage = lazy(() => import("@/pages/AnalyticsDashboardPage"));
 const AlertHistoryPage = lazy(() => import("@/pages/AlertHistoryPage"));
 const SyncStatusPage = lazy(() => import("@/pages/SyncStatusPage"));
@@ -222,7 +221,6 @@ export default function App() {
               <Route path="/science"   element={<SciencePage />} />
               {/* Dev phase: all routes bypass auth */}
               <Route path="/dashboard" element={<DashboardPage />} />
-              <Route path="/dashboard-v2" element={<DashboardPageV2 />} />
               <Route path="/dashboard/analytics" element={<AnalyticsDashboardPage />} />
               <Route path="/alerts/history" element={<AlertHistoryPage />} />
               <Route path="/sync-status" element={<SyncStatusPage />} />
