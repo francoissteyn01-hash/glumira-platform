@@ -77,7 +77,7 @@ function statusLabel(s: RoadmapPhase["status"]): string {
 }
 
 export default function InvestorDashboard() {
-  const { _user } = useAuth();
+  const { user: _user } = useAuth();
   const [_activeSection, _setActiveSection] = useState<string | null>(null);
 
   const card: React.CSSProperties = {

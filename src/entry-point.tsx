@@ -11,7 +11,7 @@ import { queryClient } from './api/queryClient';
 
 // Global pages
 import LandingPageV2 from './pages/LandingPageV2';
-import DashboardPageV2 from './pages/DashboardPageV2';
+import DashboardPage from './pages/DashboardPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import TermsOfUsePage from './pages/TermsOfUsePage';
 
@@ -39,7 +39,7 @@ export default function EntryPoint() {
             {DOMAIN === 'ai' ? (
               <>
                 <Route path="/" element={<LandingPageV2 />} />
-                <Route path="/dashboard" element={<DashboardPageV2 />} />
+                <Route path="/dashboard" element={<DashboardPage />} />
               </>
             ) : (
               <>

@@ -4,6 +4,7 @@
  * DISCLAIMER: GluMira is an informational tool only, not a medical device.
  */
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useAnonymousAuth } from "../hooks/useAnonymousAuth";
 
 /* ── colour tokens ─────────────────────────────────── */
