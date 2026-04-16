@@ -470,14 +470,17 @@ export default function WhatIfPage() {
                 <option value="bolus">Bolus</option>
               </select>
               <input
-                type="number"
-                min={0} max={23.75} step={0.25}
-                value={d.hour}
-                onChange={(e) => updateDose(d.id, "hour", parseFloat(e.target.value) || 0)}
-                className="w-16 rounded border border-slate-200 px-2 py-1.5 text-xs text-[#1A2A5E] text-center"
+                type="time"
+                value={formatHour(d.hour)}
+                onChange={(e) => {
+                  const [hStr, mStr] = e.target.value.split(":");
+                  const h = parseInt(hStr) || 0;
+                  const m = parseInt(mStr) || 0;
+                  updateDose(d.id, "hour", h + m / 60);
+                }}
+                className="rounded border border-slate-200 px-2 py-1.5 text-xs text-[#1A2A5E]"
                 style={{ fontFamily: "'JetBrains Mono', monospace" }}
               />
-              <span className="text-[10px] text-slate-500">h</span>
               <button type="button" onClick={() => removeDose(d.id)}
                 className="text-[#ef4444] text-xs hover:underline">
                 ✕
