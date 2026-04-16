@@ -66,8 +66,9 @@ const COLOUR = {
   moderate: "#FFD700",
   strong:   "#FF8C00",
   overlap:  "#E84040",
-  basal:    "#5B8FD4",
-  whatIf:   "#2E9E5A",
+  basal:    "#1A2A5E",  // Rule 9: navy base layer
+  bolus:    "#2AB5C1",  // Rule 9: teal bolus layer
+  whatIf:   "#2E9E5A",  // Rule 12: what-if green overlay (kept separate)
   gridLine: "rgba(148,163,184,0.15)",
   axis:     "#94A3B8",
 } as const;
@@ -155,14 +156,23 @@ export default function WhatIfPage() {
           (p) => p.brand_name.toLowerCase() === d.brandName.toLowerCase(),
         );
         if (!profile) continue;
-        const elapsedHours = hour - d.hour;
-        if (elapsedHours < -0.5) continue;
-        const elapsedMinutes = elapsedHours * 60;
-        if (elapsedMinutes < 0) continue;
 
-        const iob = calculateIOB(d.dose, profile, elapsedMinutes, PATIENT_WEIGHT);
-        if (d.type === "basal") basal += iob;
-        else bolus += iob;
+        // Current-day dose
+        const elapsedHours = hour - d.hour;
+        if (elapsedHours >= 0) {
+          const iob = calculateIOB(d.dose, profile, elapsedHours * 60, PATIENT_WEIGHT);
+          if (d.type === "basal") basal += iob;
+          else bolus += iob;
+        }
+
+        // Rule 17: prior-day residual — same dose given 24 h earlier
+        // Ensures graph never starts at 0 (steady-state tail present at minute 0)
+        const priorElapsedHours = hour - d.hour + 24;
+        if (priorElapsedHours >= 0) {
+          const priorIob = calculateIOB(d.dose, profile, priorElapsedHours * 60, PATIENT_WEIGHT);
+          if (d.type === "basal") basal += priorIob;
+          else bolus += priorIob;
+        }
       }
 
       points.push({
@@ -195,8 +205,8 @@ export default function WhatIfPage() {
           {
             label: "Bolus IOB",
             data: chartData.map((p) => p.bolus),
-            borderColor: COLOUR.whatIf,
-            backgroundColor: `${COLOUR.whatIf}20`,
+            borderColor: COLOUR.bolus,
+            backgroundColor: `${COLOUR.bolus}20`,
             fill: false, tension: 0.4, pointRadius: 0, borderWidth: 2,
           },
           {
