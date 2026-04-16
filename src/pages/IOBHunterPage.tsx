@@ -179,8 +179,8 @@ export default function IOBHunterPage() {
 
   /* ─── Density map — derived from the existing curve ──────────── */
   const densityMap = useMemo(
-    () => buildDensityMap(curve, kpis.total_daily_basal),
-    [curve, kpis.total_daily_basal],
+    () => buildDensityMap(curve || [], kpis?.total_daily_basal ?? 1),
+    [curve, kpis],
   );
 
   /* ─── Per-dose activity curves for the BasalActivityChart ────────
@@ -637,48 +637,34 @@ export default function IOBHunterPage() {
         />
 
         {/* ─── Density Map section ──────────────────────────────── */}
-        <div style={{ marginTop: 24 }}>
-          {/* View toggle */}
-          <div
-            style={{
-              display: "flex",
-              gap: 8,
-              marginBottom: 12,
-              fontFamily: "'DM Sans', system-ui, sans-serif",
-            }}
-          >
+        <div style={{ marginTop: 32, marginBottom: 48 }}>
+          <div style={{ display: "flex", gap: "1rem", marginBottom: "1.5rem" }}>
             <button
-              type="button"
               onClick={() => setDensityView("clinical")}
-              aria-pressed={densityView === "clinical"}
               style={{
-                padding: "6px 16px",
-                borderRadius: 999,
-                border: "1px solid rgba(148,163,184,0.35)",
-                background: densityView === "clinical" ? "#0D2149" : "#F1F5F9",
-                color: densityView === "clinical" ? "#fff" : "#0D2149",
-                fontWeight: 600,
-                fontSize: 12,
+                padding: "0.5rem 1rem",
+                background: densityView === "clinical" ? "#1a2a5e" : "#f0f2f7",
+                color: densityView === "clinical" ? "#fff" : "#666",
+                border: "none",
+                borderRadius: 6,
                 cursor: "pointer",
-                letterSpacing: 0.3,
+                fontFamily: "'DM Sans', system-ui, sans-serif",
+                fontWeight: densityView === "clinical" ? 600 : 400,
               }}
             >
               Clinical View
             </button>
             <button
-              type="button"
               onClick={() => setDensityView("kids")}
-              aria-pressed={densityView === "kids"}
               style={{
-                padding: "6px 16px",
-                borderRadius: 999,
-                border: "1px solid rgba(148,163,184,0.35)",
-                background: densityView === "kids" ? "#0D2149" : "#F1F5F9",
-                color: densityView === "kids" ? "#fff" : "#0D2149",
-                fontWeight: 600,
-                fontSize: 12,
+                padding: "0.5rem 1rem",
+                background: densityView === "kids" ? "#1a2a5e" : "#f0f2f7",
+                color: densityView === "kids" ? "#fff" : "#666",
+                border: "none",
+                borderRadius: 6,
                 cursor: "pointer",
-                letterSpacing: 0.3,
+                fontFamily: "'DM Sans', system-ui, sans-serif",
+                fontWeight: densityView === "kids" ? 600 : 400,
               }}
             >
               Kids View
