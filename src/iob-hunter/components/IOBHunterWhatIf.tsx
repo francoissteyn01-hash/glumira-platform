@@ -28,8 +28,14 @@ import type {
   WhatIfResult,
 } from "@/iob-hunter/types";
 import { applyWhatIfScenario } from "@/iob-hunter/engine/iob-engine";
-import { listAllRegionalNames, resolveInsulinName } from "@/iob-hunter/engine/insulin-regions";
 import { TIER_CONFIG } from "@/iob-hunter/engine/iob-engine";
+import WhatIfConstraintBanner from "@/iob-hunter/components/IOBHunterWhatIfConstraintBanner";
+import {
+  buildWhatIfConstraints,
+  flattenWhatIfConstraints,
+  minutesToTime,
+  validateWhatIfDose,
+} from "@/iob-hunter/lib/whatif-constraints";
 
 export type WhatIfMode = "my_data" | "what_if";
 
@@ -56,10 +62,6 @@ function cloneDoses(doses: InsulinDose[]): InsulinDose[] {
   return doses.map((d) => ({ ...d }));
 }
 
-function nextId(existing: InsulinDose[]): string {
-  return `whatif-${Date.now()}-${existing.length}`;
-}
-
 /* ─── Component ──────────────────────────────────────────────────────── */
 
 export default function IOBHunterWhatIf({
@@ -75,9 +77,15 @@ export default function IOBHunterWhatIf({
   const [workingDoses, setWorkingDoses] = useState<InsulinDose[]>(() =>
     cloneDoses(actualDoses),
   );
+  const [constraintMessage, setConstraintMessage] = useState<string | undefined>();
 
   const tierLimits = TIER_CONFIG[tier];
   const canSave = savedScenarioCount < tierLimits.whatIfScenarios;
+  const constraints = useMemo(() => buildWhatIfConstraints(actualDoses), [actualDoses]);
+  const constraintMap = useMemo(
+    () => new Map(flattenWhatIfConstraints(constraints).map((constraint) => [constraint.doseId, constraint])),
+    [constraints],
+  );
 
   /* ─── Notify parent whenever workingDoses or mode change ──────────── */
   const notifyParent = useCallback(
@@ -117,12 +125,14 @@ export default function IOBHunterWhatIf({
     const fresh = cloneDoses(actualDoses);
     setWorkingDoses(fresh);
     setMode("my_data");
+    setConstraintMessage(undefined);
     onWorkingDosesChange(actualDoses, null);
   }, [actualDoses, onWorkingDosesChange]);
 
   const reset = useCallback(() => {
     const fresh = cloneDoses(actualDoses);
     setWorkingDoses(fresh);
+    setConstraintMessage(undefined);
     if (mode === "what_if") {
       const result = applyWhatIfScenario(
         actualDoses,
@@ -138,41 +148,47 @@ export default function IOBHunterWhatIf({
   const updateDose = useCallback(
     (id: string, patch: Partial<InsulinDose>) => {
       setWorkingDoses((prev) => {
-        const next = prev.map((d) => (d.id === id ? { ...d, ...patch } : d));
+        const currentDose = prev.find((dose) => dose.id === id);
+        const constraint = constraintMap.get(id);
+        if (!currentDose || !constraint) {
+          setConstraintMessage("That dose can no longer be edited because its profile anchor is missing.");
+          return prev;
+        }
+
+        const candidate = { ...currentDose, ...patch };
+        const validation = validateWhatIfDose(
+          {
+            insulinType: candidate.insulin_name,
+            time: candidate.administered_at,
+            units: candidate.dose_units,
+          },
+          constraint,
+        );
+
+        if (!validation.valid) {
+          setConstraintMessage(validation.reason);
+          return prev;
+        }
+
+        setConstraintMessage(undefined);
+        const next = prev.map((d) => (d.id === id ? candidate : d));
         notifyParent(next);
         return next;
       });
     },
-    [notifyParent],
+    [constraintMap, notifyParent],
   );
 
   const removeDose = useCallback(
-    (id: string) => {
-      setWorkingDoses((prev) => {
-        const next = prev.filter((d) => d.id !== id);
-        notifyParent(next);
-        return next;
-      });
+    (_id: string) => {
+      setConstraintMessage("Removing doses is disabled in constrained What-If mode.");
     },
-    [notifyParent],
+    [],
   );
 
   const addDose = useCallback(() => {
-    setWorkingDoses((prev) => {
-      const next: InsulinDose[] = [
-        ...prev,
-        {
-          id: nextId(prev),
-          insulin_name: "Fiasp",
-          dose_units: 2,
-          administered_at: "12:00",
-          dose_type: "bolus",
-        },
-      ];
-      notifyParent(next);
-      return next;
-    });
-  }, [notifyParent]);
+    setConstraintMessage("Adding new doses is disabled in constrained What-If mode.");
+  }, []);
 
   const saveScenario = useCallback(() => {
     if (!canSave) {
@@ -184,8 +200,6 @@ export default function IOBHunterWhatIf({
       modified_doses: workingDoses,
     });
   }, [canSave, onTierGate, onSaveScenario, savedScenarioCount, workingDoses]);
-
-  const insulinOptions = useMemo(() => listAllRegionalNames(), []);
 
   /* ─── Render ──────────────────────────────────────────────────────── */
 
@@ -269,6 +283,10 @@ export default function IOBHunterWhatIf({
         )}
       </div>
 
+      {mode === "what_if" && (
+        <WhatIfConstraintBanner message={constraintMessage} />
+      )}
+
       {/* ─── Dose list (editable in what_if, readonly in my_data) ─── */}
       {mode === "what_if" ? (
         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
@@ -276,7 +294,7 @@ export default function IOBHunterWhatIf({
             <DoseRow
               key={dose.id}
               dose={dose}
-              insulinOptions={insulinOptions}
+              constraint={constraintMap.get(dose.id)}
               onUpdate={(patch) => updateDose(dose.id, patch)}
               onRemove={() => removeDose(dose.id)}
             />
@@ -359,82 +377,96 @@ function ModeTab({
 
 function DoseRow({
   dose,
-  insulinOptions,
+  constraint,
   onUpdate,
   onRemove,
 }: {
   dose: InsulinDose;
-  insulinOptions: string[];
+  constraint?: {
+    insulinType: string;
+    minTime: number;
+    maxTime: number;
+    minUnits: number;
+    maxUnits: number;
+  };
   onUpdate: (patch: Partial<InsulinDose>) => void;
   onRemove: () => void;
 }) {
-  const swapInsulin = useCallback(
-    (value: string) => {
-      const canonical = resolveInsulinName(value) ?? value;
-      onUpdate({ insulin_name: canonical });
-    },
-    [onUpdate],
-  );
-
   return (
     <div
       style={{
-        display: "grid",
-        gridTemplateColumns: "2fr 1fr 1fr auto",
+        display: "flex",
+        flexDirection: "column",
         gap: 8,
-        alignItems: "center",
         padding: "8px 10px",
         borderRadius: 8,
         background: "var(--card-hover, #f8fafc)",
         border: "1px solid var(--border-light)",
       }}
     >
-      <select
-        value={dose.insulin_name}
-        onChange={(e) => swapInsulin(e.target.value)}
-        aria-label="Insulin"
-        style={inputStyle}
-      >
-        {insulinOptions.map((name) => (
-          <option key={name} value={name}>
-            {name}
-          </option>
-        ))}
-      </select>
-
-      <input
-        type="number"
-        inputMode="decimal"
-        step="0.25"
-        min="0"
-        value={dose.dose_units}
-        onChange={(e) => onUpdate({ dose_units: Number(e.target.value) })}
-        aria-label="Dose units"
-        style={{ ...inputStyle, textAlign: "right" }}
-      />
-
-      <input
-        type="time"
-        value={dose.administered_at.length === 5 ? dose.administered_at : "12:00"}
-        onChange={(e) => onUpdate({ administered_at: e.target.value })}
-        aria-label="Time"
-        style={inputStyle}
-      />
-
-      <button
-        type="button"
-        onClick={onRemove}
-        aria-label="Remove dose"
+      <div
         style={{
-          ...iconBtnStyle,
-          color: "#EF4444",
-          borderColor: "#FECACA",
-          minWidth: 38,
-          padding: "0 10px",
+          display: "grid",
+          gridTemplateColumns: "2fr 1fr 1fr auto",
+          gap: 8,
+          alignItems: "center",
         }}
       >
-        ×
-      </button>
+        <input
+          type="text"
+          value={dose.insulin_name}
+          aria-label="Insulin"
+          disabled
+          style={{ ...inputStyle, color: "var(--text-secondary)", cursor: "not-allowed" }}
+        />
+
+        <input
+          type="number"
+          inputMode="decimal"
+          step="0.25"
+          min={constraint ? constraint.minUnits : 0}
+          max={constraint ? constraint.maxUnits : undefined}
+          value={dose.dose_units}
+          onChange={(e) => onUpdate({ dose_units: Number(e.target.value) })}
+          aria-label="Dose units"
+          style={{ ...inputStyle, textAlign: "right" }}
+        />
+
+        <input
+          type="time"
+          value={dose.administered_at.length === 5 ? dose.administered_at : "12:00"}
+          onChange={(e) => onUpdate({ administered_at: e.target.value })}
+          aria-label="Time"
+          style={inputStyle}
+        />
+
+        <button
+          type="button"
+          onClick={onRemove}
+          aria-label="Remove dose"
+          style={{
+            ...iconBtnStyle,
+            color: "var(--text-faint)",
+            borderColor: "var(--border-light)",
+            minWidth: 38,
+            padding: "0 10px",
+          }}
+        >
+          ×
+        </button>
+      </div>
+
+      {constraint && (
+        <div
+          style={{
+            fontSize: 11,
+            color: "var(--text-secondary)",
+            fontFamily: "'DM Sans', system-ui, sans-serif",
+          }}
+        >
+          Locked to {constraint.insulinType}. Time window {minutesToTime(constraint.minTime)}-{minutesToTime(constraint.maxTime)}. Dose window {constraint.minUnits.toFixed(1)}-{constraint.maxUnits.toFixed(1)} U.
+        </div>
+      )}
     </div>
   );
 }
