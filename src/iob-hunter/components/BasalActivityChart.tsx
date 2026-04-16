@@ -375,8 +375,6 @@ export default function BasalActivityChart(props: BasalActivityChartProps) {
                 strokeDasharray="4 3"
               />
               <text
-                x={(xStart + xEnd) / 2}
-                y={MARGIN.top + 12}
                 textAnchor="middle"
                 style={{
                   font: "600 9px 'DM Sans', system-ui, sans-serif",
@@ -384,7 +382,15 @@ export default function BasalActivityChart(props: BasalActivityChartProps) {
                   letterSpacing: 0.6,
                 }}
               >
-                {z.label}
+                {z.label.split(" / ").map((part, li) => (
+                  <tspan
+                    key={li}
+                    x={(xStart + xEnd) / 2}
+                    y={MARGIN.top + 10 + li * 12}
+                  >
+                    {part.split(" ").map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(" ")}
+                  </tspan>
+                ))}
               </text>
             </g>
           );
