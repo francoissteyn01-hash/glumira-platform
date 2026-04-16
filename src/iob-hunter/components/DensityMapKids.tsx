@@ -1,14 +1,3 @@
-/**
- * GluMira™ V7 — IOB Hunter v7 · Density Map — Kids View
- *
- * Terrain-style coloured-column chart: each 15-min segment is filled
- * by pressure colour so the density landscape reads like a mountain
- * range. Plain-language labels and a highlighted overlap band make it
- * accessible to non-clinical users.
- *
- * GluMira™ is an educational platform, not a medical device.
- */
-
 import React from "react";
 import type { DensityMap } from "@/iob-hunter/engine/density-map";
 
@@ -16,19 +5,14 @@ interface Props {
   densityMap: DensityMap;
 }
 
-const CHART_W = 1100;
-const CHART_H = 300;
-const PADDING_L = 50;
-const PADDING_T = 70;
-const BOTTOM_LABEL_Y = 390;
+const CHART_W = 1100, CHART_H = 300, PADDING_L = 50, PADDING_T = 70;
 
-function toX(hour: number): number {
-  return (hour / 24) * CHART_W + PADDING_L;
+function toX(h: number): number {
+  return (h / 24) * CHART_W + PADDING_L;
 }
 
 function toY(iob: number, maxIOB: number): number {
-  if (maxIOB <= 0) return PADDING_T + CHART_H;
-  return PADDING_T + CHART_H - (iob / maxIOB) * CHART_H;
+  return maxIOB <= 0 ? PADDING_T + CHART_H : PADDING_T + CHART_H - (iob / maxIOB) * CHART_H;
 }
 
 function fmtHour(h: number): string {
@@ -38,50 +22,36 @@ function fmtHour(h: number): string {
 }
 
 const SEGMENT_COLOURS: Record<string, string> = {
-  light:    "#3b82f6",
+  light: "#3b82f6",
   moderate: "#f59e0b",
-  strong:   "#ef5350",
-  overlap:  "#dc2626",
+  strong: "#ef5350",
+  overlap: "#dc2626",
 };
 
-const LEGEND_ITEMS = [
-  { label: "Light Activity",  color: "#3b82f6" },
-  { label: "Moderate",        color: "#f59e0b" },
-  { label: "High Activity",   color: "#ef5350" },
-  { label: "Overlap",         color: "#dc2626" },
-];
-
 export default function DensityMapKids({ densityMap }: Props) {
-  const maxIOB = densityMap.points.reduce((m, p) => Math.max(m, p.iobTotal), 0);
+  const maxIOB = Math.max(...densityMap.points.map(p => p.iobTotal), 0);
   const { highestOverlapWindow: ow } = densityMap;
-  const hasOverlap = ow.end > ow.start;
-
   const overlapX1 = toX(ow.start);
   const overlapX2 = toX(ow.end);
-  const overlapW  = Math.max(overlapX2 - overlapX1, 4);
+  const overlapW = Math.max(overlapX2 - overlapX1, 4);
   const overlapLabelX = overlapX1 + overlapW / 2;
 
   return (
-    <div
-      style={{
-        background: "var(--bg-card, #fff)",
-        border: "1px solid rgba(148,163,184,0.35)",
-        borderRadius: 12,
-        padding: "20px 24px",
-        fontFamily: "'DM Sans', system-ui, sans-serif",
-      }}
-    >
-      {/* Header */}
+    <div style={{
+      background: "var(--bg-card, #fff)",
+      border: "1px solid rgba(148,163,184,0.35)",
+      borderRadius: 12,
+      padding: "20px 24px",
+      fontFamily: "'DM Sans', system-ui, sans-serif",
+    }}>
       <div style={{ marginBottom: 4 }}>
-        <h3
-          style={{
-            margin: 0,
-            fontSize: 16,
-            fontWeight: 700,
-            color: "#0D2149",
-            fontFamily: "'Playfair Display', serif",
-          }}
-        >
+        <h3 style={{
+          margin: 0,
+          fontSize: 16,
+          fontWeight: 700,
+          color: "#0D2149",
+          fontFamily: "'Playfair Display', serif",
+        }}>
           Insulin Density Map
         </h3>
         <p style={{ margin: "4px 0 0", fontSize: 12, color: "#64748B" }}>
@@ -89,10 +59,9 @@ export default function DensityMapKids({ densityMap }: Props) {
         </p>
       </div>
 
-      {/* Terrain chart */}
       <div style={{ overflowX: "auto", marginTop: 16 }}>
         <svg
-          viewBox={`0 0 ${CHART_W + PADDING_L + 20} ${BOTTOM_LABEL_Y + 10}`}
+          viewBox={`0 0 ${CHART_W + PADDING_L + 20} 410`}
           style={{ width: "100%", minWidth: 320, display: "block" }}
           aria-label="IOB density terrain chart"
         >
@@ -117,7 +86,7 @@ export default function DensityMapKids({ densityMap }: Props) {
           })}
 
           {/* Highest overlap band */}
-          {hasOverlap && (
+          {ow.end > ow.start && (
             <g>
               <rect
                 x={overlapX1}
@@ -141,12 +110,12 @@ export default function DensityMapKids({ densityMap }: Props) {
             </g>
           )}
 
-          {/* X-axis labels */}
+          {/* X-axis labels (24hr) */}
           {[0, 6, 12, 18, 24].map((h) => (
             <text
               key={`lbl-${h}`}
               x={toX(h)}
-              y={BOTTOM_LABEL_Y - 10}
+              y={390}
               textAnchor="middle"
               fontSize={11}
               fill="#94a3b8"
@@ -158,36 +127,39 @@ export default function DensityMapKids({ densityMap }: Props) {
       </div>
 
       {/* Key insight */}
-      {hasOverlap && (
-        <div
-          style={{
-            marginTop: 12,
-            padding: "10px 14px",
-            background: "#fff7ed",
-            border: "1px solid #fed7aa",
-            borderRadius: 8,
-            fontSize: 12,
-            color: "#7c2d12",
-          }}
-        >
-          <strong>Key Insight:</strong> Peak collision occurs {fmtHour(ow.start)} – {fmtHour(ow.end)}.
-          {" "}Several insulin effects overlap here.
+      {ow.end > ow.start && (
+        <div style={{
+          marginTop: 12,
+          padding: "10px 14px",
+          background: "#fff7ed",
+          border: "1px solid #fed7aa",
+          borderRadius: 8,
+          fontSize: 12,
+          color: "#7c2d12",
+        }}>
+          <strong>🔍 Key Insight:</strong> Peak collision occurs{" "}
+          {fmtHour(ow.start)} – {fmtHour(ow.end)}.{" "}
+          Several insulin effects overlap here.
         </div>
       )}
 
       {/* Legend */}
-      <div
-        style={{
-          display: "flex",
-          gap: 16,
-          marginTop: 12,
-          flexWrap: "wrap",
-        }}
-      >
-        {LEGEND_ITEMS.map((item) => (
+      <div style={{ display: "flex", gap: 16, marginTop: 12, flexWrap: "wrap" }}>
+        {[
+          { label: "Light Activity", color: "#3b82f6" },
+          { label: "Moderate", color: "#f59e0b" },
+          { label: "High Activity", color: "#ef5350" },
+          { label: "Overlap", color: "#dc2626" },
+        ].map((item) => (
           <div
             key={item.label}
-            style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 11, color: "#64748B" }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 6,
+              fontSize: 11,
+              color: "#64748B",
+            }}
           >
             <span
               style={{
