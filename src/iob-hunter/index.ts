@@ -113,6 +113,18 @@ export {
 } from "@/iob-hunter/engine/narrative-generator";
 export type { Improvement } from "@/iob-hunter/engine/narrative-generator";
 
+/* ─── Density map ────────────────────────────────────────────────────────── */
+export { buildDensityMap } from "@/iob-hunter/engine/density-map";
+export type {
+  DensityMap,
+  DensityPoint,
+  DensityRiskZone,
+  PressureLevel,
+} from "@/iob-hunter/engine/density-map";
+
+export { default as DensityMapClinical } from "@/iob-hunter/components/DensityMapClinical";
+export { default as DensityMapKids } from "@/iob-hunter/components/DensityMapKids";
+
 /* ─── Hooks ──────────────────────────────────────────────────────────────── */
 export { useIOBHunter } from "@/iob-hunter/hooks/useIOBHunter";
 export type {

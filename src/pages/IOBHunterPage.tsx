@@ -24,9 +24,14 @@
  */
 
 import { useCallback, useMemo, useState } from "react";
+import {
+  buildDensityMap,
+  DensityMapClinical,
+  DensityMapKids,
+} from "@/iob-hunter";
 import { useAuth } from "@/hooks/useAuth";
 import { DISCLAIMER } from "@/lib/constants";
-import { INSULIN_CURVE_GLOSSARY } from "@/lib/insulin-curve-glossary";
+import IOBTerrainChart from "@/components/charts/IOBTerrainChart";
 import BasalActivityChart from "@/iob-hunter/components/BasalActivityChart";
 import {
   INSULIN_PROFILES as LEGACY_INSULIN_PROFILES,
@@ -147,6 +152,9 @@ export default function IOBHunterPage() {
     [mode, actualDoses, workingDoses],
   );
 
+  /* ─── Density map view toggle ────────────────────────────────── */
+  const [densityView, setDensityView] = useState<"clinical" | "kids">("clinical");
+
   /* ─── Tier gate overlay state ────────────────────────────────── */
   const [gateFeature, setGateFeature] = useState<TierGateFeature | null>(null);
 
@@ -167,6 +175,12 @@ export default function IOBHunterPage() {
       resolutionMinutes: 5,
       patientWeightKg: DEMO_PATIENT_A_V7.weight_kg,
     },
+  );
+
+  /* ─── Density map — derived from the existing curve ──────────── */
+  const densityMap = useMemo(
+    () => buildDensityMap(curve, kpis.total_daily_basal),
+    [curve, kpis.total_daily_basal],
   );
 
   /* ─── Per-dose activity curves for the BasalActivityChart ────────
@@ -268,7 +282,6 @@ export default function IOBHunterPage() {
   void suggestedLine;  // Retained for upcoming Suggested-timing toggle.
 
   /* ─── v7 data for the chart (bypasses legacy engine) ─────────── */
-  // Retained for IOBTerrainChart wiring (Phase 2 migration).
   const v7ChartData = useMemo(() => ({
     curve,
     doses: activeDoses.map((d) => ({
@@ -280,11 +293,9 @@ export default function IOBHunterPage() {
     })),
     maxIOB,
   }), [curve, activeDoses, maxIOB]);
-  void v7ChartData;
 
   /* ─── Legacy adapter kept as fallback only ───────────────────── */
   const legacyEntries = useMemo(() => v7ToLegacyEntries(activeDoses), [activeDoses]);
-  void legacyEntries;
 
   const profileForChart = useMemo(
     () => ({
@@ -294,7 +305,6 @@ export default function IOBHunterPage() {
     }),
     [],
   );
-  void profileForChart;
 
   /* ─── Handlers ────────────────────────────────────────────────── */
   // Visitor entry updates both sides — visitors have no what-if split.
@@ -626,13 +636,61 @@ export default function IOBHunterPage() {
           stackingAlerts={stackingAlerts}
         />
 
-        {/* ─── Educator reference panel ──────────────────────────
-         *  Collapsible accordion showing PK profile description,
-         *  mechanism notes, and primary citations for each insulin
-         *  in the current regimen. Purely informational — no curve
-         *  modifications. Engine output is unchanged.
-         */}
-        <EducatorReferencePanel doses={activeDoses} />
+        {/* ─── Density Map section ──────────────────────────────── */}
+        <div style={{ marginTop: 24 }}>
+          {/* View toggle */}
+          <div
+            style={{
+              display: "flex",
+              gap: 8,
+              marginBottom: 12,
+              fontFamily: "'DM Sans', system-ui, sans-serif",
+            }}
+          >
+            <button
+              type="button"
+              onClick={() => setDensityView("clinical")}
+              aria-pressed={densityView === "clinical"}
+              style={{
+                padding: "6px 16px",
+                borderRadius: 999,
+                border: "1px solid rgba(148,163,184,0.35)",
+                background: densityView === "clinical" ? "#0D2149" : "#F1F5F9",
+                color: densityView === "clinical" ? "#fff" : "#0D2149",
+                fontWeight: 600,
+                fontSize: 12,
+                cursor: "pointer",
+                letterSpacing: 0.3,
+              }}
+            >
+              Clinical View
+            </button>
+            <button
+              type="button"
+              onClick={() => setDensityView("kids")}
+              aria-pressed={densityView === "kids"}
+              style={{
+                padding: "6px 16px",
+                borderRadius: 999,
+                border: "1px solid rgba(148,163,184,0.35)",
+                background: densityView === "kids" ? "#0D2149" : "#F1F5F9",
+                color: densityView === "kids" ? "#fff" : "#0D2149",
+                fontWeight: 600,
+                fontSize: 12,
+                cursor: "pointer",
+                letterSpacing: 0.3,
+              }}
+            >
+              Kids View
+            </button>
+          </div>
+
+          {densityView === "clinical" ? (
+            <DensityMapClinical densityMap={densityMap} />
+          ) : (
+            <DensityMapKids densityMap={densityMap} />
+          )}
+        </div>
 
         {/* Spacer for mobile bottom nav */}
         <div style={{ height: 80 }} />
@@ -809,165 +867,5 @@ function TresibaKpiRow({ curves }: { curves: Array<{ peak_rate_uph: number; dose
         ))}
       </div>
     </>
-  );
-}
-
-/* ─── Educator Reference Panel ───────────────────────────────────────
- *
- * Collapsible accordion below the clinical report. Shows the PK
- * profile description, mechanism notes, key parameters, and primary
- * citation for each distinct insulin brand in the current regimen.
- *
- * Data source: INSULIN_CURVE_GLOSSARY (which mirrors insulin-profiles.ts).
- * Engine output: unchanged. Curves: unchanged. Purely informational.
- */
-type EducatorPanelProps = { doses: InsulinDose[] };
-
-function EducatorReferencePanel({ doses }: EducatorPanelProps) {
-  const [open, setOpen] = useState(false);
-
-  const regimenEntries = useMemo(() => {
-    const seen = new Set<string>();
-    const entries: Array<{ key: string; entry: (typeof INSULIN_CURVE_GLOSSARY)[string] }> = [];
-    for (const d of doses) {
-      if (seen.has(d.insulin_name)) continue;
-      seen.add(d.insulin_name);
-      const entry = INSULIN_CURVE_GLOSSARY[d.insulin_name];
-      if (entry) entries.push({ key: d.insulin_name, entry });
-    }
-    return entries;
-  }, [doses]);
-
-  if (regimenEntries.length === 0) return null;
-
-  return (
-    <div style={{
-      marginTop: 16,
-      borderRadius: 12,
-      border: "1px solid var(--border-light)",
-      background: "var(--bg-card)",
-      overflow: "hidden",
-      fontFamily: "'DM Sans', system-ui, sans-serif",
-    }}>
-      <button
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        style={{
-          width: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "14px 20px",
-          background: "none",
-          border: "none",
-          cursor: "pointer",
-          textAlign: "left",
-        }}
-        aria-expanded={open}
-      >
-        <div>
-          <span style={{ fontSize: 14, fontWeight: 700, color: "var(--text-primary)" }}>
-            Educator Reference
-          </span>
-          <span style={{ fontSize: 12, color: "var(--text-secondary)", marginLeft: 10 }}>
-            PK profiles for your regimen — FDA/EMA/PubMed citations
-          </span>
-        </div>
-        <span style={{
-          fontSize: 12,
-          color: "var(--text-secondary)",
-          transform: open ? "rotate(180deg)" : "none",
-          transition: "transform 0.2s",
-          display: "inline-block",
-        }}>
-          ▾
-        </span>
-      </button>
-
-      {open && (
-        <div style={{ borderTop: "1px solid var(--border-light)", padding: "16px 20px" }}>
-          <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-            {regimenEntries.map(({ key, entry }) => (
-              <div key={key} style={{
-                padding: "14px 16px",
-                borderRadius: 10,
-                background: `${entry.colour}0A`,
-                border: `1px solid ${entry.colour}30`,
-              }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 10 }}>
-                  <span style={{
-                    fontSize: 15, fontWeight: 700,
-                    color: entry.colour,
-                    fontFamily: "'Playfair Display', Georgia, serif",
-                  }}>
-                    {entry.brandName}
-                  </span>
-                  <span style={{ fontSize: 12, color: "var(--text-secondary)" }}>
-                    {entry.genericName}
-                  </span>
-                  <span style={{
-                    fontSize: 11, fontWeight: 600,
-                    padding: "2px 8px", borderRadius: 999,
-                    background: `${entry.colour}18`,
-                    color: entry.colour,
-                    border: `1px solid ${entry.colour}40`,
-                  }}>
-                    {entry.pk.ispeakless ? "Peakless plateau" : "Peaked curve"}
-                  </span>
-                </div>
-
-                <p style={{ fontSize: 13, color: "var(--text-primary)", lineHeight: 1.65, margin: "0 0 10px" }}>
-                  {entry.profileDescription}
-                </p>
-
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "6px 20px", marginBottom: 10 }}>
-                  {([
-                    ["Onset", entry.pk.onsetMinutes < 60 ? `${entry.pk.onsetMinutes} min` : `${entry.pk.onsetMinutes / 60}h`],
-                    ["Peak start", entry.pk.peakStartMinutes != null
-                      ? (entry.pk.peakStartMinutes < 60 ? `${entry.pk.peakStartMinutes} min` : `${entry.pk.peakStartMinutes / 60}h`)
-                      : "None"],
-                    ["Duration", `${(entry.pk.durationMinutes / 60).toFixed(1)}h`],
-                    ["Engine model", entry.engineDecayModel],
-                  ] as [string, string][]).map(([label, value]) => (
-                    <span key={label} style={{ fontSize: 12, color: "var(--text-secondary)" }}>
-                      <strong style={{ color: "var(--text-primary)" }}>{label}:</strong>{" "}{value}
-                    </span>
-                  ))}
-                </div>
-
-                {entry.pk.durationNote && (
-                  <p style={{ fontSize: 11, color: "var(--text-secondary)", fontStyle: "italic", margin: "0 0 8px", lineHeight: 1.5 }}>
-                    {entry.pk.durationNote}
-                  </p>
-                )}
-
-                <div style={{ fontSize: 11, color: "var(--text-faint)" }}>
-                  <strong>Source:</strong>{" "}
-                  {entry.pkSourceUrl ? (
-                    <a href={entry.pkSourceUrl} target="_blank" rel="noopener noreferrer"
-                      style={{ color: "#2AB5C1", textDecoration: "none" }}>
-                      {entry.pkSource} ↗
-                    </a>
-                  ) : entry.pkSource}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <p style={{
-            marginTop: 14, fontSize: 11,
-            color: "var(--text-faint)", lineHeight: 1.5,
-            borderTop: "1px solid var(--border-light)", paddingTop: 10,
-          }}>
-            Educator reference only. IOB curves above are calculated using the GluMira™ engine
-            ({regimenEntries.map((e) => e.entry.engineDecayModel).filter((v, i, a) => a.indexOf(v) === i).join(", ")}
-            ) — these descriptions are companion context, not curve modifiers.{" "}
-            <a href="/glossary/curves" style={{ color: "#2AB5C1", textDecoration: "none" }}>
-              Full glossary ↗
-            </a>
-          </p>
-        </div>
-      )}
-    </div>
   );
 }
