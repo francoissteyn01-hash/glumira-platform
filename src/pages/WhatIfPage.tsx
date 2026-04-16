@@ -1,548 +1,334 @@
 /**
  * GluMira™ V7 — What-If Scenario Engine
  *
- * Primary: "What if I switch from Levemir to Tresiba?" — side-by-side
- * activity-rate charts (BasalActivityChart) with full PK comparison cards.
+ * Loads the user's configured basal + bolus regimen from
+ * `patient_self_profiles` and renders:
+ *   Graph 1 — Total IOB (stacked basal + bolus) via WhatIfIOBChart
+ *   Graph 2 — Basal activity profile via BasalActivityChart
  *
- * Secondary: generic IOB scenario builder (Chart.js, kept below).
+ * The basal is locked (display only); bolus entries are editable.
  *
  * GluMira™ is an educational platform, not a medical device.
  */
 
-import { useState, useMemo, useRef, useEffect } from "react";
-import {
-  Chart,
-  CategoryScale,
-  Filler,
-  LinearScale,
-  LineController,
-  LineElement,
-  PointElement,
-  Tooltip as ChartTooltip,
-  type ChartConfiguration,
-} from "chart.js";
-import { calculateIOB } from "@/iob-hunter/engine/iob-engine";
+import { useState, useEffect } from 'react';
+import { supabase } from '@/api/supabase';
+import WhatIfIOBChart from '@/components/WhatIfIOBChart';
+import BasalActivityChart from '@/iob-hunter/components/BasalActivityChart';
 import {
   INSULIN_PROFILES,
-} from "@/iob-hunter/engine/insulin-profiles";
-import {
+  findProfile,
   generatePerDoseActivityCurves,
   computeGraphBounds,
-} from "@/iob-hunter";
-import type { InsulinDose } from "@/iob-hunter/types";
-import BasalActivityChart from "@/iob-hunter/components/BasalActivityChart";
+} from '@/iob-hunter';
+import type { InsulinDose } from '@/iob-hunter';
 
-Chart.register(
-  CategoryScale,
-  Filler,
-  LinearScale,
-  LineController,
-  LineElement,
-  PointElement,
-  ChartTooltip,
-);
+/* ─── Local types ────────────────────────────────────────────────────────── */
 
-/* ─── Demo regimens ──────────────────────────────────────────────────────── */
-
-/** Levemir BID — 10U × 2 per day (80 kg adult, 0.25 U/kg per injection).
- *  Plank 2005 Table 1: 0.4 U/kg total → DOA ≈ 20h per dose. */
-const LEVEMIR_DOSES: InsulinDose[] = [
-  { id: "lev-am", insulin_name: "Levemir", dose_units: 10, administered_at: "06:00", dose_type: "basal_injection" },
-  { id: "lev-pm", insulin_name: "Levemir", dose_units: 10, administered_at: "18:00", dose_type: "basal_injection" },
-];
-
-/** Tresiba OD — 20U once daily (same total daily dose for fair comparison).
- *  Heise 2012: 42h DOA, 3-day steady-state. */
-const TRESIBA_DOSES: InsulinDose[] = [
-  { id: "tres-od", insulin_name: "Tresiba", dose_units: 20, administered_at: "06:00", dose_type: "basal_injection" },
-];
-
-const PATIENT_WEIGHT = 80; // kg — demo
-
-/* ─── Colour / legend helpers ────────────────────────────────────────────── */
-
-const COLOUR = {
-  light:    "#D4C960",
-  moderate: "#FFD700",
-  strong:   "#FF8C00",
-  overlap:  "#E84040",
-  basal:    "#1A2A5E",  // Rule 9: navy base layer
-  bolus:    "#2AB5C1",  // Rule 9: teal bolus layer
-  whatIf:   "#2E9E5A",  // Rule 12: what-if green overlay (kept separate)
-  gridLine: "rgba(148,163,184,0.15)",
-  axis:     "#94A3B8",
-} as const;
-
-function segmentColourForValue(value: number, max: number): string {
-  if (max <= 0) return COLOUR.light;
-  const ratio = value / max;
-  if (ratio >= 0.75) return COLOUR.overlap;
-  if (ratio >= 0.5)  return COLOUR.strong;
-  if (ratio >= 0.25) return COLOUR.moderate;
-  return COLOUR.light;
+interface BasalInsulin {
+  insulin: string;
+  dose: number;
+  times: string[];
 }
 
-function formatHour(h: number): string {
-  const hr = Math.floor(h % 24);
-  const mn = Math.round((h % 1) * 60);
-  return `${String(hr).padStart(2, "0")}:${String(mn).padStart(2, "0")}`;
-}
-
-/* ─── Generic What-If engine state ───────────────────────────────────────── */
-
-type EditableDose = {
-  id: string;
-  brandName: string;
-  dose: number | null;
+interface BolusInsulin {
+  insulin: string;
+  dose: number;
   hour: number;
-  type: "basal" | "bolus";
 }
-
-const DEFAULT_DOSES: EditableDose[] = [
-  { id: "b0", brandName: "Tresiba",    dose: 12,  hour: 18.5, type: "basal" },
-  { id: "r0", brandName: "Fiasp",      dose: 3,   hour: 7,    type: "bolus" },
-  { id: "r1", brandName: "Fiasp",      dose: 2.5, hour: 12.5, type: "bolus" },
-  { id: "r2", brandName: "NovoRapid",  dose: 3.5, hour: 18,   type: "bolus" },
-];
 
 /* ═══════════════════════════════════════════════════════════════════════════ */
 export default function WhatIfPage() {
 
-  /* ── Levemir vs Tresiba activity curves ─────────────────────────────── */
+  /* ── State ───────────────────────────────────────────────────────────── */
+  const [basalInsulin,       setBasalInsulin]       = useState<BasalInsulin | null>(null);
+  const [bolusInsulins,      setBolusInsulins]      = useState<BolusInsulin[]>([]);
+  const [currentTimeMinutes, setCurrentTimeMinutes] = useState(0);
+  const [timeRangeMinutes,   setTimeRangeMinutes]   = useState(2520); // 42h default (Tresiba)
+  const [loading,            setLoading]            = useState(true);
+  const [error,              setError]              = useState<string | null>(null);
 
-  const levemirBounds = useMemo(
-    () => computeGraphBounds(LEVEMIR_DOSES, INSULIN_PROFILES, PATIENT_WEIGHT),
-    [],
-  );
-  const tresibaBounds = useMemo(
-    () => computeGraphBounds(TRESIBA_DOSES, INSULIN_PROFILES, PATIENT_WEIGHT),
-    [],
-  );
+  // Add-bolus form fields
+  const [newBolusInsulin, setNewBolusInsulin] = useState('');
+  const [newBolusDose,    setNewBolusDose]    = useState('');
+  const [newBolusHour,    setNewBolusHour]    = useState('');
 
-  const levemirCurves = useMemo(() =>
-    generatePerDoseActivityCurves(
-      LEVEMIR_DOSES, INSULIN_PROFILES,
-      levemirBounds.startHour, levemirBounds.endHour,
-      15, levemirBounds.cycles, PATIENT_WEIGHT,
-    ),
-  [levemirBounds]);
-
-  const tresibaCurves = useMemo(() =>
-    generatePerDoseActivityCurves(
-      TRESIBA_DOSES, INSULIN_PROFILES,
-      tresibaBounds.startHour, tresibaBounds.endHour,
-      15, tresibaBounds.cycles, PATIENT_WEIGHT,
-    ),
-  [tresibaBounds]);
-
-  /* ── Generic IOB engine ──────────────────────────────────────────────── */
-
-  const chartRef = useRef<HTMLCanvasElement>(null);
-  const chartInstance = useRef<Chart | null>(null);
-
-  const [doses, setDoses] = useState<EditableDose[]>(DEFAULT_DOSES);
-
-  const chartData = useMemo(() => {
-    const points: { hour: number; basal: number; bolus: number; combined: number }[] = [];
-
-    for (let min = 0; min <= 24 * 60; min += 15) {
-      const hour = min / 60;
-      let basal = 0;
-      let bolus = 0;
-
-      for (const d of doses) {
-        if (!d.dose || d.dose <= 0) continue;
-        const profile = INSULIN_PROFILES.find(
-          (p) => p.brand_name.toLowerCase() === d.brandName.toLowerCase(),
-        );
-        if (!profile) continue;
-
-        // Current-day dose
-        const elapsedHours = hour - d.hour;
-        if (elapsedHours >= 0) {
-          const iob = calculateIOB(d.dose, profile, elapsedHours * 60, PATIENT_WEIGHT);
-          if (d.type === "basal") basal += iob;
-          else bolus += iob;
-        }
-
-        // Rule 17: prior-day residual — same dose given 24 h earlier
-        // Ensures graph never starts at 0 (steady-state tail present at minute 0)
-        const priorElapsedHours = hour - d.hour + 24;
-        if (priorElapsedHours >= 0) {
-          const priorIob = calculateIOB(d.dose, profile, priorElapsedHours * 60, PATIENT_WEIGHT);
-          if (d.type === "basal") basal += priorIob;
-          else bolus += priorIob;
-        }
-      }
-
-      points.push({
-        hour,
-        basal:    Math.max(0, Math.round(basal    * 100) / 100),
-        bolus:    Math.max(0, Math.round(bolus    * 100) / 100),
-        combined: Math.max(0, Math.round((basal + bolus) * 100) / 100),
-      });
-    }
-    return points;
-  }, [doses]);
-
+  /* ── Load patient profile on mount ──────────────────────────────────── */
   useEffect(() => {
-    if (!chartRef.current) return;
-    const maxIOB = Math.max(...chartData.map((p) => p.combined), 5);
-    const colors = chartData.map((p) => segmentColourForValue(p.combined, maxIOB));
+    async function loadProfile() {
+      try {
+        const { data: authData } = await supabase.auth.getUser();
+        if (!authData.user) throw new Error('Not authenticated');
 
-    const config: ChartConfiguration = {
-      type: "line",
-      data: {
-        labels: chartData.map((p) => formatHour(p.hour)),
-        datasets: [
-          {
-            label: "Basal IOB",
-            data: chartData.map((p) => p.basal),
-            borderColor: COLOUR.basal,
-            backgroundColor: `${COLOUR.basal}20`,
-            fill: true, tension: 0.4, pointRadius: 0, borderWidth: 2,
-          },
-          {
-            label: "Bolus IOB",
-            data: chartData.map((p) => p.bolus),
-            borderColor: COLOUR.bolus,
-            backgroundColor: `${COLOUR.bolus}20`,
-            fill: false, tension: 0.4, pointRadius: 0, borderWidth: 2,
-          },
-          {
-            label: "Combined IOB",
-            data: chartData.map((p) => p.combined),
-            borderColor: COLOUR.overlap,
-            backgroundColor: colors.map((c, i) => i === 0 ? "transparent" : c),
-            borderWidth: 3, fill: false, tension: 0.4, pointRadius: 0,
-            segment: { borderColor: (ctx) => colors[ctx.p0DataIndex] ?? COLOUR.overlap },
-          },
-        ],
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: true, position: "top",
-            labels: { font: { family: "'DM Sans', sans-serif", size: 12 }, padding: 16 },
-          },
-          tooltip: {
-            enabled: true, backgroundColor: "rgba(0,0,0,0.8)",
-            bodyFont: { family: "'DM Sans', sans-serif", size: 12 },
-            titleFont: { family: "'DM Sans', sans-serif", size: 12 },
-            callbacks: { label: (ctx) => `${ctx.dataset.label}: ${(ctx.parsed.y ?? 0).toFixed(2)}U` },
-          },
+        const { data, error: fetchError } = await supabase
+          .from('patient_self_profiles')
+          .select('insulin_types')
+          .eq('user_id', authData.user.id)
+          .single();
+
+        if (fetchError) throw fetchError;
+
+        if (data?.insulin_types) {
+          const insulinTypes = data.insulin_types as Record<string, unknown>;
+
+          // Locked basal
+          const basalEntry = insulinTypes.basal as { insulin?: string; dose?: number; times?: string[] } | undefined;
+          if (basalEntry?.insulin) {
+            setBasalInsulin({
+              insulin: basalEntry.insulin,
+              dose:    basalEntry.dose ?? 0,
+              times:   basalEntry.times ?? [],
+            });
+
+            // Set time range from profile DOA
+            const profile = findProfile(basalEntry.insulin);
+            if (profile) setTimeRangeMinutes(profile.duration_minutes);
+          }
+
+          // Editable bolus
+          const bolusEntries = insulinTypes.bolus;
+          if (Array.isArray(bolusEntries)) {
+            setBolusInsulins(
+              (bolusEntries as Array<{ insulin?: string; typicalDose?: string | number }>)
+                .map((b, i) => ({
+                  insulin: b.insulin ?? '',
+                  dose:    parseFloat(String(b.typicalDose ?? 0)) || 0,
+                  hour:    7 + i * 5, // Default spacing: 07:00, 12:00, 17:00
+                })),
+            );
+          }
+        }
+
+        setLoading(false);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to load profile');
+        setLoading(false);
+      }
+    }
+
+    loadProfile();
+  }, []);
+
+  /* ── Bolus management ────────────────────────────────────────────────── */
+  const addBolusInsulin = () => {
+    if (newBolusInsulin && newBolusDose && newBolusHour) {
+      setBolusInsulins((prev) => [
+        ...prev,
+        {
+          insulin: newBolusInsulin,
+          dose:    parseFloat(newBolusDose),
+          hour:    parseFloat(newBolusHour),
         },
-        scales: {
-          x: {
-            type: "category",
-            grid: { color: COLOUR.gridLine },
-            ticks: {
-              font: { family: "'DM Sans', sans-serif", size: 11 },
-              color: COLOUR.axis,
-              maxRotation: 0,
-              minRotation: 0,
-              // show only every 4-hour boundary (15-min resolution → every 16th point)
-              callback: (_val, index) => {
-                if (index % 16 !== 0) return null;
-                return chartData[index] ? formatHour(chartData[index].hour) : null;
-              },
-            },
-          },
-          y: {
-            min: 0, max: maxIOB,
-            grid: { color: COLOUR.gridLine },
-            ticks: { font: { family: "'DM Sans', sans-serif", size: 11 }, color: COLOUR.axis },
-            title: {
-              display: true, text: "IOB (U)",
-              font: { family: "'DM Sans', sans-serif", size: 12 },
-              color: COLOUR.axis,
-            },
-          },
-        },
-      },
-    };
+      ]);
+      setNewBolusInsulin('');
+      setNewBolusDose('');
+      setNewBolusHour('');
+    }
+  };
 
-    if (chartInstance.current) chartInstance.current.destroy();
-    chartInstance.current = new Chart(chartRef.current, config);
-    return () => { if (chartInstance.current) chartInstance.current.destroy(); };
-  }, [chartData]);
+  const removeBolusInsulin = (index: number) =>
+    setBolusInsulins((prev) => prev.filter((_, i) => i !== index));
 
-  const updateDose = (id: string, field: keyof EditableDose, value: string | number | null) =>
-    setDoses((prev) => prev.map((d) => d.id === id ? { ...d, [field]: value } : d));
+  /* ── Loading / error / empty guards ─────────────────────────────────── */
+  if (loading) return <div className="p-8 text-center text-slate-500">Loading profile…</div>;
+  if (error)   return <div className="p-8 text-center text-red-600">{error}</div>;
+  if (!basalInsulin) return <div className="p-8 text-center text-slate-500">No basal insulin configured.</div>;
 
-  const addDose = () =>
-    setDoses((prev) => [...prev, { id: `new${Date.now()}`, brandName: "Fiasp", dose: 4, hour: 12, type: "bolus" }]);
+  /* ── Basal activity curves (Graph 2) ─────────────────────────────────── */
+  const basalProfile = findProfile(basalInsulin.insulin);
 
-  const removeDose = (id: string) =>
-    setDoses((prev) => prev.filter((d) => d.id !== id));
+  // InsulinDose[] requires id + insulin_name + dose_units + administered_at + dose_type
+  const basalDoses: InsulinDose[] = basalInsulin.times.map((time, i) => ({
+    id:             `basal-${i}`,
+    insulin_name:   basalInsulin.insulin,
+    dose_units:     basalInsulin.dose,
+    administered_at: time,
+    dose_type:      'basal_injection' as const,
+  }));
+
+  const bounds = basalDoses.length > 0
+    ? computeGraphBounds(basalDoses, INSULIN_PROFILES)
+    : null;
+
+  const basalCurves =
+    bounds
+      ? generatePerDoseActivityCurves(
+          basalDoses,
+          INSULIN_PROFILES,
+          bounds.startHour,
+          bounds.endHour,
+          15,
+          bounds.cycles,
+        )
+      : [];
+
+  /* ── Helper: format decimal hour as "HH:MM" ─────────────────────────── */
+  const formatHour = (h: number) =>
+    `${String(Math.floor(h)).padStart(2, '0')}:${String(Math.round((h % 1) * 60)).padStart(2, '0')}`;
 
   /* ── Render ──────────────────────────────────────────────────────────── */
-
   return (
-    <div className="min-h-screen bg-[#f8f9fa]">
+    <div className="min-h-screen bg-[#F8F9FA] p-8">
+
       {/* Education banner */}
-      <div className="bg-[#1A2A5E] text-white text-center text-xs px-4 py-3 font-medium tracking-wide">
+      <div className="bg-[#1A2A5E] text-white text-center text-xs px-4 py-3 font-medium tracking-wide mb-6">
         PHARMACOLOGICAL EDUCATION — Educational platform, not a medical device. Always consult your care team.
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 py-6 space-y-8">
+      <div className="max-w-6xl mx-auto">
+        <h1 className="text-3xl font-bold mb-8 text-[#1A2A5E]"
+          style={{ fontFamily: "'Playfair Display', serif" }}>
+          What-If Scenarios
+        </h1>
 
-        {/* ── Section 1: Levemir → Tresiba comparison ─────────────────── */}
-        <div>
-          <h1 className="font-bold text-[#1A2A5E] text-2xl md:text-3xl leading-tight"
-            style={{ fontFamily: "'Playfair Display', serif" }}>
-            What if I switch from Levemir to Tresiba?
-          </h1>
-          <p className="mt-2 text-sm text-slate-500 max-w-2xl">
-            Same total daily dose — 20U. Levemir split BID (2 × 10U). Tresiba once daily. Real pharmacokinetic engine. 80 kg adult.
-          </p>
-        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-        {/* Two basal charts side by side */}
-        <div className="grid md:grid-cols-2 gap-6">
+          {/* ── Left sidebar: configuration ─────────────────────────── */}
+          <div className="lg:col-span-1">
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+              <h2 className="text-base font-semibold text-[#1A2A5E] mb-4">Configuration</h2>
 
-          {/* Levemir chart */}
-          <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-            <div className="mb-3">
-              <p className="text-xs uppercase tracking-wider text-[#5B8FD4] font-semibold">Current regimen</p>
-              <h2 className="mt-0.5 font-bold text-[#1A2A5E] text-lg"
-                style={{ fontFamily: "'Playfair Display', serif" }}>
-                Levemir (Detemir)
-              </h2>
-              <p className="text-xs text-slate-500 mt-0.5">
-                BID · Albumin-bound · 20h at 0.4 U/kg · Plank 2005 PMID:15855574
-              </p>
-            </div>
-            <BasalActivityChart
-              curves={levemirCurves}
-              startHour={levemirBounds.startHour}
-              endHour={levemirBounds.endHour}
-              height={280}
-            />
-          </div>
-
-          {/* Tresiba chart */}
-          <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-            <div className="mb-3">
-              <p className="text-xs uppercase tracking-wider text-[#1976D2] font-semibold">Alternative</p>
-              <h2 className="mt-0.5 font-bold text-[#1A2A5E] text-lg"
-                style={{ fontFamily: "'Playfair Display', serif" }}>
-                Tresiba (Degludec)
-              </h2>
-              <p className="text-xs text-slate-500 mt-0.5">
-                OD · Depot-release · 42h · CV 20% · Heise 2012 PMID:22642570
-              </p>
-            </div>
-            <BasalActivityChart
-              curves={tresibaCurves}
-              startHour={tresibaBounds.startHour}
-              endHour={tresibaBounds.endHour}
-              height={280}
-            />
-          </div>
-        </div>
-
-        {/* ── Comparison cards ─────────────────────────────────────────── */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-
-          {/* PK data */}
-          <div className="rounded-2xl border border-slate-200 bg-white p-5">
-            <p className="text-xs uppercase tracking-wider text-[#2AB5C1] font-semibold mb-3">PK Anchor</p>
-            <table className="w-full text-xs text-slate-700 border-collapse">
-              <thead>
-                <tr className="border-b border-slate-100">
-                  <th className="text-left py-1 font-semibold text-slate-500 w-24"></th>
-                  <th className="text-center py-1 font-semibold text-[#5B8FD4]">Levemir</th>
-                  <th className="text-center py-1 font-semibold text-[#1976D2]">Tresiba</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-50">
-                {[
-                  ["Onset",    "2h",         "1h"],
-                  ["Peak",     "None",        "None"],
-                  ["DOA",      "12–20h*",     "42h+"],
-                  ["CV",       "28%",         "20%"],
-                  ["Cadence",  "BID",         "OD"],
-                  ["SS days",  "1",           "3"],
-                ].map(([label, lev, tres]) => (
-                  <tr key={label}>
-                    <td className="py-1.5 text-slate-500 font-medium">{label}</td>
-                    <td className="py-1.5 text-center font-mono">{lev}</td>
-                    <td className="py-1.5 text-center font-mono">{tres}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            <p className="mt-2 text-[10px] text-slate-400">* Dose-dependent (Plank 2005)</p>
-          </div>
-
-          {/* Mechanism */}
-          <div className="rounded-2xl border border-slate-200 bg-white p-5">
-            <p className="text-xs uppercase tracking-wider text-[#2AB5C1] font-semibold mb-3">Mechanism</p>
-            <div className="space-y-3">
-              <div>
-                <p className="text-xs font-semibold text-[#5B8FD4] mb-1">Levemir</p>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  C14 fatty acid at LysB29 → 98% albumin-bound. Dihexamers slow depot release (T₅₀ 10.2h). DOA is <em>dose-dependent</em> — higher dose, longer coverage.
+              {/* Locked basal */}
+              <div className="mb-6 p-4 bg-[#f0f4ff] rounded-xl border border-[#c7d2fe]">
+                <p className="text-xs uppercase tracking-wider text-[#5B8FD4] font-semibold mb-2">
+                  Basal Insulin (Locked)
                 </p>
-              </div>
-              <div>
-                <p className="text-xs font-semibold text-[#1976D2] mb-1">Tresiba</p>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Multi-hexamer chains at injection site. Zinc diffuses from chain ends → steady monomer release for 42+ hours. True flat depot — <em>never peaks</em>.
+                <p className="text-sm font-semibold text-[#1A2A5E]">
+                  {basalInsulin.insulin} · {basalInsulin.dose} U
                 </p>
+                <p className="text-xs text-slate-500 mt-1">
+                  {basalInsulin.times.length > 0
+                    ? `Times: ${basalInsulin.times.join(', ')}`
+                    : 'No injection times configured'}
+                </p>
+                {basalProfile && (
+                  <p className="text-[11px] text-slate-400 mt-1">
+                    DOA: {Math.round(basalProfile.duration_minutes / 60)}h ·{' '}
+                    {basalProfile.generic_name}
+                  </p>
+                )}
               </div>
-            </div>
-          </div>
 
-          {/* Transition */}
-          <div className="rounded-2xl border border-slate-200 bg-white p-5">
-            <p className="text-xs uppercase tracking-wider text-[#2AB5C1] font-semibold mb-3">Transition</p>
-            <ul className="space-y-2 text-xs text-slate-600">
-              <li className="flex gap-2">
-                <span className="text-amber-500 mt-0.5">⚠</span>
-                <span>Tresiba takes <strong>3 days</strong> to reach steady state — expect variability in week 1.</span>
-              </li>
-              <li className="flex gap-2">
-                <span className="text-slate-400 mt-0.5">•</span>
-                <span>Start at <strong>80% of total daily Levemir dose</strong> — Tresiba is more potent per unit.</span>
-              </li>
-              <li className="flex gap-2">
-                <span className="text-slate-400 mt-0.5">•</span>
-                <span>Switch at the <strong>morning injection</strong> — drop the evening dose entirely.</span>
-              </li>
-              <li className="flex gap-2">
-                <span className="text-green-600 mt-0.5">✓</span>
-                <span>Check fasting glucose daily for 2 weeks. Titrate by 2U every 3 days.</span>
-              </li>
-            </ul>
-            <p className="mt-3 text-[10px] text-slate-400">Always review with your prescriber before switching.</p>
-          </div>
+              {/* Editable bolus list */}
+              <div className="mb-4">
+                <p className="text-xs uppercase tracking-wider text-[#2AB5C1] font-semibold mb-3">
+                  Bolus Insulins
+                </p>
 
-          {/* Flexibility */}
-          <div className="rounded-2xl border border-slate-200 bg-white p-5">
-            <p className="text-xs uppercase tracking-wider text-[#2AB5C1] font-semibold mb-3">Flexibility</p>
-            <div className="space-y-3">
-              <div>
-                <p className="text-xs font-semibold text-[#5B8FD4] mb-1">Levemir</p>
-                <ul className="space-y-1 text-xs text-slate-600">
-                  <li>BID window: if gap &gt;14h, coverage drops</li>
-                  <li>Dose-dep. DOA allows fine-tuning per body weight</li>
-                  <li>Easier to reduce individual injection if hypo pattern</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-xs font-semibold text-[#1976D2] mb-1">Tresiba</p>
-                <ul className="space-y-1 text-xs text-slate-600">
-                  <li>Timing can vary ±8h without coverage gap</li>
-                  <li>Better for shift workers, irregular schedules</li>
-                  <li>Lower within-subject variability (CV 20% vs 28%)</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
+                {bolusInsulins.length === 0 && (
+                  <p className="text-xs text-slate-400 italic mb-3">No bolus doses added.</p>
+                )}
 
-        {/* Disclaimer */}
-        <div className="rounded-xl border border-amber-200 bg-amber-50 px-5 py-3">
-          <p className="text-xs text-amber-800 font-medium">
-            GluMira™ is an educational platform and does not constitute medical advice. Always consult your healthcare team before making changes to your diabetes management. PK data: Plank 2005 PMID:15855574 · Heise 2012 PMID:22642570 · FDA NDA 203314.
-          </p>
-        </div>
-
-        {/* ── Section 2: Generic IOB scenario engine ───────────────────── */}
-        <div className="pt-4 border-t border-slate-200">
-          <h2 className="font-bold text-[#1A2A5E] text-xl"
-            style={{ fontFamily: "'Playfair Display', serif" }}>
-            Custom What-If Scenario
-          </h2>
-          <p className="mt-1 text-sm text-slate-500">
-            Add any insulin combination and see real IOB curves. Adjust dose and timing.
-          </p>
-        </div>
-
-        {/* Editable doses */}
-        <div className="rounded-xl border border-slate-200 bg-white p-5 space-y-3">
-          <div className="flex items-center justify-between">
-            <p className="text-xs text-slate-500 uppercase tracking-wide font-semibold">Insulin Doses</p>
-            <button type="button" onClick={addDose}
-              className="text-xs bg-[#2AB5C1] text-white px-3 py-1 rounded-lg hover:bg-[#229eaa]">
-              + Add Dose
-            </button>
-          </div>
-          {doses.map((d) => (
-            <div key={d.id} className="flex items-center gap-3 flex-wrap">
-              <select
-                value={d.brandName}
-                onChange={(e) => updateDose(d.id, "brandName", e.target.value)}
-                className="rounded border border-slate-200 px-2 py-1.5 text-xs text-[#1A2A5E] bg-white min-w-[160px]"
-              >
-                {INSULIN_PROFILES.map((p) => (
-                  <option key={p.brand_name} value={p.brand_name}>{p.brand_name}</option>
+                {bolusInsulins.map((bolus, index) => (
+                  <div
+                    key={index}
+                    className="mb-2 px-3 py-2 bg-[#f0fdfa] rounded-lg border border-[#a7f3d0] flex justify-between items-center text-sm"
+                  >
+                    <span className="text-[#1A2A5E]">
+                      <span className="font-medium">{bolus.insulin}</span>{' '}
+                      {bolus.dose} U @ {formatHour(bolus.hour)}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => removeBolusInsulin(index)}
+                      className="text-red-400 hover:text-red-600 text-xs ml-2"
+                    >
+                      ✕
+                    </button>
+                  </div>
                 ))}
-              </select>
-              <div className="flex items-center gap-1">
-                <input
-                  type="number"
-                  value={d.dose ?? ""}
-                  onChange={(e) => updateDose(d.id, "dose", e.target.value ? parseFloat(e.target.value) : null)}
-                  placeholder="0.00"
-                  max={100}
-                  step={0.25}
-                  className="w-16 rounded border border-slate-200 px-2 py-1.5 text-xs text-[#1A2A5E] text-center"
-                  style={{ fontFamily: "'JetBrains Mono', monospace" }}
-                />
-                <span className="text-[10px] text-slate-500">U</span>
               </div>
-              <select
-                value={d.type}
-                onChange={(e) => updateDose(d.id, "type", e.target.value)}
-                className="rounded border border-slate-200 px-2 py-1.5 text-xs text-[#1A2A5E] bg-white"
-              >
-                <option value="basal">Basal</option>
-                <option value="bolus">Bolus</option>
-              </select>
-              <input
-                type="time"
-                value={formatHour(d.hour)}
-                onChange={(e) => {
-                  const [hStr, mStr] = e.target.value.split(":");
-                  const h = parseInt(hStr) || 0;
-                  const m = parseInt(mStr) || 0;
-                  updateDose(d.id, "hour", h + m / 60);
-                }}
-                className="rounded border border-slate-200 px-2 py-1.5 text-xs text-[#1A2A5E]"
-                style={{ fontFamily: "'JetBrains Mono', monospace" }}
+
+              {/* Add bolus form */}
+              <div className="border-t border-slate-100 pt-4 space-y-2">
+                <select
+                  value={newBolusInsulin}
+                  onChange={(e) => setNewBolusInsulin(e.target.value)}
+                  className="w-full px-2 py-1.5 text-xs border border-slate-200 rounded-lg text-[#1A2A5E] bg-white"
+                >
+                  <option value="">Select bolus insulin…</option>
+                  {INSULIN_PROFILES.filter((p) => p.category === 'rapid' || p.category === 'short')
+                    .map((p) => (
+                      <option key={p.brand_name} value={p.brand_name}>{p.brand_name}</option>
+                    ))}
+                </select>
+                <div className="flex gap-2">
+                  <input
+                    type="number"
+                    step="0.25"
+                    min="0"
+                    max="100"
+                    placeholder="Dose (U)"
+                    value={newBolusDose}
+                    onChange={(e) => setNewBolusDose(e.target.value)}
+                    className="flex-1 px-2 py-1.5 text-xs border border-slate-200 rounded-lg text-[#1A2A5E]"
+                  />
+                  <input
+                    type="number"
+                    step="0.5"
+                    min="0"
+                    max="23.5"
+                    placeholder="Hour (0–24)"
+                    value={newBolusHour}
+                    onChange={(e) => setNewBolusHour(e.target.value)}
+                    className="flex-1 px-2 py-1.5 text-xs border border-slate-200 rounded-lg text-[#1A2A5E]"
+                  />
+                </div>
+                <button
+                  type="button"
+                  onClick={addBolusInsulin}
+                  className="w-full py-1.5 bg-[#2AB5C1] text-white text-xs font-medium rounded-lg hover:bg-[#229eaa] transition-colors"
+                >
+                  + Add Bolus
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* ── Right content: charts ────────────────────────────────── */}
+          <div className="lg:col-span-2 space-y-6">
+
+            {/* Graph 1: Total IOB */}
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+              <WhatIfIOBChart
+                basalInsulin={basalInsulin}
+                bolusInsulins={bolusInsulins}
+                timeRangeMinutes={timeRangeMinutes}
+                currentTimeMinutes={currentTimeMinutes}
+                onTimeChange={setCurrentTimeMinutes}
               />
-              <button type="button" onClick={() => removeDose(d.id)}
-                className="text-[#ef4444] text-xs hover:underline">
-                ✕
-              </button>
             </div>
-          ))}
-        </div>
 
-        {/* Chart.js IOB canvas */}
-        <div className="rounded-xl border border-slate-200 bg-white p-5">
-          <h3 className="text-sm font-semibold text-[#1A2A5E] mb-4">IOB Curve (Pharmacokinetic Engine)</h3>
-          <div style={{ position: "relative", height: 360 }}>
-            <canvas ref={chartRef} />
+            {/* Graph 2: Basal activity profile */}
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+              <h3 className="text-base font-semibold text-[#1A2A5E] mb-1"
+                style={{ fontFamily: "'Playfair Display', serif" }}>
+                Basal Activity Profile
+              </h3>
+              {basalProfile && (
+                <p className="text-xs text-slate-500 mb-4">
+                  {basalProfile.generic_name} · {basalProfile.pk_source}
+                </p>
+              )}
+              {bounds && basalCurves.length > 0 ? (
+                <BasalActivityChart
+                  curves={basalCurves}
+                  startHour={bounds.startHour}
+                  endHour={bounds.endHour}
+                  height={280}
+                />
+              ) : (
+                <div className="text-slate-400 text-sm py-8 text-center">
+                  {basalInsulin.times.length === 0
+                    ? 'No injection times configured — add times in your profile.'
+                    : 'Loading basal profile…'}
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
-        {/* IOB legend */}
-        <div className="rounded-xl border border-slate-200 bg-[#f0fdf4] p-4">
-          <p className="text-xs text-[#1b5e20] font-medium mb-2">ℹ Colour Legend</p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs text-[#1b5e20]">
-            <div><span className="inline-block w-3 h-3 rounded-full mr-1" style={{ backgroundColor: COLOUR.light }} />Light IOB (&lt;25%)</div>
-            <div><span className="inline-block w-3 h-3 rounded-full mr-1" style={{ backgroundColor: COLOUR.moderate }} />Moderate (25–50%)</div>
-            <div><span className="inline-block w-3 h-3 rounded-full mr-1" style={{ backgroundColor: COLOUR.strong }} />Strong (50–75%)</div>
-            <div><span className="inline-block w-3 h-3 rounded-full mr-1" style={{ backgroundColor: COLOUR.overlap }} />Overlap (&gt;75%)</div>
-          </div>
-        </div>
-
-        <p className="text-xs text-slate-400 text-center pb-4">
+        <p className="text-xs text-slate-400 text-center mt-8 pb-4">
           Educational tool only. Consult your care team before making changes to your regimen.
         </p>
       </div>
