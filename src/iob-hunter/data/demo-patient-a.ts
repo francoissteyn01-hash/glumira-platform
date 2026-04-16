@@ -24,10 +24,10 @@ import type { InsulinDose } from "@/iob-hunter/types";
 export const DEMO_PATIENT_A_V7 = {
   id: "DEMO-A",
   name: "Demo regimen",
-  age: 9,
-  weight_kg: 30,
+  age: 8,
+  weight_kg: 32,
   condition: "Type 1 Diabetes",
-  therapy: "Fiasp + Actrapid + Levemir",
+  therapy: "Fiasp + Actrapid + Levemir (3x basal)",
   diet: "Bernstein Low Carb",
   currentBG: 5.1,
 } as const;
@@ -50,15 +50,22 @@ export const DEMO_PATIENT_A_V7_DOSES: readonly InsulinDose[] = [
   {
     id: "demo-fiasp-breakfast",
     insulin_name: "Fiasp",
-    dose_units: 2.0,
-    administered_at: "08:00",
+    dose_units: 3.0,
+    administered_at: "07:00",
     dose_type: "bolus",
   },
   {
-    id: "demo-actrapid-lunch",
+    id: "demo-fiasp-lunch",
+    insulin_name: "Fiasp",
+    dose_units: 2.5,
+    administered_at: "12:30",
+    dose_type: "bolus",
+  },
+  {
+    id: "demo-actrapid-dinner",
     insulin_name: "Actrapid",
     dose_units: 3.5,
-    administered_at: "13:00",
+    administered_at: "18:00",
     dose_type: "bolus",
   },
   {
@@ -84,3 +91,51 @@ export const DEMO_PATIENT_A_V7_DOSES: readonly InsulinDose[] = [
 export function getDemoPatientADoses(): InsulinDose[] {
   return DEMO_PATIENT_A_V7_DOSES.map((d) => ({ ...d }));
 }
+
+/* ─── Extended regimen shape (for profile/what-if consumers) ─────────────── */
+
+export const demoPatientRegimen = {
+  id: "demo-001",
+  name: "Demo Patient",
+  type: "caregiver",
+  childName: "Child",
+  childAge: 8,
+  childWeightKg: 32,
+  diabetesType: "type_1",
+  insulins: [
+    {
+      name: "levemir",
+      type: "basal",
+      doses: [
+        { time: "06:30", units: 5 },
+        { time: "14:00", units: 5 },
+        { time: "21:00", units: 4 },
+      ],
+    },
+    {
+      name: "fiasp",
+      type: "bolus",
+      doses: [
+        { time: "07:00", mealLabel: "breakfast", typicalUnits: 3 },
+        { time: "12:30", mealLabel: "lunch", typicalUnits: 2.5 },
+      ],
+    },
+    {
+      name: "actrapid",
+      type: "bolus",
+      doses: [
+        { time: "18:00", mealLabel: "dinner", typicalUnits: 3.5 },
+      ],
+    },
+  ],
+  totalDailyBasal: 14,
+  glucoseUnits: "mmol/L",
+  dietaryPreference: "bernstein_low_carb",
+  timezone: "Africa/Johannesburg",
+} as const;
+
+export const demoInsulinProfiles = {
+  levemir:  { onset: 60,  peak: 360, duration: 1200, ispkmodel: "peaked-intermediate" },
+  fiasp:    { onset: 10,  peak: 90,  duration: 300,  ispkmodel: "rapid-gaussian" },
+  actrapid: { onset: 30,  peak: 120, duration: 420,  ispkmodel: "short-gaussian" },
+} as const;
