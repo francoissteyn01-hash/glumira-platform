@@ -130,6 +130,26 @@ function formatHourLabel(h: number): string {
   return `${String(wrapped).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
 }
 
+/** Linear hex color interpolation for the density bar. */
+function interpolateHex(c1: string, c2: string, t: number): string {
+  const p = (hex: string): [number, number, number] => {
+    const n = parseInt(hex.slice(1), 16);
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  };
+  const [r1, g1, b1] = p(c1);
+  const [r2, g2, b2] = p(c2);
+  return `rgb(${Math.round(r1 + (r2 - r1) * t)},${Math.round(g1 + (g2 - g1) * t)},${Math.round(b1 + (b2 - b1) * t)})`;
+}
+
+/** Map summed activity rate (U/h) to a heat colour — navy → teal → amber → red. */
+function densityColor(rate: number, yMax: number): string {
+  const t = Math.min(rate / Math.max(yMax, 0.01), 1);
+  if (t < 0.25) return interpolateHex("#0D2149", "#2AB5C1", t / 0.25);
+  if (t < 0.5)  return interpolateHex("#2AB5C1", "#F59E0B", (t - 0.25) / 0.25);
+  if (t < 0.75) return interpolateHex("#F59E0B", "#FF8C00", (t - 0.5)  / 0.25);
+  return interpolateHex("#FF8C00", "#E84040", (t - 0.75) / 0.25);
+}
+
 /** Build an SVG stroke path (line only) from curve points. */
 function _curveToPath(
   points: PerDoseActivityCurve["points"],
@@ -293,6 +313,48 @@ export default function BasalActivityChart(props: BasalActivityChartProps) {
     const total = activeRows.reduce((s, r) => s + r.rate, 0);
     return { hour: hoverHour, rows: activeRows, total };
   }, [hoverHour, hoverRows]);
+
+  /* Density bar: sum all curve rates at 15-min resolution across the window. */
+  const densityData = useMemo(() => {
+    if (curves.length === 0) return [] as { hour: number; sum: number }[];
+    const out: { hour: number; sum: number }[] = [];
+    for (let h = startHour; h <= endHour + 1e-9; h += 0.25) {
+      let sum = 0;
+      for (const c of curves) {
+        if (c.points.length === 0) continue;
+        let best = c.points[0];
+        let bestDist = Math.abs(c.points[0].hour - h);
+        for (const pt of c.points) {
+          const d = Math.abs(pt.hour - h);
+          if (d < bestDist) { best = pt; bestDist = d; }
+        }
+        sum += best.rate_uph;
+      }
+      out.push({ hour: h, sum: Math.round(sum * 1000) / 1000 });
+    }
+    return out;
+  }, [curves, startHour, endHour]);
+
+  const densityStats = useMemo(() => {
+    if (densityData.length === 0) return null;
+    const MODERATE = yMax * 0.4;
+    const HIGH     = yMax * 0.65;
+    let overlapStart: number | null = null;
+    let overlapEnd:   number | null = null;
+    let peakStart:    number | null = null;
+    let peakEnd:      number | null = null;
+    for (const d of densityData) {
+      if (d.sum >= MODERATE) {
+        if (overlapStart === null) overlapStart = d.hour;
+        overlapEnd = d.hour;
+      }
+      if (d.sum >= HIGH) {
+        if (peakStart === null) peakStart = d.hour;
+        peakEnd = d.hour;
+      }
+    }
+    return { overlapStart, overlapEnd, peakStart, peakEnd };
+  }, [densityData, yMax]);
 
   const onMouseMove = (e: React.MouseEvent<SVGRectElement>) => {
     const rect = svgRef.current?.getBoundingClientRect();
@@ -660,6 +722,86 @@ export default function BasalActivityChart(props: BasalActivityChartProps) {
             ))}
           </div>
         </div>
+        );
+      })()}
+
+      {/* ─── Density Bar ──────────────────────────────────────────────── */}
+      {densityData.length > 0 && (() => {
+        const BAR_H   = 20;
+        const barW    = width - MARGIN.left - MARGIN.right;
+        const stats   = densityStats;
+        const toX     = (h: number) => ((h - startHour) / (endHour - startHour)) * barW;
+
+        return (
+          <div style={{ marginTop: 10, paddingBottom: 4 }}>
+            <div style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
+
+              {/* Left: label + bar + annotation */}
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <p style={{
+                  margin: "0 0 4px",
+                  paddingLeft: MARGIN.left,
+                  font: "500 10px 'DM Sans', system-ui, sans-serif",
+                  color: "#64748B",
+                  letterSpacing: 0.3,
+                }}>
+                  Insulin Density ({formatHourLabel(startHour)} → {formatHourLabel(endHour)})
+                </p>
+
+                <svg width={width} height={BAR_H} style={{ display: "block", borderRadius: 4, overflow: "hidden" }}
+                  role="img" aria-label="Insulin density heat bar">
+                  <g transform={`translate(${MARGIN.left},0)`}>
+                    {densityData.map((d, i) => {
+                      const x = toX(d.hour);
+                      const nxt = densityData[i + 1]?.hour ?? endHour;
+                      const w = Math.max(toX(nxt) - x, 0.5);
+                      return <rect key={i} x={x} y={0} width={w} height={BAR_H} fill={densityColor(d.sum, yMax)} />;
+                    })}
+                    {/* High-risk dashed border */}
+                    {stats?.peakStart != null && stats?.peakEnd != null && (() => {
+                      const px = toX(stats.peakStart!);
+                      const pw = Math.max(toX(stats.peakEnd!) - px, 2);
+                      return (
+                        <rect x={px} y={0.5} width={pw} height={BAR_H - 1}
+                          fill="none" stroke="#E84040" strokeWidth={1.5} strokeDasharray="4 2" />
+                      );
+                    })()}
+                  </g>
+                </svg>
+
+                {/* Moderate overlap annotation */}
+                {stats?.overlapStart != null && stats?.overlapEnd != null && (
+                  <p style={{
+                    margin: "3px 0 0", paddingLeft: MARGIN.left,
+                    font: "500 10px 'DM Sans', system-ui, sans-serif",
+                    color: "#F59E0B",
+                  }}>
+                    ⚠ Moderate Overlap&nbsp;{formatHourLabel(stats.overlapStart!)} – {formatHourLabel(stats.overlapEnd!)}
+                  </p>
+                )}
+              </div>
+
+              {/* Right: Key Insight card (only when a high-risk peak exists) */}
+              {stats?.peakStart != null && stats?.peakEnd != null && (
+                <div style={{
+                  background: "#fff",
+                  border: "1px solid rgba(148,163,184,0.3)",
+                  borderRadius: 8,
+                  padding: "8px 12px",
+                  minWidth: 148,
+                  flexShrink: 0,
+                  boxShadow: "0 2px 8px rgba(15,23,42,0.06)",
+                }}>
+                  <p style={{ margin: "0 0 4px", font: "600 10px 'DM Sans', system-ui, sans-serif", color: "#0D2149" }}>
+                    ℹ Key Insight
+                  </p>
+                  <p style={{ margin: 0, font: "400 10px 'DM Sans', system-ui, sans-serif", color: "#475569" }}>
+                    • Peak collision occurs<br />{formatHourLabel(stats.peakStart!)} – {formatHourLabel(stats.peakEnd!)}
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
         );
       })()}
     </div>
