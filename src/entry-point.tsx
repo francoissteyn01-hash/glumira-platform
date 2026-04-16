@@ -18,6 +18,9 @@ import TermsOfUsePage from './pages/TermsOfUsePage';
 // Ramadan module (both sites)
 import RamadanModule from './pages/RamadanModule';
 
+// Education
+import CurveGlossaryPage from './pages/CurveGlossaryPage';
+
 // Determine which domain we're on
 const getDomain = (): 'ai' | 'app' => {
   const hostname = window.location.hostname;
@@ -52,6 +55,7 @@ export default function EntryPoint() {
             <Route path="/ramadan" element={<RamadanModule />} />
             <Route path="/privacy" element={<PrivacyPolicyPage />} />
             <Route path="/terms" element={<TermsOfUsePage />} />
+            <Route path="/glossary/curves" element={<CurveGlossaryPage />} />
 
             {/* Catch-all */}
             <Route path="*" element={<Navigate to="/" replace />} />

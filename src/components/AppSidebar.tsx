@@ -250,6 +250,7 @@ function DesktopSidebar({ collapsed, setCollapsed }: { collapsed: boolean; setCo
         {/* Education & Tools */}
         {!collapsed && <div style={sectionLabelStyle}>Education &amp; Tools</div>}
         {navItem("/education", "Education", ICONS.education)}
+        {navItem("/glossary/curves", "Curve Glossary", ICONS.education)}
         {navItem("/mira", "Mira AI", ICONS.mira)}
         {navItem("/meals/plan", "Meal Plan", ICONS.meal)}
         {navItem("/badges", "Badges", ICONS.badges)}
@@ -418,6 +419,7 @@ function MobileBottomBar() {
               {DIETARY_MODULES.map((m) => moreItem(m.path, m.label, ICONS.modules))}
               <div style={sectionLabelStyle}>Education &amp; Tools</div>
               {moreItem("/education", "Education", ICONS.education)}
+              {moreItem("/glossary/curves", "Curve Glossary", ICONS.education)}
               {moreItem("/meals/plan", "Meal Plan", ICONS.meal)}
               {moreItem("/badges", "Badges", ICONS.badges)}
               {moreItem("/tutorial", "Tutorial", ICONS.tutorial)}
