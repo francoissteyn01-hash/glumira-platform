@@ -212,18 +212,42 @@ export default function WhatIfPage() {
       options: {
         responsive: true, maintainAspectRatio: false,
         plugins: {
-          legend: { display: true, position: "top", labels: { font: { size: 12 }, padding: 15 } },
+          legend: {
+            display: true, position: "top",
+            labels: { font: { family: "'DM Sans', sans-serif", size: 12 }, padding: 16 },
+          },
           tooltip: {
             enabled: true, backgroundColor: "rgba(0,0,0,0.8)",
+            bodyFont: { family: "'DM Sans', sans-serif", size: 12 },
+            titleFont: { family: "'DM Sans', sans-serif", size: 12 },
             callbacks: { label: (ctx) => `${ctx.dataset.label}: ${(ctx.parsed.y ?? 0).toFixed(2)}U` },
           },
         },
         scales: {
-          x: { type: "category", grid: { color: COLOUR.gridLine }, ticks: { font: { size: 10 }, color: COLOUR.axis } },
+          x: {
+            type: "category",
+            grid: { color: COLOUR.gridLine },
+            ticks: {
+              font: { family: "'DM Sans', sans-serif", size: 11 },
+              color: COLOUR.axis,
+              maxRotation: 0,
+              minRotation: 0,
+              // show only every 4-hour boundary (15-min resolution → every 16th point)
+              callback: (_val, index) => {
+                if (index % 16 !== 0) return null;
+                return chartData[index] ? formatHour(chartData[index].hour) : null;
+              },
+            },
+          },
           y: {
             min: 0, max: maxIOB,
-            grid: { color: COLOUR.gridLine }, ticks: { font: { size: 10 }, color: COLOUR.axis },
-            title: { display: true, text: "IOB (Units)", font: { size: 12 } },
+            grid: { color: COLOUR.gridLine },
+            ticks: { font: { family: "'DM Sans', sans-serif", size: 11 }, color: COLOUR.axis },
+            title: {
+              display: true, text: "IOB (U)",
+              font: { family: "'DM Sans', sans-serif", size: 12 },
+              color: COLOUR.axis,
+            },
           },
         },
       },
