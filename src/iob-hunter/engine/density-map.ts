@@ -1,18 +1,4 @@
-/**
- * GluMira™ V7 — IOB Hunter v7 · Density Map Engine
- *
- * Builds a pressure/density map from an already-computed IOBCurvePoint[]
- * (output of generateStackedCurve). No IOB re-calculation — this is a
- * pure classification + zone-detection layer on top of the curve.
- *
- * GluMira™ is an educational platform, not a medical device.
- */
-
-import type { IOBCurvePoint } from "@/iob-hunter/types";
-
-/* ─── Types ──────────────────────────────────────────────────────────────── */
-
-export type PressureLevel = "light" | "moderate" | "overlap" | "strong";
+export type PressureLevel = "light" | "moderate" | "strong" | "overlap";
 
 export type DensityPoint = {
   timeHours: number;
@@ -29,21 +15,17 @@ export type DensityRiskZone = {
 
 export type DensityMap = {
   points: DensityPoint[];
-  /** Fractional hour (0–24) where combined IOB is highest. */
   peakTime: number;
   peakIOB: number;
-  /** First contiguous block of strong + overlap pressure. */
   highestOverlapWindow: { start: number; end: number };
   riskZones: DensityRiskZone[];
 };
-
-/* ─── Internal helpers ───────────────────────────────────────────────────── */
 
 function classifyPressure(iobTotal: number, basalDose: number): PressureLevel {
   if (basalDose <= 0) return "light";
   const ratio = iobTotal / basalDose;
   if (ratio < 0.25) return "light";
-  if (ratio < 0.50) return "moderate";
+  if (ratio < 0.5) return "moderate";
   if (ratio < 0.75) return "strong";
   return "overlap";
 }
@@ -63,17 +45,8 @@ function identifyRiskZones(points: DensityPoint[]): DensityRiskZone[] {
   return zones;
 }
 
-/* ─── Public API ─────────────────────────────────────────────────────────── */
-
-/**
- * Build a DensityMap from an already-computed IOBCurvePoint[].
- *
- * @param curve         Output of generateStackedCurve (or useIOBHunter).
- * @param typicalBasalDose  Reference dose for pressure ratio — use
- *                          kpis.total_daily_basal from the same hook result.
- */
 export function buildDensityMap(
-  curve: IOBCurvePoint[],
+  curve: Array<{ hours: number; total_iob: number; breakdown: Record<string, number> }>,
   typicalBasalDose: number,
 ): DensityMap {
   if (curve.length === 0) {
