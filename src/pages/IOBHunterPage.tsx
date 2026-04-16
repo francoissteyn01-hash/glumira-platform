@@ -239,38 +239,8 @@ export default function IOBHunterPage() {
    * 06:30 ramp and 21:00 tail. User flagged as clipped info.) */
   const chart1Bounds = activityBounds;
 
-  /* Chart 2 — Tresiba demo: a single 16U dose at 17:00 rendered using
-   * the same gold-standard BasalActivityChart pipeline. Shows the 42h
-   * ultra-long-acting profile on its own x-axis so users can see what
-   * one Tresiba dose looks like versus the 3-dose Levemir regimen above.
-   */
-  const tresibaDoses = useMemo<InsulinDose[]>(() => [
-    {
-      id: "demo-tresiba",
-      insulin_name: "Tresiba",
-      dose_units: 16,
-      administered_at: "17:00",
-      dose_type: "basal_injection",
-    },
-  ], []);
-  const chart2Bounds = useMemo(
-    () => computeGraphBounds(tresibaDoses, V7_INSULIN_PROFILES, DEMO_PATIENT_A_V7.weight_kg),
-    [tresibaDoses],
-  );
-  const tresibaCurves = useMemo(
-    () => generatePerDoseActivityCurves(
-      tresibaDoses, V7_INSULIN_PROFILES,
-      chart2Bounds.startHour, chart2Bounds.endHour,
-      15, chart2Bounds.cycles,
-      DEMO_PATIENT_A_V7.weight_kg,
-    ),
-    [tresibaDoses, chart2Bounds],
-  );
-  const tresibaRiskZones = useMemo(() => detectRiskZones(tresibaCurves), [tresibaCurves]);
-
-  /* Kept the suggested-schedule helpers exported; not rendered here
-   * while Chart 2 is the Tresiba comparison. Resurrect with a toggle
-   * when the regimen-suggestion feature comes back. */
+  /* Kept the suggested-schedule helpers exported; not rendered here.
+   * Resurrect with a toggle when the regimen-suggestion feature comes back. */
   const suggestedLine = useMemo(() => {
     const suggestedDoses = suggestEqualSpacedSchedule(basalDoses);
     return generateSuggestedTotalCurve(
@@ -577,10 +547,10 @@ export default function IOBHunterPage() {
           </div>
         )}
 
-        {/* ─── Master visualization — two-chart responsive grid ────
-         *  Laptop: Chart 1 | Chart 2 side by side, KPI row below.
-         *  Mobile: Chart 1 → KPI row → Chart 2 stacked.
-         *  See index.css for `.iob-chart-grid` media query.
+        {/* ─── Master visualization ───────────────────────────────
+         *  Demo regimen is Levemir-only on the basal side. The legacy
+         *  Tresiba comparison chart has been removed so the page reflects
+         *  the actual demo schedule shown elsewhere.
          */}
         <div className="iob-chart-grid">
           <div className="iob-chart-1">
@@ -600,20 +570,6 @@ export default function IOBHunterPage() {
 
           <div className="iob-kpi-row">
             <KpiCardRow kpis={kpis} label="Current regimen" />
-          </div>
-
-          <div className="iob-chart-2">
-            <BasalActivityChart
-              curves={tresibaCurves}
-              riskZones={tresibaRiskZones}
-              startHour={chart2Bounds.startHour}
-              endHour={chart2Bounds.endHour}
-              title="Tresiba 16U at 17:00 — 42h ultra-long profile"
-            />
-          </div>
-
-          <div className="iob-kpi-row">
-            <TresibaKpiRow curves={tresibaCurves} />
           </div>
         </div>
 
@@ -776,82 +732,3 @@ function KpiCardRow({ kpis, label }: KpiRowProps) {
   );
 }
 
-/* ─── Tresiba single-dose KPI row ──────────────────────────────────
- *  Lightweight summary derived directly from the per-dose activity
- *  curve — no need for the summed-IOB engine since Tresiba Chart 2
- *  shows a single insulin. Keeps the gold-standard "KPI row below
- *  every chart" rule honoured with numbers that actually match the
- *  curve on screen.
- */
-function TresibaKpiRow({ curves }: { curves: Array<{ peak_rate_uph: number; dose_units: number; administered_at: string; points: Array<{ hour: number; rate_uph: number }> }> }) {
-  const c = curves[0];
-  if (!c) return null;
-
-  let peakHour = 0;
-  let peakRate = 0;
-  for (const p of c.points) {
-    if (p.rate_uph > peakRate) { peakRate = p.rate_uph; peakHour = p.hour; }
-  }
-
-  // DOA = time from injection to when rate returns to ~0 (below 0.01 U/h).
-  const injectionHour = Number(c.administered_at.slice(0, 2)) + Number(c.administered_at.slice(3)) / 60;
-  let endHour = injectionHour;
-  for (const p of c.points) {
-    if (p.rate_uph >= 0.01) endHour = p.hour;
-  }
-  const doaHours = Math.max(0, endHour - injectionHour);
-
-  const cards = [
-    { label: "DOSE",          value: `${c.dose_units}U` },
-    { label: "INJECTED",      value: c.administered_at },
-    { label: "PEAK RATE",     value: `${peakRate.toFixed(2)} U/h @ ${fmtHourShort(peakHour)}` },
-    { label: "DURATION",      value: `${doaHours.toFixed(1)}h` },
-  ];
-  return (
-    <>
-      <div style={{
-        fontSize: 11, fontWeight: 600, letterSpacing: 0.5,
-        color: "#64748B", marginBottom: 8,
-        fontFamily: "'DM Sans', system-ui, sans-serif",
-        textTransform: "uppercase",
-      }}>
-        Tresiba 16U · 17:00 · ultra-long-acting basal
-      </div>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
-          gap: 12,
-        }}
-      >
-        {cards.map((c) => (
-          <div
-            key={c.label}
-            style={{
-              background: "#fff",
-              border: "1px solid rgba(148,163,184,0.35)",
-              borderRadius: 10,
-              padding: "14px 16px",
-            }}
-          >
-            <div style={{
-              fontSize: 10, fontWeight: 600, letterSpacing: 0.6,
-              color: "#64748B",
-              fontFamily: "'DM Sans', system-ui, sans-serif",
-            }}>
-              {c.label}
-            </div>
-            <div style={{
-              marginTop: 6,
-              fontSize: 20, fontWeight: 700,
-              fontFamily: "'JetBrains Mono', monospace",
-              color: "#0D2149",
-            }}>
-              {c.value}
-            </div>
-          </div>
-        ))}
-      </div>
-    </>
-  );
-}
