@@ -272,9 +272,13 @@ function calculateAlbuminBoundIOB(
   const plateauEnd = effectiveDOAMinutes * 0.7;
 
   if (minutesSinceDose <= rampEnd) {
-    // Ramp: smoothstep from 0 → 0.9 over the onset window.
+    // Ramp: IOB starts at 1.0 (full dose) and declines smoothly to 0.9 as
+    // albumin binding equilibrates over the onset window (Plank 2005
+    // PMID:15855574). Inverse of activity: 1 − 0.1×smoothstep so that
+    // t=0 returns 1.0 (continuous with the calculateIOB t=0 guard) and
+    // t=rampEnd returns 0.9 (joins plateau phase without discontinuity).
     const t = minutesSinceDose / rampEnd;
-    const rampFraction = 0.9 * smoothstep(t);
+    const rampFraction = 1 - 0.1 * smoothstep(t);
     return doseUnits * rampFraction;
   }
 
