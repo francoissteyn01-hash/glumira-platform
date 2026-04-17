@@ -67,6 +67,8 @@ type ProfileData = {
   special_conditions: string[];
   is_caregiver: boolean;
   patient_name: string;
+  patient_dob?: string;
+  patient_diabetes_type?: string;
   relationship: string;
   profile_complete?: boolean;
   under_18_flag?: boolean;
@@ -76,7 +78,8 @@ const EMPTY_PROFILE: ProfileData = {
   profile_type: "", first_name: "", last_name: "", date_of_birth: "", sex: "", diabetes_type: "",
   diagnosis_date: "", country: "", language: "", glucose_units: "mmol",
   dietary_approach: "", allergens: [], meals_per_day: 3,
-  comorbidities: [], special_conditions: [], is_caregiver: false, patient_name: "", relationship: "",
+  comorbidities: [], special_conditions: [], is_caregiver: false,
+  patient_name: "", patient_dob: "", patient_diabetes_type: "", relationship: "",
 };
 
 const SEX_OPTIONS = ["Female", "Male", "Other", "Prefer not to say"] as const;
@@ -86,11 +89,9 @@ const GLUCOSE_UNIT_OPTIONS = ["mmol", "mg/dL"] as const;
 /* ─── Helpers ─────────────────────────────────────────────────────────────── */
 
 function completionPercent(p: ProfileData): number {
-  // Only REQUIRED fields count — optional fields never block access
-  const checks = [
-    !!p.first_name, !!p.last_name, !!p.date_of_birth, !!p.diabetes_type,
-    !!p.country,
-  ];
+  const checks = p.is_caregiver
+    ? [!!p.first_name, !!p.patient_name, !!p.relationship, !!p.patient_diabetes_type, !!p.country]
+    : [!!p.first_name, !!p.last_name, !!p.date_of_birth, !!p.diabetes_type, !!p.country];
   return Math.round((checks.filter(Boolean).length / checks.length) * 100);
 }
 
@@ -278,8 +279,10 @@ export default function ProfilePage() {
             comorbidities:    data.profile.comorbidities ?? [],
             special_conditions: data.profile.special_conditions ?? [],
             is_caregiver:     data.profile.is_caregiver ?? false,
-            patient_name:     data.profile.patient_name ?? "",
-            relationship:     data.profile.relationship ?? "",
+            patient_name:          data.profile.patient_name ?? "",
+            patient_dob:           data.profile.patient_dob ?? "",
+            patient_diabetes_type: data.profile.patient_diabetes_type ?? "",
+            relationship:          data.profile.relationship ?? "",
           });
         }
       })
@@ -345,10 +348,14 @@ export default function ProfilePage() {
           comorbidities:      form.comorbidities ?? [],
           special_conditions: form.special_conditions ?? [],
           is_caregiver:       form.is_caregiver ?? false,
-          patient_name:       form.patient_name || null,
-          relationship:       form.relationship || null,
-          under_18_flag:      age !== null ? age < 18 : false,
-          profile_complete:   !!(form.first_name && form.last_name && form.date_of_birth && form.diabetes_type && form.country),
+          patient_name:            form.patient_name || null,
+          patient_dob:             form.patient_dob || null,
+          patient_diabetes_type:   form.patient_diabetes_type || null,
+          relationship:            form.relationship || null,
+          under_18_flag:           age !== null ? age < 18 : false,
+          profile_complete: form.is_caregiver
+            ? !!(form.first_name && form.patient_name && form.relationship && form.patient_diabetes_type && form.country)
+            : !!(form.first_name && form.last_name && form.date_of_birth && form.diabetes_type && form.country),
         };
         const { error: upsertErr } = await supabase
           .from("patient_self_profiles")
@@ -452,36 +459,41 @@ export default function ProfilePage() {
           </Card>
 
           {/* ── Section 1: Personal ──────────────────────────────────────── */}
-          <Card title="Personal Information" defaultOpen={true}>
+          <Card title="About you" defaultOpen={true}>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-              <Field label="First name">
+              <Field label="Your first name">
                 <TextInput value={form.first_name} onChange={set("first_name")} placeholder="First name" name="given-name" autoComplete="given-name" />
               </Field>
-              <Field label="Last name">
+              <Field label="Your last name">
                 <TextInput value={form.last_name} onChange={set("last_name")} placeholder="Last name" name="family-name" autoComplete="family-name" />
               </Field>
             </div>
-            <Field label="Date of birth">
-              <TextInput value={form.date_of_birth} onChange={set("date_of_birth")} type="date" name="bday" autoComplete="bday" />
-            </Field>
-            <Field label="Sex">
-              <SelectInput value={form.sex} onChange={set("sex")} options={SEX_OPTIONS} placeholder="Select sex" />
-            </Field>
-            {under18 && (
-              <div style={{
-                borderRadius: 8, background: "rgba(42,181,193,0.08)", border: "1px solid #2ab5c1",
-                padding: "10px 14px", marginBottom: 12, fontSize: 13, color: "var(--text-primary)",
-                fontFamily: "'DM Sans', system-ui, sans-serif",
-              }}>
-                Under-18 detected — eligible for 3-month free tier.
-              </div>
+            {/* Only ask for caregiver's own DOB/diabetes type when not in caregiver mode */}
+            {!form.is_caregiver && (
+              <>
+                <Field label="Date of birth">
+                  <TextInput value={form.date_of_birth} onChange={set("date_of_birth")} type="date" name="bday" autoComplete="bday" />
+                </Field>
+                <Field label="Sex">
+                  <SelectInput value={form.sex} onChange={set("sex")} options={SEX_OPTIONS} placeholder="Select sex" />
+                </Field>
+                {under18 && (
+                  <div style={{
+                    borderRadius: 8, background: "rgba(42,181,193,0.08)", border: "1px solid #2ab5c1",
+                    padding: "10px 14px", marginBottom: 12, fontSize: 13, color: "var(--text-primary)",
+                    fontFamily: "'DM Sans', system-ui, sans-serif",
+                  }}>
+                    Under-18 detected — eligible for 3-month free tier.
+                  </div>
+                )}
+                <Field label="Diabetes type">
+                  <SelectInput value={form.diabetes_type} onChange={set("diabetes_type")} options={DIABETES_TYPES} placeholder="Select diabetes type" />
+                </Field>
+                <Field label="Diagnosis date">
+                  <TextInput value={form.diagnosis_date} onChange={set("diagnosis_date")} type="date" />
+                </Field>
+              </>
             )}
-            <Field label="Diabetes type">
-              <SelectInput value={form.diabetes_type} onChange={set("diabetes_type")} options={DIABETES_TYPES} placeholder="Select diabetes type" />
-            </Field>
-            <Field label="Diagnosis date">
-              <TextInput value={form.diagnosis_date} onChange={set("diagnosis_date")} type="date" />
-            </Field>
             <Field label="Region (optional)">
               <TextInput value={form.country} onChange={set("country")} placeholder="Your region" name="region-name" autoComplete="off" />
             </Field>
@@ -538,8 +550,8 @@ export default function ProfilePage() {
             <CheckboxGrid options={SPECIAL_CONDITIONS} selected={form.special_conditions} onToggle={toggleArray("special_conditions")} />
           </Card>
 
-          {/* ── Section 6: Caregiver Mode ───────────────────────────────── */}
-          <Card title="Caregiver Mode">
+          {/* ── Section 6: Caregiver — about who I'm caring for ─────────── */}
+          <Card title="Caregiver — who I'm caring for">
             <label style={{
               display: "flex", alignItems: "center", gap: 12, minHeight: 48,
               padding: "10px 14px", borderRadius: 8, cursor: "pointer",
@@ -556,14 +568,26 @@ export default function ProfilePage() {
               I am managing this for someone else
             </label>
             {form.is_caregiver && (
-              <>
-                <Field label="Patient name">
-                  <TextInput value={form.patient_name} onChange={set("patient_name")} placeholder="Full name of the person you're caring for" />
+              <div style={{ borderRadius: 10, border: "1.5px solid var(--accent-teal)", padding: 16, background: "rgba(42,181,193,0.04)" }}>
+                <p style={{ margin: "0 0 14px", fontSize: 13, color: "var(--text-secondary)", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+                  All fields below are about the person you are caring for — not you.
+                </p>
+                <Field label="Their name">
+                  <TextInput value={form.patient_name} onChange={set("patient_name")} placeholder="Name of the person you're caring for" />
                 </Field>
-                <Field label="Relationship">
+                <Field label="Your relationship to them">
                   <TextInput value={form.relationship} onChange={set("relationship")} placeholder="e.g. Parent, Spouse, Guardian" />
                 </Field>
-              </>
+                <Field label="Their date of birth (optional — used for dosing context)">
+                  <TextInput value={form.patient_dob ?? ""} onChange={set("patient_dob")} type="date" />
+                </Field>
+                <Field label="Their diabetes type">
+                  <SelectInput value={form.patient_diabetes_type ?? ""} onChange={set("patient_diabetes_type")} options={DIABETES_TYPES} placeholder="Select their diabetes type" />
+                </Field>
+                <Field label="Their diagnosis date (optional)">
+                  <TextInput value={form.diagnosis_date} onChange={set("diagnosis_date")} type="date" />
+                </Field>
+              </div>
             )}
           </Card>
         </form>
