@@ -4,7 +4,7 @@ import { API, apiFetch } from "@/lib/api";
 import { cn } from "@/lib/utils";
 import { DISCLAIMER } from "@/lib/constants";
 
-interface Message { role: "user" | "assistant"; content: string; timestamp: Date }
+type Message = { role: "user" | "assistant"; content: string; timestamp: Date }
 
 const SUGGESTED_PROMPTS = [
   "How does insulin stacking work?",
@@ -125,9 +125,14 @@ export default function MiraPage() {
       setMessages((p) => [...p, { role: "assistant", content: res.reply, timestamp: new Date() }]);
     } catch (err: any) {
       const isOffline = !navigator.onLine;
+      const msg = err?.message ?? "";
       const fallback = isOffline
         ? "You appear to be offline. Mira needs an internet connection to respond — please reconnect and try again."
-        : "Mira can\u2019t reach the server right now. This usually means the backend is starting up or temporarily unavailable. Please try again in a moment.";
+        : msg === "AI service not configured"
+          ? "Mira\u2019s AI service isn\u2019t configured yet — the API key is missing from the server. Please contact support."
+          : msg === "Rate limit reached, please wait a moment"
+            ? "Mira is busy right now. Please wait a moment and try again."
+            : "Mira can\u2019t reach the server right now. This usually means the backend is starting up or temporarily unavailable. Please try again in a moment.";
       setMessages((p) => [...p, { role: "assistant", content: fallback, timestamp: new Date() }]);
     } finally {
       setLoading(false);
