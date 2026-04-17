@@ -13,6 +13,7 @@ import { SensoryProvider } from "@/contexts/SensoryContext";
 import AppSidebar, { useSidebarOffset } from "@/components/AppSidebar";
 import ConfigErrorBanner from "@/components/ConfigErrorBanner";
 import { useSessionTimeout, SessionWarningModal } from "@/hooks/useSessionTimeout";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 /* ─── Lazy pages ─────────────────────────────────────────────────────────── */
 const LandingPage   = lazy(() => import("@/pages/LandingPage"));
@@ -200,6 +201,7 @@ function HomeRoute() {
 /* ═══════════════════════════════════════════════════════════════════════════ */
 export default function App() {
   return (
+    <ErrorBoundary>
     <BrowserRouter>
       <GlucoseUnitsProvider>
         <SensoryProvider>
@@ -337,5 +339,6 @@ export default function App() {
         </SensoryProvider>
       </GlucoseUnitsProvider>
     </BrowserRouter>
+    </ErrorBoundary>
   );
 }
