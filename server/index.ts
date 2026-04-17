@@ -4,6 +4,7 @@
  * GluMira™ is an educational platform, not a medical device.
  */
 
+import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
