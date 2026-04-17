@@ -23,14 +23,14 @@ const CRON_SECRET = process.env.CRON_SECRET ?? "";
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
-interface ParticipantSyncResult {
+type ParticipantSyncResult = {
   participantId: string;
   status: "synced" | "skipped" | "error";
   readingsAdded?: number;
   error?: string;
 }
 
-interface SyncSummary {
+type SyncSummary = {
   syncedAt: string;
   totalParticipants: number;
   syncedCount: number;
@@ -154,6 +154,29 @@ cronNightscoutSyncRouter.post(
     );
 
     return res.status(200).json(summary);
+  }
+);
+
+// ── GET /api/cron/nightscout-sync — Vercel Cron entry point ─────────────────
+// Vercel Cron jobs send GET with Authorization: Bearer {CRON_SECRET}.
+// Delegates to the POST handler logic by re-using the same business logic.
+
+cronNightscoutSyncRouter.get(
+  "/nightscout-sync",
+  async (req: Request, res: Response) => {
+    const authHeader = req.headers["authorization"] ?? "";
+    const token = authHeader.startsWith("Bearer ") ? authHeader.slice(7) : "";
+    if (!CRON_SECRET || token !== CRON_SECRET) {
+      return res.status(401).json({ error: "Unauthorised — invalid cron secret" });
+    }
+    // Forward internally as POST to reuse the existing handler
+    const baseUrl = `http://localhost:${process.env.PORT ?? 3001}`;
+    const inner = await fetch(`${baseUrl}/api/cron/nightscout-sync`, {
+      method: "POST",
+      headers: { "x-cron-secret": CRON_SECRET },
+    });
+    const data = (await inner.json()) as object;
+    return res.status(inner.status).json(data);
   }
 );
 

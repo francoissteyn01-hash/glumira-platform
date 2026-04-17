@@ -25,7 +25,7 @@ import { telemetryRouter }        from "./routes/telemetry";
 import { betaFeedbackRouter }     from "./routes/beta-feedback.route";
 import { glucoseTrendRouter }     from "./routes/glucose-trend.route";
 import { subscriptionRouter }     from "./routes/subscription";
-import { cronNightscoutSyncRouter as cronNightscoutRouter } from "./routes/cron-nightscout-sync.route";
+import { cronNightscoutSyncRouter as cronNightscoutRouter, scheduleSyncJob } from "./routes/cron-nightscout-sync.route";
 import { badgesRouter }           from "./routes/badges.route";
 import { miraRouter }             from "./routes/mira.route";
 import { profileRouter }          from "./routes/profile.route";
@@ -117,6 +117,14 @@ app.use((err: Error, _req: express.Request, res: express.Response, _next: expres
   res.status(500).json({ error: "Internal server error" });
 });
 
-app.listen(PORT, () => console.log(`GluMira™ V7 server :${PORT}`));
+app.listen(PORT, () => {
+  console.log(`GluMira™ V7 server :${PORT}`);
+  // On Railway/Render/local: run Nightscout sync every 5 min internally.
+  // On Vercel: disabled (serverless has no persistent process); Vercel Cron
+  // hits GET /api/cron/nightscout-sync every 5 min instead.
+  if (process.env.VERCEL !== "1") {
+    scheduleSyncJob();
+  }
+});
 export { supabase, db };
 export { app };

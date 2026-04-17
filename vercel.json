@@ -21,6 +21,12 @@
     "VITE_SUPABASE_URL": "@supabase_url",
     "VITE_SUPABASE_ANON_KEY": "@supabase_anon_key"
   },
+  "crons": [
+    {
+      "path": "/api/cron/nightscout-sync",
+      "schedule": "*/5 * * * *"
+    }
+  ],
   "domains": [
     {
       "name": "glumira.ai",
