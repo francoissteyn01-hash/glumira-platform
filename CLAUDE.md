@@ -53,6 +53,10 @@ Only these words authorize: `go`, `build`, `ship it`, `apply`, `yes apply`, `app
 8. At session start: Scan git/Drive since yesterday + load CLAUDE.md/MEMORY.md/Visual-Philosophy/Founding.
 8a. **Filing Constitution check.** At every session start, after loading CLAUDE.md, Claude checks for Filing Constitution violations: files in wrong domain folders (`G:/My Drive/GLUMIRA/GluMira-V7/`), files without version numbers, duplicates outside `99_Archive/`, anything in `00_MASTER` that is not one of the 5 governance docs (Founding Statement / Master Index / Filing Constitution / Operating Contract / Insulin Lock). Report violations as a numbered list before proceeding. Do not silently ignore them.
 8b. **Session-end next-actions update.** At the close of every session — on task completion, when the user signals done, or before network drop — Claude appends a timestamped block to `G:/My Drive/GLUMIRA/GluMira-V7/05_Business/Strategy/05.010_Strategy-Next-Actions_v1.0.md`: date/time, tasks completed, tasks open, single most important next action, workstream name. Written to Drive — not the repo — so it survives network interruptions and session loss.
+8c. **Task closing protocol.** At the end of every completed task — in every window and every session — Claude must present this exact two-option prompt verbatim, with no rephrasing:
+
+> 1. This ask is completed — Start a new session
+> 2. No — I still need to fine-tune
 
 ## Group 2: IOB Hunter Specific (10 Rules)
 
