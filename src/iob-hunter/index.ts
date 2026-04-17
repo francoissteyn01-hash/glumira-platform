@@ -123,7 +123,13 @@ export type {
 } from "@/iob-hunter/engine/density-map";
 
 export { default as DensityMapClinical } from "@/iob-hunter/components/DensityMapClinical";
+export type { DensityMapClinicalProps } from "@/iob-hunter/components/DensityMapClinical";
+export { default as DensityMapAdult } from "@/iob-hunter/components/DensityMapAdult";
+export type { DensityMapAdultProps } from "@/iob-hunter/components/DensityMapAdult";
 export { default as DensityMapKids } from "@/iob-hunter/components/DensityMapKids";
+export type { DensityMapKidsProps } from "@/iob-hunter/components/DensityMapKids";
+export { default as BasalScoreGauge } from "@/iob-hunter/components/BasalScoreGauge";
+export type { BasalScoreGaugeProps } from "@/iob-hunter/components/BasalScoreGauge";
 
 /* ─── Hooks ──────────────────────────────────────────────────────────────── */
 export { useIOBHunter } from "@/iob-hunter/hooks/useIOBHunter";

@@ -27,10 +27,14 @@ import { useCallback, useMemo, useState } from "react";
 import {
   buildDensityMap,
   DensityMapClinical,
+  DensityMapAdult,
   DensityMapKids,
+  BasalScoreGauge,
 } from "@/iob-hunter";
 import { useAuth } from "@/hooks/useAuth";
 import { DISCLAIMER } from "@/lib/constants";
+// IOBTerrainChart retained — migration to v7 engine tracked in INSULIN_LOCK.md Phase 2
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import IOBTerrainChart from "@/components/charts/IOBTerrainChart";
 import BasalActivityChart from "@/iob-hunter/components/BasalActivityChart";
 import {
@@ -153,7 +157,7 @@ export default function IOBHunterPage() {
   );
 
   /* ─── Density map view toggle ────────────────────────────────── */
-  const [densityView, setDensityView] = useState<"clinical" | "kids">("clinical");
+  const [densityView, setDensityView] = useState<"clinical" | "adult" | "kids">("clinical");
 
   /* ─── Tier gate overlay state ────────────────────────────────── */
   const [gateFeature, setGateFeature] = useState<TierGateFeature | null>(null);
@@ -275,6 +279,10 @@ export default function IOBHunterPage() {
     }),
     [],
   );
+  // Legacy adapters retained for fallback / future Terrain chart migration.
+  void v7ChartData;
+  void legacyEntries;
+  void profileForChart;
 
   /* ─── Handlers ────────────────────────────────────────────────── */
   // Visitor entry updates both sides — visitors have no what-if split.
@@ -592,45 +600,112 @@ export default function IOBHunterPage() {
           stackingAlerts={stackingAlerts}
         />
 
-        {/* ─── Density Map section ──────────────────────────────── */}
+        {/* ─── Basal Score + Density Map section ───────────────── */}
         <div style={{ marginTop: 32, marginBottom: 48 }}>
-          <div style={{ display: "flex", gap: "1rem", marginBottom: "1.5rem" }}>
-            <button
-              onClick={() => setDensityView("clinical")}
+
+          {/* Score gauge (compact, full-width card) */}
+          <div
+            style={{
+              marginBottom: 16,
+              display: "grid",
+              gridTemplateColumns: "280px 1fr",
+              gap: 12,
+              alignItems: "start",
+            }}
+          >
+            <BasalScoreGauge
+              basalAnalysis={basalAnalysis}
+              kpis={kpis}
+              compact
+            />
+
+            {/* View toggle (right of gauge) */}
+            <div
               style={{
-                padding: "0.5rem 1rem",
-                background: densityView === "clinical" ? "#1a2a5e" : "#f0f2f7",
-                color: densityView === "clinical" ? "#fff" : "#666",
-                border: "none",
-                borderRadius: 6,
-                cursor: "pointer",
-                fontFamily: "'DM Sans', system-ui, sans-serif",
-                fontWeight: densityView === "clinical" ? 600 : 400,
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 8,
+                alignItems: "center",
+                padding: "16px 20px",
+                background: "var(--bg-card, #fff)",
+                borderRadius: 12,
+                border: "1px solid rgba(148,163,184,0.35)",
               }}
             >
-              Clinical View
-            </button>
-            <button
-              onClick={() => setDensityView("kids")}
-              style={{
-                padding: "0.5rem 1rem",
-                background: densityView === "kids" ? "#1a2a5e" : "#f0f2f7",
-                color: densityView === "kids" ? "#fff" : "#666",
-                border: "none",
-                borderRadius: 6,
-                cursor: "pointer",
-                fontFamily: "'DM Sans', system-ui, sans-serif",
-                fontWeight: densityView === "kids" ? 600 : 400,
-              }}
-            >
-              Kids View
-            </button>
+              <span
+                style={{
+                  fontSize: 12,
+                  fontWeight: 700,
+                  color: "var(--text-secondary)",
+                  textTransform: "uppercase",
+                  letterSpacing: 0.5,
+                  marginRight: 4,
+                  fontFamily: "'DM Sans', system-ui, sans-serif",
+                }}
+              >
+                Collision Map View
+              </span>
+              {(["clinical", "adult", "kids"] as const).map((v) => {
+                const labels = { clinical: "Clinical", adult: "Adult", kids: "Kids" };
+                return (
+                  <button
+                    key={v}
+                    type="button"
+                    onClick={() => setDensityView(v)}
+                    style={{
+                      padding: "6px 16px",
+                      background: densityView === v ? "#1a2a5e" : "#f1f5f9",
+                      color: densityView === v ? "#fff" : "#475569",
+                      border: "none",
+                      borderRadius: 999,
+                      cursor: "pointer",
+                      fontFamily: "'DM Sans', system-ui, sans-serif",
+                      fontWeight: densityView === v ? 600 : 400,
+                      fontSize: 13,
+                      transition: "background 0.15s",
+                    }}
+                  >
+                    {labels[v]}
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
-          {densityView === "clinical" ? (
-            <DensityMapClinical densityMap={densityMap} />
-          ) : (
-            <DensityMapKids densityMap={densityMap} />
+          {/* Density map — active view.
+           *  densityMap.riskZones carries the PressureLevel field ("light" /
+           *  "moderate" / "strong" / "overlap") that the density components
+           *  colour cells by. The engine's detectRiskZones() returns a
+           *  different shape (type / severity) used only by the chart overlays. */}
+          {densityView === "clinical" && (
+            <DensityMapClinical
+              curves={activityCurves}
+              densityMap={densityMap}
+              riskZones={densityMap.riskZones}
+              startHour={chart1Bounds.startHour}
+              endHour={chart1Bounds.endHour}
+            />
+          )}
+          {densityView === "adult" && (
+            <DensityMapAdult
+              curves={activityCurves}
+              riskZones={densityMap.riskZones}
+              startHour={chart1Bounds.startHour}
+              endHour={chart1Bounds.endHour}
+              patientName={DEMO_PATIENT_A_V7.name}
+              patientMeta={`${DEMO_PATIENT_A_V7.therapy} · ${DEMO_PATIENT_A_V7.diet}`}
+            />
+          )}
+          {densityView === "kids" && (
+            <DensityMapKids
+              curves={activityCurves}
+              densityMap={densityMap}
+              riskZones={densityMap.riskZones}
+              startHour={chart1Bounds.startHour}
+              endHour={chart1Bounds.endHour}
+              patientName={DEMO_PATIENT_A_V7.name}
+              patientMeta={`${DEMO_PATIENT_A_V7.therapy} · ${DEMO_PATIENT_A_V7.diet}`}
+            />
           )}
         </div>
 
