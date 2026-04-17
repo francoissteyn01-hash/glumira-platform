@@ -1,5 +1,5 @@
 /**
- * GluMira™ V7 — client/src/hooks/useAuth.ts
+ * GluMira™ V7 — client/src/hooks/useAuth.tsx
  * Supabase auth context. Referenced by useTelemetry and App.tsx.
  */
 
