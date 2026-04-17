@@ -3,7 +3,7 @@
  *
  * Modal overlay that appears when a visitor or free-tier user attempts
  * a Pro-gated action (save scenario, export PDF, >7d history, 2nd what-if).
- * Canonical: free trial = 30 days. Always. Never 14.
+ * Canonical: free trial = 14 days. Always. (Rule 28, updated 2026-04-14.)
  *
  * GluMira™ is an educational platform, not a medical device.
  */
@@ -122,7 +122,7 @@ export default function IOBHunterTierGate({
               letterSpacing: 0.5,
             }}
           >
-            30-day free trial
+            14-day free trial
           </p>
           <p
             style={{
@@ -156,7 +156,7 @@ export default function IOBHunterTierGate({
               fontFamily: "'DM Sans', system-ui, sans-serif",
             }}
           >
-            Start 30-day free trial →
+            Start 14-day free trial →
           </button>
           <button
             type="button"

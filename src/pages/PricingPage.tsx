@@ -1,8 +1,9 @@
 /**
  * GluMira™ V7 — PricingPage
- * Rule 28: 30-day trial, always. Rule 16: free minimum is real, not trap.
- * Free tier is the priority tier — funded by Pro. Honest language, no dark patterns.
- * No names, no locations, no vendors (R26/R40/R51).
+ * Rule 28: 14-day trial, always. Rule 16: free minimum is real, not trap.
+ * Free tier is the priority tier — funded by Pro + Research Champions.
+ * Payment rail: XE Money (Stripe does not operate in Namibia).
+ * Honest language, no dark patterns. No names, no locations, no vendors.
  */
 
 import { useNavigate } from "react-router-dom";
@@ -221,13 +222,22 @@ export default function PricingPage() {
         />
         <TierCard
           name="Pro"
-          price="30 days free"
-          priceSub="Then billed monthly. Cancel anytime."
+          price="14 days free"
+          priceSub="Then billed monthly via XE. Cancel anytime."
           accent={BRAND.amber}
-          cta="Start 30-day trial"
+          cta="Start 14-day trial"
           onCta={() => navigate("/auth?mode=signup")}
           highlight
           blurb="Everything in Free, plus save, compare, and export. Your subscription keeps the Free tier running for people who cannot pay."
+        />
+        <TierCard
+          name="Champion"
+          price="Any amount"
+          priceSub="One-off gift · Any currency via XE"
+          accent="#4ADE80"
+          cta="Donate to research"
+          onCta={() => navigate("/donate")}
+          blurb="One donation unlocks the Research Champion badge forever. Funds open-source the PK engine and keep the Free tier free for families who cannot pay."
         />
       </div>
 

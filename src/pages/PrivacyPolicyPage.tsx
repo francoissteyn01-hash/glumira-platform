@@ -139,8 +139,8 @@ export default function PrivacyPolicyPage() {
         </p>
         <ul style={S.ul}>
           <li><strong>Supabase:</strong> Database hosting and authentication.</li>
-          <li><strong>Netlify:</strong> Application hosting and deployment.</li>
-          <li><strong>Stripe:</strong> Payment processing (we do not store card details).</li>
+          <li><strong>Vercel:</strong> Application hosting and deployment.</li>
+          <li><strong>XE Money:</strong> Payment and donation processing. GluMira™ never sees or stores your card or bank details — they remain with XE.</li>
         </ul>
 
         <h2 style={S.h2}>7. CGM &amp; Nightscout Data</h2>

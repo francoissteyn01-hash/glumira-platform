@@ -570,8 +570,9 @@ function ResearchSection() {
               {[
                 "14-day free trial — no card required",
                 "IOB Hunter™ full engine on the free tier",
-                "PDF clinical reports on Pro ($29.99/mo)",
-                "AI insights on the AI tier ($49.99/mo)",
+                "PDF clinical reports on Pro",
+                "AI insights on the AI tier",
+                "Pay what you can · Any amount via XE Money",
               ].map((item) => (
                 <li key={item} className="flex items-start gap-2">
                   <CheckIcon className="w-4 h-4 text-[#F59E0B] mt-0.5 flex-shrink-0" />
@@ -787,7 +788,7 @@ function QuizResult(props: { dtype: DiabetesType | null; cgm: CgmBrand | null; g
       </ul>
       <div className="mt-6 flex flex-wrap gap-3">
         <Link to="/auth?plan=pro" className="inline-flex items-center justify-center h-11 px-5 rounded-full bg-[#0D2149] dark:bg-[#2AB5C1] text-white dark:text-[#0D1B3E] text-sm font-semibold hover:bg-[#1A2A5E] dark:hover:bg-[#25a3ae] transition-colors cursor-pointer">
-          Start Pro — $29.99/mo
+          Start 14-day Pro trial
           <ArrowRightIcon className="w-4 h-4 ml-2" />
         </Link>
         <Link to="/auth?plan=free" className="inline-flex items-center justify-center h-11 px-5 rounded-full border border-slate-300 dark:border-white/20 text-slate-700 dark:text-white text-sm font-medium hover:bg-slate-50 dark:hover:bg-white/5 transition-colors cursor-pointer">
@@ -897,16 +898,17 @@ function Pricing() {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
           <PricingCard tier="Free" price="$0" period="forever" cta="Start — no card" ctaHref="/auth?plan=free" featured badge="Flagship"
             features={["IOB Hunter™ full engine (13+ insulins)", "CSV import (Dexcom, Libre, Nightscout)", "Manual logs — insulin, meal, condition", "Mira™ Lite — 20 messages/day", "Community support"]} />
-          <PricingCard tier="Pro" price="$29.99" period="/ month" cta="Start Pro trial" ctaHref="/auth?plan=pro"
+          <PricingCard tier="Pro" price="14 days" period="free trial" cta="Start Pro trial" ctaHref="/auth?plan=pro"
             features={["Everything in Free", "Direct Dexcom / Libre OAuth sync", "PDF + CSV clinical reports (unlimited)", "Mira™ Full — 200 messages/day", "Automated basal evaluation", "Email support"]} />
-          <PricingCard tier="AI" price="$49.99" period="/ month" cta="Start AI trial" ctaHref="/auth?plan=ai"
+          <PricingCard tier="AI" price="14 days" period="free trial" cta="Start AI trial" ctaHref="/auth?plan=ai"
             features={["Everything in Pro", "Mira™ Pro — adaptive-thinking model", "Predictive insights — 100 runs/day", "Custom dashboards", "Priority support"]} />
-          <PricingCard tier="Clinic" price="$299.99" period="/ month" cta="Talk to sales" ctaHref="/contact?plan=clinic"
-            features={["10 providers + 100 patients", "All Pro features per patient", "Clinician portal + audit trails", "Caregiver sharing, granular permissions", "Priority clinical report generation"]} />
+          <PricingCard tier="Champion" price="Any" period="one-off gift" cta="Donate to research" ctaHref="/donate"
+            features={["Research Champion badge on profile", "Any currency via XE Money", "Funds open-source PK engine", "Keeps Free tier free forever", "Public thanks on investor report"]} />
         </div>
         <p className="mt-8 text-xs text-slate-500 dark:text-slate-400 max-w-3xl">
-          Research / Enterprise: $499–999/month, custom-quoted. API access, unlimited providers, dedicated support.
-          Every paid subscription helps keep the Free tier strong — that's the model.
+          Paid subscriptions are billed via XE Money after the 14-day trial. Clinic / Research / Enterprise tiers are custom-quoted — see
+          {" "}<Link to="/clinician" className="underline hover:text-[#2AB5C1]">the clinician portal</Link>{" "}
+          for institutional pricing. Every paid subscription and every donation funds the Free tier.
         </p>
       </div>
     </section>
@@ -1040,6 +1042,7 @@ function Footer() {
         <FooterCol title="Platform" items={[
           ["IOB Hunter™", "#iob-hunter"],
           ["Pricing", "#pricing"],
+          ["Donate to research", "/donate"],
           ["For clinicians", "/clinician"],
           ["For researchers", "/researcher"],
           ["Live demo", "/demo"],
@@ -1048,14 +1051,14 @@ function Footer() {
           ["Pregnancy", "/modules/pregnancy"],
           ["Pediatric + school", "/modules/paediatric"],
           ["Menstrual cycle", "/modules/menstrual"],
+          ["Menopause", "/modules/menopause"],
           ["Ramadan", "/modules/ramadan"],
-          ["Overnight safety", "#quiz"],
         ]} />
         <FooterCol title="Legal" items={[
           ["Privacy", "/privacy"],
           ["Terms", "/terms"],
-          ["Consent", "/consent"],
-          ["Contact", "/contact"],
+          ["Consent", "/onboarding/consent"],
+          ["Research info", "/research"],
         ]} />
       </div>
       <div className="border-t border-white/8">
