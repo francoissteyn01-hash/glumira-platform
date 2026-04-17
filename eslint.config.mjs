@@ -52,6 +52,8 @@ export default [
         'warn',
         { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
       ],
+      'no-empty': ['error', { allowEmptyCatch: true }],
+      'no-useless-assignment': 'warn',
       'no-restricted-syntax': [
         'error',
         {
@@ -81,6 +83,26 @@ export default [
     files: ['**/*.{test,spec}.{ts,tsx}', 'e2e/**/*.{ts,tsx}'],
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
+    },
+  },
+
+  // ── Server-side code (Node/Express patterns) ───────────────────────────
+  {
+    files: ['server/**/*.{ts,tsx}'],
+    rules: {
+      '@typescript-eslint/no-namespace': 'off', // needed for Express type augmentation
+    },
+  },
+
+  // ── Service worker ─────────────────────────────────────────────────────
+  {
+    files: ['public/sw.js', 'public/**/*.js'],
+    languageOptions: {
+      globals: { ...globals.serviceworker },
+    },
+    rules: {
+      'no-undef': 'off',
+      '@typescript-eslint/no-unused-vars': 'off',
     },
   },
 ];

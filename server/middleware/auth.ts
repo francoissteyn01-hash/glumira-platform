@@ -7,6 +7,7 @@ import { type Request, type Response, type NextFunction } from "express";
 import { supabase } from "../db";
 
 declare global {
+   
   namespace Express {
     interface Request {
       userId?: string;
@@ -35,9 +36,9 @@ export function requireAuth(req: Request, res: Response, next: NextFunction) {
   });
 }
 
-export interface AuthRequest extends Request {
+export type AuthRequest = {
   user?: { id: string; email?: string };
-}
+} & Request
 
 export function getUserId(req: Request): string {
   if (!req.userId) throw new Error("userId not set — requireAuth must run first");

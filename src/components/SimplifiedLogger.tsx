@@ -89,7 +89,7 @@ export default function SimplifiedLogger() {
         </button>
         <button
           type="button"
-          onClick={() => { setValue(""); isLastStep ? commit() : setStep(step + 1); }}
+          onClick={() => { setValue(""); if (isLastStep) { commit(); } else { setStep(step + 1); } }}
           style={{ minHeight: minSize }}
           className="flex-1 rounded-lg bg-[#2AB5C1] text-white font-semibold"
         >

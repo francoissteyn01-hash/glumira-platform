@@ -13,7 +13,7 @@ const supabase: SupabaseClient = createClient(
   import.meta.env.VITE_SUPABASE_ANON_KEY
 );
 
-interface AuthContextValue {
+type AuthContextValue = {
   user:    User | null;
   loading: boolean;
   token:   string | null;

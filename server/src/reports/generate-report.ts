@@ -23,7 +23,7 @@ import {
    TYPES
    ═══════════════════════════════════════════════════════════════════════════ */
 
-export interface ReportInput {
+export type ReportInput = {
   insulinEvents: InsulinEvent[];
   mealLogs: {
     meal_time: string;
@@ -40,7 +40,7 @@ export interface ReportInput {
   patientName?: string;
 }
 
-interface DoseObservation {
+type DoseObservation = {
   icon: "check" | "warn";
   text: string;
 }
@@ -240,6 +240,7 @@ function calculateBasalScore(events: InsulinEvent[], curve: StackingPoint[]): {
   const overlap = Math.max(0, 2.5 * (1 - overlapRatio * 4));
 
   // Timing consistency (2.5): check if basal times are evenly spaced
+  let timing: number;
   if (basalEvents.length >= 2) {
     const hours = basalEvents.map((b) => new Date(b.event_time).getHours() + new Date(b.event_time).getMinutes() / 60);
     hours.sort((a, b) => a - b);
@@ -249,9 +250,9 @@ function calculateBasalScore(events: InsulinEvent[], curve: StackingPoint[]): {
       gapDeviation += Math.abs((hours[i] - hours[i - 1]) - idealGap);
     }
     const avgDev = gapDeviation / (hours.length - 1);
-    var timing = Math.max(0, 2.5 * (1 - avgDev / idealGap));
+    timing = Math.max(0, 2.5 * (1 - avgDev / idealGap));
   } else {
-    var timing = 2.0; // single daily dose — decent by default
+    timing = 2.0; // single daily dose — decent by default
   }
 
   // Tail management (2.5): how low is IOB at the end of the period
