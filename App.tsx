@@ -109,6 +109,7 @@ const ISPADCompliancePage     = lazy(() => import("@/pages/ISPADCompliancePage")
 
 /* ─── V7 Legal & Privacy ─────────────────────────────────────────────── */
 const ConsentPage             = lazy(() => import("@/pages/ConsentPage"));
+const ResearchInfoPage        = lazy(() => import("@/pages/ResearchInfoPage"));
 const PrivacyPolicyPage       = lazy(() => import("@/pages/PrivacyPolicyPage"));
 const TermsOfUsePage          = lazy(() => import("@/pages/TermsOfUsePage"));
 
@@ -151,7 +152,7 @@ function LoadingFallback() {
 }
 
 /* ─── Paths with no sidebar chrome ───────────────────────────────────────── */
-const CHROMELESS = ["/", "/v2", "/auth", "/auth/callback", "/dev", "/tutorial", "/onboarding/region", "/onboarding/consent", "/privacy", "/terms", "/launch", "/demo", "/pricing", "/science"];
+const CHROMELESS = ["/", "/v2", "/auth", "/auth/callback", "/dev", "/tutorial", "/onboarding/region", "/onboarding/consent", "/research", "/privacy", "/terms", "/launch", "/demo", "/pricing", "/science"];
 function isChromeless(pathname: string): boolean {
   if (CHROMELESS.includes(pathname)) return true;
   if (pathname === "/register") return true;
@@ -311,6 +312,7 @@ export default function App() {
               <Route path="/ispad"                 element={<ISPADCompliancePage />} />
               {/* ─── V7 Legal & Privacy ───────────────────────────────── */}
               <Route path="/onboarding/consent"    element={<ConsentPage />} />
+              <Route path="/research"              element={<ResearchInfoPage />} />
               <Route path="/onboarding/region"     element={<RegionSetupPage />} />
               <Route path="/privacy"               element={<PrivacyPolicyPage />} />
               <Route path="/terms"                 element={<TermsOfUsePage />} />
