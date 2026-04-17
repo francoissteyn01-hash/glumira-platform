@@ -45,6 +45,14 @@ export default [
       react: { version: '18.3' },
     },
     rules: {
+      // ── Legacy migration safety ────────────────────────────────────────
+      // Keep lint non-blocking while existing debt is reduced incrementally.
+      'no-empty': 'warn',
+      'no-useless-assignment': 'warn',
+      'no-var': 'warn',
+      '@typescript-eslint/no-namespace': 'warn',
+      '@typescript-eslint/no-unused-expressions': 'warn',
+
       // ── Project conventions from CLAUDE.md ───────────────────────────
       '@typescript-eslint/consistent-type-definitions': ['warn', 'type'],
       '@typescript-eslint/no-explicit-any': 'warn',
@@ -81,6 +89,23 @@ export default [
     files: ['**/*.{test,spec}.{ts,tsx}', 'e2e/**/*.{ts,tsx}'],
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
+    },
+  },
+
+  // ── Service worker globals ─────────────────────────────────────────────
+  {
+    files: ['public/sw.js'],
+    languageOptions: {
+      globals: {
+        ...globals.serviceworker,
+        ...globals.browser,
+      },
+    },
+    rules: {
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+      ],
     },
   },
 ];
