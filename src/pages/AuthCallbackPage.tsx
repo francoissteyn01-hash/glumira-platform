@@ -47,6 +47,21 @@ export default function AuthCallbackPage() {
       }}
     >
       <div style={{ textAlign: "center" }}>
+        <img
+          src="/brand/mira-hero.png"
+          alt="Mira — GluMira™ guardian owl"
+          style={{
+            width: 72,
+            height: 72,
+            objectFit: "contain",
+            margin: "0 auto 16px",
+            mixBlendMode: "screen",
+            filter: "drop-shadow(0 4px 18px rgba(42,181,193,0.3))",
+          }}
+        />
+        <div style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: 22, fontWeight: 700, marginBottom: 18 }}>
+          GluMira<span style={{ color: "#2ab5c1" }}>™</span>
+        </div>
         <div
           style={{
             width: 40,

@@ -165,6 +165,19 @@ export default function RegisterPage() {
       <div className="au">
         <div className="au-card">
           <div className="au-brand">
+            <img
+              src="/brand/mira-hero.png"
+              alt="Mira — GluMira™ guardian owl"
+              style={{
+                display: "block",
+                width: 80,
+                height: 80,
+                objectFit: "contain",
+                margin: "0 auto 10px",
+                mixBlendMode: "screen",
+                filter: "drop-shadow(0 4px 18px rgba(42,181,193,0.3))",
+              }}
+            />
             <h1>GluMira<span>&trade;</span></h1>
             <p>Powered by IOB Hunter&trade;</p>
           </div>

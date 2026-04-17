@@ -134,16 +134,29 @@ export default function ConsentPage() {
       <div style={{ width: "100%", maxWidth: 640 }}>
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: 32 }}>
+          <img
+            src="/brand/mira-hero.png"
+            alt="Mira — GluMira™ guardian owl"
+            style={{
+              display: "block",
+              width: 80,
+              height: 80,
+              objectFit: "contain",
+              margin: "0 auto 12px",
+              mixBlendMode: "screen",
+              filter: "drop-shadow(0 4px 18px rgba(42,181,193,0.3))",
+            }}
+          />
           <div
             style={{
               fontFamily: T.heading,
               fontSize: 28,
               fontWeight: 700,
-              color: T.teal,
+              color: T.white,
               letterSpacing: "-0.5px",
             }}
           >
-            GluMira™
+            GluMira<span style={{ color: T.teal }}>™</span>
           </div>
           <h1
             style={{
@@ -151,7 +164,7 @@ export default function ConsentPage() {
               fontSize: 22,
               fontWeight: 700,
               color: T.white,
-              marginTop: 8,
+              marginTop: 14,
             }}
           >
             Privacy &amp; Consent
