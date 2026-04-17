@@ -3,7 +3,7 @@
  * Auto-save on every change. No Save buttons.
  */
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth, supabase } from "@/hooks/useAuth";
 import UnitToggle from "@/components/UnitToggle";
@@ -22,6 +22,19 @@ export default function SettingsPage() {
   const [nsSecret, setNsSecret] = useState(() => localStorage.getItem("ns_secret") ?? "");
   const [pwNew, setPwNew] = useState("");
   const [pwMsg, setPwMsg] = useState<string | null>(null);
+  const [researchConsent, setResearchConsent] = useState(false);
+  const [researchLoading, setResearchLoading] = useState(false);
+
+  // Load research consent on mount
+  useEffect(() => {
+    const stored = localStorage.getItem("glumira_consent");
+    if (stored) {
+      try {
+        const record = JSON.parse(stored);
+        setResearchConsent(Array.isArray(record.consents) && record.consents.includes("research_programme"));
+      } catch { /* ignore */ }
+    }
+  }, []);
 
   // Auto-save Nightscout settings
   const saveNs = useCallback((vals: { url: string; secret: string }) => {
@@ -45,6 +58,30 @@ export default function SettingsPage() {
     if (error) setPwMsg(error.message);
     else { setPwMsg("Password updated."); setPwNew(""); }
   }
+
+  const handleResearchToggle = async (enabled: boolean) => {
+    setResearchLoading(true);
+    setResearchConsent(enabled);
+
+    try {
+      const stored = localStorage.getItem("glumira_consent");
+      const record = stored ? JSON.parse(stored) : { consents: [] };
+      record.consents = enabled
+        ? [...new Set([...record.consents, "research_programme"])]
+        : record.consents.filter((c: string) => c !== "research_programme");
+      localStorage.setItem("glumira_consent", JSON.stringify(record));
+    } catch { /* ignore */ }
+
+    try {
+      await fetch("/trpc/consent.updateResearch", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ "0": { json: { researchConsent: enabled } } }),
+      });
+    } catch { /* server sync best-effort */ }
+
+    setResearchLoading(false);
+  };
 
   return (
     <div style={{ minHeight: "100vh", background: "var(--bg-primary)", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
@@ -135,6 +172,33 @@ export default function SettingsPage() {
             Import Handwritten Notes &rarr;
           </Link>
         </Section>
+
+        <div style={{ background: "var(--bg-card)", border: `1px solid ${BORDER}`, borderRadius: 12, padding: "20px 24px", marginBottom: 16 }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <div>
+              <div style={{ fontWeight: 600, color: NAVY, fontSize: 15, marginBottom: 4 }}>Research Programme</div>
+              <div style={{ color: MUTED, fontSize: 13, lineHeight: 1.5 }}>
+                Contribute anonymised glucose patterns to GluMira™ research.{" "}
+                <a href="/research" style={{ color: TEAL }}>Learn more</a>
+              </div>
+            </div>
+            <button
+              onClick={() => handleResearchToggle(!researchConsent)}
+              disabled={researchLoading}
+              style={{
+                width: 48, height: 26, borderRadius: 13, border: "none", cursor: "pointer",
+                background: researchConsent ? TEAL : "#e2e8f0",
+                position: "relative", transition: "background 0.2s", flexShrink: 0,
+              }}
+            >
+              <span style={{
+                position: "absolute", top: 3, left: researchConsent ? 25 : 3,
+                width: 20, height: 20, borderRadius: 10,
+                background: "#fff", transition: "left 0.2s",
+              }} />
+            </button>
+          </div>
+        </div>
 
         <Section title="Legal">
           <p style={{ fontSize: 12, color: MUTED, lineHeight: 1.6, margin: 0 }}>
