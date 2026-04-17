@@ -5,7 +5,7 @@
  */
 
 import { useState, useEffect, useCallback, useRef } from "react";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth, supabase } from "@/hooks/useAuth";
 import { DISCLAIMER } from "@/lib/constants";
 import { API } from "@/lib/api";
 import { useKeyboardSave } from "@/hooks/useKeyboardSave";
@@ -87,7 +87,7 @@ function groupByCategory(insulins: InsulinRef[]): Record<string, InsulinRef[]> {
 
 /* ─── Collapsible Card ────────────────────────────────────────────────────── */
 
-function Card({ id, title, defaultOpen = false, children }: { id?: string; title: string; defaultOpen?: boolean; children: React.ReactNode }) {
+function Card({ id, title, accent = "#2ab5c1", kicker, defaultOpen = false, children }: { id?: string; title: string; accent?: string; kicker?: string; defaultOpen?: boolean; children: React.ReactNode }) {
   const isTarget = id && typeof window !== "undefined" && window.location.hash === `#${id}`;
   const [open, setOpen] = useState(defaultOpen || !!isTarget);
   const ref = useRef<HTMLDivElement>(null);
@@ -95,19 +95,53 @@ function Card({ id, title, defaultOpen = false, children }: { id?: string; title
     if (isTarget && ref.current) ref.current.scrollIntoView({ behavior: "smooth", block: "start" });
   }, [isTarget]);
   return (
-    <div ref={ref} id={id} style={{ background: "var(--bg-card)", borderRadius: 12, border: "1px solid var(--border-light)", overflow: "hidden" }}>
+    <div
+      ref={ref}
+      id={id}
+      style={{
+        background: "var(--bg-card)",
+        borderRadius: 12,
+        border: "1px solid var(--border-light)",
+        borderLeft: `4px solid ${accent}`,
+        overflow: "hidden",
+      }}
+    >
       <button
         type="button"
         onClick={() => setOpen(!open)}
         style={{
           width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between",
           padding: "16px 20px", background: "none", border: "none", cursor: "pointer",
-          fontFamily: "'Playfair Display', serif", fontSize: "clamp(16px, 5vw, 20px)",
-          fontWeight: 700, color: "var(--text-primary)", textAlign: "left",
+          textAlign: "left",
         }}
       >
-        {title}
-        <span style={{ fontSize: 18, color: "var(--text-secondary)", transition: "transform 0.2s", transform: open ? "rotate(180deg)" : "rotate(0deg)" }}>
+        <span style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+          {kicker && (
+            <span
+              style={{
+                fontSize: 10,
+                fontWeight: 700,
+                letterSpacing: ".12em",
+                textTransform: "uppercase",
+                color: accent,
+                fontFamily: "'DM Sans', system-ui, sans-serif",
+              }}
+            >
+              {kicker}
+            </span>
+          )}
+          <span
+            style={{
+              fontFamily: "'Playfair Display', serif",
+              fontSize: "clamp(16px, 5vw, 20px)",
+              fontWeight: 700,
+              color: "var(--text-primary)",
+            }}
+          >
+            {title}
+          </span>
+        </span>
+        <span style={{ fontSize: 18, color: accent, transition: "transform 0.2s", transform: open ? "rotate(180deg)" : "rotate(0deg)" }}>
           &#9662;
         </span>
       </button>
@@ -149,6 +183,59 @@ function TextInput({ value, onChange, placeholder, type = "text", inputMode, pat
       style={inputStyle}
       onFocus={(e) => { e.currentTarget.style.borderColor = "#2ab5c1"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(42,181,193,0.15)"; }}
       onBlur={(e) => { e.currentTarget.style.borderColor = "#dee2e6"; e.currentTarget.style.boxShadow = "none"; }}
+    />
+  );
+}
+
+function formatTimeDigits(digits: string): string {
+  const d = digits.replace(/\D/g, "").slice(0, 4);
+  if (d.length === 0) return "";
+  if (d.length <= 2) return d;
+  return `${d.slice(0, 2)}:${d.slice(2)}`;
+}
+
+function isValidTime(v: string): boolean {
+  return /^([01][0-9]|2[0-3]):[0-5][0-9]$/.test(v);
+}
+
+function Time24Input({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  const display = value || "";
+  const valid = !display || isValidTime(display);
+  return (
+    <input
+      type="text"
+      inputMode="numeric"
+      pattern="[0-9]{2}:[0-9]{2}"
+      maxLength={5}
+      value={display}
+      onChange={(e) => onChange(formatTimeDigits(e.target.value))}
+      placeholder="HH:MM"
+      aria-label="Time (24h, type digits e.g. 2045)"
+      style={{
+        width: 108,
+        minHeight: 48,
+        padding: "10px 12px",
+        borderRadius: 8,
+        border: `1px solid ${valid ? "var(--border-light)" : "#e74c3c"}`,
+        background: "var(--bg-card)",
+        color: "var(--text-primary)",
+        fontSize: 18,
+        fontWeight: 600,
+        letterSpacing: "0.04em",
+        fontFamily: "'JetBrains Mono', ui-monospace, monospace",
+        textAlign: "center",
+        outline: "none",
+        boxSizing: "border-box",
+      }}
+      onFocus={(e) => {
+        e.currentTarget.style.borderColor = "#2ab5c1";
+        e.currentTarget.style.boxShadow = "0 0 0 3px rgba(42,181,193,0.15)";
+        e.currentTarget.select();
+      }}
+      onBlur={(e) => {
+        e.currentTarget.style.borderColor = valid ? "#dee2e6" : "#e74c3c";
+        e.currentTarget.style.boxShadow = "none";
+      }}
     />
   );
 }
@@ -305,9 +392,14 @@ export default function InsulinProfilePage() {
     setError(null);
     setSaved(false);
     try {
+      const { data: { session: fresh } } = await supabase.auth.getSession();
+      const token = fresh?.access_token ?? session.access_token;
+      if (!fresh) {
+        throw new Error("Your session has expired. Please sign in again.");
+      }
       const res = await fetch(`${API}/api/profile`, {
         method: "PUT",
-        headers: { Authorization: `Bearer ${session.access_token}`, "Content-Type": "application/json" },
+        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
       const text = await res.text();
@@ -449,15 +541,14 @@ export default function InsulinProfilePage() {
               <Field label="Planned basal injection times (up to 4)">
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center" }}>
                   {form.basal_times.map((t, i) => (
-                    <div key={i} style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                      <input
-                        type="time" value={t}
-                        onChange={(e) => {
+                    <div key={i} style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                      <Time24Input
+                        value={t}
+                        onChange={(v) => {
                           const updated = [...form.basal_times];
-                          updated[i] = e.target.value;
+                          updated[i] = v;
                           set("basal_times")(updated);
                         }}
-                        style={{ ...inputStyle, width: 130 }}
                       />
                       <button
                         type="button"

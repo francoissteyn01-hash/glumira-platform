@@ -43,6 +43,31 @@ if (!isSupabaseConfigured) {
   console.error(`[GluMira] ${SUPABASE_CONFIG_ERROR}`);
 }
 
+// Session is kept in sessionStorage (not localStorage) so it dies when the
+// tab/window is closed — the user is logged out on screen close per privacy
+// policy. sessionStorage survives same-tab reloads and the OAuth PKCE redirect
+// round-trip, so login and refresh-in-tab still work.
+//
+// On a fresh page open (not a reload), we also wipe any leftover sessionStorage
+// entry that Chrome may have restored via "Continue where you left off", and
+// purge the legacy localStorage key left behind by the pre-2026-04-17 build.
+if (typeof window !== "undefined") {
+  try {
+    window.localStorage.removeItem("glumira-auth");
+  } catch { /* private mode etc. */ }
+
+  try {
+    const navType =
+      (window.performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined)?.type;
+    if (navType === "navigate") {
+      window.sessionStorage.removeItem("glumira-auth");
+    }
+  } catch { /* ignore */ }
+}
+
+const sessionOnlyStorage =
+  typeof window !== "undefined" ? window.sessionStorage : undefined;
+
 export const supabase: SupabaseClient = createClient(
   SUPABASE_URL,
   SUPABASE_ANON_KEY,
@@ -52,6 +77,7 @@ export const supabase: SupabaseClient = createClient(
       autoRefreshToken: true,
       detectSessionInUrl: true,
       storageKey: "glumira-auth",
+      storage: sessionOnlyStorage,
       flowType: "pkce",
     },
   }
