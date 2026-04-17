@@ -25,7 +25,7 @@ import {
   useIOBHunter,
   BasalScoreGauge,
 } from '@/iob-hunter';
-import type { InsulinDose } from '@/iob-hunter';
+import type { InsulinDose, StackingAlert } from '@/iob-hunter';
 
 /* ─── Local types ────────────────────────────────────────────────────────── */
 
@@ -46,6 +46,50 @@ type BolusInsulin = {
 function formatHour(h: number): string {
   return `${String(Math.floor(h)).padStart(2, '0')}:${String(Math.round((h % 1) * 60)).padStart(2, '0')}`;
 }
+
+/* ─── Risk countdown helper ─────────────────────────────────────────────
+ * Given the current wall-clock hour (decimal) and the stacking alerts for
+ * the active schedule, returns a human-readable countdown to the next
+ * pharmacokinetic overlap window — or a "clear" message if none found.   */
+
+type RiskLevel = 'none' | 'imminent' | 'soon' | 'later';
+
+function riskCountdown(
+  alerts: StackingAlert[],
+  nowHour: number,
+): { label: string; hoursUntil: number | null; level: RiskLevel } {
+  const upcoming = alerts
+    .filter((a) => a.start_hour > nowHour)
+    .sort((a, b) => a.start_hour - b.start_hour);
+
+  if (upcoming.length === 0) {
+    return {
+      label: 'No pharmacokinetic overlap detected in this regimen',
+      hoursUntil: null,
+      level: 'none',
+    };
+  }
+
+  const h = upcoming[0].start_hour - nowHour;
+  const level: RiskLevel = h < 2 ? 'imminent' : h < 5 ? 'soon' : 'later';
+  const hh = Math.floor(h);
+  const mm = Math.round((h % 1) * 60);
+  const timeStr = hh > 0
+    ? `${hh}h${mm > 0 ? ` ${mm}m` : ''}`
+    : `${mm}m`;
+
+  const label = level === 'imminent'
+    ? `Pharmacokinetic overlap in ${timeStr} — monitor glucose closely`
+    : level === 'soon'
+      ? `Next overlap window in ${timeStr}`
+      : `Next overlap window in ${timeStr} (low immediate risk)`;
+
+  return { label, hoursUntil: h, level };
+}
+
+/* ─── Suggested bolus hours (standard meal-time anchors) ────────────────
+ * 07:30 → 12:30 → 18:00 for first 3 doses; +5h per additional dose.    */
+const SUGGESTED_HOURS = [7.5, 12.5, 18.0];
 
 /* ═══════════════════════════════════════════════════════════════════════════ */
 export default function WhatIfPage() {
@@ -77,6 +121,46 @@ export default function WhatIfPage() {
     }));
   }, [basalInsulin]);
 
+  /* ── Bolus doses (current) for combined IOB ─────────────────────────── */
+  const currentBolusDoses = useMemo<InsulinDose[]>(
+    () => bolusInsulins.map((b, i) => ({
+      id:              `bolus-${i}`,
+      insulin_name:    b.insulin,
+      dose_units:      b.dose,
+      administered_at: formatHour(b.hour),
+      dose_type:       'bolus' as const,
+    })),
+    [bolusInsulins],
+  );
+
+  const currentDoses = useMemo(
+    () => [...basalDoses, ...currentBolusDoses],
+    [basalDoses, currentBolusDoses],
+  );
+
+  /* ── Suggested schedule: standard meal-time spacing ─────────────────── */
+  const suggestedBolusInsulins = useMemo(
+    () => bolusInsulins.map((b, i) => ({
+      ...b,
+      hour: SUGGESTED_HOURS[i] ?? 7.5 + i * 5,
+    })),
+    [bolusInsulins],
+  );
+
+  const suggestedDoses = useMemo<InsulinDose[]>(
+    () => [
+      ...basalDoses,
+      ...suggestedBolusInsulins.map((b, i) => ({
+        id:              `suggested-bolus-${i}`,
+        insulin_name:    b.insulin,
+        dose_units:      b.dose,
+        administered_at: formatHour(b.hour),
+        dose_type:       'bolus' as const,
+      })),
+    ],
+    [basalDoses, suggestedBolusInsulins],
+  );
+
   /* ── IOB analysis for the score gauge ────────────────────────────────
    * Runs at top level before early returns. Returns null values while
    * basalDoses is empty (during load / no profile).                    */
@@ -84,6 +168,12 @@ export default function WhatIfPage() {
     resolutionMinutes: 15,
     patientWeightKg:   70,
   });
+
+  /* ── IOB analysis for scenario comparison ────────────────────────────
+   * currentResult: basal + current bolus timing
+   * suggestedResult: basal + suggested meal-time timing                */
+  const currentResult   = useIOBHunter(currentDoses,   { resolutionMinutes: 15, patientWeightKg: 70 });
+  const suggestedResult = useIOBHunter(suggestedDoses, { resolutionMinutes: 15, patientWeightKg: 70 });
 
   /* ── Load patient profile on mount ──────────────────────────────── */
   useEffect(() => {
@@ -160,6 +250,12 @@ export default function WhatIfPage() {
 
   const removeBolusInsulin = (index: number) =>
     setBolusInsulins((prev) => prev.filter((_, i) => i !== index));
+
+  /* ── Apply suggested timing (one-tap) ───────────────────────────── */
+  const applySuggestedTiming = () => setBolusInsulins(suggestedBolusInsulins);
+
+  const isAlreadyOptimal = bolusInsulins.length > 0 &&
+    suggestedBolusInsulins.every((s, i) => Math.abs(s.hour - bolusInsulins[i].hour) < 0.1);
 
   /* ── Loading / error / empty guards ─────────────────────────────── */
   if (loading) return (
@@ -516,6 +612,262 @@ export default function WhatIfPage() {
             </div>
           </div>
         </div>
+
+        {/* ── Scenario Comparison + Risk Countdown ─────────────────────── */}
+        {(() => {
+          const nowHour = new Date().getHours() + new Date().getMinutes() / 60;
+          const risk = riskCountdown(currentResult.stackingAlerts, nowHour);
+          const ck = currentResult.kpis;
+          const sk = suggestedResult.kpis;
+
+          const RISK_BG:     Record<RiskLevel, string> = {
+            none:     '#f0fdf4',
+            later:    '#eff6ff',
+            soon:     '#fffbeb',
+            imminent: '#fef2f2',
+          };
+          const RISK_COLOUR: Record<RiskLevel, string> = {
+            none:     '#16a34a',
+            later:    '#2563eb',
+            soon:     '#d97706',
+            imminent: '#dc2626',
+          };
+          const RISK_ICON: Record<RiskLevel, string> = {
+            none:     '✓',
+            later:    '◷',
+            soon:     '⚠',
+            imminent: '⚡',
+          };
+
+          // Delta helpers — positive = improvement
+          const peakDelta    = ck.peak_iob - sk.peak_iob;               // lower = better
+          const overlapDelta = ck.hours_strong_or_overlap - sk.hours_strong_or_overlap; // lower = better
+          const troughDelta  = sk.trough_iob - ck.trough_iob;           // higher = better
+
+          function deltaChip(value: number, unit: string, label: string) {
+            const improved = value > 0.05;
+            const worse    = value < -0.05;
+            const colour   = improved ? '#16a34a' : worse ? '#dc2626' : '#94a3b8';
+            const arrow    = improved ? '↓' : worse ? '↑' : '–';
+            return (
+              <div key={label} style={{ textAlign: 'center', padding: '8px 0' }}>
+                <div style={{ fontSize: 18, fontWeight: 700, color: colour }}>
+                  {arrow} {Math.abs(value).toFixed(1)}{unit}
+                </div>
+                <div style={{ fontSize: 10, color: '#94a3b8', marginTop: 2 }}>{label}</div>
+              </div>
+            );
+          }
+
+          function kpiPills(
+            peak: number, overlap: number, trough: number,
+            comparePeak?: number, compareOverlap?: number, compareTrough?: number,
+          ) {
+            function pill(value: string, sub: string, improved?: boolean) {
+              return (
+                <div
+                  key={sub}
+                  style={{
+                    padding: '8px 12px',
+                    borderRadius: 8,
+                    background: improved === true ? '#f0fdf4' : improved === false ? '#fef2f2' : '#f8fafc',
+                    border: `1px solid ${improved === true ? '#bbf7d0' : improved === false ? '#fecaca' : '#e2e8f0'}`,
+                    textAlign: 'center',
+                    flex: 1,
+                  }}
+                >
+                  <div style={{ fontSize: 15, fontWeight: 700, color: '#1A2A5E' }}>{value}</div>
+                  <div style={{ fontSize: 10, color: '#64748b', marginTop: 1 }}>{sub}</div>
+                </div>
+              );
+            }
+            const peakImproved    = comparePeak    !== undefined ? peak < comparePeak - 0.05          : undefined;
+            const overlapImproved = compareOverlap !== undefined ? overlap < compareOverlap - 0.05     : undefined;
+            const troughImproved  = compareTrough  !== undefined ? trough > compareTrough + 0.05       : undefined;
+            return (
+              <div style={{ display: 'flex', gap: 6, marginTop: 10 }}>
+                {pill(`${peak.toFixed(1)} U`,    'Peak IOB',      peakImproved)}
+                {pill(`${overlap.toFixed(1)} h`, 'Overlap hours', overlapImproved)}
+                {pill(`${trough.toFixed(1)} U`,  'Trough IOB',    troughImproved)}
+              </div>
+            );
+          }
+
+          const hasBolus = bolusInsulins.length > 0;
+
+          return (
+            <div style={{ marginTop: 20 }}>
+
+              {/* Risk countdown banner */}
+              <div
+                style={{
+                  background:   RISK_BG[risk.level],
+                  border:       `1px solid ${RISK_COLOUR[risk.level]}33`,
+                  borderRadius: 12,
+                  padding:      '12px 20px',
+                  display:      'flex',
+                  alignItems:   'center',
+                  gap:          14,
+                  marginBottom: 12,
+                }}
+              >
+                <span
+                  style={{
+                    fontSize:   22,
+                    color:      RISK_COLOUR[risk.level],
+                    fontWeight: 700,
+                    flexShrink: 0,
+                  }}
+                >
+                  {RISK_ICON[risk.level]}
+                </span>
+                <div>
+                  <p
+                    style={{
+                      margin:     0,
+                      fontSize:   13,
+                      fontWeight: 600,
+                      color:      RISK_COLOUR[risk.level],
+                    }}
+                  >
+                    {risk.label}
+                  </p>
+                  <p style={{ margin: '2px 0 0', fontSize: 11, color: '#64748b' }}>
+                    Risk window analysis · current schedule · {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  </p>
+                </div>
+              </div>
+
+              {/* Comparison panel — only when bolus doses exist */}
+              {hasBolus && (
+                <div
+                  style={{
+                    display:             'grid',
+                    gridTemplateColumns: '1fr 90px 1fr',
+                    gap:                 12,
+                    alignItems:          'start',
+                  }}
+                >
+
+                  {/* Current schedule card */}
+                  <div
+                    style={{
+                      background:   '#fff',
+                      borderRadius: 12,
+                      border:       '1px solid rgba(148,163,184,0.35)',
+                      padding:      '16px 18px',
+                    }}
+                  >
+                    <p style={{ margin: '0 0 2px', fontSize: 10, fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: 0.6 }}>
+                      Current Schedule
+                    </p>
+                    <p style={{ margin: 0, fontSize: 13, fontWeight: 600, color: '#1A2A5E' }}>
+                      Your bolus timing
+                    </p>
+                    {kpiPills(ck.peak_iob, ck.hours_strong_or_overlap, ck.trough_iob)}
+                    <div style={{ marginTop: 12, display: 'flex', flexDirection: 'column', gap: 5 }}>
+                      {bolusInsulins.map((b, i) => (
+                        <div key={i} style={{ fontSize: 11, color: '#475569', display: 'flex', justifyContent: 'space-between' }}>
+                          <span>{b.insulin} · {b.dose} U</span>
+                          <span style={{ fontWeight: 700, color: '#1A2A5E', fontFamily: 'monospace' }}>
+                            {formatHour(b.hour)}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Delta column */}
+                  <div
+                    style={{
+                      display:        'flex',
+                      flexDirection:  'column',
+                      justifyContent: 'center',
+                      alignItems:     'center',
+                      gap:            4,
+                      paddingTop:     48,
+                    }}
+                  >
+                    <div style={{ fontSize: 11, color: '#94a3b8', marginBottom: 6, textAlign: 'center' }}>vs suggested</div>
+                    {deltaChip(peakDelta,    'U', 'Peak IOB')}
+                    {deltaChip(overlapDelta, 'h', 'Overlap')}
+                    {deltaChip(troughDelta,  'U', 'Trough')}
+                  </div>
+
+                  {/* Suggested schedule card */}
+                  <div
+                    style={{
+                      background:   '#fff',
+                      borderRadius: 12,
+                      border:       '1px solid rgba(42,181,193,0.4)',
+                      padding:      '16px 18px',
+                    }}
+                  >
+                    <p style={{ margin: '0 0 2px', fontSize: 10, fontWeight: 700, color: '#2AB5C1', textTransform: 'uppercase', letterSpacing: 0.6 }}>
+                      Suggested Schedule
+                    </p>
+                    <p style={{ margin: 0, fontSize: 13, fontWeight: 600, color: '#1A2A5E' }}>
+                      Standard meal anchors
+                    </p>
+                    {kpiPills(sk.peak_iob, sk.hours_strong_or_overlap, sk.trough_iob, ck.peak_iob, ck.hours_strong_or_overlap, ck.trough_iob)}
+                    <div style={{ marginTop: 12, display: 'flex', flexDirection: 'column', gap: 5 }}>
+                      {suggestedBolusInsulins.map((b, i) => {
+                        const changed = Math.abs(b.hour - bolusInsulins[i].hour) > 0.1;
+                        return (
+                          <div key={i} style={{ fontSize: 11, color: '#475569', display: 'flex', justifyContent: 'space-between' }}>
+                            <span>{b.insulin} · {b.dose} U</span>
+                            <span style={{ fontWeight: 700, color: changed ? '#2AB5C1' : '#1A2A5E', fontFamily: 'monospace' }}>
+                              {formatHour(b.hour)}{changed ? ' ←' : ''}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                    <button
+                      type="button"
+                      onClick={applySuggestedTiming}
+                      disabled={isAlreadyOptimal}
+                      style={{
+                        marginTop:    12,
+                        width:        '100%',
+                        padding:      '9px 0',
+                        background:   isAlreadyOptimal ? '#e2e8f0' : '#2AB5C1',
+                        color:        isAlreadyOptimal ? '#94a3b8' : '#fff',
+                        border:       'none',
+                        borderRadius: 8,
+                        fontSize:     12,
+                        fontWeight:   600,
+                        cursor:       isAlreadyOptimal ? 'default' : 'pointer',
+                        transition:   'background 0.15s',
+                      }}
+                    >
+                      {isAlreadyOptimal ? 'Already at suggested timing' : 'Apply Suggested Timing'}
+                    </button>
+                    <p style={{ margin: '8px 0 0', fontSize: 10, color: '#94a3b8', textAlign: 'center' }}>
+                      Educational suggestion only — confirm with your care team
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {!hasBolus && (
+                <div
+                  style={{
+                    background:   '#f8fafc',
+                    borderRadius: 12,
+                    border:       '1px solid #e2e8f0',
+                    padding:      '20px',
+                    textAlign:    'center',
+                    color:        '#94a3b8',
+                    fontSize:     13,
+                  }}
+                >
+                  Add bolus doses above to see timing comparison and suggested schedule
+                </div>
+              )}
+            </div>
+          );
+        })()}
 
         <p
           style={{
