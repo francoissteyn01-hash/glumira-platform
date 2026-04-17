@@ -11,6 +11,7 @@ import { conditionEventRouter } from "./routes/condition-event.router";
 import { emotionalDistressRouter } from "./routes/emotional-distress.router";
 import { patternRouter } from "./routes/pattern.router";
 import { miraAIRouter } from "./routes/mira.router";
+import { consentRouter } from "./routes/consent.router";
 
 export const appRouter = router({
   health: publicProcedure.query(() => ({
@@ -25,6 +26,7 @@ export const appRouter = router({
   emotionalDistress: emotionalDistressRouter,
   patterns: patternRouter,
   mira: miraAIRouter,
+  consent: consentRouter,
 });
 
 export type AppRouter = typeof appRouter;
