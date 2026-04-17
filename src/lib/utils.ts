@@ -2,11 +2,6 @@ import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) { return twMerge(clsx(inputs)); }
-export function formatGlucose(v: number, unit: "mmol" | "mgdl" = "mmol") {
-  return unit === "mmol" ? `${v.toFixed(1)} mmol/L` : `${Math.round(v)} mg/dL`;
-}
-export function mmolToMgdl(mmol: number) { return Math.round(mmol * 18.018); }
-export function mgdlToMmol(mgdl: number) { return parseFloat((mgdl / 18.018).toFixed(1)); }
 export function glucoseStatus(mmol: number): "low" | "normal" | "high" | "critical" {
   if (mmol < 3.9)  return "low";
   if (mmol <= 10.0) return "normal";

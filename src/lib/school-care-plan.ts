@@ -23,10 +23,11 @@
  */
 
 import { getMealRegime, type MealRegime } from "./meal-regimes";
+import { mgdlToMmol as _mgdlToMmolNum } from "@/utils/glucose-units";
 
 // ─── Types ────────────────────────────────────────────────────
 
-export interface SchoolCarePlanInput {
+export type SchoolCarePlanInput = {
   // Patient
   patientFirstName: string;
   patientLastName: string;
@@ -70,14 +71,14 @@ export interface SchoolCarePlanInput {
   additionalNotes?: string;
 }
 
-export interface EmergencyContact {
+export type EmergencyContact = {
   name: string;
   relationship: string;
   phone: string;
   altPhone?: string;
 }
 
-export interface SchoolCarePlanResult {
+export type SchoolCarePlanResult = {
   html: string;
   patientName: string;
   generatedAt: string;
@@ -100,7 +101,7 @@ function formatDate(iso: string): string {
 }
 
 function mgdlToMmol(mgdl: number): string {
-  return (mgdl / 18.018).toFixed(1);
+  return _mgdlToMmolNum(mgdl).toFixed(1);
 }
 
 function diabetesTypeLabel(type: string): string {
