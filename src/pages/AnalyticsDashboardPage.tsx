@@ -13,14 +13,14 @@
  */
 
 import { DISCLAIMER } from "@/lib/constants";
-import { usePatientName } from "@/hooks/usePatientName";
+import { useDisplayName } from "@/hooks/useDisplayName";
 import GlucoseVariabilityCard    from "@/components/widgets/GlucoseVariabilityCard";
 import InsulinSensitivityHeatmap from "@/components/widgets/InsulinSensitivityHeatmap";
 import CarbRatioCard             from "@/components/widgets/CarbRatioCard";
 import BasalRateCard             from "@/components/widgets/BasalRateCard";
 
 export default function AnalyticsDashboardPage() {
-  const { patientName, isCaregiver } = usePatientName();
+  const { displayName: patientName, isCaregiver } = useDisplayName();
 
   return (
     <div style={{ minHeight: "100vh", background: "var(--bg-primary)" }}>

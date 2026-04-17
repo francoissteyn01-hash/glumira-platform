@@ -187,9 +187,15 @@ function DesktopSidebar({ collapsed, setCollapsed }: { collapsed: boolean; setCo
         borderBottom: `1px solid ${BORDER}`,
       }}>
         {!collapsed && (
-          <span style={{ fontSize: 16, fontWeight: 700, color: TEAL, letterSpacing: "-0.01em", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
-            GluMira&trade;
-          </span>
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <img src="/brand/mira-hero.png" alt="Mira" style={{ width: 28, height: 28, objectFit: "contain" }} />
+            <span style={{ fontSize: 16, fontWeight: 700, color: TEAL, letterSpacing: "-0.01em", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+              GluMira&trade;
+            </span>
+          </div>
+        )}
+        {collapsed && (
+          <img src="/brand/mira-hero.png" alt="Mira" style={{ width: 28, height: 28, objectFit: "contain", margin: "0 auto" }} />
         )}
         <button type="button"
           onClick={() => setCollapsed(!collapsed)}

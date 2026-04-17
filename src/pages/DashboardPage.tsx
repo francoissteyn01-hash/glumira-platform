@@ -27,7 +27,7 @@ import AlertNotificationCenter from "@/components/widgets/AlertNotificationCente
 import PresentationToggle from "@/components/PresentationMode";
 import ShareButton from "@/components/ShareButton";
 import ThemeToggle from "@/components/ThemeToggle";
-import { usePatientName } from "@/hooks/usePatientName";
+import { useDisplayName } from "@/hooks/useDisplayName";
 import QuickActions from "@/components/widgets/QuickActions";
 
 const ARROWS: Record<string, string> = {
@@ -58,7 +58,7 @@ const INTENSITY_COLOURS: Record<string, string> = {
 /* ═══════════════════════════════════════════════════════════════════════════ */
 export default function DashboardPage() {
   const { user } = useAuth();
-  const { patientName, isCaregiver } = usePatientName();
+  const { displayName: patientName, isCaregiver } = useDisplayName();
   const { units: glucoseUnits } = useGlucoseUnits();
 
   const {

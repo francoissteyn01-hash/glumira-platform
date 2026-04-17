@@ -114,7 +114,7 @@ export default function RegisterPage() {
 
   const roles = [
     { id: "caregiver", label: "Caregiver" },
-    { id: "patient", label: "Patient" },
+    { id: "patient", label: "Self-Managing" },
     { id: "clinician", label: "Clinician" },
   ];
 

@@ -9,6 +9,7 @@ import { useAuth, supabase } from "@/hooks/useAuth";
 import UnitToggle from "@/components/UnitToggle";
 import NightscoutSetup from "@/components/NightscoutSetup";
 import ThemeToggle from "@/components/ThemeToggle";
+import { useTheme } from "@/hooks/useTheme";
 import { useAutoSave, SavedIndicator } from "@/hooks/useAutoSave";
 
 const NAVY = "var(--text-primary)";
@@ -18,6 +19,7 @@ const MUTED = "var(--text-muted)";
 
 export default function SettingsPage() {
   const { user } = useAuth();
+  const { mode, setMode } = useTheme();
   const [nsUrl, setNsUrl] = useState(() => localStorage.getItem("ns_url") ?? "");
   const [nsSecret, setNsSecret] = useState(() => localStorage.getItem("ns_secret") ?? "");
   const [pwNew, setPwNew] = useState("");
@@ -148,6 +150,28 @@ export default function SettingsPage() {
           <p style={{ fontSize: 12, color: MUTED, marginBottom: 8 }}>
             Designed for caregivers at 2am who don&apos;t want to wake sleeping companions.
           </p>
+          <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
+            {(["auto", "manual"] as const).map((m) => (
+              <button
+                key={m}
+                type="button"
+                onClick={() => setMode(m)}
+                style={{
+                  padding: "6px 14px", borderRadius: 20, fontSize: 12, fontWeight: 500,
+                  border: `1px solid ${mode === m ? TEAL : BORDER}`,
+                  background: mode === m ? "rgba(42,181,193,0.1)" : "var(--bg-card)",
+                  color: mode === m ? TEAL : MUTED, cursor: "pointer",
+                }}
+              >
+                {m === "auto" ? "Auto (time of day)" : "Manual"}
+              </button>
+            ))}
+          </div>
+          {mode === "auto" && (
+            <p style={{ fontSize: 11, color: MUTED, marginBottom: 10 }}>
+              Dark after 19:00 · Light after 07:00 — switches automatically
+            </p>
+          )}
           <ThemeToggle showLabel />
         </Section>
 

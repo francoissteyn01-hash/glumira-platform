@@ -15,7 +15,7 @@ const T = {
 
 type DiabetesType = "type1" | "type2" | "gestational" | "lada" | "other";
 
-interface DiabetesOption {
+type DiabetesOption = {
   id: DiabetesType;
   icon: string;
   title: string;
@@ -32,7 +32,7 @@ const DIABETES_TYPES: DiabetesOption[] = [
 
 type ProfileType = "caregiver" | "adult_patient" | "newly_diagnosed" | "clinician" | "teen";
 
-interface ProfileOption {
+type ProfileOption = {
   id: ProfileType;
   icon: string;
   title: string;
@@ -41,7 +41,7 @@ interface ProfileOption {
 
 const PROFILES: ProfileOption[] = [
   { id: "caregiver", icon: "🤱", title: "Caregiver", subtitle: "Parent or guardian of someone with diabetes" },
-  { id: "adult_patient", icon: "🩺", title: "Patient", subtitle: "Living with diabetes" },
+  { id: "adult_patient", icon: "🩺", title: "Self-Managing", subtitle: "Living with diabetes" },
   { id: "newly_diagnosed", icon: "🌱", title: "Newly Diagnosed", subtitle: "Diagnosed in the last 3 months" },
   { id: "teen", icon: "⚡", title: "Teen / Young Adult", subtitle: "13-18, managing my own diabetes" },
   { id: "clinician", icon: "🧑‍⚕️", title: "Clinician", subtitle: "Healthcare professional" },
@@ -68,7 +68,7 @@ const T2_MED_TYPES = [
   "Not sure yet",
 ];
 
-interface ModuleRec {
+type ModuleRec = {
   id: string;
   label: string;
   href: string;
