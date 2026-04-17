@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import {
   analyseMenopause,
@@ -61,7 +61,7 @@ const SYMPTOM_OPTIONS: { value: Symptom; label: string }[] = [
 
 const TRACKER_KEY = "glumira_menopause_tracker";
 
-type TrackerEntry = { date: string; fastingMmol: string; postMealMmol: string; symptoms: Symptom[] }
+type TrackerEntry = { date: string; fastingMmol: string; postMealMmol: string; symptoms: Symptom[]; unit: "mmol" | "mg" }
 
 function loadTrackerEntries(): TrackerEntry[] {
   try { return JSON.parse(localStorage.getItem(TRACKER_KEY) ?? "[]"); } catch { return []; }
@@ -88,6 +88,7 @@ export default function MenopauseModule() {
     fastingMmol: "",
     postMealMmol: "",
     symptoms: [],
+    unit: "mmol",
   });
 
   const stageDesc = STAGES.find(s => s.value === stage)?.desc ?? "";
@@ -120,10 +121,10 @@ export default function MenopauseModule() {
 
   const addTrackerEntry = () => {
     if (!trackerForm.fastingMmol || !trackerForm.postMealMmol) return;
-    const updated = [...trackerEntries, trackerForm];
+    const updated = [...trackerEntries, { ...trackerForm, unit }];
     setTrackerEntries(updated);
     saveTrackerEntries(updated);
-    setTrackerForm({ date: new Date().toISOString().slice(0, 10), fastingMmol: "", postMealMmol: "", symptoms: [] });
+    setTrackerForm({ date: new Date().toISOString().slice(0, 10), fastingMmol: "", postMealMmol: "", symptoms: [], unit: "mmol" });
   };
 
   const resistanceColour = (r: MenopauseAnalysisResult["resistanceLevel"]) =>
@@ -132,11 +133,12 @@ export default function MenopauseModule() {
   const hypoColour = (r: MenopauseAnalysisResult["nocturnalHypoRisk"]) =>
     r === "low" ? "#16a34a" : r === "elevated" ? "#d97706" : "#dc2626";
 
-  const weekSummary = trackerEntries.length >= 7 ? (() => {
+  const weekSummary = useMemo(() => {
+    if (trackerEntries.length < 7) return null;
     const vals = trackerEntries.slice(-7).map(e => parseFloat(e.fastingMmol)).filter(v => !isNaN(v));
     const avg = vals.reduce((a, b) => a + b, 0) / vals.length;
     return { avg: avg.toFixed(1), count: vals.length };
-  })() : null;
+  }, [trackerEntries]);
 
   const inputStyle: React.CSSProperties = {
     border: `1px solid ${T.border}`, borderRadius: 8,
@@ -389,7 +391,7 @@ export default function MenopauseModule() {
                     <div style={{ fontSize: 12, color: T.muted, marginBottom: 6 }}>Recent entries</div>
                     {trackerEntries.slice(-3).reverse().map((e, i) => (
                       <div key={i} style={{ fontSize: 12, color: "#374151", padding: "4px 0", borderBottom: `1px solid ${T.border}` }}>
-                        {`${e.date} — fasting ${e.fastingMmol}, post-meal ${e.postMealMmol} ${unit === "mmol" ? "mmol/L" : "mg/dL"}`}
+                        {`${e.date} — fasting ${e.fastingMmol}, post-meal ${e.postMealMmol} ${e.unit === "mmol" ? "mmol/L" : "mg/dL"}`}
                       </div>
                     ))}
                   </div>
