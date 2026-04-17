@@ -1,5 +1,10 @@
 /**
- * GluMira™ V7 — Pharmacokinetic Engine
+ * GluMira™ V7 — Pharmacokinetic Engine (LEGACY)
+ *
+ * @deprecated Active consumers: ReportPage.tsx only.
+ * New features must use the cited v7 engine in src/iob-hunter/engine/iob-engine.ts
+ * which implements Plank 2005 (Levemir dose-dependent DOA), albumin-bound kinetics,
+ * and 6 decay models with peer-reviewed references.
  *
  * Two-compartment absorption model for insulin-on-board (IOB).
  * Uses the Bateman function: C(t) = dose × (ka/(ka-ke)) × (e^(-ke×t) - e^(-ka×t))

@@ -21,9 +21,7 @@ import {
   ResponsiveContainer, CartesianGrid, ReferenceLine, ReferenceArea,
 } from "recharts";
 import {
-  buildTerrainTimeline,
   generateInsight,
-  computeEntryCurve,
   type InsulinPharmacology,
   type InsulinEntry,
   type PressureClass,
@@ -68,8 +66,8 @@ export type IOBTerrainChartProps = {
   showWhatIf?: boolean;
   compact?: boolean;
   tier?: "free" | "pro" | "ai" | "clinical";
-  /** When provided, uses v7 cited PK engine instead of legacy Bateman model */
-  v7Data?: V7ChartData;
+  /** v7 cited PK engine data (required — legacy Bateman path removed 2026-04-17) */
+  v7Data: V7ChartData;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════ */
@@ -91,11 +89,6 @@ const PRESSURE_OPACITY: Record<PressureClass, number> = {
 // Rule 50 audit — basal blues (#5B8FD4 vs #7F77DD vs #378ADD vs #5BA3CF) were
 // perceptually adjacent on navy. Spread hues to distinguish stacked layers.
 const BASAL_STACK_COLOURS = ["#5B8FD4", "#9E7FDD", "#2E86AB", "#7FB3D3"];
-const BOLUS_STACK_COLOURS: Record<string, string> = {
-  "ultra-rapid": "#2AB5C1",
-  "rapid": "#2AB5C1",
-  "short": "#E8A838",
-};
 const BOLUS_STACK_DEFAULT = "#2AB5C1";
 
 // Per-insulin colours — high contrast, multi-colour (reference images)
@@ -154,17 +147,9 @@ type ChartPoint = {
   [key: string]: any;
 } & TerrainPoint
 
-function attachGlucose(points: TerrainPoint[], glucoseData: GlucosePoint[] | undefined, cycles: number): ChartPoint[] {
-  if (!glucoseData || glucoseData.length === 0) return points;
-  const glucoseMap = new Map<number, number>();
-  for (const gp of glucoseData) {
-    const min = timeToMinutes(gp.time);
-    const bucket = Math.round(min / 5) * 5;
-    glucoseMap.set(bucket, gp.value);
-    for (let c = 1; c < cycles; c++) glucoseMap.set(bucket + c * MINUTES_PER_DAY, gp.value);
-  }
-  return points.map((pt) => ({ ...pt, glucose: glucoseMap.get(pt.minute) }));
-}
+// attachGlucose was removed with the legacy Bateman path (2026-04-17).
+// Glucose overlay in v7 mode is handled by the parent passing glucoseData
+// as a separate prop to GlucoseOverlay component.
 
 /** Merge adjacent timepoints with same pressure into contiguous bands */
 function buildPressureBands(points: TerrainPoint[]): Array<{ start: number; end: number; pressure: PressureClass }> {
@@ -199,12 +184,11 @@ function getCurrentMinute(): number {
 /* ═══════════════════════════════════════════════════════════════════════════ */
 
 export default function IOBTerrainChart({
-  profile, basalEntries, bolusEntries, glucoseData,
+  profile, basalEntries, bolusEntries, glucoseData: _glucoseData,
   cycles = 2, showInsight = true, showDensityBar = true, showWhatIf = false, compact = false, tier = "free",
   v7Data,
 }: IOBTerrainChartProps) {
   const safeCycles = Math.max(2, cycles);
-  const useV7 = v7Data != null;
 
   const view = "clinical" as const;
 
@@ -227,19 +211,16 @@ export default function IOBTerrainChart({
     setWhatIfBolus(bolusEntries);
   }, [basalEntries, bolusEntries, userEditedWhatIf]);
 
-  const isModified = !useV7 && userEditedWhatIf;
-  const activeBasal = isModified ? whatIfBasal : basalEntries;
-  const activeBolus = isModified ? whatIfBolus : bolusEntries;
+  // entries: used for generateInsight, earliest-injection time, totalDoses, what-if panel
+  const entries = useMemo(() => toInsulinEntries(basalEntries, bolusEntries), [basalEntries, bolusEntries]);
+  // isModified: true when user has edited doses in the What-If panel (cosmetic indicator only in v7 mode)
+  const isModified = userEditedWhatIf;
 
   // ═══════════════════════════════════════════════════════════════════
-  // DATA PIPELINE — v7 engine (cited PK) when available, legacy fallback
+  // DATA PIPELINE — v7 cited PK engine (legacy Bateman path removed)
   // ═══════════════════════════════════════════════════════════════════
 
-  const entries = useMemo(() => toInsulinEntries(activeBasal, activeBolus), [activeBasal, activeBolus]);
-
-  // --- v7 path: convert IOBCurvePoint[] → chart-ready data ---
   const v7Derived = useMemo(() => {
-    if (!v7Data) return null;
     const { curve, doses, maxIOB } = v7Data;
     if (curve.length === 0) return null;
 
@@ -335,50 +316,15 @@ export default function IOBTerrainChart({
     return { points: enriched, rawPoints: points, peakIOB: maxIOB, dangerWindows, worstPressure, entryCurves: entryCurvesV7 };
   }, [v7Data]);
 
-  // --- Legacy path (fallback when v7Data not provided) ---
-  const legacyDerived = useMemo(() => {
-    if (useV7) return null;
-    const { points: rp, peakIOB: pk, dangerWindows: dw, worstPressure: wp } = buildTerrainTimeline(entries, safeCycles);
-    const pts = attachGlucose(rp, glucoseData, safeCycles);
-    const totalMinutes = safeCycles * MINUTES_PER_DAY;
-    let basalIdx = 0;
-    let _bolusIdx = 0;
-    const ec = entries.map((entry, idx) => {
-      let colour: string;
-      let stackColour: string;
-      if (entry.type === "basal") {
-        colour = BASAL_COLOURS[idx % BASAL_COLOURS.length];
-        stackColour = BASAL_STACK_COLOURS[basalIdx % BASAL_STACK_COLOURS.length];
-        basalIdx++;
-      } else {
-        colour = BOLUS_COLOURS[idx % BOLUS_COLOURS.length];
-        stackColour = BOLUS_STACK_COLOURS[entry.pharmacology.category] || BOLUS_STACK_DEFAULT;
-        _bolusIdx++;
-      }
-      return { entry, idx, colour, stackColour, curve: computeEntryCurve(entry, totalMinutes, safeCycles) };
-    });
-    const lookup = new Map<number, Record<string, number>>();
-    for (const { entry, curve } of ec) {
-      for (const pt of curve) {
-        if (!lookup.has(pt.minute)) lookup.set(pt.minute, {});
-        lookup.get(pt.minute)![entry.id] = pt.iob;
-      }
-    }
-    const enriched = pts.map((pt) => ({ ...pt, ...(lookup.get(pt.minute) || {}) }));
-    return { points: enriched, rawPoints: rp, peakIOB: pk, dangerWindows: dw, worstPressure: wp, entryCurves: ec };
-  }, [useV7, entries, safeCycles, glucoseData]);
-
-  // --- Unified variables for the rest of the component ---
-  const derived = v7Derived ?? legacyDerived!;
+  const derived = v7Derived ?? { points: [], rawPoints: [], peakIOB: 0, dangerWindows: [], worstPressure: "light" as const, entryCurves: [] };
   const { rawPoints, peakIOB, dangerWindows, worstPressure, entryCurves } = derived;
   const enrichedPoints = derived.points;
 
   const basalOnlyCurves = useMemo(() => entryCurves.filter(({ entry }) => entry.type === "basal"), [entryCurves]);
   const bolusOnlyCurves = useMemo(() => entryCurves.filter(({ entry }) => entry.type === "bolus"), [entryCurves]);
 
-  // What-if comparison (legacy only)
-  const originalEntries = useMemo(() => toInsulinEntries(basalEntries, bolusEntries), [basalEntries, bolusEntries]);
-  const { points: originalPoints } = useMemo(() => useV7 ? { points: [] as TerrainPoint[] } : buildTerrainTimeline(originalEntries, safeCycles), [useV7, originalEntries, safeCycles]);
+  // What-if comparison overlay — empty in v7 mode (v7 engine handles what-if via dose edits)
+  const originalPoints: TerrainPoint[] = [];
 
   const pressureBands = useMemo(() => buildPressureBands(rawPoints), [rawPoints]);
 
