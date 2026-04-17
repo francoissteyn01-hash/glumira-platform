@@ -16,7 +16,6 @@ import { useSessionTimeout, SessionWarningModal } from "@/hooks/useSessionTimeou
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 /* ─── Lazy pages ─────────────────────────────────────────────────────────── */
-const LandingPage   = lazy(() => import("@/pages/LandingPage"));
 const LandingPageV2 = lazy(() => import("@/pages/LandingPageV2"));
 const AuthPage      = lazy(() => import("@/pages/RegisterPage"));
 const AuthCallbackPage = lazy(() => import("@/pages/AuthCallbackPage"));
@@ -195,7 +194,7 @@ function AppShell({ children }: { children: React.ReactNode }) {
 function HomeRoute() {
   const { user } = useAuth();
   if (user) return <Navigate to="/dashboard" replace />;
-  return <LandingPage />;
+  return <LandingPageV2 />;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════ */
@@ -214,7 +213,6 @@ export default function App() {
           <Suspense fallback={<LoadingFallback />}>
             <Routes>
               <Route path="/"          element={<HomeRoute />} />
-              <Route path="/v2"        element={<LandingPageV2 />} />
               <Route path="/auth"      element={<AuthPage />} />
               <Route path="/auth/callback" element={<AuthCallbackPage />} />
               {/* Public routes — no auth required */}
