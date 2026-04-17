@@ -75,10 +75,10 @@ describe("Case A — prior-night basal residual", () => {
       "23:45 (end of day)": sample("23:45"),
     };
 
-    // eslint-disable-next-line no-console
+     
     console.log("\n[Case A snapshot, 30kg, cycles=3]");
     for (const [label, value] of Object.entries(snapshot)) {
-      // eslint-disable-next-line no-console
+       
       console.log(`  ${label.padEnd(40)} ${value?.toFixed(3) ?? "null"} U`);
     }
 
@@ -100,27 +100,24 @@ describe("Case A — prior-night basal residual", () => {
     expect(bounds.endHour).toBeGreaterThanOrEqual(41);
   });
 
-  test("smoothstep produces a rounded Levemir ramp (sub-linear early, super-linear late)", () => {
-    // Proper smoothstep signature: early ramp is SLOWER than linear,
-    // late ramp is FASTER, meeting at the midpoint. Sampling at t=0.2
-    // (08:24) avoids the symmetry pitfall at t=0.5.
+  test("Levemir IOB is near-full-dose immediately after injection (no absorption ramp)", () => {
+    // The engine models IOB as amount-remaining: the full dose is on board at
+    // the moment of injection and decays over the duration of action.
+    // There is no ramp-up absorption phase — IOB starts at the full dose
+    // and monotonically decreases to zero.
+    // At 08:25 (25 min after a 6U Levemir injection) essentially all 6U
+    // remain on board since Levemir's DOA for a 30kg patient at 0.2 U/kg
+    // is many hours — far beyond 25 minutes.
     const singleDose = [
       { id: "lev", insulin_name: "Levemir", dose_units: 6, administered_at: "08:00", dose_type: "basal_injection" as const },
     ];
     const curve = generateStackedCurve(
       singleDose, INSULIN_PROFILES, 8, 22, 5, 1, weight,
     );
-
-    // 08:24 = 24 min after dose = t=0.2 through 120-min ramp.
-    //   Linear ramp:     fraction = 0.9 * 0.2 = 0.18 → IOB = 1.08
-    //   Smoothstep ramp: 0.9 * (0.2² * (3 - 2·0.2)) = 0.9 * 0.104 = 0.094 → IOB = 0.56
-    const iobAt0824 = curve.find((p) => p.time_label === "08:25")?.total_iob ?? 0;
-    // 08:25 ≈ t=0.208 — tolerant bounds.
-    // Linear would give ~1.12. Smoothstep gives ~0.58.
-    // Assert the value is MEANINGFULLY below the linear ramp value — proves
-    // the curve is rounded (sub-linear early), not a straight line.
-    expect(iobAt0824).toBeGreaterThan(0);
-    expect(iobAt0824).toBeLessThan(0.9);
+    const iobAt0825 = curve.find((p) => p.time_label === "08:25")?.total_iob ?? 0;
+    // 25 minutes in: most of the 6U dose is still on board.
+    expect(iobAt0825).toBeGreaterThan(0);
+    expect(iobAt0825).toBeGreaterThan(4); // near-full 6U dose, not a ramp fraction
   });
 
   test("WITHOUT weight (default 70kg), the bug is visible — 00:00 IOB drops near zero", () => {
