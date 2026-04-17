@@ -325,3 +325,13 @@ export const miraConversations = pgTable("mira_conversations", {
   createdAt:  timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   updatedAt:  timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
 });
+
+export const userConsents = pgTable("user_consents", {
+  id:                         uuid("id").primaryKey().defaultRandom(),
+  userId:                     uuid("user_id").notNull(),
+  timestamp:                  timestamp("timestamp", { withTimezone: true }).notNull().defaultNow(),
+  consents:                   jsonb("consents").notNull().default([]),
+  researchConsent:            boolean("research_consent").notNull().default(false),
+  researchConsentTs:          timestamp("research_consent_ts",           { withTimezone: true }),
+  researchConsentWithdrawnTs: timestamp("research_consent_withdrawn_ts", { withTimezone: true }),
+});
