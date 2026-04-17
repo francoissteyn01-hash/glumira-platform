@@ -249,7 +249,7 @@ export default function MenopauseModule() {
           onClick={handleAnalyse}
           disabled={!canAnalyse}
           style={{
-            width: "100%", marginBottom: 20, padding: "15px 24px",
+            width: "100%", marginBottom: 20, padding: "15px 24px", minHeight: "48px",
             background: canAnalyse ? `linear-gradient(135deg, ${T.teal}, #1e9eab)` : T.border,
             color: canAnalyse ? T.white : T.muted,
             border: "none", borderRadius: 12, fontSize: 16, fontWeight: 600,
@@ -352,11 +352,11 @@ export default function MenopauseModule() {
                     <input style={inputStyle} type="date" value={trackerForm.date} onChange={e => setTrackerForm(f => ({ ...f, date: e.target.value }))} />
                   </div>
                   <div>
-                    <div style={{ fontSize: 12, color: T.muted, marginBottom: 4 }}>Fasting (mmol/L)</div>
+                    <div style={{ fontSize: 12, color: T.muted, marginBottom: 4 }}>{`Fasting (${unit === "mmol" ? "mmol/L" : "mg/dL"})`}</div>
                     <input style={inputStyle} type="number" value={trackerForm.fastingMmol} onChange={e => setTrackerForm(f => ({ ...f, fastingMmol: e.target.value }))} placeholder="e.g. 7.0" />
                   </div>
                   <div>
-                    <div style={{ fontSize: 12, color: T.muted, marginBottom: 4 }}>Post-meal (mmol/L)</div>
+                    <div style={{ fontSize: 12, color: T.muted, marginBottom: 4 }}>{`Post-meal (${unit === "mmol" ? "mmol/L" : "mg/dL"})`}</div>
                     <input style={inputStyle} type="number" value={trackerForm.postMealMmol} onChange={e => setTrackerForm(f => ({ ...f, postMealMmol: e.target.value }))} placeholder="e.g. 10.5" />
                   </div>
                 </div>
@@ -379,7 +379,7 @@ export default function MenopauseModule() {
                 {/* Week summary */}
                 {weekSummary && (
                   <div style={{ marginTop: 14, background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: 8, padding: 12, fontSize: 13, color: "#166534" }}>
-                    <strong>7-day summary:</strong> avg fasting {weekSummary.avg} mmol/L across {weekSummary.count} readings
+                    <strong>7-day summary:</strong> avg fasting {weekSummary.avg} {`${unit === "mmol" ? "mmol/L" : "mg/dL"}`} across {weekSummary.count} readings
                   </div>
                 )}
 
@@ -389,7 +389,7 @@ export default function MenopauseModule() {
                     <div style={{ fontSize: 12, color: T.muted, marginBottom: 6 }}>Recent entries</div>
                     {trackerEntries.slice(-3).reverse().map((e, i) => (
                       <div key={i} style={{ fontSize: 12, color: "#374151", padding: "4px 0", borderBottom: `1px solid ${T.border}` }}>
-                        {e.date} — fasting {e.fastingMmol}, post-meal {e.postMealMmol} mmol/L
+                        {`${e.date} — fasting ${e.fastingMmol}, post-meal ${e.postMealMmol} ${unit === "mmol" ? "mmol/L" : "mg/dL"}`}
                       </div>
                     ))}
                   </div>
