@@ -288,7 +288,11 @@ Violations are reported as a numbered list before any other work begins.
 
 > **Rule 8a — Filing Constitution check.** At every session start, after loading CLAUDE.md, Claude checks for Filing Constitution violations: files in wrong domain folders, files without version numbers, duplicates outside `99_Archive/`, anything in `00_MASTER` that isn't a governance doc. Report violations as a numbered list before proceeding. Do not silently ignore them.
 
-### Session Start Hook — Updated step 4
+### Rule 8b — New rule added to Group 1
+
+> **Rule 8b — Session-end next-actions update.** At the close of every session (before network drop, on task completion, or when the user signals done), Claude writes a timestamped update to `G:/My Drive/GLUMIRA/GluMira-V7/05_Business/Strategy/05.010_Strategy-Next-Actions_v1.0.md`. The update appends: date/time, tasks completed this session, tasks still open, and the single most important next action. This is written to Drive — not the repo — so it survives network interruptions and session loss.
+
+### Session Start Hook — Updated
 
 ```
 SESSION START:
@@ -298,6 +302,44 @@ SESSION START:
    in G:/My Drive/GLUMIRA/GluMira-V7/06_Operations/Claude-Memory/Sessions/{workstream}/
 4) Run Filing Constitution check (Rule 8a): scan 00_MASTER for non-governance files,
    scan active domains for cross-contamination, report violations before any other work.
+5) Read G:/My Drive/GLUMIRA/GluMira-V7/05_Business/Strategy/05.010_Strategy-Next-Actions_v1.0.md
+   — load open items as context before any work begins.
+```
+
+### Session End Hook — New
+
+```
+SESSION END (on task completion or user signals done):
+1) Append to G:/My Drive/GLUMIRA/GluMira-V7/05_Business/Strategy/05.010_Strategy-Next-Actions_v1.0.md:
+
+   ## [YYYY-MM-DD HH:MM] Session Close
+   **Completed:** [list of tasks finished this session]
+   **Open:** [tasks started but not finished]
+   **Next action:** [single most important thing to do next session]
+   **Workstream:** [active workstream name]
+
+2) Write session memory file to 06_Operations/Claude-Memory/Sessions/{workstream}/
+   GLUMIRA_SESSION_YYYYMMDD_HHMM.md
+```
+
+### Next-Actions File Structure
+
+`05.010_Strategy-Next-Actions_v1.0.md` is a rolling append-only log:
+
+```markdown
+# GluMira™ — Strategy Next Actions
+_Auto-updated by Claude at every session close. Never manually edited above the latest entry._
+
+---
+
+## [YYYY-MM-DD HH:MM] Session Close
+**Completed:** Filing system design spec approved and written
+**Open:** Implementation plan pending
+**Next action:** Execute Drive folder migration — Phase 1 (create new structure)
+**Workstream:** filing-system
+
+---
+[prior entries below, newest at top]
 ```
 
 ---
@@ -330,6 +372,9 @@ The following files currently sitting at `C:/glumira-v7/` root are misplaced:
 - [ ] Both `18_CLAUDE_CODE_MEMORY` folders are merged into `06_Operations/Claude-Memory/`
 - [ ] All 20 module folders exist in `03_Platform/Modules/`, built or placeholder
 - [ ] Session start hook enforces Filing Constitution check (Rule 8a)
+- [ ] Session-end hook appends to `05.010_Strategy-Next-Actions_v1.0.md` on Drive after every session
+- [ ] Session start hook reads Next-Actions file as context before work begins
+- [ ] `05.010_Strategy-Next-Actions_v1.0.md` exists on Drive and contains at least one entry
 - [ ] Code repo root is clean — no SQL files, HTML demos, financial models, or patch files
 
 ---
