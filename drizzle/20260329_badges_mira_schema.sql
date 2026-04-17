@@ -56,5 +56,6 @@ INSERT INTO badges (slug, name, description, tier, icon_emoji) VALUES
   ('streak-7',           '7-Day Streak',           'Logged glucose data for 7 consecutive days',          'bronze',   '🔥'),
   ('streak-30',          '30-Day Streak',          'Logged glucose data for 30 consecutive days',         'gold',     '🏆'),
   ('mira-first-chat',    'Ask Mira',               'Started your first conversation with Mira AI',        'bronze',   '🤖'),
-  ('nightscout-linked',  'CGM Linked',             'Connected a Nightscout instance to GluMira',          'silver',   '🔗')
+  ('nightscout-linked',  'CGM Linked',             'Connected a Nightscout instance to GluMira',          'silver',   '🔗'),
+  ('research-champion',  'Research Champion',      'Donated to the GluMira research programme — your contribution keeps the free tier free and the PK engine open.', 'gold', '🎗️')
 ON CONFLICT (slug) DO NOTHING;

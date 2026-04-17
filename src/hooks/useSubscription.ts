@@ -51,7 +51,7 @@ export function useSubscription(): SubscriptionInfo {
       return;
     }
 
-    // Fetch tier from server (subscriptions table, checked against Stripe)
+    // Fetch tier from server (subscriptions table)
     fetch(`${API}/api/subscription/status`, {
       headers: {
         Authorization: `Bearer ${session.access_token}`,

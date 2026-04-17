@@ -339,7 +339,8 @@ export default function DensityMapAdult({
             />
           )}
 
-          {/* Ribbon fills — basal behind, bolus in front */}
+          {/* Curve traces — solid strokes only, NO fill, so overlapping
+              regions preserve each curve's identity (no colour mixing). */}
           {[...curves]
             .sort((a, b) =>
               a.dose_type === "basal_injection" ? -1 : b.dose_type === "basal_injection" ? 1 : 0,
@@ -352,11 +353,13 @@ export default function DensityMapAdult({
                 <path
                   key={`${c.dose_id}-${i}`}
                   d={d}
-                  fill={col}
-                  fillOpacity={c.dose_type === "basal_injection" ? 0.35 : 0.55}
+                  fill="none"
                   stroke={col}
-                  strokeWidth={1.2}
-                  strokeOpacity={0.7}
+                  strokeWidth={c.dose_type === "basal_injection" ? 2 : 2.5}
+                  strokeLinejoin="round"
+                  strokeLinecap="round"
+                  strokeDasharray={c.dose_type === "basal_injection" ? "2 3" : undefined}
+                  strokeOpacity={1}
                 />
               );
             })}

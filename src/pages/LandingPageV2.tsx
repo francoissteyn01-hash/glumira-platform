@@ -617,14 +617,27 @@ function ResearchSection() {
                 </li>
               ))}
             </ul>
-            <div className="mt-8">
+            <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 to="/researcher"
                 className="inline-flex items-center h-12 px-6 rounded-full border border-[#2AB5C1] text-[#2AB5C1] text-sm font-semibold hover:bg-[#2AB5C1]/10 transition-colors cursor-pointer"
               >
                 Researcher portal →
               </Link>
+              <Link
+                to="/donate"
+                className="inline-flex items-center gap-2 h-12 px-6 rounded-full bg-[#F59E0B] text-[#0D2149] text-sm font-bold hover:bg-[#e8900a] transition-colors cursor-pointer"
+              >
+                <span aria-hidden>🎗️</span>
+                Donate to research
+                <span className="ml-1 inline-flex items-center h-6 px-2 rounded-full bg-[#0D2149] text-[#F59E0B] text-[10px] font-bold uppercase tracking-wider">
+                  Champion badge
+                </span>
+              </Link>
             </div>
+            <p className="mt-3 text-xs text-slate-400">
+              Any donation — in any currency — unlocks the Research Champion badge on your profile. Funds open-source the PK engine and keep the free tier free.
+            </p>
           </div>
         </div>
       </div>

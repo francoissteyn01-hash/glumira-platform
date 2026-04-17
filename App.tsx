@@ -134,6 +134,7 @@ const IOBHunterPage           = lazy(() => import("@/pages/IOBHunterPage"));
 const BasalParametersPage     = lazy(() => import("@/pages/BasalParametersPage"));
 const DemoDashboardPage       = lazy(() => import("@/pages/DemoDashboardPage"));
 const PricingPage             = lazy(() => import("@/pages/PricingPage"));
+const DonatePage              = lazy(() => import("@/pages/DonatePage"));
 const SciencePage             = lazy(() => import("@/pages/SciencePage"));
 const DevPanel                = lazy(() => import("@/pages/DevPanel"));
 const RegisterPage            = lazy(() => import("@/pages/RegisterPage"));
@@ -153,7 +154,7 @@ function LoadingFallback() {
 }
 
 /* ─── Paths with no sidebar chrome ───────────────────────────────────────── */
-const CHROMELESS = ["/", "/v2", "/auth", "/auth/callback", "/dev", "/tutorial", "/onboarding/region", "/onboarding/consent", "/research", "/privacy", "/terms", "/launch", "/demo", "/pricing", "/science"];
+const CHROMELESS = ["/", "/v2", "/auth", "/auth/callback", "/dev", "/tutorial", "/onboarding/region", "/onboarding/consent", "/research", "/privacy", "/terms", "/launch", "/demo", "/pricing", "/science", "/donate"];
 function isChromeless(pathname: string): boolean {
   if (CHROMELESS.includes(pathname)) return true;
   if (pathname === "/register") return true;
@@ -332,6 +333,7 @@ export default function App() {
               {/* ─── IOB Hunter ─────────────────────────────────────────── */}
               <Route path="/iob-hunter"            element={<IOBHunterPage />} />
               <Route path="/basal-parameters"      element={<BasalParametersPage />} />
+              <Route path="/donate"                element={<DonatePage />} />
               {/* ─── Existing ─────────────────────────────────────────── */}
               <Route path="/dev"                   element={<DevPanel />} />
               <Route path="/register"              element={<RegisterPage />} />
