@@ -19,11 +19,13 @@ const T = {
   body: "'DM Sans', -apple-system, sans-serif",
 };
 
-interface ConsentItem {
+type ConsentItem = {
   id: string;
   label: string;
   mandatory: boolean;
   link?: { text: string; href: string };
+  sublabel?: string;
+  badgeText?: string;
 }
 
 const CONSENT_ITEMS: ConsentItem[] = [
@@ -63,6 +65,14 @@ const CONSENT_ITEMS: ConsentItem[] = [
     id: "minor_consent",
     label: "I am a parent/guardian providing consent on behalf of a minor",
     mandatory: false,
+  },
+  {
+    id: "research_programme",
+    label: "I voluntarily consent to contribute my anonymised glucose and insulin patterns to the GluMira™ Real-World Research Programme",
+    mandatory: false,
+    sublabel: "Your identity is never shared. Data is aggregated only. You may withdraw at any time from Settings → Research.",
+    badgeText: "Optional — does not affect platform access",
+    link: { text: "Learn more", href: "/research" },
   },
 ];
 
@@ -163,56 +173,78 @@ export default function ConsentPage() {
         >
           <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
             {CONSENT_ITEMS.map((item) => (
-              <label
-                key={item.id}
-                style={{
-                  display: "flex",
-                  alignItems: "flex-start",
-                  gap: 12,
-                  cursor: "pointer",
-                  userSelect: "none",
-                }}
-              >
-                <input
-                  type="checkbox"
-                  checked={!!checked[item.id]}
-                  onChange={() => toggle(item.id)}
+              <div key={item.id}>
+                {item.id === "research_programme" && (
+                  <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: 12, marginTop: 4 }} />
+                )}
+                <label
                   style={{
-                    width: 20,
-                    height: 20,
-                    minWidth: 20,
-                    marginTop: 2,
-                    accentColor: T.teal,
+                    display: "flex",
+                    alignItems: "flex-start",
+                    gap: 12,
                     cursor: "pointer",
+                    userSelect: "none",
                   }}
-                />
-                <span style={{ color: T.white, fontSize: 14, lineHeight: 1.55 }}>
-                  {item.label}
-                  {item.link && (
-                    <>
-                      {" "}
-                      <a
-                        href={item.link.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                          color: T.teal,
-                          textDecoration: "underline",
-                          textUnderlineOffset: 2,
-                        }}
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        {item.link.text}
-                      </a>
-                    </>
-                  )}
-                  {!item.mandatory && (
-                    <span style={{ color: T.muted, fontSize: 12, marginLeft: 6 }}>
-                      (if applicable)
+                >
+                  <input
+                    type="checkbox"
+                    checked={!!checked[item.id]}
+                    onChange={() => toggle(item.id)}
+                    style={{
+                      width: 20,
+                      height: 20,
+                      minWidth: 20,
+                      marginTop: 2,
+                      accentColor: T.teal,
+                      cursor: "pointer",
+                    }}
+                  />
+                  <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                    <span style={{ color: T.white, fontSize: 14, lineHeight: 1.55 }}>
+                      {item.label}
+                      {item.link && (
+                        <>
+                          {" "}
+                          <a
+                            href={item.link.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                              color: T.teal,
+                              textDecoration: "underline",
+                              textUnderlineOffset: 2,
+                            }}
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            {item.link.text}
+                          </a>
+                        </>
+                      )}
+                      {!item.mandatory && !item.badgeText && (
+                        <span style={{ color: T.muted, fontSize: 12, marginLeft: 6 }}>
+                          (if applicable)
+                        </span>
+                      )}
                     </span>
-                  )}
-                </span>
-              </label>
+                    {item.sublabel && (
+                      <div style={{ color: "#64748b", fontSize: 12, marginTop: 4, lineHeight: 1.5 }}>
+                        {item.sublabel}
+                      </div>
+                    )}
+                    {item.badgeText && (
+                      <div style={{
+                        display: "inline-block", marginTop: 6,
+                        background: "rgba(245,158,11,0.12)",
+                        border: "1px solid rgba(245,158,11,0.3)",
+                        borderRadius: 4, padding: "2px 8px",
+                        fontSize: 11, color: "#f59e0b"
+                      }}>
+                        {item.badgeText}
+                      </div>
+                    )}
+                  </div>
+                </label>
+              </div>
             ))}
           </div>
 
