@@ -341,13 +341,41 @@ function IOBVisualization() {
 /* ─────────────────────────────────────────────────────────────────────────── */
 
 function EvidenceBar() {
+  const stats: { n: string; label: string }[] = [
+    { n: "13+",    label: "Cited insulins · FDA / EMA PK data" },
+    { n: "34",     label: "Specialist + dietary modules" },
+    { n: "14 d",   label: "Free trial — no card needed" },
+    { n: "100%",   label: "Anonymous research · GDPR 9(2)(a)" },
+  ];
   return (
     <section className="bg-slate-50 dark:bg-[#0D2149]/60 border-y border-slate-200 dark:border-white/10">
-      <div className="mx-auto max-w-6xl px-4 py-5">
-        <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-center">
-          <span className="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider">Built on evidence from</span>
-          {["Plank 2005 · PMID:15855574", "ADA Standards of Care", "NICE NG3", "CONCEPTT", "FDA / EMA PK data"].map((e) => (
-            <span key={e} className="text-sm font-medium text-slate-700 dark:text-slate-200">{e}</span>
+      <div className="mx-auto max-w-6xl px-4 py-10 md:py-12">
+        {/* Stats row — 4 big credibility numbers */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4 mb-8">
+          {stats.map((s) => (
+            <div key={s.label} className="text-center">
+              <div
+                className="font-[Playfair_Display] text-[#0D2149] dark:text-white font-bold leading-none mb-1"
+                style={{ fontSize: "clamp(28px, 4vw, 40px)", letterSpacing: "-0.02em" }}
+              >
+                {s.n}
+              </div>
+              <div className="text-[11px] md:text-xs text-slate-600 dark:text-slate-400 uppercase tracking-wider leading-snug">
+                {s.label}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Evidence citations row */}
+        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-center pt-6 border-t border-slate-200 dark:border-white/10">
+          <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-widest font-semibold">
+            Built on evidence from
+          </span>
+          {["Plank 2005 · PMID:15855574", "ADA Standards", "NICE NG3", "CONCEPTT", "FDA / EMA"].map((e) => (
+            <span key={e} className="text-xs font-medium text-slate-700 dark:text-slate-200">
+              {e}
+            </span>
           ))}
         </div>
       </div>
