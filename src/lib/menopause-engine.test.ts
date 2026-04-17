@@ -95,4 +95,64 @@ describe("analyseMenopause", () => {
     });
     expect(r.hotFlashCorrelationNote).toBeTruthy();
   });
+
+  it("nocturnalHypoRisk is 'elevated' at exactly 2 events", () => {
+    const r = analyseMenopause({
+      stage: "menopause",
+      hrtType: "none",
+      yearsSinceLastPeriod: 1,
+      symptoms: [],
+      avgFastingMmol: 6.5,
+      avgPostMealMmol: 9.0,
+      basalDoseUnits: 20,
+      hypoEventsLast7Days: 2,
+      unit: "mmol",
+    });
+    expect(r.nocturnalHypoRisk).toBe("elevated");
+  });
+
+  it("nocturnalHypoRisk is 'high' at 3+ events", () => {
+    const r = analyseMenopause({
+      stage: "menopause",
+      hrtType: "none",
+      yearsSinceLastPeriod: 1,
+      symptoms: [],
+      avgFastingMmol: 6.5,
+      avgPostMealMmol: 9.0,
+      basalDoseUnits: 20,
+      hypoEventsLast7Days: 3,
+      unit: "mmol",
+    });
+    expect(r.nocturnalHypoRisk).toBe("high");
+  });
+
+  it("dawnPhenomenonFlag true when fasting > 7.0 and post-meal rise < 2 mmol", () => {
+    const r = analyseMenopause({
+      stage: "menopause",
+      hrtType: "none",
+      yearsSinceLastPeriod: 1,
+      symptoms: [],
+      avgFastingMmol: 7.5,
+      avgPostMealMmol: 8.5,
+      basalDoseUnits: 20,
+      hypoEventsLast7Days: 0,
+      unit: "mmol",
+    });
+    expect(r.dawnPhenomenonFlag).toBe(true);
+  });
+
+  it("dawnPhenomenonFlag false when fasting <= 7.0", () => {
+    const r = analyseMenopause({
+      stage: "menopause",
+      hrtType: "none",
+      yearsSinceLastPeriod: 1,
+      symptoms: [],
+      avgFastingMmol: 6.5,
+      avgPostMealMmol: 9.0,
+      basalDoseUnits: 20,
+      hypoEventsLast7Days: 0,
+      unit: "mmol",
+    });
+    expect(r.dawnPhenomenonFlag).toBe(false);
+  });
 });

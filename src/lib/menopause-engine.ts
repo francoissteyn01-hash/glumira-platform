@@ -47,6 +47,9 @@ const HRT_MODIFIER: Record<HrtType, number> = {
 };
 
 export function analyseMenopause(input: MenopauseInput): MenopauseAnalysisResult {
+  const fasting = input.unit === "mg" ? input.avgFastingMmol / 18 : input.avgFastingMmol;
+  const postMeal = input.unit === "mg" ? input.avgPostMealMmol / 18 : input.avgPostMealMmol;
+
   const base = STAGE_BANDS[input.stage];
   const mod  = HRT_MODIFIER[input.hrtType];
 
@@ -64,7 +67,7 @@ export function analyseMenopause(input: MenopauseInput): MenopauseAnalysisResult
       ? "elevated"
       : "low";
 
-  const dawnPhenomenonFlag = input.avgFastingMmol > 7.0 && input.avgPostMealMmol < input.avgFastingMmol + 2;
+  const dawnPhenomenonFlag = fasting > 7.0 && postMeal < fasting + 2;
 
   const hrtInteractionNote =
     input.hrtType !== "none"
