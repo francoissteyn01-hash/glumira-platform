@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { formatGlucose as fmtGlucose, getUnitLabel } from "@/utils/glucose-units";
 import TimeInRangeDonut from "@/components/widgets/TimeInRangeDonut";
 import ShowcaseCarousel from "@/components/ShowcaseCarousel";
+import PublicPageHeader from "@/components/PublicPageHeader";
 
 const T = {
   navy: "#1a2a5e",
@@ -70,6 +71,7 @@ export default function DemoDashboardPage() {
 
   return (
     <div style={{ minHeight: "100vh", background: "var(--bg-primary, #f8f9fa)" }}>
+      <PublicPageHeader />
       {/* Demo banner */}
       <div style={{
         background: `linear-gradient(135deg, ${T.teal}, ${T.navy})`,

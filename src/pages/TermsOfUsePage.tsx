@@ -3,6 +3,8 @@
  * Block 88: Terms of Use. Scandinavian Minimalist.
  */
 
+import PublicPageHeader from "@/components/PublicPageHeader";
+
 const T = {
   navy: "#1a2a5e",
   teal: "#2ab5c1",
@@ -80,6 +82,7 @@ const S = {
 export default function TermsOfUsePage() {
   return (
     <div style={S.page}>
+      <PublicPageHeader />
       <div style={S.container}>
         <button
           type="button"
