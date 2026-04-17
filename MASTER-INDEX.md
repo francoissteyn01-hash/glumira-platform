@@ -1,5 +1,5 @@
 # GluMira™ V7 — Master File Index
-Generated: 2026-04-01
+Generated: 2026-04-17 (partial update — 2026-04-17 session changes only)
 
 ## A. ACTIVE V7 CODEBASE (Desktop — C:/Users/franc/Desktop/glumira-v7)
 
@@ -50,12 +50,24 @@ Generated: 2026-04-01
 - src/lib/utils.ts
 - src/pages/AuthPage.tsx
 - src/pages/BadgesPage.tsx
-- src/pages/DashboardPage.tsx
+- src/pages/DashboardPage.tsx  ← refactored 2026-04-17 (state extracted to useDashboard.ts)
 - src/pages/EducationPage.tsx
 - src/pages/FAQPage.tsx
-- src/pages/LandingPage.tsx
+- src/pages/LandingPageV2.tsx  ← primary landing (LandingPage.tsx deleted 2026-04-17)
 - src/pages/MiraPage.tsx
 - src/pages/SettingsPage.tsx
+- src/pages/ReportPage.tsx  (legacy Bateman engine — planned migration to v7)
+- src/components/ErrorBoundary.tsx  ← added 2026-04-17
+- src/components/charts/IOBTerrainChart.tsx  ← v7-only, legacy path removed 2026-04-17
+- src/components/charts/IOBTerrainTooltip.tsx  ← extracted 2026-04-17
+- src/components/charts/IOBTerrainLegend.tsx  ← extracted 2026-04-17
+- src/components/charts/IOBTerrainG4View.tsx  ← extracted 2026-04-17
+- src/hooks/useDashboard.ts  ← added 2026-04-17
+- src/hooks/useAlerts.ts  ← added 2026-04-17
+- src/hooks/useAnonymousAuth.ts  ← rewritten 2026-04-17 (Supabase native anonymous auth)
+- src/hooks/useSubscription.ts  ← rewritten 2026-04-17 (reads from /api/subscription/status)
+- src/utils/glucose-units.ts  ← canonical glucose unit conversion (sole source of truth)
+- src/lib/pharmacokinetics.ts  ← LEGACY Bateman engine (ReportPage only)
 
 ### client/ (Extended modules)
 - client/src/App.tsx
@@ -92,8 +104,7 @@ Generated: 2026-04-01
 - client/src/pages/SchoolCarePlanPage.tsx
 
 ### server/
-- server/index.ts
-- server/index-final.ts
+- server/index.ts  ← scheduleSyncJob() activated 2026-04-17
 - server/router.ts
 - server/trpc.ts
 - server/db/index.ts
