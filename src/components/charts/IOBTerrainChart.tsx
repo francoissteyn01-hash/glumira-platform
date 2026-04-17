@@ -34,6 +34,9 @@ import {
 import IOBDensityBar from "@/components/charts/IOBDensityBar";
 import SixtySecondInsight from "@/components/charts/SixtySecondInsight";
 import WhatIfTiming from "@/components/charts/WhatIfTiming";
+import { StackedTooltip } from "@/components/charts/IOBTerrainTooltip";
+import { LegendDot, PressureLegend, SummaryStats, DangerWindowBadges } from "@/components/charts/IOBTerrainLegend";
+import { G4DensityView } from "@/components/charts/IOBTerrainG4View";
 
 /* ═══════════════════════════════════════════════════════════════════════════ */
 /*  Types                                                                     */
@@ -185,195 +188,11 @@ function getCurrentMinute(): number {
   return now.getHours() * 60 + now.getMinutes();
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════ */
-/*  Sub-components                                                            */
-/* ═══════════════════════════════════════════════════════════════════════════ */
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function StackedTooltip({ active, payload, entryCurves }: any) {
-  if (!active || !payload?.[0]) return null;
-  const d = payload[0].payload as ChartPoint;
-  const breakdown: { name: string; time: string; iob: number; colour: string }[] = [];
-  if (entryCurves) {
-    for (const { entry, colour } of entryCurves) {
-      const iob = d[entry.id];
-      if (iob !== undefined && iob > 0.005) {
-        breakdown.push({ name: entry.insulinName, time: entry.time, iob, colour });
-      }
-    }
-  }
-  breakdown.sort((a, b) => b.iob - a.iob);
-  // Rule 53 audit — mobile tooltip overflow on 393px S23 FE. Cap at 4 rows.
-  const MAX_ROWS = 4;
-  const visible = breakdown.slice(0, MAX_ROWS);
-  const overflow = Math.max(0, breakdown.length - MAX_ROWS);
-
-  return (
-    <div style={{ background: "var(--bg-card, #fff)", border: "1px solid var(--border, #e2e8f0)", borderRadius: 10, padding: "12px 16px", boxShadow: "0 4px 16px rgba(0,0,0,0.12)", fontFamily: "'DM Sans', system-ui, sans-serif", minWidth: 200, maxWidth: 280 }}>
-      <p style={{ fontSize: "clamp(12px, 3vw, 13px)", color: "var(--text-primary)", margin: "0 0 8px", fontWeight: 700, fontFamily: "'JetBrains Mono', monospace" }}>
-        {d.label} — Total IOB: {d.totalIOB.toFixed(2)}U
-      </p>
-      {visible.length > 0 && (
-        <div style={{ display: "flex", flexDirection: "column", gap: 3, marginBottom: 8 }}>
-          {visible.map((b, i) => (
-            <div key={i} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: "clamp(10px, 2.8vw, 11px)", color: "var(--text-secondary)" }}>
-              <span style={{ width: 8, height: 8, borderRadius: 2, background: b.colour, flexShrink: 0 }} />
-              <span style={{ fontFamily: "'JetBrains Mono', monospace" }}>
-                {b.name} ({b.time}): {b.iob.toFixed(2)}U
-              </span>
-            </div>
-          ))}
-          {overflow > 0 && (
-            <div style={{ fontSize: 10, color: "var(--text-secondary)", opacity: 0.7, fontStyle: "italic" }}>
-              +{overflow} more
-            </div>
-          )}
-        </div>
-      )}
-      <div style={{ display: "flex", gap: 12, fontSize: 11 }}>
-        <span style={{ color: PRESSURE_COLOURS[d.pressure], fontWeight: 600 }}>
-          Pressure: {d.pressure === "overlap" ? "OVERLAP" : d.pressure.toUpperCase()}
-        </span>
-      </div>
-      {d.glucose !== undefined && (
-        <p style={{ fontSize: 12, color: GLUCOSE_COLOUR, margin: "6px 0 0", fontWeight: 600 }}>Glucose: {d.glucose.toFixed(1)}</p>
-      )}
-    </div>
-  );
-}
-
-function LegendDot({ colour, label }: { colour: string; label: string }) {
-  return (
-    <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 10, color: "var(--text-secondary)", fontFamily: "'DM Sans', sans-serif" }}>
-      <span style={{ width: 8, height: 8, borderRadius: 2, background: colour, display: "inline-block" }} />{label}
-    </span>
-  );
-}
-
-function PressureLegend() {
-  return (
-    <div style={{ display: "flex", gap: 12, justifyContent: "center", padding: "6px 0 2px", fontSize: 10, color: "var(--text-secondary)", fontFamily: "'DM Sans', sans-serif" }}>
-      <span style={{ display: "flex", alignItems: "center", gap: 3 }}><span style={{ width: 10, height: 10, borderRadius: 2, background: "transparent", border: "1px solid var(--border)" }} /> Light</span>
-      <span style={{ display: "flex", alignItems: "center", gap: 3 }}><span style={{ width: 10, height: 10, borderRadius: 2, background: "#F59E0B", opacity: 0.3 }} /> Moderate</span>
-      <span style={{ display: "flex", alignItems: "center", gap: 3 }}><span style={{ width: 10, height: 10, borderRadius: 2, background: "#F87171", opacity: 0.4 }} /> Strong</span>
-      <span style={{ display: "flex", alignItems: "center", gap: 3 }}><span style={{ width: 10, height: 10, borderRadius: 2, background: "#EF4444", opacity: 0.5 }} /> Overlap</span>
-    </div>
-  );
-}
-
-function SummaryStats({ peakIOB, peakTime, lowestIOB, lowestTime, strongOverlapHours, totalBasal, totalBolus }: {
-  peakIOB: number; peakTime: string; lowestIOB: number; lowestTime: string; strongOverlapHours: number; totalBasal: number; totalBolus: number;
-}) {
-  const stats = [
-    { label: "Peak IOB", value: `${peakIOB.toFixed(1)}U`, sub: `at ${peakTime}` },
-    { label: "Lowest pressure", value: `${lowestIOB.toFixed(1)}U`, sub: `@ ${lowestTime}` },
-    { label: "Strong / Overlap", value: `${strongOverlapHours}h`, sub: "" },
-    { label: "Daily totals", value: `${totalBasal.toFixed(1)}U basal`, sub: `${totalBolus.toFixed(1)}U bolus` },
-  ];
-  return (
-    <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12, marginTop: 16, padding: "0 4px" }}>
-      {stats.map((s, i) => (
-        <div key={i} style={{ textAlign: "center", padding: "12px 8px", borderRadius: 8, background: "var(--bg-primary, #f8fafc)", border: "1px solid var(--border)" }}>
-          <p style={{ margin: 0, fontSize: 10, fontWeight: 500, color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.05em", fontFamily: "'DM Sans', sans-serif" }}>{s.label}</p>
-          <p style={{ margin: "4px 0 0", fontSize: 20, fontWeight: 700, color: "var(--text-primary)", fontFamily: "'DM Sans', sans-serif" }}>{s.value}</p>
-          {s.sub && <p style={{ margin: "2px 0 0", fontSize: 11, color: "var(--text-secondary)", fontFamily: "'DM Sans', sans-serif" }}>{s.sub}</p>}
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function DangerWindowBadges({ dangerWindows }: { dangerWindows: DangerWindow[] }) {
-  if (dangerWindows.length === 0) return null;
-  return (
-    <div style={{ display: "flex", gap: 6, flexWrap: "wrap", padding: "0 4px", marginBottom: 8 }}>
-      {dangerWindows.map((w, i) => {
-        const isOverlap = w.pressure === "overlap";
-        const colour = isOverlap ? "#EF4444" : "#F87171";
-        const bg = isOverlap ? "rgba(239,68,68,0.08)" : "rgba(248,113,113,0.08)";
-        const label = isOverlap ? "Danger" : "Watch";
-        return (
-          <span key={`dw-${i}`} style={{
-            display: "inline-flex", alignItems: "center", gap: 4,
-            padding: "4px 10px", borderRadius: 6,
-            background: bg, border: `1px solid ${colour}30`,
-            fontSize: 11, fontWeight: 600, color: colour,
-            fontFamily: "'DM Sans', sans-serif",
-          }}>
-            <span style={{ width: 6, height: 6, borderRadius: "50%", background: colour }} />
-            {label}: {minutesToTime(w.startMinute)} – {minutesToTime(w.endMinute)}
-          </span>
-        );
-      })}
-    </div>
-  );
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════ */
-/*  G4 Individual Curves View                                                 */
-/* ═══════════════════════════════════════════════════════════════════════════ */
-
-function G4DensityView({ entryCurves, enrichedPoints, totalMinutes, graphStartMinute, xTicks, compact }: {
-  entryCurves: Array<{ entry: InsulinEntry; idx: number; colour: string; stackColour: string; curve: Array<{ minute: number; iob: number }> }>;
-  enrichedPoints: ChartPoint[];
-  totalMinutes: number;
-  graphStartMinute: number;
-  xTicks: number[];
-  compact: boolean;
-}) {
-  const [highlighted, setHighlighted] = useState<string | null>(null);
-  const chartHeight = compact ? 200 : 260;
-
-  return (
-    <div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8, padding: "0 4px" }}>
-        <h4 style={{ margin: 0, fontSize: 14, fontWeight: 600, color: "var(--text-primary)", fontFamily: "'DM Sans', sans-serif" }}>
-          Individual Curves
-        </h4>
-        <span style={{ fontSize: 10, color: "var(--text-muted)" }}>Tap a curve to highlight</span>
-      </div>
-      <div style={{ display: "flex", gap: 6, flexWrap: "wrap", padding: "0 4px", marginBottom: 8 }}>
-        {entryCurves.map(({ entry, colour }) => (
-          <button key={entry.id} onClick={() => setHighlighted(highlighted === entry.id ? null : entry.id)}
-            style={{
-              display: "flex", alignItems: "center", gap: 4, padding: "3px 8px", borderRadius: 4, border: "1px solid",
-              borderColor: highlighted === entry.id ? colour : "var(--border)",
-              background: highlighted === entry.id ? colour + "20" : "transparent",
-              fontSize: 10, fontWeight: 500, color: highlighted === entry.id ? colour : "var(--text-secondary)",
-              cursor: "pointer", fontFamily: "'DM Sans', sans-serif",
-            }}>
-            <span style={{ width: 6, height: 6, borderRadius: "50%", background: colour }} />
-            {entry.insulinName} {entry.dose}U
-          </button>
-        ))}
-      </div>
-
-      <ResponsiveContainer width="100%" height={chartHeight}>
-        <ComposedChart data={enrichedPoints} margin={{ top: 4, right: 8, left: compact ? -12 : 0, bottom: 0 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" strokeOpacity={0.5} strokeWidth={0.75} vertical={false} />
-          <XAxis dataKey="minute" type="number" domain={[graphStartMinute, totalMinutes]} ticks={xTicks} tickFormatter={minutesToLabel}
-            tick={{ fontSize: 10, fill: "var(--text-secondary)", fontFamily: "'DM Sans', sans-serif" }}
-            axisLine={{ stroke: "var(--border)" }} tickLine={{ stroke: "var(--border)" }} />
-          <YAxis tick={{ fontSize: 10, fill: "var(--text-secondary)", fontFamily: "'DM Sans', sans-serif" }}
-            tickFormatter={(v: number) => `${v.toFixed(1)}`}
-            axisLine={{ stroke: "var(--border)" }} tickLine={{ stroke: "var(--border)" }} />
-
-          {entryCurves.map(({ entry, colour }) => {
-            const isHighlighted = highlighted === null || highlighted === entry.id;
-            return (
-              <Area key={entry.id} type="monotone" dataKey={entry.id}
-                stroke={colour} strokeWidth={isHighlighted ? 1.5 : 1}
-                strokeOpacity={isHighlighted ? 0.9 : 0.15}
-                fill={colour} fillOpacity={isHighlighted ? 0.15 : 0.02}
-                dot={false} animationDuration={0}
-                name={`${entry.insulinName} ${entry.dose}U`} />
-            );
-          })}
-        </ComposedChart>
-      </ResponsiveContainer>
-    </div>
-  );
-}
+/* Sub-components are imported from:
+ * IOBTerrainTooltip.tsx  — StackedTooltip
+ * IOBTerrainLegend.tsx   — LegendDot, PressureLegend, SummaryStats, DangerWindowBadges
+ * IOBTerrainG4View.tsx   — G4DensityView
+ */
 
 /* ═══════════════════════════════════════════════════════════════════════════ */
 /*  Main Component                                                            */
