@@ -85,7 +85,7 @@ export default function DashboardPage() {
             <p style={{ fontSize: 14, color: "var(--text-secondary)", margin: 0, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
               {isCaregiver && patientName
                 ? `Managing for ${patientName}`
-                : `Welcome back${user?.email ? `, ${user.email.split("@")[0]}` : ""}`}
+                : "Welcome back"}
             </p>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>

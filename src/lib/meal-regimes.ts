@@ -9,7 +9,7 @@
  * NOT a medical device. Educational purposes only.
  */
 
-export interface MealRegime {
+export type MealRegime = {
   id: string;
   name: string;
   meals: {
@@ -237,6 +237,8 @@ const MEAL_REGIMES: MealRegime[] = [
     culturalNotes: "Young children eat unpredictably. Always dose AFTER the meal based on what was actually eaten. Use half-unit pens.",
   },
 ];
+
+MEAL_REGIMES.sort((a, b) => a.name.localeCompare(b.name, "en-GB"));
 
 const REGIME_MAP = new Map(MEAL_REGIMES.map((r) => [r.id, r]));
 

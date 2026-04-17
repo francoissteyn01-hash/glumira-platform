@@ -72,7 +72,7 @@ function TopNav() {
       <div className="mx-auto max-w-6xl px-4 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
-          <LogoMark />
+          <img src="/brand/mira-hero.png" alt="Mira" style={{ width: 36, height: 36, objectFit: "contain", mixBlendMode: "multiply" }} />
           <span className="font-[Playfair_Display] text-xl font-bold tracking-tight text-[#0D2149] dark:text-white">
             GluMira<span className="text-[#2AB5C1]">™</span>
           </span>
@@ -965,9 +965,10 @@ function FinalCta() {
   return (
     <section className="bg-gradient-to-br from-[#0D2149] via-[#1A2A5E] to-[#2AB5C1]/60 text-white">
       <div className="mx-auto max-w-4xl px-4 py-16 md:py-24 text-center">
-        {/* Owl — Rule 43 */}
+        {/* Owl — Rule 43: canonical Mira PNG */}
         <div className="mb-8 flex justify-center">
-          <OwlMark />
+          <img src="/brand/mira-hero.png" alt="Mira — GluMira™ guardian owl"
+            style={{ width: 180, height: 180, objectFit: "contain", filter: "drop-shadow(0 4px 24px rgba(42,181,193,0.35))" }} />
         </div>
 
         <h2 className="font-[Playfair_Display] text-white leading-tight font-bold mb-4"
@@ -1013,7 +1014,7 @@ function Footer() {
       <div className="mx-auto max-w-6xl px-4 py-12 grid md:grid-cols-4 gap-8">
         <div>
           <div className="flex items-center gap-2 mb-3">
-            <LogoMark />
+            <img src="/brand/mira-hero.png" alt="Mira" style={{ width: 32, height: 32, objectFit: "contain" }} />
             <span className="font-[Playfair_Display] text-lg font-bold text-white">
               GluMira<span className="text-[#2AB5C1]">™</span>
             </span>
@@ -1075,43 +1076,6 @@ function FooterCol({ title, items }: { title: string; items: [string, string][] 
 /* ICONS + MARKS                                                                */
 /* ─────────────────────────────────────────────────────────────────────────── */
 
-function LogoMark() {
-  return (
-    <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden>
-      <circle cx="14" cy="14" r="13" fill="#0D2149" />
-      <path d="M8 18 Q 14 6 20 18" stroke="#2AB5C1" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-      <circle cx="14" cy="10" r="2" fill="#F59E0B" />
-    </svg>
-  );
-}
-
-/** Owl — landing page guardian (Rule 43) */
-function OwlMark() {
-  return (
-    <svg width="64" height="64" viewBox="0 0 64 64" aria-label="GluMira owl" fill="none">
-      {/* Body */}
-      <ellipse cx="32" cy="40" rx="16" ry="18" fill="#1A2A5E" stroke="#2AB5C1" strokeWidth="1.5" />
-      {/* Head */}
-      <ellipse cx="32" cy="22" rx="13" ry="12" fill="#1A2A5E" stroke="#2AB5C1" strokeWidth="1.5" />
-      {/* Ears/tufts */}
-      <polygon points="22,13 18,4 25,10" fill="#1A2A5E" stroke="#2AB5C1" strokeWidth="1" />
-      <polygon points="42,13 46,4 39,10" fill="#1A2A5E" stroke="#2AB5C1" strokeWidth="1" />
-      {/* Eyes */}
-      <circle cx="26" cy="22" r="5" fill="#0D1B3E" stroke="#F59E0B" strokeWidth="1.5" />
-      <circle cx="38" cy="22" r="5" fill="#0D1B3E" stroke="#F59E0B" strokeWidth="1.5" />
-      <circle cx="26" cy="22" r="2.5" fill="#F59E0B" />
-      <circle cx="38" cy="22" r="2.5" fill="#F59E0B" />
-      {/* Beak */}
-      <path d="M29 27 L32 31 L35 27" fill="#F59E0B" />
-      {/* Wings */}
-      <path d="M16 38 Q8 32 10 44 Q14 50 18 46" fill="#1A2A5E" stroke="#2AB5C1" strokeWidth="1" />
-      <path d="M48 38 Q56 32 54 44 Q50 50 46 46" fill="#1A2A5E" stroke="#2AB5C1" strokeWidth="1" />
-      {/* Chest heraldic shield — amber */}
-      <path d="M26 42 Q32 38 38 42 L38 52 Q32 56 26 52 Z" fill="#F59E0B" opacity="0.85" />
-      <text x="32" y="50" textAnchor="middle" fontSize="7" fill="#0D2149" fontWeight="bold" fontFamily="DM Sans">GM</text>
-    </svg>
-  );
-}
 
 function SunIcon({ className = "" }: { className?: string }) {
   return (

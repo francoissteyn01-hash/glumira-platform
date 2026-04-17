@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { API } from "@/lib/api";
 
-interface PatientNameState {
+type PatientNameState = {
   patientName: string;      // The name shown in the UI (patient_name for caregivers, first_name for patients)
   caregiverName: string;    // The caregiver's own name (empty for non-caregivers)
   isCaregiver: boolean;
@@ -60,7 +60,7 @@ export function usePatientName(): PatientNameState {
           });
         } else {
           setState({
-            patientName: p?.first_name ?? user?.email?.split("@")[0] ?? "",
+            patientName: p?.first_name ?? "",
             caregiverName: "",
             isCaregiver: false,
             relationship: "",
