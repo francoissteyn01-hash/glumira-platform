@@ -74,6 +74,7 @@ const VegetarianModule        = lazy(() => import("@/pages/VegetarianModule"));
 const ZoneModule              = lazy(() => import("@/pages/ZoneModule"));
 const MealPlanPage            = lazy(() => import("@/pages/MealPlanPage"));
 const EducationTopicPage      = lazy(() => import("@/pages/EducationTopicPage"));
+const ProfPiperPage           = lazy(() => import("@/pages/ProfPiperPage"));
 
 /* ─── V7 New Modules — Free Tier ──────────────────────────────────────── */
 const GlucoseLogPage          = lazy(() => import("@/pages/GlucoseLogPage"));
@@ -231,6 +232,8 @@ export default function App() {
               <Route path="/compliance" element={<CompliancePage />} />
               <Route path="/dashboard/what-if" element={<WhatIfPage />} />
               <Route path="/education" element={<EducationPage />} />
+              <Route path="/education/piper" element={<ProfPiperPage />} />
+              <Route path="/education/piper/:id" element={<EducationTopicPage />} />
               <Route path="/education/:id" element={<EducationTopicPage />} />
               <Route path="/clips"       element={<ClipsPage />} />
               <Route path="/mira"      element={<MiraPage />} />

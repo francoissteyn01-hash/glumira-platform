@@ -78,6 +78,30 @@ export default function EducationPage() {
           </span>
         </div>
 
+        {/* Prof Piper card */}
+        <Link to="/education/piper" style={{ textDecoration: "none" }}>
+          <div style={{
+            background: "linear-gradient(135deg, #0D1B3E 0%, #1A2A5E 60%, rgba(42,181,193,0.25) 100%)",
+            borderRadius: 14, padding: "16px 20px",
+            display: "flex", alignItems: "center", gap: 16,
+            border: "1px solid rgba(42,181,193,0.3)",
+          }}>
+            <div style={{ fontSize: 36, flexShrink: 0 }}>🐦</div>
+            <div style={{ flex: 1 }}>
+              <p style={{ margin: "0 0 2px", fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", color: "rgba(42,181,193,0.9)", fontFamily: "'DM Sans', system-ui, sans-serif", textTransform: "uppercase" }}>
+                Mira's mentor for the hard stuff
+              </p>
+              <p style={{ margin: "0 0 4px", fontSize: 16, fontWeight: 700, color: "#FFFFFF", fontFamily: "'Playfair Display', serif" }}>
+                Visit Prof Piper in The Study
+              </p>
+              <p style={{ margin: 0, fontSize: 12, color: "rgba(255,255,255,0.6)", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+                HbA1c · Ketones · Insulin curves · Lab results — explained with calm authority
+              </p>
+            </div>
+            <span style={{ color: "rgba(42,181,193,0.8)", fontSize: 20, flexShrink: 0 }}>→</span>
+          </div>
+        </Link>
+
         {/* Search */}
         <div className="relative">
           <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-muted)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
