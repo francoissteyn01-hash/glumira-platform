@@ -10,6 +10,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { GlucoseUnitsProvider } from "@/context/GlucoseUnitsContext";
 import { PresentationModeProvider } from "@/components/PresentationMode";
 import { SensoryProvider } from "@/contexts/SensoryContext";
+import { ThemeProvider } from "@/context/ThemeContext";
 import AppSidebar, { useSidebarOffset } from "@/components/AppSidebar";
 import ConfigErrorBanner from "@/components/ConfigErrorBanner";
 import { useSessionTimeout, SessionWarningModal } from "@/hooks/useSessionTimeout";
@@ -202,6 +203,7 @@ export default function App() {
   return (
     <ErrorBoundary>
     <BrowserRouter>
+      <ThemeProvider>
       <GlucoseUnitsProvider>
         <SensoryProvider>
         <PresentationModeProvider>
@@ -336,6 +338,7 @@ export default function App() {
         </PresentationModeProvider>
         </SensoryProvider>
       </GlucoseUnitsProvider>
+      </ThemeProvider>
     </BrowserRouter>
     </ErrorBoundary>
   );
