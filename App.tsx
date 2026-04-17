@@ -46,6 +46,7 @@ const PregnancyModule         = lazy(() => import("@/pages/PregnancyModule"));
 const PaediatricModule        = lazy(() => import("@/pages/PaediatricModule"));
 const SchoolCarePlanModule    = lazy(() => import("@/pages/SchoolCarePlanModule"));
 const MenstrualCycleModule    = lazy(() => import("@/pages/MenstrualCycleModule"));
+const MenopauseModule         = lazy(() => import("@/pages/MenopauseModule"));
 
 /* ─── Specialist & Dietary Modules ─────────────────────────────────────── */
 const ADHDModule              = lazy(() => import("@/pages/ADHDModule"));
@@ -250,6 +251,7 @@ export default function App() {
               <Route path="/modules/paediatric"      element={<PaediatricModule />} />
               <Route path="/modules/school-care"     element={<SchoolCarePlanModule />} />
               <Route path="/modules/menstrual"       element={<MenstrualCycleModule />} />
+              <Route path="/modules/menopause"       element={<MenopauseModule />} />
               {/* Legacy route redirects */}
               <Route path="/pregnancy" element={<Navigate to="/modules/pregnancy" replace />} />
               <Route path="/paediatric" element={<Navigate to="/modules/paediatric" replace />} />
