@@ -399,16 +399,20 @@ export default function InsulinProfilePage() {
 
   /* ─── Save ───────────────────────────────────────────────────────── */
   const save = useCallback(async () => {
-    if (!session) return;
-    setSaving(true);
     setError(null);
     setSaved(false);
+    // Re-read session at click-time. The cached `session` from useAuth can be
+    // null if the user closed the tab (sessionStorage was wiped per
+    // commit 1df6b2b) but Supabase may still have a valid token in memory.
+    const { data: { session: fresh } } = await supabase.auth.getSession();
+    if (!fresh) {
+      setError("You're signed out. Redirecting to sign-in…");
+      setTimeout(() => { window.location.href = "/auth"; }, 1200);
+      return;
+    }
+    setSaving(true);
     try {
-      const { data: { session: fresh } } = await supabase.auth.getSession();
-      const token = fresh?.access_token ?? session.access_token;
-      if (!fresh) {
-        throw new Error("Your session has expired. Please sign in again.");
-      }
+      const token = fresh.access_token;
       const res = await fetch(`${API}/api/profile`, {
         method: "PUT",
         headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
