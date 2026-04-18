@@ -26,6 +26,23 @@ The following basal profiles are rendering correctly and the underlying math is 
 - `computeGraphBounds` — window + cycle count
 - Canonical PK data: `src/iob-hunter/engine/insulin-profiles.ts`
 
+## 🛰️ SATELLITE MIRRORS — vendored copies that must equal canonical
+
+The following repositories carry **vendored copies** of `iob-engine.ts` and `insulin-profiles.ts`. Math + PK drift between canonical and any satellite is an INSULIN LOCK violation.
+
+| Repo | Path | Sync direction | Last sync |
+|------|------|----------------|-----------|
+| `francoissteyn01-hash/glumira-insight-e00084f6` (Lovable) | `src/iob-hunter/engine/iob-engine.ts` + `src/iob-hunter/engine/insulin-profiles.ts` | canonical → satellite (manual) | **2026-04-18 — Phase 1 mirror** |
+
+**Satellite consumption rule:**
+
+1. Engine math + PK rows in any satellite must be **byte-equivalent in spirit** to canonical (formula choice, decay-model branches, PK source citations). API surface may differ — the satellite chart code remains free to evolve.
+2. Edits to engine math originate in `glumira-v7` (canonical), pass `APPROVE-INSULIN-EDIT`, then propagate to every satellite by hand-port or hash-check sync. Edits made in a satellite first are LOCK violations.
+3. Satellite engine files MUST carry the `VENDORED MIRROR` banner header so any reader knows the file is downstream of canonical.
+4. **Phase 2 (deferred):** extract canonical engine into `@glumira/iob-engine` npm package, retire vendored mirrors. Tracked separately.
+
+**Lovable.dev specific note:** The `glumira-insight-e00084f6` repo is owned by `gpt-engineer-app[bot]`. Direct human pushes to engine files survive UNTIL the founder asks Lovable's editor to modify those files — at which point the bot may regenerate them and undo the mirror. Workflow: any future engine change must (a) edit canonical first under `APPROVE-INSULIN-EDIT`, (b) re-port to Lovable, (c) push Lovable repo, (d) NOT prompt the Lovable editor to touch engine files thereafter.
+
 ## 🗑️ DEPRECATED — do not import into protected files
 
 The following files are **alternative/legacy engines** that produced the drift documented across sessions. They must NOT be imported by any protected chart component or engine file. Existing importers (`IOBHunterPage`, `ReportPage`, etc.) are pending migration to the canonical engine — tracked as Phase 2 cleanup.
